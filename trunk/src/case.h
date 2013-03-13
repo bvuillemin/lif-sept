@@ -7,7 +7,7 @@
 
 /**
  * \file      Module case
- * \author    Les queux de cheval
+ * \author    Les queues de cheval
  * \version   0.1
  * \date      13 mars 2013
  * \brief     Case et ses particularités
@@ -18,7 +18,7 @@
 typedef struct
 {
     int x,y;
-    int type_terrain; // Quel type mettre?
+    int type_case; // Quel type mettre?
     int presence_unite;
 }Case_terrain;
 
@@ -27,7 +27,6 @@ int get_x(Case_terrain case_terrain);
 
 void set_y(Case_terrain case_terrain, int y);
 int get_y(Case_terrain case_terrain);
-
 
 
 #endif
