@@ -8,7 +8,7 @@
 
 /**
  * \file      Module terrain
- * \author    Les queux de cheval
+ * \author    Les queues de cheval
  * \version   0.1
  * \date      13 mars 2013
  * \brief     Terrain et ses particularités
