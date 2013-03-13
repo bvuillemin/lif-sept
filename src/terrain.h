@@ -21,16 +21,16 @@ typedef struct
     int taille_x;
     int taille_y;
     Case *tab_terrain;
-}terrain;
+}Terrain;
 
 
-void set_taille_x(terrain terrain_jeu, int x);
-int get_taille_x(terrain terrain_jeu);
+void set_taille_x(Terrain terrain_jeu, int x);
+int get_taille_x(Terrain terrain_jeu);
 
-void set_taille_y(terrain terrain_jeu, int y);
+void set_taille_y(Terrain terrain_jeu, int y);
 int get_taille_y(terrain terrain_jeu);
 
-void initilalise_terrain(terrain *terrain_de_jeu, int taille_x, int taille_y);
+void initilalise_terrain(Terrain *terrain_de_jeu, int taille_x, int taille_y);
 Terrain *creer_terrain(int taille_x, int taille_y);
 
 

@@ -20,13 +20,13 @@ typedef struct
     int x,y;
     int type_terrain; // Quel type mettre?
     int presence_unite;
-}case;
+}Case_terrain;
 
-void set_x(case case_terrain, int x);
-int get_x(case case_terrain);
+void set_x(Case_terrain case_terrain, int x);
+int get_x((Case_terrain case_terrain);
 
-void set_y(case case_terrain, int y);
-int get_y(case case_terrain);
+void set_y((Case_terrain case_terrain, int y);
+int get_y((Case_terrain case_terrain);
 
 
 
