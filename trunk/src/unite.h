@@ -25,18 +25,19 @@ typedef struct
 	//compétence spéciale
 }Unite;
 
+void initialise_unite(Unite *unite_jeu);
 
-void set_pt_vie(Unite unite_jeu, int x);
-int get_pt_vie(Unite unite_jeu);
+void set_pt_vie(Unite *unite_jeu, const int x);
+int get_pt_vie(Unite *unite_jeu);
 
-void set_pt_attaque(Unite unite_jeu, int x);
-int get_pt_attaque(Unite unite_jeu);
+void set_pt_attaque(Unite *unite_jeu, const int x);
+int get_pt_attaque(Unite *unite_jeu);
 
-void set_pt_action(Unite unite_jeu, int x);
-int get_pt_action(Unite unite_jeu);
+void set_pt_action(Unite *unite_jeu, const int x);
+int get_pt_action(Unite *unite_jeu);
 
-void set_pt_deplacement(Unite unite_jeu, int x);
-int get_pt_deplacement(Unite unite_jeu);
+void set_pt_deplacement(Unite *unite_jeu, const int x);
+int get_pt_deplacement(Unite *unite_jeu);
 
 
 #endif
