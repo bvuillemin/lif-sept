@@ -23,10 +23,10 @@ typedef struct
 }Case_terrain;
 
 void set_x(Case_terrain case_terrain, int x);
-int get_x((Case_terrain case_terrain);
+int get_x(Case_terrain case_terrain);
 
-void set_y((Case_terrain case_terrain, int y);
-int get_y((Case_terrain case_terrain);
+void set_y(Case_terrain case_terrain, int y);
+int get_y(Case_terrain case_terrain);
 
 
 

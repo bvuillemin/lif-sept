@@ -24,11 +24,11 @@ int get_taille_y(Terrain terrain_jeu)
     return terrain_jeu.taille_y;
 }
 
-void initilalise_terrain(Terrain *terrain_de_jeu, int taille_x, int taille_y)
+void initialise_terrain(Terrain *terrain_jeu, int taille_x, int taille_y)
 {
-    terrain_de_jeu->taille_x = taille_x;
-    terrain_de_jeu->taille_y = taille_y;
-    terrain_de_jeu->tab_terrain = (Case_terrain *)malloc(sizeof(Case_terrain)*taille_x*taille_y);
+    terrain_jeu->taille_x = taille_x;
+    terrain_jeu->taille_y = taille_y;
+    terrain_jeu->tab_terrain = (Case_terrain *)malloc(sizeof(Case_terrain)*taille_x*taille_y);
 }
 
 Terrain *creer_terrain(int taille_x, int taille_y)
@@ -37,3 +37,19 @@ Terrain *creer_terrain(int taille_x, int taille_y)
     initialise_terrain(terrain, taille_x, taille_y);
     return terrain;
 }
+
+void libere_terrain(Terrain *terrain_jeu)
+{
+    free(terrain_jeu->tab_terrain);
+    terrain_jeu->taille_x=0;
+    terrain_jeu->taille_y=0;
+}
+
+void detruit_terrain(Terrain **terrain_jeu)
+{
+    libere_terrain(*terrain_jeu);
+    free(*terrain_jeu);
+    *terrain_jeu = NULL;
+}
+
+
