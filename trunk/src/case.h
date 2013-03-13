@@ -22,11 +22,14 @@ typedef struct
     int presence_unite;
 }Case_terrain;
 
-void set_x(Case_terrain case_terrain, int x);
-int get_x(Case_terrain case_terrain);
+void initialise_case(Case_terrain *case_terrain);
+Case_terrain *creer_case();
 
-void set_y(Case_terrain case_terrain, int y);
-int get_y(Case_terrain case_terrain);
+void set_x(Case_terrain *case_terrain, int x);
+int get_x(const Case_terrain *case_terrain);
+
+void set_y(Case_terrain *case_terrain, int y);
+int get_y(const Case_terrain *case_terrain);
 
 
 #endif
