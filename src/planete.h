@@ -18,13 +18,13 @@
  {
      int id_planete;
      char *nom_planete;
-     //lien sur proprietaire
-     //tab de batiments
-     //ressources produites
+     /*lien sur proprietaire
+     tab de batiments
+     ressources produites*/
      int taille_utilisee;
      int taille_planete;
-     int planete_principale; //1 si oui, 0 sinon
-     int planete_colonise; //1 si oui, 0 sinon
+     int planete_principale; /*1 si oui, 0 sinon*/
+     int planete_colonise; /*1 si oui, 0 sinon*/
 
  }Planete;
 
@@ -33,6 +33,8 @@ Planete *creer_planete(int id);
 
 
 void set_nom_planete(Planete *planete, char nom[30]);
+
+void test_module_planete();
 
 
 
