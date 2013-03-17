@@ -21,6 +21,7 @@ typedef struct
 	int pt_attaque;
 	int pt_action;
 	int pt_deplacement;
+	Niveau niveau_unite;
 	//ressources nécessaires
 	//compétence spéciale
 }Unite;
