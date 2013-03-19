@@ -1,8 +1,8 @@
 CC = gcc
 CFLAGS = -Wall -pedantic -ggdb 
 EXEC_NAME = ../bin/main
-LIBS = -lSDL
-OBJ_FILES = main.o unite.o flotte.o niveau.o planete.o case.o terrain.o
+LIBS = # -lSDL
+OBJ_FILES = main.o planete.o case.o terrain.o
 
 
 #rajouter à la suite de cette liste les .o que l'on veut générer
