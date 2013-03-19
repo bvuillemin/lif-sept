@@ -5,7 +5,7 @@
 
 void initilalise_niveau(Niveau *niveau, int niv, int exp)
 {
-	niveau = (*Niveau) malloc (sizeof(Niveau));
+	niveau = (*Niveau)malloc(sizeof(Niveau));
 	niveau -> niveau_unite = niv;
 	niveau -> experience = exp;
 }
