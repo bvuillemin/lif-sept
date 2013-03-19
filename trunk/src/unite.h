@@ -44,5 +44,6 @@ int get_pt_action(const Unite *unite_jeu);
 void set_pt_deplacement(Unite *unite_jeu, const int x);
 int get_pt_deplacement(const Unite *unite_jeu);
 
+void test_module_unite();
 
 #endif
