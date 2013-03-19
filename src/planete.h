@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdbool.h>
 
 /**
  * \file      Module terrain
@@ -23,8 +24,8 @@
      ressources produites*/
      int taille_utilisee;
      int taille_planete;
-     int planete_principale; /*1 si oui, 0 sinon (booléen?)*/
-     int planete_colonise; /*1 si oui, 0 sinon  (booléen?)*/
+     int planete_principale; /*1 si oui, 0 sinon */
+     int planete_colonise; /*1 si oui, 0 sinon */
 
  }Planete;
 

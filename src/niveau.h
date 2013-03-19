@@ -3,7 +3,9 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include "unite.h"
+#include <stdbool.h>
+
+
 
 /**
  * \file      Module terrain
