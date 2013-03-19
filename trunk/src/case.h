@@ -5,7 +5,6 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-
 /**
  * \file      Module case
  * \author    Les queues de cheval
@@ -19,7 +18,7 @@
 typedef struct
 {
     int x,y;
-    int type_case; // Quel type mettre?
+    char type_case; // Quel type mettre?
     int presence_unite;//plutôt un booleen non ?
 }Case_terrain;
 
@@ -31,6 +30,11 @@ int get_x(const Case_terrain *case_terrain);
 
 void set_y(Case_terrain *case_terrain, int y);
 int get_y(const Case_terrain *case_terrain);
+
+void definir_case_terrain(Case_terrain *case_terrain, char c);
+
+void affiche_case_terrain(const Case_terrain *case_terrain);
+void test_module_case_terrain();
 
 
 #endif
