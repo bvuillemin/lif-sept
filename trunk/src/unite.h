@@ -27,7 +27,7 @@ typedef struct
 }Unite;
 
 void initialise_unite(Unite *unite_jeu);
-Unite creer_unite();
+Unite *creer_unite();
 
 void libere_unite(Unite *unite_jeu);
 void detruit_unite(Unite **unite_jeu);

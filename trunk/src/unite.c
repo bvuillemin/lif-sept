@@ -24,7 +24,7 @@ void libere_unite(Unite *unite_jeu)
     unite_jeu->pt_attaque=0;
     unite_jeu->pt_action=0;
     unite_jeu->pt_deplacement=0;
-    detruit_niveau(unite_jeu->niveau_unite);
+    /*libere_niveau(unite_jeu->niveau_unite);*/
 }
 
 void detruit(Unite **unite_jeu)
