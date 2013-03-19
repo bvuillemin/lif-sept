@@ -18,12 +18,12 @@ Flotte *creer_flotte()
     return flotte;
 }
 
-void set_taille_maximum_flotte(Flotte *flotte, int max)
+void set_taille_maximum_flotte(Flotte *flotte,const int max)
 {
     flotte->taille_maximum_flotte = max;
 }
 
-void set_taille_flotte(Flotte *flotte, int nb)
+void set_taille_flotte(Flotte *flotte,const int nb)
 {
     flotte->taille_flotte = nb;
 }
@@ -67,7 +67,7 @@ int ajouter_unite_flotte(Flotte *flotte, Unite *unite)
     }
 }
 
-void retirer_unite_flotte(Flotte *flotte, int indice_unite)
+void retirer_unite_flotte(Flotte *flotte,const int indice_unite)
 {
     int i;
     if(flotte->taille_flotte > 0)
@@ -82,5 +82,20 @@ void retirer_unite_flotte(Flotte *flotte, int indice_unite)
     else{return 0;}
 }
 
+void test_module_flotte()
+{
+    Flotte *flotte;
+    printf("Verif de la création de flottes\n");
+    flotte = creer_flotte();
+    if((flotte->taille_maximale_flotte == 10) && (flotte->taille_flotte == 0))
+    {
+		printf ("OK \n");
+	}
+	else
+	{
+		printf ("Echec\n");
+	}
+
+}
 
 
