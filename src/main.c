@@ -11,7 +11,8 @@
 int main()
 {
     test_module_planete();
-    //test_module_flotte();
+    test_module_flotte();
 	test_module_unite();
+	test_module_case_terrain();
     return 0;
 }
