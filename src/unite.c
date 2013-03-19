@@ -74,3 +74,19 @@ int get_pt_deplacement(const Unite *unite_jeu)
 {
     return unite_jeu->pt_deplacement;
 }
+
+void test_module_unite()
+{
+    Unite *guerriers;
+    printf("Verif de la création d'une unité\n");
+    guerriers = creer_unite();
+    if((guerriers->pt_vie == 0) && (guerriers->pt_attaque == 0) && (guerriers->pt_attaque == 0) && (guerriers->pt_deplacement == 0))
+    {
+		printf ("OK \n");
+	}
+	else
+	{
+		printf ("Echec\n");
+	}
+
+}
