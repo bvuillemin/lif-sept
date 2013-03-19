@@ -36,3 +36,18 @@ int get_y(const Case_terrain *case_terrain)
 {
     return case_terrain->y;
 }
+
+void test_module_case_terrain()
+{
+    Case_terrain *case_terrain;
+    printf("Verif de la création de cases\n");
+    case_terrain = creer_case();
+    if((case_terrain->x == 0) && (case_terrain->y == 0))
+    {
+		printf ("OK \n");
+	}
+	else
+	{
+		printf ("Echec\n");
+	}
+}

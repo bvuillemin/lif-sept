@@ -2,7 +2,7 @@ CC = gcc
 CFLAGS = -Wall -pedantic -ggdb 
 EXEC_NAME = ../bin/main
 LIBS = # -lSDL
-OBJ_FILES = main.o planete.o case.o terrain.o niveau.o
+OBJ_FILES = main.o planete.o case.o terrain.o niveau.o unite.o flotte.o
 
 
 
