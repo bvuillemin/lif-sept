@@ -26,10 +26,10 @@ void initialise_flotte(Flotte *flotte);
 Flotte *creer_flotte();
 
 void set_taille_maximum_flotte(Flotte *flotte,const int max);
-int get_taille_maximum_flotte(Flotte *flotte);
+int get_taille_maximum_flotte(const Flotte *flotte);
 void set_taille_flotte(Flotte *flotte,const int nb);
-int get_taille_flotte(Flotte *flotte);
-
+int get_taille_flotte(const Flotte *flotte);
+ 
 void libere_flotte(Flotte *flotte);
 void detruit_flotte(Flotte **flotte);
 
