@@ -3,15 +3,13 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <stdbool.h>
-#include "niveau.h"
 
 
 /**
  * \file      Module unité
  * \author    Les queues de cheval
  * \version   0.1
- * \date      13 mars 2013
+ * \date      19 mars 2013
  * \brief     Unité et ses particularités
  *
  * \details
@@ -29,6 +27,10 @@ typedef struct
 }Unite;
 
 void initialise_unite(Unite *unite_jeu);
+Unite creer_unite();
+
+void libere_unite(Unite *unite_jeu);
+void detruit_unite(Unite **unite_jeu);
 
 void set_pt_vie(Unite *unite_jeu, const int x);
 int get_pt_vie(const Unite *unite_jeu);
