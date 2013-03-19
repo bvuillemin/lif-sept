@@ -8,7 +8,7 @@ void initialise_unite(Unite *unite_jeu)
     unite_jeu->pt_attaque=0;
     unite_jeu->pt_action=0;
     unite_jeu->pt_deplacement=0;
-    initialise_niveau(unite_jeu->niveau_unite, 0, 0);
+    /*initialise_niveau(unite_jeu->niveau_unite, 0, 0);*/
 }
 
 Unite *creer_unite()

@@ -12,6 +12,6 @@ int main()
 {
     test_module_planete();
     //test_module_flotte();
-
+	test_module_unite();
     return 0;
 }
