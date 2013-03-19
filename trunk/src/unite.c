@@ -8,10 +8,10 @@ void initialise_unite(Unite *unite_jeu)
     unite_jeu->pt_attaque=0;
     unite_jeu->pt_action=0;
     unite_jeu->pt_deplacement=0;
-    initialise_niveau(unite_jeu->niveau_unite, machin, machin);
+    initialise_niveau(unite_jeu->niveau_unite, 0, 0);
 }
 
-Unite creer_unite()
+Unite *creer_unite()
 {
     Unite *nouvelle_unite = (Unite *)malloc(sizeof(Unite));
     initialise_unite(nouvelle_unite);
@@ -39,7 +39,7 @@ void set_pt_vie(Unite *unite_jeu, const int x)
     unite_jeu->pt_vie = x;
 }
 
-int get_pt_vie(Unite *unite_jeu)
+int get_pt_vie(const Unite *unite_jeu)
 {
     return unite_jeu->pt_vie;
 }
@@ -50,7 +50,7 @@ void set_pt_attaque(Unite *unite_jeu, const int x)
     unite_jeu->pt_attaque = x;
 }
 
-int get_pt_attaque(Unite *unite_jeu)
+int get_pt_attaque(const Unite *unite_jeu)
 {
     return unite_jeu->pt_attaque;
 }
@@ -60,7 +60,7 @@ void set_pt_action(Unite *unite_jeu, const int x)
     unite_jeu->pt_action = x;
 }
 
-int get_pt_action(Unite *unite_jeu)
+int get_pt_action(const Unite *unite_jeu)
 {
     return unite_jeu->pt_action;
 }
@@ -70,7 +70,7 @@ void set_pt_deplacement(Unite *unite_jeu, const int x)
     unite_jeu->pt_deplacement = x;
 }
 
-int get_pt_deplacement(Unite *unite_jeu)
+int get_pt_deplacement(const Unite *unite_jeu)
 {
     return unite_jeu->pt_deplacement;
 }
