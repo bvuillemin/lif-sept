@@ -24,3 +24,14 @@
 
 void initialise_flotte(Flotte *flotte);
 Flotte *creer_flotte();
+
+void set_taille_maximum_flotte(Flotte *flotte, int max);
+int get_taille_maximum_flotte(Flotte *flotte);
+void set_taille_flotte(Flotte *flotte, int nb);
+int get_taille_flotte(Flotte *flotte);
+
+void libere_flotte(Flotte *flotte);
+void detruit_flotte(Flotte **flotte);
+
+int ajouter_unite_flotte(Flotte *flotte, Unite *unite); //renvoie 1 en cas de succès, 0 en cas d'échecs
+void retirer_unite_flotte(Flotte *flotte, int indice_unite);
