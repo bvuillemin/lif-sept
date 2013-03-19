@@ -35,7 +35,10 @@ int get_taille_x(const Terrain *terrain_jeu);
 void set_taille_y(Terrain *terrain_jeu, int y);
 int get_taille_y(const Terrain *terrain_jeu);
 
+void affiche_case(const Terrain *terrain, int x, int y);
+void affiche_terrain(const Terrain *terrain);
 
+void test_module_terrain();
 
 
 

@@ -52,4 +52,28 @@ void detruit_terrain(Terrain **terrain_jeu)
     *terrain_jeu = NULL;
 }
 
+void affiche_case(const Terrain *terrain, int x, int y)
+{
+    affiche_case_terrain(&(terrain->tab_terrain[y*terrain->taille_y + x]));
+}
+
+void affiche_terrain(const Terrain *terrain)
+{
+    int i, j;
+    for(i=0;i<terrain->taille_x;i++)
+    {
+        for(j=0;j<terrain->taille_y;j++)
+        {
+            affiche_case(terrain, i, j);
+        }
+    }
+}
+
+void test_module_terrain()
+{
+    Terrain *terrain;
+    terrain = creer_terrain(3, 3);
+    affiche_terrain(terrain);
+}
+
 
