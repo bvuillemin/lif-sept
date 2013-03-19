@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "case.h"
-
+#include <stdbool.h>
 
 /**
  * \file      Module terrain
