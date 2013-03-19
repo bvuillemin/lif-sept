@@ -13,7 +13,7 @@ void initialise_flotte(Flotte *flotte)
 
 Flotte *creer_flotte()
 {
-    Flotte flotte->tab_unite = (Flotte *)malloc(sizeof(Flotte));
+    Flotte *flotte=(Flotte *)malloc(sizeof(Flotte));
     initialise_flotte(flotte);
     return flotte;
 }
@@ -82,12 +82,45 @@ void retirer_unite_flotte(Flotte *flotte,const int indice_unite)
     else{return 0;}
 }
 
+void afficher_flotte(Flotte *flotte)
+{
+    int i;
+    for(i=0;i<flotte->taille_flotte;i++)
+    {
+        printf("|| Unite %d: pv = %d, pa = %d\n", i+1 , flotte->tab_unite[i].pt_vie, flotte->tab_unite[i].pt_action);
+    }
+
+}
+
 void test_module_flotte()
 {
     Flotte *flotte;
+    Unite *unite1;
+    Unite *unite2;
+    Unite *unite3;
+    unite1 = creer_unite();
+    unite2 = creer_unite();
+    unite3 = creer_unite();
+
     printf("Verif de la création de flottes\n");
     flotte = creer_flotte();
-    if((flotte->taille_maximale_flotte == 10) && (flotte->taille_flotte == 0))
+
+    ajouter_unite_flotte(flotte, unite1);
+    ajouter_unite_flotte(flotte, unite2);
+    ajouter_unite_flotte(flotte, unite3);
+
+    set_pt_vie(&(flotte->tab_unite[0]), 10);
+    set_pt_vie(&(flotte->tab_unite[1]), 15);
+    set_pt_vie(&(flotte->tab_unite[2]), 20);
+
+    afficher_flotte(flotte);
+
+    retirer_unite_flotte(flotte, 1);
+    ajouter_unite_flotte(flotte, unite3);
+    set_pt_vie(&(flotte->tab_unite[2]), 30);
+    afficher_flotte(flotte);
+
+    if((flotte->taille_maximum_flotte == 10) && (flotte->taille_flotte == 3))
     {
 		printf ("OK \n");
 	}
@@ -95,6 +128,8 @@ void test_module_flotte()
 	{
 		printf ("Echec\n");
 	}
+
+
 
 }
 
