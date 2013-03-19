@@ -5,12 +5,13 @@
 
 void initilalise_niveau(Niveau *niveau, int niv, int exp)
 {
+<<<<<<< .mine
+=======
 	niveau = (*Niveau)malloc(sizeof(Niveau));
+>>>>>>> .r41
 	niveau -> niveau_unite = niv;
 	niveau -> experience = exp;
 }
-
-
 
 void set_niveau_unite(Niveau * niveau, int niv)
 {
@@ -20,18 +21,18 @@ int get_niveau_unite(const Niveau * niveau)
 {
 	return niveau->niveau_unite;
 }
-
-void set_experience(Niveau niveau, int exp)
+void set_experience(Niveau *niveau, int exp)
 {
-	niveau->experience=exp;
+	niveau -> experience=exp;
 }
-int get_experience(const Niveau * niveau)
+int get_experience(const Niveau *niveau)
 {
-	return niveau->experience;
+	return niveau -> experience;
 }
 
-void augmenter_niveau(Niveau niveau){}
-void augmenter_experience(Niveau niveau){}
+void augmenter_niveau(Niveau *niveau){}
+void augmenter_experience(Niveau *niveau){}
+
 
 void libere_niveau(Niveau *niveau)
 {

@@ -28,14 +28,14 @@ typedef struct
 void initilalise_niveau(Niveau *niveau, int niv, int exp);
 
 
-void set_niveau_unite(Niveau * niveau, int niv);
-int get_niveau_unite(const Niveau * niveau);
+void set_niveau_unite(Niveau *niveau, int niv);
+int get_niveau_unite(const Niveau *niveau);
 
-void set_experience(Niveau niveau, int exp);
-int get_experience(const Niveau * niveau);
+void set_experience(Niveau *niveau, int exp);
+int get_experience(const Niveau *niveau);
 
-void augmenter_niveau(Niveau * niveau);
-void augmenter_experience(Niveau * niveau);
+void augmenter_niveau(Niveau *niveau);
+void augmenter_experience(Niveau *niveau);
 
 void libere_niveau(Niveau *niveau);
 void detruit_niveau(Niveau **niveau);

@@ -6,7 +6,7 @@ LIBS = -lSDL
 OBJ_FILES = main.o unite.o planete.o case.o terrain.o
 =======
 LIBS = # -lSDL
-OBJ_FILES = main.o planete.o case.o terrain.o
+OBJ_FILES = main.o planete.o case.o terrain.o niveau.o
 >>>>>>> .r40
 
 
