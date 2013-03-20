@@ -20,7 +20,7 @@ typedef struct
 {
     int taille_x;
     int taille_y;
-    Case_terrain *tab_terrain;
+    Case_terrain *tab_terrain; //x en abscisse, y en ordonnée, on commence à 0 (à modifier?)
 }Terrain;
 
 void initilalise_terrain(Terrain *terrain_jeu, int taille_x, int taille_y);
@@ -35,7 +35,11 @@ int get_taille_x(const Terrain *terrain_jeu);
 void set_taille_y(Terrain *terrain_jeu, int y);
 int get_taille_y(const Terrain *terrain_jeu);
 
-void affiche_case(const Terrain *terrain, int x, int y);
+Case_terrain get_case_terrain(const Terrain *terrain, const int x, const int y);
+void set_case_terrain(const Terrain *terrain, int x, int y, char c);
+
+void modification_terrain(const Terrain *terrain, const char c);
+
 void affiche_terrain(const Terrain *terrain);
 
 void test_module_terrain();
