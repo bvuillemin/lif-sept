@@ -5,6 +5,8 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+#include "planete.h"
+
 /**
  * \file      Module case
  * \author    Les queues de cheval
