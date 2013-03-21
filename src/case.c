@@ -47,20 +47,20 @@ void definir_case_terrain(Case_terrain *une_case_terrain, char c)
     }
 }
 
-void libere_case_terrain(Case_terrain *une_une_case_terrain)
+void libere_case_terrain(Case_terrain *une_case_terrain)
 {
-    free(une_une_case_terrain->planete);
-    une_une_case_terrain->x=0;
-    une_une_case_terrain->y=0;
-    une_une_case_terrain->type_case='N';
-    une_une_case_terrain->presence_unite=0;
+    free(une_case_terrain->planete);
+    une_case_terrain->x=0;
+    une_case_terrain->y=0;
+    une_case_terrain->type_case='N';
+    une_case_terrain->presence_unite=0;
 }
 
-void detruit_case_terrain(Terrain **une_une_case_terrain)
+void detruit_case_terrain(Case_terrain **une_case_terrain)
 {
-    libere_terrain(*une_une_case_terrain);
-    free(*une_une_case_terrain);
-    *une_une_case_terrain = NULL;
+    libere_terrain(*une_case_terrain);
+    free(*une_case_terrain);
+    *une_case_terrain = NULL;
 }
 
 void affiche_case_terrain(const Case_terrain *une_case_terrain)
@@ -73,8 +73,8 @@ void test_module_case_terrain()
     Case_terrain *une_case_terrain;
     printf("Verif de la création de cases\n");
     une_case_terrain = creer_case();
-    definir_une_case_terrain(une_case_terrain, 'E');
-    affiche_une_case_terrain(une_case_terrain);
+    definir_case_terrain(une_case_terrain, 'E');
+    affiche_case_terrain(une_case_terrain);
     if((une_case_terrain->x == 0) && (une_case_terrain->y == 0))
     {
 		printf ("OK \n");

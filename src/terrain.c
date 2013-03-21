@@ -103,6 +103,9 @@ void test_module_terrain()
     modification_terrain(terrain, 'E');
     set_case_terrain(terrain, 1, 2, 'P');
     affiche_terrain(terrain);
+
+    detruit_terrain(&terrain);
+
 }
 
 
