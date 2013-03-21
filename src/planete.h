@@ -17,6 +17,8 @@
 
  typedef struct
  {
+     int x;
+     int y;
      char *nom_planete;
      /*lien sur proprietaire
      tab de batiments
@@ -24,7 +26,7 @@
      int taille_utilisee;
      int taille_planete;
      int planete_principale; /*1 si oui, 0 sinon */
-     int planete_colonise; /*1 si oui, 0 sinon */
+     int planete_colonisee; /*1 si oui, 0 sinon */
 
  }Planete;
 
@@ -42,9 +44,10 @@ int get_planete_principale(Planete *planete);
 void set_planete_colonise(Planete *planete, int booleen);
 int get_planete_colonise(Planete *planete);
 
-
 void libere_planete(Planete *planete);
 void detruit_planete(Planete **planete);
+
+void affiche_planete(Planete *une_planete);
 
 void test_module_planete();
 

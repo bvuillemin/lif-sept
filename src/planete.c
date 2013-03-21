@@ -6,8 +6,10 @@
 
 void initialise_planete(Planete *planete)
 {
+    planete->x = 0;
+    planete->y = 0;
     planete->nom_planete = (char*)malloc(sizeof(char) * 30);
-    planete->planete_colonise = 0;
+    planete->planete_colonisee = 0;
     planete->planete_principale = 0;
     planete->taille_planete = 0; /* a modifier*/
     planete->taille_utilisee = 0;
@@ -22,8 +24,10 @@ Planete *creer_planete()
 
 void libere_planete(Planete *planete)
 {
+    planete->x = 0;
+    planete->y = 0;
     free(planete->nom_planete);
-    planete->planete_colonise = 0;
+    planete->planete_colonisee = 0;
     planete->planete_principale = 0;
     planete->taille_planete = 0;
     planete->taille_utilisee = 0;
@@ -78,17 +82,26 @@ int get_planete_principale(Planete *planete)
     return planete->planete_principale;
 }
 
-void set_planete_colonise(Planete *planete, int booleen)
+void set_planete_colonisee(Planete *planete, int booleen)
 {
     if ((booleen == 0) || (booleen == 1))
     {
-        planete->planete_colonise = booleen;
+        planete->planete_colonisee = booleen;
     }
 }
 
-int get_planete_colonise(Planete *planete)
+int get_planete_colonisee(Planete *planete)
 {
-    return planete->planete_colonise;
+    return planete->planete_colonisee;
+}
+
+void affiche_planete(Planete *une_planete)
+{
+    printf("Infos planete %s:\n", une_planete->nom_planete);
+    printf("Coordonnes: x = %d, y = %d \n", une_planete->x, une_planete->y);
+    printf("Taille: %d/%d \n", une_planete->taille_utilisee, une_planete->taille_planete);
+    printf("Planete colonisee: %d, planete principale: %d \n", une_planete->planete_colonisee, une_planete->planete_principale);
+    printf("\n");
 }
 
 void test_module_planete()
