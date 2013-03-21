@@ -7,6 +7,7 @@
 
 #include "planete.h"
 
+
 /**
  * \file      Module case
  * \author    Les queues de cheval
@@ -34,7 +35,7 @@ int get_x(const Case_terrain *une_case_terrain);
 void set_y(Case_terrain *une_case_terrain, int y);
 int get_y(const Case_terrain *une_case_terrain);
 
-void detruit_case_terrain(Terrain **une_case_terrain);
+void detruit_case_terrain(Case_terrain **une_case_terrain);
 void libere_case_terrain(Case_terrain *une_case_terrain);
 
 void definir_case_terrain(Case_terrain *une_case_terrain, char c);

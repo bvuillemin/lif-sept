@@ -104,5 +104,5 @@ void test_module_planete()
 	{
 		printf ("Echec\n");
 	}
-
+    detruit_planete(&terre);
 }
