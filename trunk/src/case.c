@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+
 #include "case.h"
 #include "planete.h"
 
@@ -66,6 +67,14 @@ void detruit_case_terrain(Case_terrain **une_case_terrain)
 void affiche_case_terrain(const Case_terrain *une_case_terrain)
 {
     printf("|%c|", une_case_terrain->type_case);
+}
+
+void ajouter_planete(Case_terrain *une_case_terrain, Planete *une_planete)
+{
+    une_case_terrain->type_case = 'P';
+    une_case_terrain->planete = une_planete;
+    une_case_terrain->planete->x = une_case_terrain->x;
+    une_case_terrain->planete->y = une_case_terrain->y;
 }
 
 void test_module_case_terrain()

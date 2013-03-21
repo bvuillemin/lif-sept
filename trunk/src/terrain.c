@@ -80,6 +80,7 @@ void affiche_terrain(const Terrain *terrain)
         }
         printf("\n");
     }
+    printf("\n");
 }
 
 
@@ -95,17 +96,28 @@ void modification_terrain(const Terrain *terrain, const char c)
     }
 }
 
+void ajouter_planete_terrain(Terrain *terrain, int x, int y)
+{
+    Planete *terre;
+    terre = creer_planete();
+    ajouter_planete(&(terrain->tab_terrain[x*(terrain->taille_x)+y]), terre);
+}
 
-void test_module_terrain()
+
+/*void test_module_terrain()
 {
     Terrain *terrain;
     terrain = creer_terrain(20, 20);
     modification_terrain(terrain, 'E');
-    set_case_terrain(terrain, 1, 2, 'P');
     affiche_terrain(terrain);
+
+    ajouter_planete_terrain(terrain, 4, 2);
+    affiche_terrain(terrain);
+
+    affiche_planete(terrain->tab_terrain[2*(terrain->taille_x)+1].planete);
 
     detruit_terrain(&terrain);
 
 }
 
-
+*/
