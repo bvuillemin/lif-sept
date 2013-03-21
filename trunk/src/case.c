@@ -1,63 +1,81 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "case.h"
+#include "planete.h"
 
-void initialise_case(Case_terrain *case_terrain)
+void initialise_case(Case_terrain *une_case_terrain)
 {
-    case_terrain->x=0;
-    case_terrain->y=0;
-    case_terrain->type_case='N';
-    case_terrain->presence_unite=0;
+    une_case_terrain->x=0;
+    une_case_terrain->y=0;
+    une_case_terrain->type_case='N';
+    une_case_terrain->presence_unite=0;
+	une_case_terrain->planete = NULL;
 }
 
 Case_terrain *creer_case()
 {
-    Case_terrain *case_terrain=(Case_terrain *)malloc(sizeof(Case_terrain));
-    initialise_case(case_terrain);
-    return case_terrain;
+    Case_terrain *une_case_terrain=(Case_terrain *)malloc(sizeof(Case_terrain));
+    initialise_case(une_case_terrain);
+    return une_case_terrain;
 }
 
-void set_x(Case_terrain *case_terrain, int x)
+void set_x(Case_terrain *une_case_terrain, int x)
 {
-    case_terrain->x = x;
+    une_case_terrain->x = x;
 }
 
-int get_x(const Case_terrain *case_terrain)
+int get_x(const Case_terrain *une_case_terrain)
 {
-    return case_terrain->x;
+    return une_case_terrain->x;
 }
 
-void set_y(Case_terrain *case_terrain, int y)
+void set_y(Case_terrain *une_case_terrain, int y)
 {
-    case_terrain->y = y;
+    une_case_terrain->y = y;
 }
 
-int get_y(const Case_terrain *case_terrain)
+int get_y(const Case_terrain *une_case_terrain)
 {
-    return case_terrain->y;
+    return une_case_terrain->y;
 }
 
-void definir_case_terrain(Case_terrain *case_terrain, char c)
+void definir_case_terrain(Case_terrain *une_case_terrain, char c)
 {
     if((c == 'E')||(c == 'S')||(c == 'P'))
     {
-        case_terrain->type_case = c;
+        une_case_terrain->type_case = c;
     }
 }
 
-void affiche_case_terrain(const Case_terrain *case_terrain)
+void libere_case_terrain(Case_terrain *une_une_case_terrain)
 {
-    printf("|%c|", case_terrain->type_case);
+    free(une_une_case_terrain->planete);
+    une_une_case_terrain->x=0;
+    une_une_case_terrain->y=0;
+    une_une_case_terrain->type_case='N';
+    une_une_case_terrain->presence_unite=0;
+}
+
+void detruit_case_terrain(Terrain **une_une_case_terrain)
+{
+    libere_terrain(*une_une_case_terrain);
+    free(*une_une_case_terrain);
+    *une_une_case_terrain = NULL;
+}
+
+void affiche_case_terrain(const Case_terrain *une_case_terrain)
+{
+    printf("|%c|", une_case_terrain->type_case);
 }
 
 void test_module_case_terrain()
 {
-    Case_terrain *case_terrain;
+    Case_terrain *une_case_terrain;
     printf("Verif de la création de cases\n");
-    case_terrain = creer_case();
-    definir_case_terrain(case_terrain, 'E');
-    affiche_case_terrain(case_terrain);
-    if((case_terrain->x == 0) && (case_terrain->y == 0))
+    une_case_terrain = creer_case();
+    definir_une_case_terrain(une_case_terrain, 'E');
+    affiche_une_case_terrain(une_case_terrain);
+    if((une_case_terrain->x == 0) && (une_case_terrain->y == 0))
     {
 		printf ("OK \n");
 	}
