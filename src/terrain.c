@@ -27,7 +27,7 @@ int get_taille_y(const Terrain *terrain_jeu)
 Case_terrain get_case_terrain(const Terrain *terrain, const int x, const int y)
 {
     return terrain->tab_terrain[x*(terrain->taille_x)+y];
-    //return terrain->tab_terrain[y*(terrain->taille_y)+x];
+    /*return terrain->tab_terrain[y*(terrain->taille_y)+x];*/
 }
 
 void set_case_terrain(const Terrain *terrain, int x, int y, char c)

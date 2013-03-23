@@ -22,8 +22,8 @@ typedef struct
 	int pt_action;
 	int pt_deplacement;
 	Niveau niveau_unite;
-	//ressources nécessaires
-	//compétence spéciale
+	/*ressources nécessaires*/
+	/*compétence spéciale*/
 }Unite;
 
 void initialise_unite(Unite *unite_jeu);
