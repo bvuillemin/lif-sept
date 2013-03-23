@@ -59,7 +59,7 @@ void libere_case_terrain(Case_terrain *une_case_terrain)
 
 void detruit_case_terrain(Case_terrain **une_case_terrain)
 {
-    libere_terrain(*une_case_terrain);
+    libere_case_terrain(*une_case_terrain); /* libere_terrain(*une_case_terrain); */
     free(*une_case_terrain);
     *une_case_terrain = NULL;
 }

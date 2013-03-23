@@ -18,5 +18,5 @@ $(EXEC_NAME): $(OBJ_FILES)
 	$(CC) $(CFLAGS) -o $@ -c $<
 
 clean:
-	rm $(OBJ_FILES)
+	rm $(OBJ_FILES) $(EXEC_NAME)
 
