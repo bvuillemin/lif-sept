@@ -38,9 +38,18 @@ void set_case_terrain_espace(const Terrain_espace *terrain_espace, int x, int y,
 
 void initilalise_terrain_espace(Terrain_espace *terrain_jeu_espace, int taille_espace_x, int taille_espace_y)
 {
+    int i, j;
     terrain_jeu_espace->taille_espace_x = taille_espace_x;
     terrain_jeu_espace->taille_espace_y = taille_espace_y;
     terrain_jeu_espace->tab_terrain_espace = (Case_terrain_espace *)malloc(sizeof(Case_terrain_espace)*taille_espace_x*taille_espace_y);
+    for(i=0;i<terrain_jeu_espace->taille_espace_x;i++)
+    {
+        for(j=0;j<terrain_jeu_espace->taille_espace_y;j++)
+        {
+           terrain_jeu_espace->tab_terrain_espace[j*(terrain_jeu_espace->taille_espace_y)+i].x_espace = i;
+           terrain_jeu_espace->tab_terrain_espace[j*(terrain_jeu_espace->taille_espace_y)+i].y_espace = j;
+        }
+    }
 
 }
 
