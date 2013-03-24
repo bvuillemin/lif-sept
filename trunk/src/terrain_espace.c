@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdbool.h>
 
 #include "case_terrain_espace.h"
 #include "terrain_espace.h"
@@ -79,13 +80,17 @@ void detruit_terrain_espace(Terrain_espace **terrain_jeu_espace)
 void affiche_terrain_espace(const Terrain_espace *terrain_espace)
 {
     int i, j;
-    Case_terrain_espace unecase;
+    Case_terrain_espace une_case;
     for(i=0;i<terrain_espace->taille_espace_x;i++)
     {
         for(j=0;j<terrain_espace->taille_espace_y;j++)
         {
-            unecase = get_case_terrain_espace(terrain_espace, i, j);
-            printf("|%c|", unecase.type_case_terrain_espace);
+            une_case = get_case_terrain_espace(terrain_espace, i, j);
+            if(une_case.presence_flotte == true)
+            {
+                printf("|F|");
+            }
+            else{printf("|%c|", une_case.type_case_terrain_espace);}
         }
         printf("\n");
     }

@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdbool.h>
 
 #include "case_terrain_espace.h"
 #include "planete.h"
@@ -11,6 +12,7 @@ void initialise_case_espace(Case_terrain_espace *une_case_terrain_espace)
     une_case_terrain_espace->type_case_terrain_espace='N';
     une_case_terrain_espace->presence_flotte=0;
 	une_case_terrain_espace->planete = NULL;
+	une_case_terrain_espace->flotte = NULL;
 }
 
 Case_terrain_espace *creer_case_espace()
@@ -51,6 +53,7 @@ void definir_case_terrain_espace(Case_terrain_espace *une_case_terrain_espace, c
 void libere_case_terrain_espace(Case_terrain_espace *une_case_terrain_espace)
 {
     free(une_case_terrain_espace->planete);
+    free(une_case_terrain_espace->flotte);
     une_case_terrain_espace->x_espace=0;
     une_case_terrain_espace->y_espace=0;
     une_case_terrain_espace->type_case_terrain_espace='N';
@@ -75,6 +78,14 @@ void ajouter_planete(Case_terrain_espace *une_case_terrain_espace, Planete *une_
     une_case_terrain_espace->planete = une_planete;
     une_case_terrain_espace->planete->x = une_case_terrain_espace->x_espace;
     une_case_terrain_espace->planete->y = une_case_terrain_espace->y_espace;
+}
+
+void ajouter_flotte(Case_terrain_espace *une_case_terrain_espace, Flotte *une_flotte)
+{
+    une_case_terrain_espace->flotte = une_flotte;
+    une_case_terrain_espace->presence_flotte = true;
+    une_case_terrain_espace->flotte->x_flotte = une_case_terrain_espace->x_espace;
+    une_case_terrain_espace->flotte->y_flotte = une_case_terrain_espace->y_espace;
 }
 
 void test_module_case_terrain_espace()

@@ -92,7 +92,7 @@ void afficher_flotte(Flotte *flotte)
 
 }
 
-void test_module_flotte()
+/*void test_module_flotte()
 {
     Flotte *flotte;
     Unite *unite1;
@@ -131,6 +131,6 @@ void test_module_flotte()
 
 
 
-}
+}*/
 
 
