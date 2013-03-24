@@ -19,6 +19,8 @@
 
  typedef struct
  {
+     int x_flotte;
+     int y_flotte;
      int taille_maximum_flotte;
      int taille_flotte;
      Unite *tab_unite;

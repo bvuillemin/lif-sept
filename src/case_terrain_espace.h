@@ -6,6 +6,7 @@
 #include <stdbool.h>
 
 #include "planete.h"
+#include "flotte.h"
 
 
 /**
@@ -24,6 +25,7 @@ typedef struct
     char type_case_terrain_espace;/* E pour l'espace, P pour une planète, N si non initialisé*/
     bool presence_flotte;
 	Planete *planete;/*lien sur une planète si la case est de type planète, sinon NULL*/
+	Flotte *flotte;
 }Case_terrain_espace;
 
 void initialise_case_espace(Case_terrain_espace *une_case_terrain_espace);
@@ -39,6 +41,7 @@ void libere_case_terrain_espace(Case_terrain_espace *une_case_terrain_espace);
 
 void definir_case_terrain_espace(Case_terrain_espace *une_case_terrain_espace, char c);
 void ajouter_planete(Case_terrain_espace *une_case_terrain_espace, Planete *une_planete);
+void ajouter_flotte(Case_terrain_espace *une_case_terrain_espace, Flotte *une_flotte);
 
 void affiche_case_terrain_espace(const Case_terrain_espace *une_case_terrain_espace);
 void test_module_case_terrain_espace();
