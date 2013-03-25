@@ -6,7 +6,7 @@
 
 void initialise_flotte(Flotte *flotte)
 {
-    flotte->taille_maximum_flotte = 10; //valeur temporaire qu'il faudra éventuellemnt modifié
+    flotte->taille_maximum_flotte = 10; /*valeur temporaire qu'il faudra éventuellemnt modifié*/
     flotte->taille_flotte = 0;
     flotte->tab_unite = (Unite *)malloc(sizeof(Unite)*flotte->taille_maximum_flotte);
 }
@@ -42,7 +42,7 @@ void libere_flotte(Flotte *flotte)
 {
     free(flotte->tab_unite);
     flotte->tab_unite = NULL;
-    flotte->taille_maximum_flotte = 10; //valeur temporaire qu'il faudra éventuellemnt modifié
+    flotte->taille_maximum_flotte = 10; /*valeur temporaire qu'il faudra éventuellemnt modifié*/
     flotte->taille_flotte = 0;
 }
 
@@ -67,7 +67,7 @@ int ajouter_unite_flotte(Flotte *flotte, Unite *unite)
     }
 }
 
-void retirer_unite_flotte(Flotte *flotte,const int indice_unite)
+int retirer_unite_flotte(Flotte *flotte,const int indice_unite)
 {
     int i;
     if(flotte->taille_flotte > 0)

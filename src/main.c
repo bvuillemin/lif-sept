@@ -28,18 +28,18 @@ int main()
 	scanf("%29s", tab2);
 
 	Terrain_espace *un_terrain_espace;
-    un_terrain_espace = creer_terrain_espace(20, 20);
+    un_terrain_espace = creer_terrain_espace(5, 5);
     modification_terrain_espace(un_terrain_espace, 'E');
 
-/*    ajouter_planete_terrain_espace(un_terrain_espace, 2, 1);
-    ajouter_planete_terrain_espace(un_terrain_espace, 18, 15);
+    ajouter_planete_terrain_espace(un_terrain_espace, 2, 1);
+    ajouter_planete_terrain_espace(un_terrain_espace, 4, 4);
 
     set_nom_planete(un_terrain_espace->tab_terrain_espace[2*(un_terrain_espace->taille_espace_x)+1].planete, tab);
-    set_nom_planete(un_terrain_espace->tab_terrain_espace[18*(un_terrain_espace->taille_espace_x)+15].planete, tab2);
+    set_nom_planete(un_terrain_espace->tab_terrain_espace[4*(un_terrain_espace->taille_espace_x)+4].planete, tab2);
     affiche_terrain_espace(un_terrain_espace);
 
     affiche_planete(un_terrain_espace->tab_terrain_espace[2*(un_terrain_espace->taille_espace_x)+1].planete);
-    affiche_planete(un_terrain_espace->tab_terrain_espace[18*(un_terrain_espace->taille_espace_x)+15].planete);*/
+    affiche_planete(un_terrain_espace->tab_terrain_espace[4*(un_terrain_espace->taille_espace_x)+4].planete);
 
     unite1 = creer_unite();
     unite2 = creer_unite();
