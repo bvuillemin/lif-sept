@@ -25,11 +25,12 @@ int main()
 	char tab[30];
 	char tab2[30];
 
+	Terrain_espace *un_terrain_espace;
+
 	scanf("%29s", tab);
     scanf("%29s", tab2);
 
-	Terrain_espace *un_terrain_espace;
-    un_terrain_espace = creer_terrain_espace(5, 5);
+	un_terrain_espace = creer_terrain_espace(5, 5);
     modification_terrain_espace(un_terrain_espace, 'E');
 
     ajouter_planete_terrain_espace(un_terrain_espace, 2, 1);
