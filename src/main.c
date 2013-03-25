@@ -7,6 +7,7 @@
 #include "unite.h"
 #include "terrain_espace.h"
 #include "flotte.h"
+#include "sauvegarde.h"
 
 int main()
 {
@@ -22,10 +23,10 @@ int main()
     Unite *unite2;
 
 	char tab[30];
-	scanf("%29s", tab);
-
 	char tab2[30];
-	scanf("%29s", tab2);
+
+	scanf("%29s", tab);
+    scanf("%29s", tab2);
 
 	Terrain_espace *un_terrain_espace;
     un_terrain_espace = creer_terrain_espace(5, 5);
