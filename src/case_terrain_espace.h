@@ -44,6 +44,7 @@ void libere_case_terrain_espace(Case_terrain_espace *une_case_terrain_espace);
 void definir_case_terrain_espace(Case_terrain_espace *une_case_terrain_espace, char c);
 void ajouter_planete(Case_terrain_espace *une_case_terrain_espace, Planete *une_planete);
 void ajouter_flotte(Case_terrain_espace *une_case_terrain_espace, Flotte *une_flotte);
+void retirer_flotte(Case_terrain_espace *une_case_terrain_espace);
 
 void affiche_case_terrain_espace(const Case_terrain_espace *une_case_terrain_espace);
 void test_module_case_terrain_espace();

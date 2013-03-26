@@ -118,6 +118,55 @@ void ajouter_planete_terrain_espace(Terrain_espace *terrain_espace, int x, int y
 }
 
 
+void calcul_deplacement_flotte(Flotte *une_flotte)
+{
+    int i;
+    int min = 1000;
+    for(i=0;i<une_flotte->taille_flotte;i++)
+    {
+        if (une_flotte->tab_unite[i].pt_mouvement_espace < min)
+        {
+            min = une_flotte->tab_unite[i].pt_mouvement_espace;
+        }
+    }
+    une_flotte->pt_mouvement_espace_flotte = min;
+}
+
+bool peut_se_deplacer(Flotte *une_flotte, int x, int y)
+{
+    int x_min, y_min, x_max, y_max;
+    x_min = une_flotte->x_flotte - une_flotte->pt_mouvement_espace_flotte;
+    y_min = une_flotte->y_flotte - une_flotte->pt_mouvement_espace_flotte;
+    x_max = une_flotte->x_flotte + une_flotte->pt_mouvement_espace_flotte;
+    y_max = une_flotte->y_flotte + une_flotte->pt_mouvement_espace_flotte;
+
+    if((x>x_min) && (x<x_max) && (y>y_min) && (y<y_max))
+    {
+        return true;
+    }
+    else {return false;}
+}
+
+bool deplacement_flotte(Terrain_espace *un_terrain_espace, Flotte *une_flotte, int x, int y)
+{
+    if(peut_se_deplacer(une_flotte, x, y))
+    {
+        int x_depart, y_depart;
+        x_depart = get_x_flotte(une_flotte);
+        y_depart = get_y_flotte(une_flotte);
+        Case_terrain_espace *case_depart;
+        Case_terrain_espace *case_arrivee;
+        case_depart = get_case_terrain_espace(un_terrain_espace, x_depart, y_depart);
+        case_arrivee = get_case_terrain_espace(un_terrain_espace, x, y);
+        ajouter_flotte(case_arrivee, une_flotte);
+        retirer_flotte(case_depart);
+
+        return true;
+    }
+    else {return false;}
+
+}
+
 /*void test_module_terrain_espace()
 {
     Terrain_espace_espace *terrain_espace;

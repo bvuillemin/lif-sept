@@ -47,10 +47,6 @@ void detruit_flotte(Flotte **flotte);
 int ajouter_unite_flotte(Flotte *flotte, Unite *unite); /*renvoie 1 en cas de succès, 0 en cas d'échecs*/
 int retirer_unite_flotte(Flotte *flotte,const int indice_unite);
 
-bool peut_se_deplacer(Flotte *une_flotte, int x, int y);
-void calcul_deplacement_flotte(Flotte *une_flotte);
-bool deplacement_flotte(Flotte *une_flotte, int x, int y);
-
 void afficher_flotte(Flotte *flotte);
 
 void test_module_flotte();
