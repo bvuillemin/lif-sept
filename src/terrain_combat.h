@@ -35,7 +35,7 @@ int get_taille_combat_x(const Terrain_combat *terrain_jeu_combat);
 void set_taille_combat_y(Terrain_combat *terrain_jeu_combat, int y);
 int get_taille_combat_y(const Terrain_combat *terrain_jeu_combat);
 void set_case_terrain_combat(const Terrain_combat *terrain_jeu_combat, int x, int y, char c);
-Case_terrain_combat get_case_terrain_combat(const Terrain_combat *terrain_jeu_combat, const int x, const int y);
+Case_terrain_combat* get_case_terrain_combat(const Terrain_combat *terrain_jeu_combat, const int x, const int y);
 
 
 void modification_terrain_combat(const Terrain_combat *terrain_jeu_combat, const char c); /* met toutes les cases du terrain avec le type char c*/

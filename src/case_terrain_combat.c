@@ -71,7 +71,7 @@ void affiche_case_terrain_combat(const Case_terrain_combat *une_case_terrain_com
 }
 
 
-void ajouter_unite(Case_terrain_combat *une_case_terrain_combat, unite *une_unite)
+void ajouter_unite(Case_terrain_combat *une_case_terrain_combat, Unite *une_unite)
 {
     une_case_terrain_combat->unite = une_unite;
     une_case_terrain_combat->presence_unite = true;
