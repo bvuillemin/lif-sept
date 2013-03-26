@@ -44,6 +44,7 @@ void ajouter_planete_terrain_espace(Terrain_espace *terrain, int x, int y); /*va
 
 void affiche_terrain_espace(const Terrain_espace *terrain); /*affiche tous les types du terrain*/
 
+int calcul_distance(int x_depart, int y_depart, int x_arrivee, int y_arrivee);
 
 bool peut_se_deplacer(Flotte *une_flotte, int x, int y);
 void calcul_deplacement_flotte(Flotte *une_flotte);

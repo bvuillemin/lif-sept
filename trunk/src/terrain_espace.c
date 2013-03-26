@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include <math.h>
 
 #include "case_terrain_espace.h"
 #include "terrain_espace.h"
@@ -147,10 +148,16 @@ bool peut_se_deplacer(Flotte *une_flotte, int x, int y)
     else {return false;}
 }
 
+int calcul_distance(int x_depart, int y_depart, int x_arrivee, int y_arrivee)
+{
+    return ceil(sqrt(pow(x_depart - x_arrivee, 2) + pow(y_depart - y_arrivee, 2)) - 0.1); /*on enleve 0.1 pour etre un peu plus précis: si on se deplace de 7.05 on veut que ce soit 7*/
+}
+
 bool deplacement_flotte(Terrain_espace *un_terrain_espace, Flotte *une_flotte, int x, int y)
 {
     if(peut_se_deplacer(une_flotte, x, y))
     {
+        int distance;
         int x_depart, y_depart;
         x_depart = get_x_flotte(une_flotte);
         y_depart = get_y_flotte(une_flotte);
@@ -160,7 +167,8 @@ bool deplacement_flotte(Terrain_espace *un_terrain_espace, Flotte *une_flotte, i
         case_arrivee = get_case_terrain_espace(un_terrain_espace, x, y);
         ajouter_flotte(case_arrivee, une_flotte);
         retirer_flotte(case_depart);
-
+        distance = calcul_distance(x_depart, y_depart, x, y);
+        enlever_pt_mouvement_espace_flotte(une_flotte, distance);
         return true;
     }
     else {return false;}
