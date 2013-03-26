@@ -28,6 +28,10 @@ void sauvegarde_planete(const Planete *une_planete, const char nom[30])
 {
     FILE *f;
     f = fopen(nom, "w");
+    if (f==NULL)
+    {
+        printf("Erreur lors de l'ouverture de %s\n", nom);
+    }
     fprintf(f, "Planete \n");
     fprintf(f, "%s \n", une_planete->nom_planete);
     fprintf(f, "%d \n", une_planete->x);
