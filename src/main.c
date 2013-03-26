@@ -35,12 +35,13 @@ int main()
 	scanf("%29s", tab);
     /*scanf("%29s", tab2);*/
 
-	un_terrain_espace = creer_terrain_espace(5, 5);
+	un_terrain_espace = creer_terrain_espace(10, 10);
     modification_terrain_espace(un_terrain_espace, 'E');
 
     ajouter_planete_terrain_espace(un_terrain_espace, 2, 1);
+    affiche_terrain_espace(un_terrain_espace);
 
-    set_nom_planete(un_terrain_espace->tab_terrain_espace[2*(un_terrain_espace->taille_espace_x)+1].planete, tab);
+    /*set_nom_planete(un_terrain_espace->tab_terrain_espace[2*(un_terrain_espace->taille_espace_x)+1].planete, tab);
     affiche_terrain_espace(un_terrain_espace);
 
     affiche_planete(un_terrain_espace->tab_terrain_espace[2*(un_terrain_espace->taille_espace_x)+1].planete);
@@ -63,19 +64,10 @@ int main()
 
     set_pt_mouvement_espace_flotte(flotte, 10);
 
-    if(deplacement_flotte(un_terrain_espace, flotte, 1, 1))
-    {
-        affiche_terrain_espace(un_terrain_espace);
-    }
-    else
-    {
-        affiche_terrain_espace(un_terrain_espace);
-    }
-
     scanf("%d", &x);
     scanf("%d", &y);
     deplacement_flotte(un_terrain_espace, flotte, x, y);
-    affiche_terrain_espace(un_terrain_espace);
+    affiche_terrain_espace(un_terrain_espace);*/
 
 
     /*sauvegarde_terrain(un_terrain_espace, "test");
