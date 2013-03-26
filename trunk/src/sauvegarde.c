@@ -24,15 +24,15 @@ void sauvegarde_terrain(const Terrain_espace *terrain_jeu_espace, const char nom
     }
     fclose(f);
 }
-/*void sauvegarde_planete(const Planete *une_planete)
+void sauvegarde_planete(const Planete *une_planete, const char nom[30])
 {
     FILE *f;
     f = fopen(nom, "w");
-    printf("Planete");
-    printf(une_planete->nom_planete);
-    printf(une_planete->x, une_planete->y);
-    printf(une_planete->taille_utilisee, une_planete->taille_planete);
-    printf(une_planete->planete_colonisee, une_planete->planete_principale);
-    printf("\n");
+    fprintf(f, "Planete");
+    fprintf(f, une_planete->nom_planete);
+    fprintf(f, une_planete->x, une_planete->y);
+    fprintf(f, une_planete->taille_utilisee, une_planete->taille_planete);
+    fprintf(f, une_planete->planete_colonisee, une_planete->planete_principale);
+    fprintf(f, "\n");
     fclose(f);
-}*/
+}
