@@ -1,5 +1,5 @@
-#ifndef _CASE_TERRAIN_H_
-#define _CASE_TERRAIN_H_
+#ifndef _CASE_TERRAIN_ESPACE_H_
+#define _CASE_TERRAIN_ESPACE_H_
 
 #include <stdlib.h>
 #include <stdio.h>
