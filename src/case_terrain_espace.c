@@ -42,11 +42,21 @@ int get_y_espace(const Case_terrain_espace *une_case_terrain_espace)
     return une_case_terrain_espace->y_espace;
 }
 
+void set_type_case_terrain_espace(Case_terrain_espace *une_case_terrain_espace, char type)
+{
+	une_case_terrain_espace->type_case_terrain_espace = type;
+}
+
+char get_type_case_terrain_espace(Case_terrain_espace *une_case_terrain_espace)
+{
+	return une_case_terrain_espace->type_case_terrain_espace;
+}
+	
 void definir_case_terrain_espace(Case_terrain_espace *une_case_terrain_espace, char c)
 {
     if((c == 'E')||(c == 'F')||(c == 'P'))
     {
-        une_case_terrain_espace->type_case_terrain_espace = c;
+        c = get_type_case_terrain_espace(une_case_terrain_espace);
     }
 }
 

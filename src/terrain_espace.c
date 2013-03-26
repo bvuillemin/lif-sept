@@ -30,7 +30,7 @@ Case_terrain_espace* get_case_terrain_espace(const Terrain_espace *terrain_espac
     return &(terrain_espace->tab_terrain_espace[x*(terrain_espace->taille_espace_x)+y]);
 }
 
-void set_type_case_terrain_espace(const Terrain_espace *terrain_espace, int x, int y, char c)
+void modifie_type_case_terrain_espace(const Terrain_espace *terrain_espace, int x, int y, char c)
 {
     terrain_espace->tab_terrain_espace[y*(terrain_espace->taille_espace_y)+x].type_case_terrain_espace = c;
 }
@@ -105,7 +105,7 @@ void modification_terrain_espace(const Terrain_espace *terrain_espace, const cha
     {
         for(j=0;j<terrain_espace->taille_espace_y;j++)
         {
-            set_type_case_terrain_espace(terrain_espace, i, j, c);
+            modifie_type_case_terrain_espace(terrain_espace, i, j, c);
         }
     }
 }
