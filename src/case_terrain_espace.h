@@ -33,10 +33,15 @@ Case_terrain_espace *creer_case_espace();
 
 void set_x_espace(Case_terrain_espace *une_case_terrain_espace, int x_espace);
 int get_x_espace(const Case_terrain_espace *une_case_terrain_espace);
+
 void set_y_espace(Case_terrain_espace *une_case_terrain_espace, int y_espace);
 int get_y_espace(const Case_terrain_espace *une_case_terrain_espace);
+
 void set_type_case_terrain_espace(Case_terrain_espace *une_case_terrain_espace, char type);
 char get_type_case_terrain_espace(Case_terrain_espace *une_case_terrain_espace);
+
+Planete * get_planete(Case_terrain_espace *une_case_terrain_espace);
+Flotte * get_flotte(Case_terrain_espace *une_case_terrain_espace);
 
 void detruit_case_terrain_espace(Case_terrain_espace **une_case_terrain_espace);
 void libere_case_terrain_espace(Case_terrain_espace *une_case_terrain_espace);

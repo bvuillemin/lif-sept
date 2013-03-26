@@ -37,11 +37,13 @@ int get_y_combat(const Case_terrain_combat *une_case_terrain_combat);
 void set_type_case_terrain_combat(Case_terrain_combat *une_case_terrain_combat, char type);
 char get_type_case_terrain_combat(Case_terrain_combat *une_case_terrain_combat);
 
+
 void detruit_case_terrain_combat(Case_terrain_combat **une_case_terrain_combat);
 void libere_case_terrain_combat(Case_terrain_combat *une_case_terrain_combat);
 
 void definir_case_terrain_combat(Case_terrain_combat *une_case_terrain_combat, char c);
-void ajouter_unite(Case_terrain_combat *une_case_terrain_combat, Unite *une_unite);
+void set_unite(Case_terrain_combat *une_case_terrain_combat, Unite *une_unite);
+Unite * get_unite(Case_terrain_combat *une_case_terrain_combat);
 
 void affiche_case_terrain_combat(const Case_terrain_combat *une_case_terrain_combat);
 void test_module_case_terrain_combat();
