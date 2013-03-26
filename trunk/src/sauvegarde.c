@@ -28,11 +28,14 @@ void sauvegarde_planete(const Planete *une_planete, const char nom[30])
 {
     FILE *f;
     f = fopen(nom, "w");
-    fprintf(f, "Planete");
-    fprintf(f, une_planete->nom_planete);
-    fprintf(f, une_planete->x, une_planete->y);
-    fprintf(f, une_planete->taille_utilisee, une_planete->taille_planete);
-    fprintf(f, une_planete->planete_colonisee, une_planete->planete_principale);
-    fprintf(f, "\n");
+    fprintf(f, "Planete \n");
+    fprintf(f, "%s \n", une_planete->nom_planete);
+    fprintf(f, "%d \n", une_planete->x);
+    fprintf(f, "%d \n", une_planete->y);
+    fprintf(f, "%d \n", une_planete->taille_utilisee);
+    fprintf(f, "%d \n", une_planete->taille_planete);
+    fprintf(f, "%d \n", une_planete->planete_colonisee);
+    fprintf(f, "%d \n", une_planete->planete_principale);
+    fprintf(f, "#\n");
     fclose(f);
 }
