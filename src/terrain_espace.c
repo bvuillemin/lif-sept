@@ -25,17 +25,20 @@ int get_taille_espace_y(const Terrain_espace *terrain_jeu_espace)
     return terrain_jeu_espace->taille_espace_y;
 }
 
-Case_terrain_espace get_case_terrain_espace(const Terrain_espace *terrain_espace, const int x, const int y)
+Case_terrain_espace* get_case_terrain_espace(const Terrain_espace *terrain_espace, const int x, const int y)
 {
-    return terrain_espace->tab_terrain_espace[x*(terrain_espace->taille_espace_x)+y];
-    /*return terrain_espace->tab_terrain_espace[y*(terrain_espace->taille_espace_y)+x];*/
+    return &(terrain_espace->tab_terrain_espace[x*(terrain_espace->taille_espace_x)+y]);
 }
 
-void set_case_terrain_espace(const Terrain_espace *terrain_espace, int x, int y, char c)
+void set_type_case_terrain_espace(const Terrain_espace *terrain_espace, int x, int y, char c)
 {
     terrain_espace->tab_terrain_espace[y*(terrain_espace->taille_espace_y)+x].type_case_terrain_espace = c;
 }
 
+Planete* get_planete_terrain_espace(const Terrain_espace *terrain_espace, int x, int y)
+{
+    return terrain_espace->tab_terrain_espace[x*(terrain_espace->taille_espace_x)+y].planete;
+}
 
 void initilalise_terrain_espace(Terrain_espace *terrain_jeu_espace, int taille_espace_x, int taille_espace_y)
 {
@@ -75,28 +78,25 @@ void detruit_terrain_espace(Terrain_espace **terrain_jeu_espace)
     *terrain_jeu_espace = NULL;
 }
 
-
-
 void affiche_terrain_espace(const Terrain_espace *terrain_espace)
 {
     int i, j;
-    Case_terrain_espace une_case;
+    Case_terrain_espace *une_case;
     for(i=0;i<terrain_espace->taille_espace_x;i++)
     {
         for(j=0;j<terrain_espace->taille_espace_y;j++)
         {
             une_case = get_case_terrain_espace(terrain_espace, i, j);
-            if(une_case.presence_flotte == true)
+            if(une_case->presence_flotte == true)
             {
                 printf("|F|");
             }
-            else{printf("|%c|", une_case.type_case_terrain_espace);}
+            else{printf("|%c|", une_case->type_case_terrain_espace);}
         }
         printf("\n");
     }
     printf("\n");
 }
-
 
 void modification_terrain_espace(const Terrain_espace *terrain_espace, const char c)
 {
@@ -105,7 +105,7 @@ void modification_terrain_espace(const Terrain_espace *terrain_espace, const cha
     {
         for(j=0;j<terrain_espace->taille_espace_y;j++)
         {
-            set_case_terrain_espace(terrain_espace, i, j, c);
+            set_type_case_terrain_espace(terrain_espace, i, j, c);
         }
     }
 }
