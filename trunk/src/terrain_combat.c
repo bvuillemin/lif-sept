@@ -30,7 +30,7 @@ Case_terrain_combat* get_case_terrain_combat(const Terrain_combat *terrain_comba
     return &(terrain_combat->tab_terrain_combat[x*(terrain_combat->taille_combat_x)+y]);
 }
 
-void set_type_case_terrain_combat(const Terrain_combat *terrain_combat, int x, int y, char c)
+void modifie_type_case_terrain_combat(const Terrain_combat *terrain_combat, int x, int y, char c)
 {
     terrain_combat->tab_terrain_combat[y*(terrain_combat->taille_combat_y)+x].type_case_terrain_combat = c;
 }
@@ -100,7 +100,7 @@ void modification_terrain_combat(const Terrain_combat *terrain_combat, const cha
     {
         for(j=0;j<terrain_combat->taille_combat_y;j++)
         {
-            set_type_case_terrain_combat(terrain_combat, i, j, c);
+            modifie_type_case_terrain_combat(terrain_combat, i, j, c);
         }
     }
 }

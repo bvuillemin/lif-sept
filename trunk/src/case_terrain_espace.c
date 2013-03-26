@@ -51,6 +51,16 @@ char get_type_case_terrain_espace(Case_terrain_espace *une_case_terrain_espace)
 {
 	return une_case_terrain_espace->type_case_terrain_espace;
 }
+
+Planete * get_planete(Case_terrain_espace *une_case_terrain_espace)
+{
+	return une_case_terrain_espace->planete;
+}
+
+Flotte * get_flotte(Case_terrain_espace *une_case_terrain_espace)
+{
+	return une_case_terrain_espace->flotte;
+}
 	
 void definir_case_terrain_espace(Case_terrain_espace *une_case_terrain_espace, char c)
 {
@@ -72,7 +82,7 @@ void libere_case_terrain_espace(Case_terrain_espace *une_case_terrain_espace)
 
 void detruit_case_terrain_espace(Case_terrain_espace **une_case_terrain_espace)
 {
-    libere_case_terrain_espace(*une_case_terrain_espace); /* libere_terrain(*une_case_terrain_espace); */
+    libere_case_terrain_espace(*une_case_terrain_espace); 
     free(*une_case_terrain_espace);
     *une_case_terrain_espace = NULL;
 }

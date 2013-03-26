@@ -41,6 +41,17 @@ int get_y_combat(const Case_terrain_combat *une_case_terrain_combat)
     return une_case_terrain_combat->y_combat;
 }
 
+void set_type_case_terrain_combat(Case_terrain_combat *une_case_terrain_combat, char type)
+{
+	une_case_terrain_combat->type_case_terrain_combat = type;
+}
+
+char get_type_case_terrain_combat(Case_terrain_combat *une_case_terrain_combat)
+{
+	return une_case_terrain_combat->type_case_terrain_combat;
+}
+
+
 void definir_case_terrain_combat(Case_terrain_combat *une_case_terrain_combat, char c)
 {
     if((c == 'E')||(c == 'R')||(c == 'A')) /*'R' pour les unites rivales, 'A' pour les alliés, 'E' pour l'espace */
@@ -71,12 +82,17 @@ void affiche_case_terrain_combat(const Case_terrain_combat *une_case_terrain_com
 }
 
 
-void ajouter_unite(Case_terrain_combat *une_case_terrain_combat, Unite *une_unite)
+void set_unite(Case_terrain_combat *une_case_terrain_combat, Unite *une_unite)
 {
     une_case_terrain_combat->unite = une_unite;
     une_case_terrain_combat->presence_unite = true;
     une_case_terrain_combat->unite->x_unite = une_case_terrain_combat->x_combat;
     une_case_terrain_combat->unite->y_unite = une_case_terrain_combat->y_combat;
+}
+
+Unite * get_unite(Case_terrain_combat *une_case_terrain_combat)
+{
+	return une_case_terrain_combat->unite;
 }
 
 void test_module_case_terrain_combat()
