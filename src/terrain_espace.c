@@ -86,7 +86,7 @@ void affiche_terrain_espace(const Terrain_espace *terrain_espace)
     {
         for(j=0;j<terrain_espace->taille_espace_y;j++)
         {
-            une_case = get_case_terrain_espace(terrain_espace, i, j);
+            une_case = get_case_terrain_espace(terrain_espace, j, i);
             if(une_case->presence_flotte == true)
             {
                 printf("|F|");
