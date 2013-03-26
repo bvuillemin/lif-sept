@@ -47,7 +47,7 @@ void detruit_flotte(Flotte **flotte);
 int ajouter_unite_flotte(Flotte *flotte, Unite *unite); /*renvoie 1 en cas de succès, 0 en cas d'échecs*/
 int retirer_unite_flotte(Flotte *flotte,const int indice_unite);
 
-void enlever_pt_mouvement_espace_flotte(Flotte *une_flotte, int distance)
+void enlever_pt_mouvement_espace_flotte(Flotte *une_flotte, int distance);
 void afficher_flotte(Flotte *flotte);
 
 void test_module_flotte();

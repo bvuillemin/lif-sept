@@ -68,7 +68,7 @@ int main()
 
     set_pt_mouvement_espace_flotte(flotte, 10);
 
-    /*system("clear");
+    system("clear");
 
     while(1)
     {
@@ -83,8 +83,11 @@ int main()
             printf("Coordonnées où bouger la flotte:\n");
             scanf("%d", &x);
             scanf("%d", &y);
-            deplacement_flotte(un_terrain_espace, flotte, x, y);
             system("clear");
+            if(deplacement_flotte(un_terrain_espace, flotte, x, y) == false)
+            {
+                printf("Déplacement impossible\n");
+            }
             affiche_terrain_espace(un_terrain_espace);
         }
         if(strcmp(menu, info) == 0)
@@ -92,7 +95,7 @@ int main()
             affiche_planete(terre);
         }
 
-    }*/
+    }
 
     /*sauvegarde_terrain(un_terrain_espace, "test");
 

@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall -pedantic -ggdb 
 EXEC_NAME = ../bin/cos
-LIBS = # -lSDL
+LIBS = -lm # -lSDL
 OBJ_FILES = main.o planete.o case_terrain_espace.o terrain_espace.o sauvegarde.o unite.o flotte.o terrain_combat.o case_terrain_combat.o
 
 

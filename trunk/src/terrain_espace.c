@@ -141,7 +141,7 @@ bool peut_se_deplacer(Flotte *une_flotte, int x, int y)
     x_max = une_flotte->x_flotte + une_flotte->pt_mouvement_espace_flotte;
     y_max = une_flotte->y_flotte + une_flotte->pt_mouvement_espace_flotte;
 
-    if((x>x_min) && (x<x_max) && (y>y_min) && (y<y_max))
+    if((x>x_min) && (x<x_max) && (y>y_min) && (y<y_max) && (une_flotte->pt_mouvement_espace_flotte != 0))
     {
         return true;
     }
@@ -159,10 +159,11 @@ bool deplacement_flotte(Terrain_espace *un_terrain_espace, Flotte *une_flotte, i
     {
         int distance;
         int x_depart, y_depart;
-        x_depart = get_x_flotte(une_flotte);
-        y_depart = get_y_flotte(une_flotte);
         Case_terrain_espace *case_depart;
         Case_terrain_espace *case_arrivee;
+
+        x_depart = get_x_flotte(une_flotte);
+        y_depart = get_y_flotte(une_flotte);
         case_depart = get_case_terrain_espace(un_terrain_espace, x_depart, y_depart);
         case_arrivee = get_case_terrain_espace(un_terrain_espace, x, y);
         ajouter_flotte(case_arrivee, une_flotte);
