@@ -45,8 +45,8 @@ void initilalise_terrain_combat(Terrain_combat *terrain_jeu_combat, int taille_c
     {
         for(j=0;j<terrain_jeu_combat->taille_combat_y;j++)
         {
-           terrain_jeu_combat->tab_terrain_combat[j*(terrain_jeu_combat->taille_combat_y)+i].x_espace = i;
-           terrain_jeu_combat->tab_terrain_combat[j*(terrain_jeu_combat->taille_combat_y)+i].y_espace = j;
+           terrain_jeu_combat->tab_terrain_combat[j*(terrain_jeu_combat->taille_combat_y)+i].x_combat = i;
+           terrain_jeu_combat->tab_terrain_combat[j*(terrain_jeu_combat->taille_combat_y)+i].y_combat = j;
         }
     }
 
@@ -105,7 +105,7 @@ void modification_terrain_combat(const Terrain_combat *terrain_combat, const cha
     }
 }
 
-}
+
 
 
 /*void test_module_terrain_combat()

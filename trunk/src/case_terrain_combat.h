@@ -28,7 +28,7 @@ typedef struct
 }Case_terrain_combat;
 
 void initialise_case_combat(Case_terrain_combat *une_case_terrain_combat);
-Case_terrain_combat *creer_case_espace();
+Case_terrain_combat *creer_case_combat();
 
 void set_x_combat(Case_terrain_combat *une_case_terrain_combat, int x_combat);
 int get_x_combat(const Case_terrain_combat *une_case_terrain_combat);
