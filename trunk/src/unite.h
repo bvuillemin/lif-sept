@@ -17,6 +17,8 @@
 
 typedef struct
 {
+	int x_unite;
+	int y_unite;
 	int pt_vie;
 	int pt_attaque;
 	int pt_action;
