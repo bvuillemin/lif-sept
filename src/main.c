@@ -25,7 +25,6 @@ int main()
     Unite *unite1;
     Unite *unite2;
 
-	char tab[30];
 	char menu[50];
 	char exit[] = "exit";
 	char move[] = "move";
@@ -39,9 +38,6 @@ int main()
 
 	Terrain_espace *un_terrain_espace;
 /*	Terrain_combat * un_terrain_combat;*/
-
-	/*scanf("%29s", tab);*/
-    /*scanf("%29s", tab2);*/
 
 	un_terrain_espace = creer_terrain_espace(10, 10);
     modification_terrain_espace(un_terrain_espace, 'E');
@@ -71,10 +67,12 @@ int main()
     affiche_terrain_espace(un_terrain_espace);
 
     set_pt_mouvement_espace_flotte(flotte, 10);
-    system("clear");
+
+    /*system("clear");
 
     while(1)
     {
+        printf("tapez info, move ou exit\n");
         scanf("%s", menu);
         if(strcmp(menu, exit) == 0)
         {
@@ -94,7 +92,7 @@ int main()
             affiche_planete(terre);
         }
 
-    }
+    }*/
 
     /*sauvegarde_terrain(un_terrain_espace, "test");
 
