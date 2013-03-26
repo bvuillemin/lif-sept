@@ -86,6 +86,7 @@ void ajouter_flotte(Case_terrain_espace *une_case_terrain_espace, Flotte *une_fl
     une_case_terrain_espace->presence_flotte = true;
     une_case_terrain_espace->flotte->x_flotte = une_case_terrain_espace->x_espace;
     une_case_terrain_espace->flotte->y_flotte = une_case_terrain_espace->y_espace;
+
 }
 
 void test_module_case_terrain_espace()

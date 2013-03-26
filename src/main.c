@@ -20,9 +20,9 @@ int main()
 	test_module_terrain();*/
 
 
-    /*Flotte *flotte;
+    Flotte *flotte;
     Unite *unite1;
-    Unite *unite2;*/
+    Unite *unite2;
 
 	char tab[30];
 	Planete *terre; 
@@ -46,7 +46,7 @@ int main()
     terre = get_planete_terrain_espace(un_terrain_espace, 2, 1);
     affiche_planete(terre);
 
-    /*unite1 = creer_unite();
+    unite1 = creer_unite();
     unite2 = creer_unite();
     flotte = creer_flotte();
 
@@ -59,7 +59,7 @@ int main()
     ajouter_flotte(&(un_terrain_espace->tab_terrain_espace[3*(un_terrain_espace->taille_espace_x)+2]), flotte);
     affiche_terrain_espace(un_terrain_espace);
 
-    sauvegarde_terrain(un_terrain_espace, "test");*/
+    /*sauvegarde_terrain(un_terrain_espace, "test");*/
 	
 	printf("\n \n");
 	un_terrain_combat = creer_terrain_combat(7,7);
