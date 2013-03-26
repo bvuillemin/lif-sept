@@ -25,10 +25,12 @@ int main()
     Unite *unite2;
 
 	char tab[30];
-	Planete *terre; 
+	Planete *terre;
+
+	int x,y;
 
 	Terrain_espace *un_terrain_espace;
-	Terrain_combat * un_terrain_combat;
+/*	Terrain_combat * un_terrain_combat;*/
 
 	scanf("%29s", tab);
     /*scanf("%29s", tab2);*/
@@ -59,14 +61,31 @@ int main()
     ajouter_flotte(&(un_terrain_espace->tab_terrain_espace[3*(un_terrain_espace->taille_espace_x)+2]), flotte);
     affiche_terrain_espace(un_terrain_espace);
 
-    /*sauvegarde_terrain(un_terrain_espace, "test");*/
-	
+    set_pt_mouvement_espace_flotte(flotte, 10);
+
+    if(deplacement_flotte(un_terrain_espace, flotte, 1, 1))
+    {
+        affiche_terrain_espace(un_terrain_espace);
+    }
+    else
+    {
+        affiche_terrain_espace(un_terrain_espace);
+    }
+
+    scanf("%d", &x);
+    scanf("%d", &y);
+    deplacement_flotte(un_terrain_espace, flotte, x, y);
+    affiche_terrain_espace(un_terrain_espace);
+
+
+    /*sauvegarde_terrain(un_terrain_espace, "test");
+
 	printf("\n \n");
 	un_terrain_combat = creer_terrain_combat(7,7);
 	modification_terrain_combat(un_terrain_combat, 'E');
 	affiche_terrain_combat(un_terrain_combat);
-	
-	
+	*/
+
     detruit_terrain_espace(&un_terrain_espace);
 
     return 0;
