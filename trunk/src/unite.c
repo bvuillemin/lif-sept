@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdbool.h>
 #include "unite.h"
 
 void initialise_unite(Unite *unite_jeu)
@@ -8,6 +9,7 @@ void initialise_unite(Unite *unite_jeu)
     unite_jeu->pt_attaque=0;
     unite_jeu->pt_action=0;
     unite_jeu->pt_deplacement=0;
+    unite_jeu->pt_mouvement_espace=0;
     /*initialise_niveau(unite_jeu->niveau_unite, 0, 0);*/
 }
 
@@ -24,6 +26,7 @@ void libere_unite(Unite *unite_jeu)
     unite_jeu->pt_attaque=0;
     unite_jeu->pt_action=0;
     unite_jeu->pt_deplacement=0;
+    unite_jeu->pt_mouvement_espace=0;
     /*libere_niveau(unite_jeu->niveau_unite);*/
 }
 
@@ -73,6 +76,16 @@ void set_pt_deplacement(Unite *unite_jeu, const int x)
 int get_pt_deplacement(const Unite *unite_jeu)
 {
     return unite_jeu->pt_deplacement;
+}
+
+void set_pt_mouvement_espace(Unite *unite_jeu, const int x)
+{
+    unite_jeu->pt_mouvement_espace = x;
+}
+
+int get_pt_mouvement_espace(const Unite *unite_jeu)
+{
+    return unite_jeu->pt_mouvement_espace;
 }
 
 void test_module_unite()
