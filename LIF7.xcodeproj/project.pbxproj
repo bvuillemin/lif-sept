@@ -7,8 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		25C5CDD31701D5B000AA780C /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 25C5CDD21701D5B000AA780C /* main.c */; };
-		25C5CDD51701D5B000AA780C /* LIF7.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 25C5CDD41701D5B000AA780C /* LIF7.1 */; };
+		2512D31C1701D7EF00EDB19D /* case_terrain_combat.c in Sources */ = {isa = PBXBuildFile; fileRef = 2512D3081701D7EF00EDB19D /* case_terrain_combat.c */; };
+		2512D31D1701D7EF00EDB19D /* case_terrain_espace.c in Sources */ = {isa = PBXBuildFile; fileRef = 2512D30A1701D7EF00EDB19D /* case_terrain_espace.c */; };
+		2512D31E1701D7EF00EDB19D /* flotte.c in Sources */ = {isa = PBXBuildFile; fileRef = 2512D30C1701D7EF00EDB19D /* flotte.c */; };
+		2512D31F1701D7EF00EDB19D /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 2512D30E1701D7EF00EDB19D /* main.c */; };
+		2512D3201701D7EF00EDB19D /* makefile in Sources */ = {isa = PBXBuildFile; fileRef = 2512D30F1701D7EF00EDB19D /* makefile */; };
+		2512D3211701D7EF00EDB19D /* niveau.c in Sources */ = {isa = PBXBuildFile; fileRef = 2512D3101701D7EF00EDB19D /* niveau.c */; };
+		2512D3221701D7EF00EDB19D /* planete.c in Sources */ = {isa = PBXBuildFile; fileRef = 2512D3121701D7EF00EDB19D /* planete.c */; };
+		2512D3231701D7EF00EDB19D /* sauvegarde.c in Sources */ = {isa = PBXBuildFile; fileRef = 2512D3141701D7EF00EDB19D /* sauvegarde.c */; };
+		2512D3241701D7EF00EDB19D /* terrain_combat.c in Sources */ = {isa = PBXBuildFile; fileRef = 2512D3161701D7EF00EDB19D /* terrain_combat.c */; };
+		2512D3251701D7EF00EDB19D /* terrain_espace.c in Sources */ = {isa = PBXBuildFile; fileRef = 2512D3181701D7EF00EDB19D /* terrain_espace.c */; };
+		2512D3261701D7EF00EDB19D /* unite.c in Sources */ = {isa = PBXBuildFile; fileRef = 2512D31A1701D7EF00EDB19D /* unite.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -18,16 +27,41 @@
 			dstPath = /usr/share/man/man1/;
 			dstSubfolderSpec = 0;
 			files = (
-				25C5CDD51701D5B000AA780C /* LIF7.1 in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2512D3031701D7EF00EDB19D /* main */ = {isa = PBXFileReference; lastKnownFileType = file; path = main; sourceTree = "<group>"; };
+		2512D3071701D7EF00EDB19D /* affichage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = affichage.h; sourceTree = "<group>"; };
+		2512D3081701D7EF00EDB19D /* case_terrain_combat.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = case_terrain_combat.c; sourceTree = "<group>"; };
+		2512D3091701D7EF00EDB19D /* case_terrain_combat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = case_terrain_combat.h; sourceTree = "<group>"; };
+		2512D30A1701D7EF00EDB19D /* case_terrain_espace.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = case_terrain_espace.c; sourceTree = "<group>"; };
+		2512D30B1701D7EF00EDB19D /* case_terrain_espace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = case_terrain_espace.h; sourceTree = "<group>"; };
+		2512D30C1701D7EF00EDB19D /* flotte.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = flotte.c; sourceTree = "<group>"; };
+		2512D30D1701D7EF00EDB19D /* flotte.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = flotte.h; sourceTree = "<group>"; };
+		2512D30E1701D7EF00EDB19D /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		2512D30F1701D7EF00EDB19D /* makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = makefile; sourceTree = "<group>"; };
+		2512D3101701D7EF00EDB19D /* niveau.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = niveau.c; sourceTree = "<group>"; };
+		2512D3111701D7EF00EDB19D /* niveau.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = niveau.h; sourceTree = "<group>"; };
+		2512D3121701D7EF00EDB19D /* planete.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = planete.c; sourceTree = "<group>"; };
+		2512D3131701D7EF00EDB19D /* planete.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = planete.h; sourceTree = "<group>"; };
+		2512D3141701D7EF00EDB19D /* sauvegarde.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sauvegarde.c; sourceTree = "<group>"; };
+		2512D3151701D7EF00EDB19D /* sauvegarde.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sauvegarde.h; sourceTree = "<group>"; };
+		2512D3161701D7EF00EDB19D /* terrain_combat.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = terrain_combat.c; sourceTree = "<group>"; };
+		2512D3171701D7EF00EDB19D /* terrain_combat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = terrain_combat.h; sourceTree = "<group>"; };
+		2512D3181701D7EF00EDB19D /* terrain_espace.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = terrain_espace.c; sourceTree = "<group>"; };
+		2512D3191701D7EF00EDB19D /* terrain_espace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = terrain_espace.h; sourceTree = "<group>"; };
+		2512D31A1701D7EF00EDB19D /* unite.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = unite.c; sourceTree = "<group>"; };
+		2512D31B1701D7EF00EDB19D /* unite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unite.h; sourceTree = "<group>"; };
 		25C5CDCF1701D5B000AA780C /* LIF7 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = LIF7; sourceTree = BUILT_PRODUCTS_DIR; };
-		25C5CDD21701D5B000AA780C /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
-		25C5CDD41701D5B000AA780C /* LIF7.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = LIF7.1; sourceTree = "<group>"; };
+		25F6B3E91701E01B002A8072 /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
+		25F6B3EA1701E01B002A8072 /* 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2.png; sourceTree = "<group>"; };
+		25F6B3EB1701E01B002A8072 /* 3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3.png; sourceTree = "<group>"; };
+		25F6B3EC1701E01B002A8072 /* vaisseau bleu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "vaisseau bleu.png"; sourceTree = "<group>"; };
+		25F6B3ED1701E01B002A8072 /* vaisseau rouge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "vaisseau rouge.png"; sourceTree = "<group>"; };
+		25F6B3EE1701E01B002A8072 /* vaisseau vert.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "vaisseau vert.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,6 +75,56 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2512D3021701D7EF00EDB19D /* bin */ = {
+			isa = PBXGroup;
+			children = (
+				2512D3031701D7EF00EDB19D /* main */,
+			);
+			path = bin;
+			sourceTree = SOURCE_ROOT;
+		};
+		2512D3041701D7EF00EDB19D /* data */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = data;
+			sourceTree = SOURCE_ROOT;
+		};
+		2512D3051701D7EF00EDB19D /* doc */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = doc;
+			sourceTree = SOURCE_ROOT;
+		};
+		2512D3061701D7EF00EDB19D /* src */ = {
+			isa = PBXGroup;
+			children = (
+				2512D3071701D7EF00EDB19D /* affichage.h */,
+				2512D3081701D7EF00EDB19D /* case_terrain_combat.c */,
+				2512D3091701D7EF00EDB19D /* case_terrain_combat.h */,
+				2512D30A1701D7EF00EDB19D /* case_terrain_espace.c */,
+				2512D30B1701D7EF00EDB19D /* case_terrain_espace.h */,
+				2512D30C1701D7EF00EDB19D /* flotte.c */,
+				2512D30D1701D7EF00EDB19D /* flotte.h */,
+				2512D30E1701D7EF00EDB19D /* main.c */,
+				2512D30F1701D7EF00EDB19D /* makefile */,
+				2512D3101701D7EF00EDB19D /* niveau.c */,
+				2512D3111701D7EF00EDB19D /* niveau.h */,
+				2512D3121701D7EF00EDB19D /* planete.c */,
+				2512D3131701D7EF00EDB19D /* planete.h */,
+				2512D3141701D7EF00EDB19D /* sauvegarde.c */,
+				2512D3151701D7EF00EDB19D /* sauvegarde.h */,
+				2512D3161701D7EF00EDB19D /* terrain_combat.c */,
+				2512D3171701D7EF00EDB19D /* terrain_combat.h */,
+				2512D3181701D7EF00EDB19D /* terrain_espace.c */,
+				2512D3191701D7EF00EDB19D /* terrain_espace.h */,
+				2512D31A1701D7EF00EDB19D /* unite.c */,
+				2512D31B1701D7EF00EDB19D /* unite.h */,
+			);
+			path = src;
+			sourceTree = SOURCE_ROOT;
+		};
 		25C5CDC61701D5B000AA780C = {
 			isa = PBXGroup;
 			children = (
@@ -60,11 +144,27 @@
 		25C5CDD11701D5B000AA780C /* LIF7 */ = {
 			isa = PBXGroup;
 			children = (
-				25C5CDD21701D5B000AA780C /* main.c */,
-				25C5CDD41701D5B000AA780C /* LIF7.1 */,
+				25F6B3E81701E01B002A8072 /* Graphics */,
+				2512D3021701D7EF00EDB19D /* bin */,
+				2512D3041701D7EF00EDB19D /* data */,
+				2512D3051701D7EF00EDB19D /* doc */,
+				2512D3061701D7EF00EDB19D /* src */,
 			);
 			path = LIF7;
 			sourceTree = "<group>";
+		};
+		25F6B3E81701E01B002A8072 /* Graphics */ = {
+			isa = PBXGroup;
+			children = (
+				25F6B3E91701E01B002A8072 /* 1.png */,
+				25F6B3EA1701E01B002A8072 /* 2.png */,
+				25F6B3EB1701E01B002A8072 /* 3.png */,
+				25F6B3EC1701E01B002A8072 /* vaisseau bleu.png */,
+				25F6B3ED1701E01B002A8072 /* vaisseau rouge.png */,
+				25F6B3EE1701E01B002A8072 /* vaisseau vert.png */,
+			);
+			path = Graphics;
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -117,7 +217,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				25C5CDD31701D5B000AA780C /* main.c in Sources */,
+				2512D31C1701D7EF00EDB19D /* case_terrain_combat.c in Sources */,
+				2512D31D1701D7EF00EDB19D /* case_terrain_espace.c in Sources */,
+				2512D31E1701D7EF00EDB19D /* flotte.c in Sources */,
+				2512D31F1701D7EF00EDB19D /* main.c in Sources */,
+				2512D3201701D7EF00EDB19D /* makefile in Sources */,
+				2512D3211701D7EF00EDB19D /* niveau.c in Sources */,
+				2512D3221701D7EF00EDB19D /* planete.c in Sources */,
+				2512D3231701D7EF00EDB19D /* sauvegarde.c in Sources */,
+				2512D3241701D7EF00EDB19D /* terrain_combat.c in Sources */,
+				2512D3251701D7EF00EDB19D /* terrain_espace.c in Sources */,
+				2512D3261701D7EF00EDB19D /* unite.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -216,6 +326,7 @@
 				25C5CDDA1701D5B000AA780C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
