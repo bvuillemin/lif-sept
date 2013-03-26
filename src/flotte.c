@@ -126,9 +126,9 @@ void afficher_flotte(Flotte *flotte)
 
 void enlever_pt_mouvement_espace_flotte(Flotte *une_flotte, int distance)
 {
-    int temp = get_pt_mouvement_espace_flotte(flotte);
+    int temp = get_pt_mouvement_espace_flotte(une_flotte);
     temp = temp - distance;
-    set_pt_mouvement_espace_flotte(flotte, temp);
+    set_pt_mouvement_espace_flotte(une_flotte, temp);
 }
 
 
