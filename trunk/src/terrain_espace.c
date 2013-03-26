@@ -27,17 +27,17 @@ int get_taille_espace_y(const Terrain_espace *terrain_jeu_espace)
 
 Case_terrain_espace* get_case_terrain_espace(const Terrain_espace *terrain_espace, const int x, const int y)
 {
-    return &(terrain_espace->tab_terrain_espace[x*(terrain_espace->taille_espace_x)+y]);
+    return &(terrain_espace->tab_terrain_espace[y*(terrain_espace->taille_espace_x)+x]);
 }
 
 void modifie_type_case_terrain_espace(const Terrain_espace *terrain_espace, int x, int y, char c)
 {
-    terrain_espace->tab_terrain_espace[y*(terrain_espace->taille_espace_y)+x].type_case_terrain_espace = c;
+    terrain_espace->tab_terrain_espace[y*(terrain_espace->taille_espace_x)+x].type_case_terrain_espace = c;
 }
 
 Planete* get_planete_terrain_espace(const Terrain_espace *terrain_espace, int x, int y)
 {
-    return terrain_espace->tab_terrain_espace[x*(terrain_espace->taille_espace_x)+y].planete;
+    return terrain_espace->tab_terrain_espace[y*(terrain_espace->taille_espace_x)+x].planete;
 }
 
 void initilalise_terrain_espace(Terrain_espace *terrain_jeu_espace, int taille_espace_x, int taille_espace_y)
@@ -50,8 +50,8 @@ void initilalise_terrain_espace(Terrain_espace *terrain_jeu_espace, int taille_e
     {
         for(j=0;j<terrain_jeu_espace->taille_espace_y;j++)
         {
-           terrain_jeu_espace->tab_terrain_espace[j*(terrain_jeu_espace->taille_espace_y)+i].x_espace = i;
-           terrain_jeu_espace->tab_terrain_espace[j*(terrain_jeu_espace->taille_espace_y)+i].y_espace = j;
+           terrain_jeu_espace->tab_terrain_espace[j*(terrain_jeu_espace->taille_espace_x)+i].x_espace = i;
+           terrain_jeu_espace->tab_terrain_espace[j*(terrain_jeu_espace->taille_espace_x)+i].y_espace = j;
         }
     }
 
@@ -114,7 +114,7 @@ void ajouter_planete_terrain_espace(Terrain_espace *terrain_espace, int x, int y
 {
     Planete *terre;
     terre = creer_planete();
-    ajouter_planete(&(terrain_espace->tab_terrain_espace[x*(terrain_espace->taille_espace_x)+y]), terre);
+    ajouter_planete(&(terrain_espace->tab_terrain_espace[y*(terrain_espace->taille_espace_x)+x]), terre);
 }
 
 
