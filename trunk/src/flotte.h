@@ -24,6 +24,7 @@
      int taille_maximum_flotte;
      int taille_flotte;
      int pt_mouvement_espace_flotte;
+     int nb_planete;
      Unite *tab_unite;
  }Flotte;
 

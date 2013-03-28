@@ -13,6 +13,10 @@ void initialise_planete(Planete *planete)
     planete->planete_principale = 0;
     planete->taille_planete = 0; /* a modifier*/
     planete->taille_utilisee = 0;
+    planete->metal = 0;
+    planete->argent = 0;
+    planete->carburant = 0;
+    planete->population = 0;
 }
 
 Planete *creer_planete()
@@ -31,6 +35,10 @@ void libere_planete(Planete *planete)
     planete->planete_principale = 0;
     planete->taille_planete = 0;
     planete->taille_utilisee = 0;
+    planete->metal = 0;
+    planete->argent = 0;
+    planete->carburant = 0;
+    planete->population = 0;
 }
 
 void detruit_planete(Planete **planete)
@@ -94,6 +102,48 @@ int get_planete_colonisee(Planete *planete)
 {
     return planete->planete_colonisee;
 }
+
+void set_metal(Planete *une_planete, int nb)
+{
+    une_planete->metal = nb;
+}
+
+int get_metal(Planete *une_planete)
+{
+    return une_planete->metal;
+}
+
+void set_argent(Planete *une_planete, int nb)
+{
+    une_planete->argent = nb;
+}
+
+int get_argent(Planete *une_planete)
+{
+    return une_planete->argent;
+}
+
+void set_carburant(Planete *une_planete, int nb)
+{
+    une_planete->carburant = nb;
+}
+
+int get_carburant(Planete *une_planete)
+{
+    return une_planete->carburant;
+}
+
+void set_population(Planete *une_planete, int nb)
+{
+    une_planete->population = nb;
+}
+
+int get_population(Planete *une_planete)
+{
+    return une_planete->population;
+}
+
+
 
 void affiche_planete(Planete *une_planete)
 {
