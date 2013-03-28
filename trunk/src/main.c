@@ -60,14 +60,19 @@ int main()
     ajouter_unite_flotte(flotte, unite1);
     ajouter_unite_flotte(flotte, unite2);
 
-    set_pt_vie(&(flotte->tab_unite[0]), 10);
-    set_pt_vie(&(flotte->tab_unite[1]), 15);
+    set_pt_vie(unite1, 10);
+    set_pt_vie(unite2, 15);
 
     ajouter_flotte(&(un_terrain_espace->tab_terrain_espace[2*(un_terrain_espace->taille_espace_x)+3]), flotte);
     affiche_terrain_espace(un_terrain_espace);
 
     set_pt_mouvement_espace_flotte(flotte, 10);
-
+    detruire_ancienne_sauvegarde("test");
+    sauvegarde_terrain(un_terrain_espace, "test");
+    sauvegarde_planete(un_terrain_espace->tab_terrain_espace[1*(un_terrain_espace->taille_espace_x)+2].planete, "test");
+    sauvegarde_flotte(flotte, "test");
+    sauvegarde_unite(unite1, "test");
+    sauvegarde_unite(unite2, "test");
     system("clear");
 
     while(1)
@@ -97,9 +102,7 @@ int main()
 
     }
 
-    /*sauvegarde_terrain(un_terrain_espace, "test");
-
-	printf("\n \n");
+    /*printf("\n \n");
 	un_terrain_combat = creer_terrain_combat(7,7);
 	modification_terrain_combat(un_terrain_combat, 'E');
 	affiche_terrain_combat(un_terrain_combat);
