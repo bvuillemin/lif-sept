@@ -21,12 +21,16 @@
      int y;
      char *nom_planete;
      /*lien sur proprietaire
-     tab de batiments
-     ressources produites*/
+     tab de batiments*/
      int taille_utilisee;
      int taille_planete;
      int planete_principale; /*1 si oui, 0 sinon */
      int planete_colonisee; /*1 si oui, 0 sinon */
+
+     int metal;
+     int argent;
+     int carburant;
+     int population;
 
  }Planete;
 
@@ -43,6 +47,15 @@ void set_planete_principale(Planete *planete, int booleen);
 int get_planete_principale(Planete *planete);
 void set_planete_colonise(Planete *planete, int booleen);
 int get_planete_colonise(Planete *planete);
+
+void set_metal(Planete *une_planete, int nb);
+int get_metal(Planete *une_planete);
+void set_argent(Planete *une_planete, int nb);
+int get_argent(Planete *une_planete);
+void set_carburant(Planete *une_planete, int nb);
+int get_carburant(Planete *une_planete);
+void set_population(Planete *une_planete, int nb);
+int get_population(Planete *une_planete);
 
 void libere_planete(Planete *planete);
 void detruit_planete(Planete **planete);
