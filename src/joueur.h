@@ -14,6 +14,7 @@ typedef struct
     int argent;
     int carburant;
     int population;
+	int nb_planete; /*Correspond au nombre de planètes possédées et donc au nombre de cases du tableau ci-dessous*/
     Planete *tab_planete;
 }Joueur;
 
@@ -28,6 +29,11 @@ void set_carburant_joueur(Joueur *un_joueur, int nb);
 int get_carburant_joueur(const Joueur *un_joueur);
 void set_population_joueur(Joueur *un_joueur, int nb);
 int get_population_joueur(const Joueur *un_joueur);
+void set_nb_planete(Joueur *un_joueur, int nb);
+int get_nb_planete(Joueur *un_joueur);
+
+void initialise_joueur(Joueur *un_joueur);
+Joueur *creer_joueur();
 
 void ajouter_metal(Joueur *un_joueur, int nb);
 void retirer_metal(Joueur *un_joueur, int nb);

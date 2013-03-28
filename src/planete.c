@@ -4,103 +4,115 @@
 #include "planete.h"
 
 
-void initialise_planete(Planete *planete)
+void initialise_planete(Planete *une_planete)
 {
-    planete->x = 0;
-    planete->y = 0;
-    planete->nom_planete = (char*)malloc(sizeof(char) * 30);
-    planete->planete_colonisee = 0;
-    planete->planete_principale = 0;
-    planete->taille_planete = 0; /* a modifier*/
-    planete->taille_utilisee = 0;
-    planete->metal = 0;
-    planete->argent = 0;
-    planete->carburant = 0;
-    planete->population = 0;
+    une_planete->x = 0;
+    une_planete->y = 0;
+    une_planete->nom_planete = (char*)malloc(sizeof(char) * 30);
+    une_planete->planete_colonisee = 0;
+    une_planete->planete_principale = 0;
+	une_planete->habitabilite = 0;
+    une_planete->taille_planete = 0; /* a modifier*/
+    une_planete->taille_utilisee = 0;
+    une_planete->metal = 0;
+    une_planete->argent = 0;
+    une_planete->carburant = 0;
+    une_planete->population = 0;
 }
 
 Planete *creer_planete()
 {
-    Planete *planete=(Planete *)malloc(sizeof(Planete));
-    initialise_planete(planete);
-    return planete;
+    Planete *une_planete=(Planete *)malloc(sizeof(Planete));
+    initialise_planete(une_planete);
+    return une_planete;
 }
 
-void libere_planete(Planete *planete)
+void libere_planete(Planete *une_planete)
 {
-    planete->x = 0;
-    planete->y = 0;
-    free(planete->nom_planete);
-    planete->planete_colonisee = 0;
-    planete->planete_principale = 0;
-    planete->taille_planete = 0;
-    planete->taille_utilisee = 0;
-    planete->metal = 0;
-    planete->argent = 0;
-    planete->carburant = 0;
-    planete->population = 0;
+    une_planete->x = 0;
+    une_planete->y = 0;
+    free(une_planete->nom_planete);
+    une_planete->planete_colonisee = 0;
+    une_planete->planete_principale = 0;
+	une_planete->habitabilite = 0;
+    une_planete->taille_planete = 0;
+    une_planete->taille_utilisee = 0;
+    une_planete->metal = 0;
+    une_planete->argent = 0;
+    une_planete->carburant = 0;
+    une_planete->population = 0;
 }
 
-void detruit_planete(Planete **planete)
+void detruit_planete(Planete **une_planete)
 {
-    libere_planete(*planete);
-    free(*planete);
-    *planete = NULL;
+    libere_planete(*une_planete);
+    free(*une_planete);
+    *une_planete = NULL;
 }
 
-void set_nom_planete(Planete *planete, char nom[30])
+void set_nom_planete(Planete *une_planete, char nom[30])
 {
     int i;
     for(i=0;i<30;i++)
     {
-        planete->nom_planete[i]=nom[i];
+        une_planete->nom_planete[i]=nom[i];
     }
 }
 
-void set_taille_utilisee(Planete *planete, int taille_utilisee)
+void set_taille_utilisee(Planete *une_planete, int taille_utilisee)
 {
-    planete->taille_utilisee = taille_utilisee;
+    une_planete->taille_utilisee = taille_utilisee;
 }
 
-int get_taille_utilisee(Planete *planete)
+int get_taille_utilisee(Planete *une_planete)
 {
-    return planete->taille_utilisee;
+    return une_planete->taille_utilisee;
 }
 
-void set_taille_planete(Planete *planete, int taille_planete)
+void set_taille_planete(Planete *une_planete, int taille_planete)
 {
-    planete->taille_planete = taille_planete;
+    une_planete->taille_planete = taille_planete;
 }
 
-int get_taille_planete(Planete *planete)
+int get_taille_planete(Planete *une_planete)
 {
-    return planete->taille_planete;
+    return une_planete->taille_planete;
 }
 
-void set_planete_principale(Planete *planete, int booleen)
+void set_habitabilite(Planete *une_planete, int nb)
+{
+	une_planete->habitabilite=nb;
+}
+
+int get_habitabilite(Planete *une_planete)
+{
+	return une_planete->habitabilite;
+}
+
+void set_planete_principale(Planete *une_planete, int booleen)
 {
     if ((booleen == 0) || (booleen == 1))
     {
-        planete->planete_principale = booleen;
+        une_planete->planete_principale = booleen;
     }
 }
 
-int get_planete_principale(Planete *planete)
+int get_planete_principale(Planete *une_planete)
 {
-    return planete->planete_principale;
+    return une_planete->planete_principale;
 }
 
-void set_planete_colonisee(Planete *planete, int booleen)
+void set_planete_colonisee(Planete *une_planete, int booleen)
 {
     if ((booleen == 0) || (booleen == 1))
     {
-        planete->planete_colonisee = booleen;
+        une_planete->planete_colonisee = booleen;
     }
 }
 
-int get_planete_colonisee(Planete *planete)
+int get_planete_colonisee(Planete *une_planete)
 {
-    return planete->planete_colonisee;
+    return une_planete->planete_colonisee;
 }
 
 void set_metal(Planete *une_planete, int nb)
@@ -142,8 +154,6 @@ int get_population(Planete *une_planete)
 {
     return une_planete->population;
 }
-
-
 
 void affiche_planete(Planete *une_planete)
 {
