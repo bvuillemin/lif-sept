@@ -3,31 +3,42 @@
 
 #include "terrain_espace.h"
 
-void sauvegarde_terrain(const Terrain_espace *terrain_jeu_espace, const char nom[30])
+void detruire_ancienne_sauvegarde(const char nom[30])
 {
     FILE *f;
-    int i,j;
     f = fopen(nom, "w");
     if (f==NULL)
     {
         printf("Erreur lors de l'ouverture de %s\n", nom);
     }
-
+    fclose(f);
+}
+void sauvegarde_terrain(const Terrain_espace *terrain_jeu_espace, const char nom[30])
+{
+    FILE *f;
+    int i,j;
+    f = fopen(nom, "a");
+    if (f==NULL)
+    {
+        printf("Erreur lors de l'ouverture de %s\n", nom);
+    }
+    fprintf(f, "Terrain \n");
     for(i=0;i<terrain_jeu_espace->taille_espace_x;i++)
     {
         fprintf(f, "#");
         for(j=0;j<terrain_jeu_espace->taille_espace_y;j++)
         {
-           fprintf(f,"%c", terrain_jeu_espace->tab_terrain_espace[j*(terrain_jeu_espace->taille_espace_y)+i].type_case_terrain_espace);
+           fprintf(f,"%c", terrain_jeu_espace->tab_terrain_espace[i*(terrain_jeu_espace->taille_espace_y)+j].type_case_terrain_espace);
         }
         fprintf(f, "#\n");
     }
+    fprintf(f, "#\n");
     fclose(f);
 }
 void sauvegarde_planete(const Planete *une_planete, const char nom[30])
 {
     FILE *f;
-    f = fopen(nom, "w");
+    f = fopen(nom, "a");
     if (f==NULL)
     {
         printf("Erreur lors de l'ouverture de %s\n", nom);
@@ -43,3 +54,61 @@ void sauvegarde_planete(const Planete *une_planete, const char nom[30])
     fprintf(f, "#\n");
     fclose(f);
 }
+void sauvegarde_flotte(const Flotte *une_flotte, const char nom[30])
+{
+    FILE *f;
+    f = fopen(nom, "a");
+    if (f==NULL)
+    {
+        printf("Erreur lors de l'ouverture de %s\n", nom);
+    }
+    fprintf(f, "Flotte \n");
+    fprintf(f, "%d \n", une_flotte->x_flotte);
+    fprintf(f, "%d \n", une_flotte->y_flotte);
+    fprintf(f, "%d \n", une_flotte->taille_maximum_flotte);
+    fprintf(f, "%d \n", une_flotte->taille_flotte);
+    fprintf(f, "%d \n", une_flotte->pt_mouvement_espace_flotte);
+    fprintf(f, "#\n");
+    fclose(f);
+}
+void sauvegarde_unite(const Unite *une_unite, const char nom[30])
+{
+    FILE *f;
+    f = fopen(nom, "a");
+    if (f==NULL)
+    {
+        printf("Erreur lors de l'ouverture de %s\n", nom);
+    }
+    fprintf(f, "Unite \n");
+    fprintf(f, "%d \n", une_unite->x_unite);
+    fprintf(f, "%d \n", une_unite->y_unite);
+    fprintf(f, "%d \n", une_unite->pt_vie);
+    fprintf(f, "%d \n", une_unite->pt_attaque);
+    fprintf(f, "%d \n", une_unite->pt_action);
+    fprintf(f, "%d \n", une_unite->pt_deplacement);
+    fprintf(f, "%d \n", une_unite->pt_mouvement_espace);
+    fprintf(f, "#\n");
+    fclose(f);
+}
+/*void ouverture_terrain(const char nom[30])
+{
+    FILE *f;
+    int i,j;
+    f = fopen(nom, "o");
+    if (f==NULL)
+    {
+        printf("Erreur lors de l'ouverture de %s\n", nom);
+    }
+    
+    for(i=0;i<terrain_jeu_espace->taille_espace_x;i++)
+    {
+        fprintf(f, "#");
+        for(j=0;j<terrain_jeu_espace->taille_espace_y;j++)
+        {
+            fprintf(f,"%c", terrain_jeu_espace->tab_terrain_espace[i*(terrain_jeu_espace->taille_espace_y)+j].type_case_terrain_espace);
+        }
+        fprintf(f, "#\n");
+    }
+    fprintf(f, "#\n");
+    fclose(f);
+}*/
