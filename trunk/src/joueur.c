@@ -63,6 +63,46 @@ int get_population_joueur(Joueur *un_joueur)
     return un_joueur->population;
 }
 
+void set_nb_planete(Joueur *un_joueur, int nb)
+{
+	int i;
+	int nb_precedent = un_joueur->nb_planete;
+	Planete *tab_planete_temp;
+	un_joueur->nb_planete = nb;
+	tab_planete_temp = (Planete *)malloc(sizeof(Planete) * nb);
+	for(i=0;i<nb_precedent;i++)
+	{
+		tab_planete_temp[i]= un_joueur->tab_planete[i];
+	}
+	free(un_joueur->tab_planete);
+	un_joueur->tab_planete = tab_planete_temp;
+}
+
+int get_nb_planete(Joueur *un_joueur)
+{
+	return un_joueur->nb_planete;
+}
+
+
+void initialise_joueur(Joueur *un_joueur)
+{
+	//un_joueur->bleu;
+	//un_joueur->nom_joueur =(char *)malloc(sizeof(char) * 20);
+	un_joueur->metal = 0;
+	un_joueur->argent = 0;
+	un_joueur->carburant = 0;
+	un_joueur->population = 0;
+	un_joueur->nb_planete = 0;
+	un_joueur->tab_planete = NULL;
+
+}
+
+Joueur *creer_joueur()
+{
+    Joueur *un_joueur=(Joueur *)malloc(sizeof(Joueur));
+    initialise_joueur(un_joueur);
+    return un_joueur;
+}
 
 
 

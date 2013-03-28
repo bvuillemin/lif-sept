@@ -11,6 +11,7 @@
 #include "sauvegarde.h"
 #include "terrain_combat.h"
 #include "case_terrain_combat.h"
+#include "joueur.h"
 
 int main()
 {
@@ -18,7 +19,7 @@ int main()
     test_module_flotte();
 	test_module_unite();
 	test_module_case_terrain();
-	test_module_terrain();*/
+	test_module_terrain();
 
 
     Flotte *flotte;
@@ -37,7 +38,7 @@ int main()
 	int y = 1;
 
 	Terrain_espace *un_terrain_espace;
-/*	Terrain_combat * un_terrain_combat;*/
+/*	Terrain_combat * un_terrain_combat;
 
 	un_terrain_espace = creer_terrain_espace(10, 10);
     modification_terrain_espace(un_terrain_espace, 'E');
@@ -106,9 +107,21 @@ int main()
 	un_terrain_combat = creer_terrain_combat(7,7);
 	modification_terrain_combat(un_terrain_combat, 'E');
 	affiche_terrain_combat(un_terrain_combat);
-	*/
+	
 
-    detruit_terrain_espace(&un_terrain_espace);
+    detruit_terrain_espace(&un_terrain_espace);*/
+
+
+	Planete *planete;
+	Joueur *joueur;
+	
+	planete = creer_planete();
+	joueur = creer_joueur();
+
+	set_nb_planete(joueur, 2);
+
+
+	return 0;
 
 }
 
