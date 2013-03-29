@@ -95,8 +95,8 @@ void initialise_joueur(Joueur *un_joueur)
 	un_joueur->argent = 0;
 	un_joueur->carburant = 0;
 	un_joueur->population = 0;
-	un_joueur->nb_planete = 0;
-	un_joueur->tab_planete = NULL;
+	un_joueur->nb_planete = 1;
+	un_joueur->tab_planete = (Planete *)malloc(sizeof(Planete));
 
 }
 

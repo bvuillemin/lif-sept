@@ -121,6 +121,7 @@ int main()
 	joueur = creer_joueur();
 
 	set_nb_planete(joueur, 5);
+	printf("lol");
 	set_nom_planete(&(joueur->tab_planete[0]), terre);
 	affiche_planete(&(joueur->tab_planete[0]));
     /*affiche_planete(&(joueur->tab_planete[1]));*/

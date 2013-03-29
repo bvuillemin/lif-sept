@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 #include "planete.h"
 
@@ -52,11 +53,7 @@ void detruit_planete(Planete **une_planete)
 
 void set_nom_planete(Planete *une_planete, char nom[30])
 {
-    int i;
-    for(i=0;i<30;i++)
-    {
-        une_planete->nom_planete[i]=nom[i];
-    }
+    strcpy(une_planete->nom_planete, nom);
 }
 
 void set_taille_utilisee(Planete *une_planete, int taille_utilisee)
