@@ -28,7 +28,7 @@ void set_metal_joueur(Joueur *un_joueur, int nb)
     un_joueur->metal = nb;
 }
 
-int get_metal_joueur(Joueur *un_joueur)
+int get_metal_joueur(const Joueur *un_joueur)
 {
     return un_joueur->metal;
 }
@@ -38,7 +38,7 @@ void set_argent_joueur(Joueur *un_joueur, int nb)
     un_joueur->argent = nb;
 }
 
-int get_argent_joueur(Joueur *un_joueur)
+int get_argent_joueur(const Joueur *un_joueur)
 {
     return un_joueur->argent;
 }
@@ -48,7 +48,7 @@ void set_carburant_joueur(Joueur *un_joueur, int nb)
     un_joueur->carburant = nb;
 }
 
-int get_carburant_joueur(Joueur *un_joueur)
+int get_carburant_joueur(const Joueur *un_joueur)
 {
     return un_joueur->carburant;
 }
@@ -58,7 +58,7 @@ void set_population_joueur(Joueur *un_joueur, int nb)
     un_joueur->population = nb;
 }
 
-int get_population_joueur(Joueur *un_joueur)
+int get_population_joueur(const Joueur *un_joueur)
 {
     return un_joueur->population;
 }
@@ -67,16 +67,19 @@ void set_nb_planete(Joueur *un_joueur, int nb)
 {
 	int i;
 	int nb_precedent = un_joueur->nb_planete;
-	Planete *tab_planete_temp;
-	un_joueur->nb_planete = nb;
-	tab_planete_temp = (Planete *)malloc(sizeof(Planete) * nb);
-	for(i=0;i<nb_precedent;i++)
-	{
-		tab_planete_temp[i]= un_joueur->tab_planete[i];
-	}
-	free(un_joueur->tab_planete);
-	un_joueur->tab_planete = tab_planete_temp;
+	if(nb_precedent<nb)
+    {
+        Planete *temp = un_joueur->tab_planete;
+        un_joueur->tab_planete = malloc (sizeof(Planete)*nb);
+        for(i=0;i<nb_precedent;i++)
+        {
+            un_joueur->tab_planete[i]=temp[i];
+        }
+        un_joueur->nb_planete = nb;
+        free(temp);
+    }
 }
+
 
 int get_nb_planete(Joueur *un_joueur)
 {

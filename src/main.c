@@ -38,7 +38,7 @@ int main()
 	int y = 1;
 
 	Terrain_espace *un_terrain_espace;
-/*	Terrain_combat * un_terrain_combat;
+	Terrain_combat * un_terrain_combat;
 
 	un_terrain_espace = creer_terrain_espace(10, 10);
     modification_terrain_espace(un_terrain_espace, 'E');
@@ -103,23 +103,26 @@ int main()
 
     }
 
-    /*printf("\n \n");
+    printf("\n \n");
 	un_terrain_combat = creer_terrain_combat(7,7);
 	modification_terrain_combat(un_terrain_combat, 'E');
 	affiche_terrain_combat(un_terrain_combat);
-	
+
 
     detruit_terrain_espace(&un_terrain_espace);*/
 
 
 	Planete *planete;
 	Joueur *joueur;
-	
+	char terre[]="terre";
+
 	planete = creer_planete();
 	joueur = creer_joueur();
 
-	set_nb_planete(joueur, 2);
-
+	set_nb_planete(joueur, 5);
+	set_nom_planete(&(joueur->tab_planete[0]), terre);
+	affiche_planete(&(joueur->tab_planete[0]));
+    /*affiche_planete(&(joueur->tab_planete[1]));*/
 
 	return 0;
 
