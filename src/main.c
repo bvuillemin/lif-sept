@@ -68,12 +68,13 @@ int main()
     affiche_terrain_espace(un_terrain_espace);
 
     set_pt_mouvement_espace_flotte(flotte, 10);
-    detruire_ancienne_sauvegarde("test");
+    detruire_sauvegarde("test");
     sauvegarde_terrain(un_terrain_espace, "test");
     sauvegarde_planete(un_terrain_espace->tab_terrain_espace[1*(un_terrain_espace->taille_espace_x)+2].planete, "test");
     sauvegarde_flotte(flotte, "test");
     sauvegarde_unite(unite1, "test");
     sauvegarde_unite(unite2, "test");
+    ouverture_terrain("test");
     system("clear");
 
     while(1)
