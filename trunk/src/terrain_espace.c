@@ -111,10 +111,10 @@ void modification_terrain_espace(const Terrain_espace *terrain_espace, const cha
     }
 }
 
-void ajouter_planete_terrain_espace(Terrain_espace *terrain_espace, int x, int y)
+void ajouter_planete_terrain_espace(Terrain_espace *terrain_espace, int x, int y, char nom_planete[30])
 {
     Planete *terre;
-    terre = creer_planete();
+    terre = creer_planete(nom_planete);
     ajouter_planete(&(terrain_espace->tab_terrain_espace[y*(terrain_espace->taille_espace_x)+x]), terre);
 }
 

@@ -4,12 +4,11 @@
 
 #include "planete.h"
 
-
-void initialise_planete(Planete *une_planete)
+void initialise_planete(Planete *une_planete, char nom_planete[30])
 {
     une_planete->x = 0;
     une_planete->y = 0;
-    une_planete->nom_planete = (char*)malloc(sizeof(char) * 30);
+    strcpy(une_planete->nom_planete, nom_planete); 
     une_planete->planete_colonisee = 0;
     une_planete->planete_principale = 0;
 	une_planete->habitabilite = 0;
@@ -21,10 +20,10 @@ void initialise_planete(Planete *une_planete)
     une_planete->population = 0;
 }
 
-Planete *creer_planete()
+Planete *creer_planete(char nom_planete[30])
 {
     Planete *une_planete=(Planete *)malloc(sizeof(Planete));
-    initialise_planete(une_planete);
+    initialise_planete(une_planete, nom_planete);
     return une_planete;
 }
 
@@ -152,6 +151,14 @@ int get_population(Planete *une_planete)
     return une_planete->population;
 }
 
+void modification_production_planete(Planete *une_planete, int metal, int argent, int carburant, int population)
+{
+	une_planete->metal = metal;
+	une_planete->argent = argent;
+	une_planete->carburant = carburant;
+	une_planete->population = population;
+}
+
 void affiche_planete(Planete *une_planete)
 {
     printf("Infos planete %s:\n", une_planete->nom_planete);
@@ -164,8 +171,9 @@ void affiche_planete(Planete *une_planete)
 void test_module_planete()
 {
     Planete *terre;
+	char nom_planete[] = "terre";
     printf("Verif de la création de planètes\n");
-    terre = creer_planete();
+    terre = creer_planete(nom_planete);
     if((terre->taille_planete == 0))
     {
 		printf ("OK \n");
