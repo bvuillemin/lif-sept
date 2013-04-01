@@ -19,7 +19,7 @@
  {
      int x;
      int y;
-     char *nom_planete;
+     char nom_planete[30];
      /*lien sur proprietaire
      tab de batiments*/
      int taille_utilisee;
@@ -35,8 +35,8 @@
 
  }Planete;
 
-void initialise_planete(Planete *une_planete);
-Planete *creer_planete();
+void initialise_planete(Planete *une_planete, char nom_planete[30]);
+Planete *creer_planete(char nom_planete[30]);
 
 void set_nom_planete(Planete *une_planete, char nom[30]);
 
@@ -59,6 +59,8 @@ void set_carburant(Planete *une_planete, int nb);
 int get_carburant(Planete *une_planete);
 void set_population(Planete *une_planete, int nb);
 int get_population(Planete *une_planete);
+
+void modification_production_planete(Planete *une_planete, int metal, int argent, int carburant, int population);
 
 void libere_planete(Planete *planete);
 void detruit_planete(Planete **planete);

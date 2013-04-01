@@ -65,25 +65,51 @@ int get_population_joueur(const Joueur *un_joueur)
 
 void set_nb_planete(Joueur *un_joueur, int nb)
 {
-	int i;
-	int nb_precedent = un_joueur->nb_planete;
-	if(nb_precedent<nb)
-    {
-        Planete *temp = un_joueur->tab_planete;
-        un_joueur->tab_planete = malloc (sizeof(Planete)*nb);
-        for(i=0;i<nb_precedent;i++)
-        {
-            un_joueur->tab_planete[i]=temp[i];
-        }
-        un_joueur->nb_planete = nb;
-        free(temp);
-    }
-}
 
+}
 
 int get_nb_planete(Joueur *un_joueur)
 {
 	return un_joueur->nb_planete;
+}
+
+void ajouter_planete_joueur(Joueur *un_joueur, Planete *une_planete)
+{
+	int i;
+	Planete *temp1[1];
+	
+	if(un_joueur->nb_planete == un_joueur->nb_planete_possible)
+	{
+		Planete *temp;
+		temp = *(un_joueur->tab_planete);
+
+		*(un_joueur->tab_planete) =(Planete *)malloc(sizeof(Planete *) * (un_joueur->nb_planete_possible +10));
+		for(i=0;i<un_joueur->nb_planete_possible;i++)
+		{
+			*(un_joueur->tab_planete[i]) = temp[i];
+		}
+
+		free(temp);
+		un_joueur->nb_planete_possible = un_joueur->nb_planete_possible +10;
+	}
+
+	i = un_joueur->nb_planete;
+	
+	temp1[0] = une_planete;
+	un_joueur->tab_planete[i] = temp1[0];
+	un_joueur->nb_planete ++;
+}
+
+void recuperer_ressource_planete(Joueur *un_joueur, int *metal, int *argent, int *carburant, int *population)
+{
+	int i;
+	for(i = 0; i < un_joueur->nb_planete;i++)
+	{
+		*metal = *metal + un_joueur->tab_planete[i]->metal;
+		*argent = *argent + un_joueur->tab_planete[i]->argent;
+		*carburant = *carburant + un_joueur->tab_planete[i]->carburant;
+		*population = *population + un_joueur->tab_planete[i]->population;
+	}
 }
 
 
@@ -95,8 +121,9 @@ void initialise_joueur(Joueur *un_joueur)
 	un_joueur->argent = 0;
 	un_joueur->carburant = 0;
 	un_joueur->population = 0;
-	un_joueur->nb_planete = 1;
-	un_joueur->tab_planete = (Planete *)malloc(sizeof(Planete));
+	un_joueur->nb_planete = 0;
+	un_joueur->nb_planete_possible = 10;
+	*(un_joueur->tab_planete) =(Planete *)malloc(sizeof(Planete *) * 10);
 
 }
 

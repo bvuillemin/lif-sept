@@ -12,6 +12,7 @@
 #include "terrain_combat.h"
 #include "case_terrain_combat.h"
 #include "joueur.h"
+#include "jeu.h"
 
 int main()
 {
@@ -112,20 +113,39 @@ int main()
 
     detruit_terrain_espace(&un_terrain_espace);*/
 
-
-	Planete *planete;
+	Planete *terre;
+	Planete *jupiter;
+	Planete *saturne;
 	Joueur *joueur;
-	char terre[]="terre";
+	Jeu *jeu;
+	char nom_terre[]="terre";
+	char nom_jupiter[]="jupiter";
+	char nom_saturne[]="saturne";
 
-	planete = creer_planete();
+	terre = creer_planete(nom_terre);
+	jupiter = creer_planete(nom_jupiter);
+	saturne = creer_planete(nom_saturne);
 	joueur = creer_joueur();
+	jeu = creer_jeu();
 
-	set_nb_planete(joueur, 5);
-	printf("lol");
-	set_nom_planete(&(joueur->tab_planete[0]), terre);
-	affiche_planete(&(joueur->tab_planete[0]));
-    /*affiche_planete(&(joueur->tab_planete[1]));*/
+	ajouter_planete_joueur(joueur, terre);
+	affiche_planete(joueur->tab_planete[0]);
 
+	ajouter_planete_joueur(joueur, jupiter);
+	affiche_planete(joueur->tab_planete[1]);
+
+	ajouter_planete_joueur(joueur, saturne);
+	affiche_planete(joueur->tab_planete[2]);
+
+	modification_production_planete(joueur->tab_planete[0], 100, 100, 100, 100);
+	modification_production_planete(joueur->tab_planete[1], 200, 50, 75, 0);
+
+	ajouter_joueur(jeu, joueur);
+	tour_suivant(jeu);
+
+
+	printf("lol\n");
+	system("pause");
 	return 0;
 
 }
