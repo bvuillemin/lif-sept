@@ -131,8 +131,19 @@ void enlever_pt_mouvement_espace_flotte(Flotte *une_flotte, int distance)
     set_pt_mouvement_espace_flotte(une_flotte, temp);
 }
 
-
-
+void reinitialiser_mouvement_flotte(Flotte *une_flotte)
+{
+	int i;
+	int min=0;
+	for(i=0;i<une_flotte->taille_flotte;i++)
+	{
+		if(une_flotte->tab_unite[i].pt_mouvement_espace<min)
+		{
+			min = une_flotte->tab_unite[i].pt_mouvement_espace;
+		}
+	}
+	une_flotte->pt_mouvement_espace_flotte = min;
+}
 
 
 /*void test_module_flotte()

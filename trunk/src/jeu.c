@@ -38,10 +38,16 @@ void tour_suivant(Jeu *un_jeu)
 	int argent = 0;
 	int carburant = 0;
 	int population = 0;
-
+	
 	recuperer_ressource_planete( un_jeu->tab_joueur[0], &metal, &argent, &carburant, &population);
-	printf("Ressources au tour %d: \nMetal: %d \nArgent: %d \nCarburant: %d \nPopulation: %d\n", un_jeu->tour_en_cours, metal, argent, carburant, population);
+
+	un_jeu->tab_joueur[0]->metal += metal;
+	un_jeu->tab_joueur[0]->argent += argent;
+	un_jeu->tab_joueur[0]->carburant += carburant;
+	un_jeu->tab_joueur[0]->population += population;
+
+	printf("Ressources du tour %d: \nMetal: %d \nArgent: %d \nCarburant: %d \nPopulation: %d\n", un_jeu->tour_en_cours, metal, argent, carburant, population);
+	printf("Ressources du joueur %d: \nMetal: %d \nArgent: %d \nCarburant: %d \nPopulation: %d\n", un_jeu->tour_en_cours, un_jeu->tab_joueur[0]->metal, un_jeu->tab_joueur[0]->argent, un_jeu->tab_joueur[0]->carburant, un_jeu->tab_joueur[0]->population);
 	
 	un_jeu->tour_en_cours++;
-
 }

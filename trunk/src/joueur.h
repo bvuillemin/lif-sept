@@ -5,18 +5,26 @@
 #include <stdio.h>
 
 #include "planete.h"
+#include "flotte.h"
 
 typedef struct
 {
     char nom_joueur[20];
     enum {bleu, rouge} couleur_joueur;
+
     int metal;
     int argent;
     int carburant;
     int population;
+
 	int nb_planete; /*Correspond au nombre de planètes possédées et donc au nombre de cases du tableau ci-dessous*/
 	int nb_planete_possible;
     Planete* tab_planete[];
+
+	int nb_flotte;
+	int nb_flotte_possible;
+	Flotte* tab_flotte[];
+
 }Joueur;
 
 void set_nom_joueur(Joueur *un_joueur, char nom[20]);
@@ -33,8 +41,8 @@ int get_population_joueur(const Joueur *un_joueur);
 //void set_nb_planete(Joueur *un_joueur, int nb);
 int get_nb_planete(Joueur *un_joueur);
 
-void initialise_joueur(Joueur *un_joueur);
-Joueur *creer_joueur();
+void initialise_joueur(Joueur *un_joueur, char nom[30]);
+Joueur *creer_joueur(char nom[30]);
 
 void ajouter_metal(Joueur *un_joueur, int nb);
 void retirer_metal(Joueur *un_joueur, int nb);
