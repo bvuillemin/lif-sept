@@ -23,14 +23,15 @@ void sauvegarde_terrain(const Terrain_espace *terrain_jeu_espace, const char nom
         printf("Erreur lors de l'ouverture de %s\n", nom);
     }
     fprintf(f, "Terrain \n");
+    fprintf(f, "%d \n", terrain_jeu_espace->taille_espace_x);
+    fprintf(f, "%d \n", terrain_jeu_espace->taille_espace_y);
     for(i=0;i<terrain_jeu_espace->taille_espace_x;i++)
     {
-        fprintf(f, "#");
         for(j=0;j<terrain_jeu_espace->taille_espace_y;j++)
         {
-           fprintf(f,"%c", terrain_jeu_espace->tab_terrain_espace[i*(terrain_jeu_espace->taille_espace_y)+j].type_case_terrain_espace);
+           fprintf(f, "%c", terrain_jeu_espace->tab_terrain_espace[i*(terrain_jeu_espace->taille_espace_y)+j].type_case_terrain_espace);
         }
-        fprintf(f, "#\n");
+        fprintf(f, "\n");
     }
     fprintf(f, "FinTerrain\n");
     fclose(f);
@@ -90,20 +91,47 @@ void sauvegarde_unite(const Unite *une_unite, const char nom[30])
     fprintf(f, "FinUnite\n");
     fclose(f);
 }
-void ouverture_terrain(const char nom[30])
+void ouverture_terrain(FILE *f, long a)
+{
+    /*fseek (f, a, SEEK_SET);
+    Terrain_espace *un_terrain_espace;
+    char chaine[50];
+    int b, c;
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    sscanf(fgets(chaine, 50, f), "%d", &c);
+    initilalise_terrain_espace(un_terrain_espace, b, c);
+    affiche_terrain_espace(un_terrain_espace);*/
+}
+void selection_ouverture(const char nom[30], long a)
 {
     FILE *f;
-    char chaine[256];
+    char chaine[50];
     f = fopen(nom, "r");
     if (f==NULL)
     {
         printf("Erreur lors de l'ouverture de %s\n", nom);
     }
-    rewind(f);
-    fgets(chaine, 256, f);
-    if (strcmp(chaine, "Terrain")==1) {
-        printf("%s","GENIAL");
+    fseek (f, a, SEEK_SET);
+    fgets(chaine, 50, f);
+    a = ftell(f);
+    printf("%ld \n", a);
+    printf(chaine);
+    if (strcmp(chaine, "Terrain \n")==0)
+    {
+        printf("%s \n","GENIAL Terrain");
+        ouverture_terrain(f, a);
     }
-    else {printf("%s","BOUH");} 
+    if (strcmp(chaine, "Planete \n")==0)
+    {
+        printf("%s \n","GENIAL Planete");
+    }
+    if (strcmp(chaine, "Flotte \n")==0)
+    {
+        printf("%s \n","GENIAL Flotte");
+    }
+    if (strcmp(chaine, "Unite \n")==0)
+    {
+        printf("%s \n","GENIAL Unite");
+    }
     fclose(f);
 }
