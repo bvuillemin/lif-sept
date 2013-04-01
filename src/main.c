@@ -121,11 +121,12 @@ int main()
 	char nom_terre[]="terre";
 	char nom_jupiter[]="jupiter";
 	char nom_saturne[]="saturne";
+	char nom_joueur[]="Pierre";
 
 	terre = creer_planete(nom_terre);
 	jupiter = creer_planete(nom_jupiter);
 	saturne = creer_planete(nom_saturne);
-	joueur = creer_joueur();
+	joueur = creer_joueur(nom_joueur);
 	jeu = creer_jeu();
 
 	ajouter_planete_joueur(joueur, terre);
@@ -144,7 +145,6 @@ int main()
 	tour_suivant(jeu);
 
 
-	printf("lol\n");
 	system("pause");
 	return 0;
 
