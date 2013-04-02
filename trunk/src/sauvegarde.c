@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
 #include "terrain_espace.h"
 
 void detruire_sauvegarde(const char nom[30])
@@ -87,22 +88,36 @@ void sauvegarde_unite(const Unite *une_unite, const char nom[30])
     fprintf(f, "%d \n", une_unite->pt_attaque);
     fprintf(f, "%d \n", une_unite->pt_action);
     fprintf(f, "%d \n", une_unite->pt_deplacement);
-    fprintf(f, "%d \n", une_unite->pt_mouvement_espace);
+    fprintf(f, "%d \n", une_unite->pt_mouvement_unite);
     fprintf(f, "FinUnite\n");
     fclose(f);
 }
 void ouverture_terrain(FILE *f, long a)
 {
-    /*fseek (f, a, SEEK_SET);
-    Terrain_espace *un_terrain_espace;
-    char chaine[50];
+    fseek (f, a, SEEK_SET);
+    Terrain_espace *terrain_ouvert;
+    char chaine[50], carre[1];
     int b, c;
+    int i = 0;
+    int j = 0;
     sscanf(fgets(chaine, 50, f), "%d", &b);
     sscanf(fgets(chaine, 50, f), "%d", &c);
-    initilalise_terrain_espace(un_terrain_espace, b, c);
-    affiche_terrain_espace(un_terrain_espace);*/
+    terrain_ouvert = creer_terrain_espace(b, c);
+    while (j != c) {
+        fgets(carre, 2, f);
+        if(strcmp(carre, "\n") == 0)
+        {
+            j++;
+            i = 0;
+        }
+        else
+        {
+            modifie_type_case_terrain_espace(terrain_ouvert, i, j, carre[0]);
+            i++;
+        }
+    }
 }
-/*void selection_ouverture(const char nom[30], long a)
+void selection_ouverture(const char nom[30], long a)
 {
     FILE *f;
     char chaine[50];
@@ -134,4 +149,4 @@ void ouverture_terrain(FILE *f, long a)
         printf("%s \n","GENIAL Unite");
     }
     fclose(f);
-}*/
+}
