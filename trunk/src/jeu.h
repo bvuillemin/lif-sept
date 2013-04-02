@@ -21,12 +21,12 @@
  {
      int tour_en_cours;
 	 int nb_joueur;
-	 Joueur* tab_joueur[];
+	 Joueur* tab_joueur;
  }Jeu;
 
  void initialise_jeu(Jeu *un_jeu);
  Jeu *creer_jeu();
  void ajouter_joueur(Jeu *un_jeu, Joueur *un_joueur);
  void tour_suivant(Jeu *un_jeu);
-
+void tour_suivant(Jeu *un_jeu);
 #endif
