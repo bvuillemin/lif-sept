@@ -30,8 +30,8 @@ typedef struct
 	/*compétence spéciale*/
 }Unite;
 
-void initialise_unite(Unite *unite_jeu,int pt_vie, int pt_attaque, int pt_action, int pt_deplacement,int pt_mouvement);
-Unite *creer_unite(int pt_vie, int pt_attaque, int pt_action, int pt_deplacement,int pt_mouvement);
+void initialise_unite(Unite *unite_jeu,int x_unite, int y_unite,int pt_vie, int pt_attaque, int pt_action, int pt_deplacement,int pt_mouvement);
+Unite *creer_unite(int x_unite, int y_unite, int pt_vie, int pt_attaque, int pt_action, int pt_deplacement,int pt_mouvement);
 
 void libere_unite(Unite *unite_jeu);
 void detruit_unite(Unite **unite_jeu);

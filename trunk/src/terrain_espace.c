@@ -33,7 +33,7 @@ Case_terrain_espace* get_case_terrain_espace(const Terrain_espace *terrain_espac
 
 void modifie_type_case_terrain_espace(const Terrain_espace *terrain_espace, int x, int y, char c)
 {
-    terrain_espace->tab_terrain_espace[y*(terrain_espace->taille_espace_x)+x].type_case_terrain_espace = c;
+	set_type_case_terrain_espace(terrain_espace->tab_terrain_espace[y*(terrain_espace->taille_espace_x)+x],c);
 }
 
 Planete* get_planete_terrain_espace(const Terrain_espace *terrain_espace, int x, int y)
