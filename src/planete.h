@@ -39,7 +39,10 @@ void initialise_planete(Planete *une_planete, char nom_planete[30]);
 Planete *creer_planete(char nom_planete[30]);
 
 void set_nom_planete(Planete *une_planete, char nom[30]);
-
+char* get_nom_planete(Planete *une_planete);
+void set_position_planete(Planete *une_planete, int x, int y);
+int get_position_x_planete(Planete *une_planete);
+int get_position_y_planete(Planete *une_planete);
 void set_taille_utilisee(Planete *une_planete, int taille_utilisee);
 int get_taille_utilisee(Planete *une_planete);
 void set_taille_planete(Planete *une_planete, int taille_planete);
