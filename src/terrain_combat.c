@@ -4,7 +4,7 @@
 #include <math.h>
 #include "case_terrain_combat.h"
 #include "terrain_combat.h"
-
+#include "flotte.h"
 #include "unite.h"
 void set_taille_combat_x(Terrain_combat *terrain_jeu_combat, int x)
 {
@@ -33,7 +33,7 @@ Case_terrain_combat* get_case_terrain_combat(const Terrain_combat *terrain_comba
 
 void modifie_type_case_terrain_combat(const Terrain_combat *terrain_combat, int x, int y, char c)
 {
-    set_type_case_terrain_combat(terrain_combat->tab_terrain_combat[x*(terrain_combat->taille_combat_x)+y],c);
+    set_type_case_terrain_combat(terrain_combat->tab_terrain_combat+(x*(terrain_combat->taille_combat_x)+y),c);
 }
 
 void initilalise_terrain_combat(Terrain_combat *terrain_jeu_combat, int taille_combat_x, int taille_combat_y)
@@ -150,9 +150,11 @@ bool deplacement_unite(Terrain_combat *un_terrain_combat, Unite *une_unite, int 
 
 }
 
-void set_case_terrain_combat(const Terrain_combat *terrain_jeu_combat, int x, int y, char c)
+void ajoute_unite_terrain(Terrain_combat * un_terrain_combat, Unite * unite, int x, int y)
 {
-	
+	Case_terrain_combat * une_case;
+	une_case = get_case_terrain_combat(un_terrain_combat,x,y);
+	ajouter_unite(une_case,unite);
 }
 
 /*void test_module_terrain_combat()
