@@ -132,7 +132,7 @@ void selection_ouverture(const char nom[30], long a)
     fgets(chaine, 50, f);
     a = ftell(f);
     printf("%ld \n", a);
-    printf(chaine);
+    printf("%s", chaine);
     if (strcmp(chaine, "Terrain \n")==0)
     {
         printf("%s \n","GENIAL Terrain");
