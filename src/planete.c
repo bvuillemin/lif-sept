@@ -8,7 +8,7 @@ void initialise_planete(Planete *une_planete, char nom_planete[30])
 {
     une_planete->x = 0;
     une_planete->y = 0;
-    strcpy(une_planete->nom_planete, nom_planete); 
+    strcpy(une_planete->nom_planete, nom_planete);
     une_planete->planete_colonisee = 0;
     une_planete->planete_principale = 0;
 	une_planete->habitabilite = 0;
@@ -159,7 +159,7 @@ void modification_production_planete(Planete *une_planete, int metal, int argent
 	une_planete->population = population;
 }
 
-void affiche_planete(Planete *une_planete)
+void afficher_planete(Planete *une_planete)
 {
     printf("Infos planete %s:\n", une_planete->nom_planete);
     printf("Coordonnes: x = %d, y = %d \n", une_planete->x, une_planete->y);

@@ -115,7 +115,6 @@ int main()
 
 	Planete *terre;
 	Planete *jupiter;
-	Planete *saturne;
 	Joueur *joueur;
 	Jeu *jeu;
 	Flotte *flotte;
@@ -124,26 +123,20 @@ int main()
 
 	char nom_terre[]="terre";
 	char nom_jupiter[]="jupiter";
-	char nom_saturne[]="saturne";
 	char nom_joueur[]="Pierre";
 
 	terre = creer_planete(nom_terre);
 	jupiter = creer_planete(nom_jupiter);
-	saturne = creer_planete(nom_saturne);
 	joueur = creer_joueur(nom_joueur);
 	jeu = creer_jeu();
 
-
 	ajouter_planete_joueur(joueur, terre);
-	affiche_planete(joueur->tab_planete[0]);
+	afficher_planete(joueur->tab_planete[0]);
 
 	ajouter_planete_joueur(joueur, jupiter);
-	affiche_planete(joueur->tab_planete[1]);
+	afficher_planete(joueur->tab_planete[1]);
 
-/*	ajouter_planete_joueur(joueur, saturne);
-	affiche_planete(joueur->tab_planete[2]);
-*/
-	modification_production_planete(joueur->tab_planete[0], 100, 100, 100, 100);
+    modification_production_planete(joueur->tab_planete[0], 100, 100, 100, 100);
 	modification_production_planete(joueur->tab_planete[1], 200, 50, 75, 0);
 
 	ajouter_joueur(jeu, joueur);
@@ -157,8 +150,12 @@ int main()
     ajouter_unite_flotte(flotte, unite1);
     ajouter_unite_flotte(flotte, unite2);
 
-    ajouter_flotte_joueur(joueur, flotte);
-    affiche_flotte(joueur->tab_flotte[0]);
+    ajouter_flotte_joueur(joueur, *flotte);
+
+    printf("Affiche flotte 1\n");
+    afficher_flotte(&joueur->tab_flotte[0]);
+    printf("Affiche flotte 2\n");
+    afficher_flotte(flotte);
 
 	system("pause");
 	return 0;

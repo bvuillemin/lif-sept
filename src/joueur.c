@@ -106,12 +106,12 @@ void ajouter_planete_joueur(Joueur *un_joueur, Planete *une_planete)
     }
 }
 
-void ajouter_flotte_joueur(Joueur *un_joueur, Flotte *une_flotte)
+void ajouter_flotte_joueur(Joueur *un_joueur, Flotte une_flotte)
 {
     int i = un_joueur->nb_flotte;
     if(i< un_joueur->nb_flotte_possible)
     {
-        un_joueur->tab_flotte[0] = *une_flotte;
+        un_joueur->tab_flotte[0] = une_flotte;
         un_joueur->nb_flotte ++;
     }
 
@@ -132,7 +132,7 @@ void recuperer_ressource_planete(Joueur *un_joueur, int *metal, int *argent, int
 
 void initialise_joueur(Joueur *un_joueur, char nom[20])
 {
-	//un_joueur->bleu;
+	/*un_joueur->bleu;*/
 	strcpy(un_joueur->nom_joueur, nom);
 	un_joueur->metal = 0;
 	un_joueur->argent = 0;
