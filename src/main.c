@@ -121,14 +121,17 @@ int main()
     Unite *unite1;
     Unite *unite2;
 
-	char nom_terre[]="terre";
+    char nom_joueur[]="Pierre";
+	joueur = creer_joueur(1, nom_joueur);
+
+/*	char nom_terre[]="terre";
 	char nom_jupiter[]="jupiter";
-	char nom_joueur[]="Pierre";
+	char nom_joueur[]="Pierre\0";
 
 	terre = creer_planete(nom_terre);
 	jupiter = creer_planete(nom_jupiter);
 	joueur = creer_joueur(nom_joueur);
-/*	jeu = creer_jeu();*/
+	jeu = creer_jeu();
 
 	ajouter_planete_joueur(joueur, terre);
 	afficher_planete(joueur->tab_planete[0]);
@@ -139,7 +142,7 @@ int main()
     modification_production_planete(joueur->tab_planete[0], 100, 100, 100, 100);
 	modification_production_planete(joueur->tab_planete[1], 200, 50, 75, 0);
 
-/*	ajouter_joueur(jeu, joueur);
+	ajouter_joueur(jeu, joueur);
 	tour_suivant(jeu);
 	tour_suivant(jeu);
 */
