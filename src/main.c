@@ -33,7 +33,10 @@ int main()
 	char menu[50];
 	char exit[] = "exit";
 	char move[] = "move";
-	char info[] = "info";
+	char info_planete[] = "planete";
+	char info_flotte[] = "flotte";
+	char passer_tour[] = "suivant";
+	char ressource[] = "ressource";
 
 	Planete *terre;
 	Planete *jupiter;
@@ -62,6 +65,9 @@ int main()
 
 	joueur = creer_joueur(1, nom_joueur);
 	jeu = creer_jeu();
+    flotte = creer_flotte();
+    unite1 = creer_unite(1, 1, 1, 1, 10);
+    unite2 = creer_unite(1, 1, 1, 1, 10);
 
 	ajouter_planete_joueur(joueur, terre);
 	afficher_planete(joueur->tab_planete[0]);
@@ -73,12 +79,6 @@ int main()
 	modification_production_planete(joueur->tab_planete[1], 200, 50, 75, 0);
 
 	ajouter_joueur(jeu, joueur);
-	tour_suivant(jeu);
-	tour_suivant(jeu);
-
-    unite1 = creer_unite(1, 1, 1, 1, 1, 1, 10);
-    unite2 = creer_unite(1, 1, 1, 1, 1, 1, 10);
-    flotte = creer_flotte();
 
     ajouter_unite_flotte(flotte, unite1);
     ajouter_unite_flotte(flotte, unite2);
@@ -90,7 +90,9 @@ int main()
     printf("Affiche flotte 2\n");
     afficher_flotte(flotte);
 
-
+	ajouter_flotte(&(un_terrain_espace->tab_terrain_espace[2*(un_terrain_espace->taille_espace_x)+3]), &joueur->tab_flotte[0]);
+	
+	affiche_terrain_espace(un_terrain_espace);
 
    /* ajouter_flotte(&(un_terrain_espace->tab_terrain_espace[2*(un_terrain_espace->taille_espace_x)+3]), flotte);
     affiche_terrain_espace(un_terrain_espace);
@@ -108,7 +110,7 @@ int main()
 
     while(1)
     {
-        printf("tapez info, move ou exit\n");
+        printf("tapez planete, move, flotte, suivant, ressource ou exit\n");
         scanf("%s", menu);
         if(strcmp(menu, exit) == 0)
         {
@@ -120,16 +122,29 @@ int main()
             scanf("%d", &x);
             scanf("%d", &y);
             system("clear");
-            if(deplacement_flotte(un_terrain_espace, flotte, x, y) == false)
+            if(deplacement_flotte(un_terrain_espace, &joueur->tab_flotte[0], x, y) == false)
             {
                 printf("Déplacement impossible\n");
             }
             affiche_terrain_espace(un_terrain_espace);
         }
-        if(strcmp(menu, info) == 0)
+        if(strcmp(menu, info_planete) == 0)
         {
             afficher_planete(terre);
             afficher_planete(jupiter);
+        }
+		if(strcmp(menu, info_flotte) == 0)
+        {
+            printf("Affiche flotte 1\n");
+			afficher_flotte(&joueur->tab_flotte[0]);
+        }
+		if(strcmp(menu, ressource) == 0)
+        {
+            afficher_ressource_joueur(jeu);
+        }
+		if(strcmp(menu, passer_tour) == 0)
+        {
+            tour_suivant(jeu);
         }
 
     }
