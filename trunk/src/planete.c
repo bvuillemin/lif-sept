@@ -55,6 +55,27 @@ void set_nom_planete(Planete *une_planete, char nom[30])
     strcpy(une_planete->nom_planete, nom);
 }
 
+char* get_nom_planete(Planete *une_planete)
+{
+    return une_planete->nom_planete;
+}
+
+void set_position_planete(Planete *une_planete, int x, int y)
+{
+    une_planete->x = x;
+    une_planete->y = y;
+}
+
+int get_position_x_planete(Planete *une_planete)
+{
+    return une_planete->x;
+}
+
+int get_position_y_planete(Planete *une_planete)
+{
+    return une_planete->y;
+}
+
 void set_taille_utilisee(Planete *une_planete, int taille_utilisee)
 {
     une_planete->taille_utilisee = taille_utilisee;
@@ -174,7 +195,7 @@ void test_module_planete()
 	char nom_planete[] = "terre";
     printf("Verif de la création de planètes\n");
     terre = creer_planete(nom_planete);
-    if((terre->taille_planete == 0))
+    if(terre->taille_planete == 0)
     {
 		printf ("OK \n");
 	}
