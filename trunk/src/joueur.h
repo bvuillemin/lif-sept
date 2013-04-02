@@ -9,6 +9,8 @@
 
 typedef struct
 {
+    int numero_joueur;
+
     char nom_joueur[20];
     enum {bleu, rouge} couleur_joueur;
 
@@ -41,8 +43,8 @@ int get_population_joueur(const Joueur *un_joueur);
 /*void set_nb_planete(Joueur *un_joueur, int nb);*/
 int get_nb_planete(Joueur *un_joueur);
 
-void initialise_joueur(Joueur *un_joueur, char nom[30]);
-Joueur *creer_joueur(char nom[30]);
+void initialise_joueur(Joueur *un_joueur,int num_joueur, char nom[30]);
+Joueur *creer_joueur(int num_joueur, char nom[30]);
 
 void ajouter_metal(Joueur *un_joueur, int nb);
 void retirer_metal(Joueur *un_joueur, int nb);
