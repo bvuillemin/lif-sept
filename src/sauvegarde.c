@@ -96,12 +96,12 @@ void sauvegarde_unite(const Unite *une_unite, const char nom[30])
 }
 void ouverture_terrain(FILE *f, long a)
 {
-    fseek (f, a, SEEK_SET);
     Terrain_espace *terrain_ouvert;
     char chaine[50], carre[1];
     int b, c;
     int i = 0;
     int j = 0;
+    fseek (f, a, SEEK_SET);
     sscanf(fgets(chaine, 50, f), "%d", &b);
     sscanf(fgets(chaine, 50, f), "%d", &c);
     terrain_ouvert = creer_terrain_espace(b, c);
@@ -119,31 +119,6 @@ void ouverture_terrain(FILE *f, long a)
         }
     }
 }
-void lire_terrain(FILE *f, long a)
-{
-    fseek (f, a, SEEK_SET);
-    Terrain_espace *terrain_ouvert;
-    char chaine[50], carre[1];
-    int b, c;
-    int i = 0;
-    int j = 0;
-    sscanf(fgets(chaine, 50, f), "%d", &b);
-    sscanf(fgets(chaine, 50, f), "%d", &c);
-    terrain_ouvert = creer_terrain_espace(b, c);
-    while (j != c) {
-        fgets(carre, 2, f);
-        if(strcmp(carre, "\n") == 0)
-        {
-            j++;
-            i = 0;
-        }
-        else
-        {
-            modifie_type_case_terrain_espace(terrain_ouvert, i, j, carre[0]);
-            i++;
-        }
-    }
-}/*
 void selection_ouverture(const char nom[30], long a)
 {
     FILE *f;
@@ -161,7 +136,7 @@ void selection_ouverture(const char nom[30], long a)
     if (strcmp(chaine, "Terrain \n")==0)
     {
         printf("%s \n","GENIAL Terrain");
-        lire_terrain(f, a);
+        ouverture_terrain(f, a);
     }
     if (strcmp(chaine, "Planete \n")==0)
     {
@@ -176,4 +151,4 @@ void selection_ouverture(const char nom[30], long a)
         printf("%s \n","GENIAL Unite");
     }
     fclose(f);
-}*/
+}
