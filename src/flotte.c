@@ -137,9 +137,9 @@ void reinitialiser_mouvement_flotte(Flotte *une_flotte)
 	int min=0;
 	for(i=0;i<une_flotte->taille_flotte;i++)
 	{
-		if(une_flotte->tab_unite[i].pt_mouvement_espace<min)
+		if(une_flotte->tab_unite[i].pt_mouvement_unite<min)
 		{
-			min = une_flotte->tab_unite[i].pt_mouvement_espace;
+			min = une_flotte->tab_unite[i].pt_mouvement_unite;
 		}
 	}
 	une_flotte->pt_mouvement_espace_flotte = min;
