@@ -143,7 +143,7 @@ void initialise_joueur(Joueur *un_joueur, int num_joueur, char nom[20])
 	un_joueur->nb_planete_possible = 10;
 	un_joueur->tab_planete = (Planete **)malloc(sizeof(Planete *) * 10);
 	un_joueur->nb_flotte = 0;
-	un_joueur->nb_flotte_possible = 0;
+	un_joueur->nb_flotte_possible = 10;
 	un_joueur->tab_flotte = (Flotte *)malloc(sizeof(Flotte) * 10);
 
 }

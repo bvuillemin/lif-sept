@@ -50,6 +50,7 @@ int retirer_unite_flotte(Flotte *flotte,const int indice_unite);
 
 void enlever_pt_mouvement_espace_flotte(Flotte *une_flotte, int distance);
 void afficher_flotte(Flotte *flotte);
+void reinitialiser_mouvement_flotte(Flotte *une_flotte);
 
 void test_module_flotte();
 

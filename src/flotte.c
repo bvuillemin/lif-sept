@@ -119,7 +119,7 @@ void afficher_flotte(Flotte *flotte)
     int i;
     for(i=0;i<flotte->taille_flotte;i++)
     {
-        printf("|| Unite %d: pv = %d, pa = %d\n", i+1 , flotte->tab_unite[i].pt_vie, flotte->tab_unite[i].pt_action);
+        printf("|| Unite %d: pv = %d, pa = %d\n, pme = %d\n", i+1 , flotte->tab_unite[i].pt_vie, flotte->tab_unite[i].pt_action, flotte->tab_unite[i].pt_mouvement_unite);
     }
 
 }

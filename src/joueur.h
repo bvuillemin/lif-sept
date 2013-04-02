@@ -11,7 +11,6 @@ typedef struct
 {
     int numero_joueur;
 
-    char nom_joueur[20];
     enum {bleu, rouge} couleur_joueur;
 
     int metal;
@@ -26,6 +25,8 @@ typedef struct
 	int nb_flotte;
 	int nb_flotte_possible;
     Flotte* tab_flotte;
+
+    char nom_joueur[20];
 
 }Joueur;
 
