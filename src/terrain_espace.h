@@ -40,7 +40,7 @@ Case_terrain_espace* get_case_terrain_espace(const Terrain_espace *terrain, cons
 Planete* get_planete_terrain_espace(const Terrain_espace *terrain_espace, int x, int y);/*récupère le pointeur d'une planète à partir du terrain*/
 
 void modification_terrain_espace(const Terrain_espace *terrain, const char c); /* met toutes les cases du terrain avec le type char c*/
-void ajouter_planete_terrain_espace(Terrain_espace *terrain, int x, int y); /*va créer une planète et l'ajouter sur la carte aux coordonnées*/
+void ajouter_planete_terrain_espace(Terrain_espace *terrain, int x, int y, char nom_planete[30]); /*va créer une planète et l'ajouter sur la carte aux coordonnées*/
 
 void affiche_terrain_espace(const Terrain_espace *terrain); /*affiche tous les types du terrain*/
 

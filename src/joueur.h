@@ -19,11 +19,11 @@ typedef struct
 
 	int nb_planete; /*Correspond au nombre de planètes possédées et donc au nombre de cases du tableau ci-dessous*/
 	int nb_planete_possible;
-    Planete* tab_planete[];
+	Planete** tab_planete;
 
 	int nb_flotte;
 	int nb_flotte_possible;
-	Flotte* tab_flotte[];
+    Flotte* tab_flotte;
 
 }Joueur;
 
@@ -56,6 +56,7 @@ void retirer_population(Joueur *un_joueur, int nb);
 void recuperer_ressource_planete(Joueur *un_joueur, int *metal, int *argent, int *carburant, int *population);
 
 void ajouter_planete_joueur(Joueur *un_joueur, Planete *une_planete);
+void ajouter_flotte_joueur(Joueur *un_joueur, Flotte *une_flotte);
 
 
 #endif

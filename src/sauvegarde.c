@@ -102,7 +102,7 @@ void ouverture_terrain(FILE *f, long a)
     initilalise_terrain_espace(un_terrain_espace, b, c);
     affiche_terrain_espace(un_terrain_espace);*/
 }
-void selection_ouverture(const char nom[30], long a)
+/*void selection_ouverture(const char nom[30], long a)
 {
     FILE *f;
     char chaine[50];
@@ -134,4 +134,4 @@ void selection_ouverture(const char nom[30], long a)
         printf("%s \n","GENIAL Unite");
     }
     fclose(f);
-}
+}*/

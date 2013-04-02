@@ -75,9 +75,8 @@ int get_nb_planete(Joueur *un_joueur)
 
 void ajouter_planete_joueur(Joueur *un_joueur, Planete *une_planete)
 {
-	int i;
-	Planete *temp1[1];
-	
+	/*int i;
+
 	if(un_joueur->nb_planete == un_joueur->nb_planete_possible)
 	{
 		Planete *temp;
@@ -94,10 +93,28 @@ void ajouter_planete_joueur(Joueur *un_joueur, Planete *une_planete)
 	}
 
 	i = un_joueur->nb_planete;
-	
-	temp1[0] = une_planete;
-	un_joueur->tab_planete[i] = temp1[0];
-	un_joueur->nb_planete ++;
+
+	temp[0] = une_planete;
+	un_joueur->tab_planete[i] = temp[0];
+	un_joueur->nb_planete ++;*/
+
+    int i = un_joueur->nb_planete;
+    if(i< un_joueur->nb_planete_possible)
+    {
+        (un_joueur->tab_planete)[i] = une_planete;
+        un_joueur->nb_planete ++;
+    }
+}
+
+void ajouter_flotte_joueur(Joueur *un_joueur, Flotte *une_flotte)
+{
+    int i = un_joueur->nb_flotte;
+    if(i< un_joueur->nb_flotte_possible)
+    {
+        un_joueur->tab_flotte[0] = *une_flotte;
+        un_joueur->nb_flotte ++;
+    }
+
 }
 
 void recuperer_ressource_planete(Joueur *un_joueur, int *metal, int *argent, int *carburant, int *population)
@@ -123,7 +140,10 @@ void initialise_joueur(Joueur *un_joueur, char nom[20])
 	un_joueur->population = 0;
 	un_joueur->nb_planete = 0;
 	un_joueur->nb_planete_possible = 10;
-	*(un_joueur->tab_planete) =(Planete *)malloc(sizeof(Planete *) * 10);
+	un_joueur->tab_planete = (Planete **)malloc(sizeof(Planete *) * 10);
+	un_joueur->nb_flotte = 0;
+	un_joueur->nb_flotte_possible = 0;
+	un_joueur->tab_flotte = (Flotte *)malloc(sizeof(Flotte) * 10);
 
 }
 
