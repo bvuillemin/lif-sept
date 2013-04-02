@@ -116,7 +116,7 @@ int main()
 	Planete *terre;
 	Planete *jupiter;
 	Joueur *joueur;
-	Jeu *jeu;
+/*	Jeu *jeu;*/
 	Flotte *flotte;
     Unite *unite1;
     Unite *unite2;
@@ -128,7 +128,7 @@ int main()
 	terre = creer_planete(nom_terre);
 	jupiter = creer_planete(nom_jupiter);
 	joueur = creer_joueur(nom_joueur);
-	jeu = creer_jeu();
+/*	jeu = creer_jeu();*/
 
 	ajouter_planete_joueur(joueur, terre);
 	afficher_planete(joueur->tab_planete[0]);
@@ -139,12 +139,12 @@ int main()
     modification_production_planete(joueur->tab_planete[0], 100, 100, 100, 100);
 	modification_production_planete(joueur->tab_planete[1], 200, 50, 75, 0);
 
-	ajouter_joueur(jeu, joueur);
+/*	ajouter_joueur(jeu, joueur);
 	tour_suivant(jeu);
 	tour_suivant(jeu);
-
-    unite1 = creer_unite();
-    unite2 = creer_unite();
+*/
+    unite1 = creer_unite(1, 1, 1, 1, 1, 1, 1);
+    unite2 = creer_unite(1, 1, 1, 1, 1, 1, 1);
     flotte = creer_flotte();
 
     ajouter_unite_flotte(flotte, unite1);

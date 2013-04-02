@@ -143,7 +143,7 @@ void lire_terrain(FILE *f, long a)
             i++;
         }
     }
-}
+}/*
 void selection_ouverture(const char nom[30], long a)
 {
     FILE *f;
@@ -176,4 +176,4 @@ void selection_ouverture(const char nom[30], long a)
         printf("%s \n","GENIAL Unite");
     }
     fclose(f);
-}
+}*/
