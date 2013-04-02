@@ -45,6 +45,9 @@ void definir_case_terrain_combat(Case_terrain_combat *une_case_terrain_combat, c
 void set_unite(Case_terrain_combat *une_case_terrain_combat, Unite *une_unite);
 Unite * get_unite(Case_terrain_combat *une_case_terrain_combat);
 
+void ajouter_unite(Case_terrain_combat *une_case_terrain_combat, Unite *une_unite);
+void retirer_unite(Case_terrain_combat *une_case_terrain_combat);
+
 void affiche_case_terrain_combat(const Case_terrain_combat *une_case_terrain_combat);
 void test_module_case_terrain_combat();
 
