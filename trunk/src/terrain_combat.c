@@ -85,7 +85,15 @@ void affiche_terrain_combat(const Terrain_combat *terrain_combat)
             une_case = get_case_terrain_combat(terrain_combat, i, j);
             if(une_case->presence_unite == true)
             {
-                printf("|U|");
+				if(une_case->id_joueur == 1)
+				{
+					printf("|1|");
+				}
+				else if(une_case->id_joueur == 2)
+				{
+					printf("|2|");
+				}
+                
             }
             else{printf("|%c|", une_case->type_case_terrain_combat);}
         }
@@ -155,6 +163,38 @@ void ajoute_unite_terrain(Terrain_combat * un_terrain_combat, Unite * unite, int
 	Case_terrain_combat * une_case;
 	une_case = get_case_terrain_combat(un_terrain_combat,x,y);
 	ajouter_unite(une_case,unite);
+}
+
+bool case_libre(Terrain_combat * un_terrain_combat,int x, int y)
+{
+	bool p;
+	p = get_presence_unite(un_terrain_combat->tab_terrain_combat[x*(terrain_combat->taille_combat_x)+y]);
+	return p;
+}
+
+void placer_unite_flotte(Terrain_combat * un_terrain_combat, Flotte * flotte1, Flotte * flotte2)
+{
+	int i,j,m,n;
+	for(i=0,i<(flotte1->taille_flotte),i++)
+	{
+		m=flotte1->tab_unite[i]->x_unite;n=flotte1->tab_unite[i]->y_unite;
+		do
+		{
+			flotte1->tab_unite[i]->y_unite= (flotte1->tab_unite[i]->y_unite) +1	;
+			m=flotte1->tab_unite[i]->x_unite;n=flotte1->tab_unite[i]->y_unite;
+		}while(!case_libre(un_terrain_combat, m,n));
+			ajoute_unite_terrain(un_terrain_combat, flotte1->tab_unite+i,m,n);
+	}
+	/* for(i=0,i<(flotte2->taille_flotte),i++)
+	{
+		m=flotte1->tab_unite[i]->x_unite;n=flotte1->tab_unite[i]->y_unite;
+		do
+		{
+			flotte1->tab_unite[i]->y_unite= (flotte1->tab_unite[i]->y_unite) +1	;
+			m=flotte1->tab_unite[i]->x_unite;n=flotte1->tab_unite[i]->y_unite;
+		}while(!case_libre(un_terrain_combat, m,n));
+			ajoute_unite_terrain(un_terrain_combat, flotte1->tab_unite+i,m,n);
+	}*/
 }
 
 /*void test_module_terrain_combat()

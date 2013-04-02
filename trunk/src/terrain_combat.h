@@ -23,8 +23,6 @@ typedef struct
     int taille_combat_x;
     int taille_combat_y;
     Case_terrain_combat *tab_terrain_combat; /*x en abscisse, y en ordonnée, on commence à 0 (à modifier?)*/
-	Flotte * flotte1;
-	Flotte * flotte2;
 }Terrain_combat;
 
 void initilalise_terrain_combat(Terrain_combat *terrain_jeu_combat, int taille_x, int taille_y);
@@ -53,7 +51,7 @@ bool deplacement_unite(Terrain_combat *un_terrain_combat, Unite *une_unite, int 
 /*ajoute une unité sur la case de coordonnées (x,y)*/
 void ajoute_unite_terrain(Terrain_combat * un_terrain_combat, Unite * unite, int x, int y);
 
-
+void placer_unite_flotte(Terrain_combat * un_terrain_combat, Flotte * flotte1, Flotte * flotte2);
 
 /*void test_module_terrain_combat();*/
 
