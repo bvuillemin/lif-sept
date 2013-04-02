@@ -6,6 +6,7 @@
 #include <stdbool.h>
 #include "flotte.h"
 #include "case_terrain_combat.h"
+#include "flotte.h"
 
 /**
  * \file      Module Terrain_combat

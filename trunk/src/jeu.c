@@ -4,12 +4,12 @@
 
 #include "jeu.h"
 #include "joueur.h"
-
+/*
 void initialise_jeu(Jeu *un_jeu)
 {
 	un_jeu->tour_en_cours = 0;
 	un_jeu->nb_joueur = 0;
-	*(un_jeu->tab_joueur) =(Joueur *)malloc(sizeof(Joueur *) * 10);
+	un_jeu->tab_joueur =(Joueur *)malloc(sizeof(Joueur *) * 10);
 }
 
 Jeu *creer_jeu()
@@ -22,12 +22,10 @@ Jeu *creer_jeu()
 void ajouter_joueur(Jeu *un_jeu, Joueur *un_joueur)
 {
 	int i;
-	Joueur *temp[1];
 	i = un_jeu->nb_joueur;
 	if(un_jeu->nb_joueur < 10)
 	{
-		temp[0] = un_joueur;
-		un_jeu->tab_joueur[i] = temp[0];
+		un_jeu->tab_joueur[i] = *un_joueur;
 		un_jeu->nb_joueur ++;
 	}
 }
@@ -51,3 +49,4 @@ void tour_suivant(Jeu *un_jeu)
 
 	un_jeu->tour_en_cours++;
 }
+*/

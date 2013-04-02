@@ -16,7 +16,7 @@
  *
  * \details
  */
-
+/*
  typedef struct
  {
      int tour_en_cours;
@@ -28,5 +28,5 @@
  Jeu *creer_jeu();
  void ajouter_joueur(Jeu *un_jeu, Joueur *un_joueur);
  void tour_suivant(Jeu *un_jeu);
-void tour_suivant(Jeu *un_jeu);
+void tour_suivant(Jeu *un_jeu);*/
 #endif
