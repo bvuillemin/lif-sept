@@ -33,7 +33,7 @@ Case_terrain_combat* get_case_terrain_combat(const Terrain_combat *terrain_comba
 
 void modifie_type_case_terrain_combat(const Terrain_combat *terrain_combat, int x, int y, char c)
 {
-    terrain_combat->tab_terrain_combat[y*(terrain_combat->taille_combat_y)+x].type_case_terrain_combat = c;
+    set_type_case_terrain_combat(terrain_combat->tab_terrain_combat[x*(terrain_combat->taille_combat_x)+y],c);
 }
 
 void initilalise_terrain_combat(Terrain_combat *terrain_jeu_combat, int taille_combat_x, int taille_combat_y)
@@ -150,6 +150,10 @@ bool deplacement_unite(Terrain_combat *un_terrain_combat, Unite *une_unite, int 
 
 }
 
+void set_case_terrain_combat(const Terrain_combat *terrain_jeu_combat, int x, int y, char c)
+{
+	
+}
 
 /*void test_module_terrain_combat()
 {
