@@ -65,7 +65,7 @@ void modification_production_planete(Planete *une_planete, int metal, int argent
 void libere_planete(Planete *planete);
 void detruit_planete(Planete **planete);
 
-void affiche_planete(Planete *une_planete);
+void afficher_planete(Planete *une_planete);
 
 void test_module_planete();
 

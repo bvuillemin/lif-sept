@@ -38,7 +38,7 @@ void set_carburant_joueur(Joueur *un_joueur, int nb);
 int get_carburant_joueur(const Joueur *un_joueur);
 void set_population_joueur(Joueur *un_joueur, int nb);
 int get_population_joueur(const Joueur *un_joueur);
-//void set_nb_planete(Joueur *un_joueur, int nb);
+/*void set_nb_planete(Joueur *un_joueur, int nb);*/
 int get_nb_planete(Joueur *un_joueur);
 
 void initialise_joueur(Joueur *un_joueur, char nom[30]);
@@ -56,7 +56,7 @@ void retirer_population(Joueur *un_joueur, int nb);
 void recuperer_ressource_planete(Joueur *un_joueur, int *metal, int *argent, int *carburant, int *population);
 
 void ajouter_planete_joueur(Joueur *un_joueur, Planete *une_planete);
-void ajouter_flotte_joueur(Joueur *un_joueur, Flotte *une_flotte);
+void ajouter_flotte_joueur(Joueur *un_joueur, Flotte une_flotte);
 
 
 #endif
