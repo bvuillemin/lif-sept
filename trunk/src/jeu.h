@@ -29,4 +29,5 @@
  void ajouter_joueur(Jeu *un_jeu, Joueur *un_joueur);
  void tour_suivant(Jeu *un_jeu);
 void tour_suivant(Jeu *un_jeu);
+void afficher_ressource_joueur(Jeu *un_jeu);
 #endif

@@ -10,6 +10,7 @@ void initialise_flotte(Flotte *flotte)
 {
     flotte->taille_maximum_flotte = 10; /*valeur temporaire qu'il faudra éventuellemnt modifié*/
     flotte->taille_flotte = 0;
+	flotte->pt_mouvement_espace_flotte = 0;
     flotte->tab_unite = (Unite *)malloc(sizeof(Unite)*flotte->taille_maximum_flotte);
 }
 
@@ -87,10 +88,15 @@ void detruit_flotte(Flotte **flotte)
 
 int ajouter_unite_flotte(Flotte *flotte, Unite *unite)
 {
-    if(flotte->taille_flotte < flotte->taille_maximum_flotte)
+	int min = flotte->pt_mouvement_espace_flotte;
+	if(flotte->taille_flotte < flotte->taille_maximum_flotte)
     {
         flotte->tab_unite[flotte->taille_flotte] = *unite;
         flotte->taille_flotte ++;
+		if((unite->pt_mouvement_unite < min)||(flotte->pt_mouvement_espace_flotte == 0))
+		{
+			flotte->pt_mouvement_espace_flotte = unite->pt_mouvement_unite;
+		}
         return 1;
     }
     else
@@ -119,7 +125,8 @@ void afficher_flotte(Flotte *flotte)
     int i;
     for(i=0;i<flotte->taille_flotte;i++)
     {
-        printf("|| Unite %d: pv = %d, pa = %d\n, pme = %d\n", i+1 , flotte->tab_unite[i].pt_vie, flotte->tab_unite[i].pt_action, flotte->tab_unite[i].pt_mouvement_unite);
+		printf("Coordonnes de la flotte: %d %d, pt mouvement %d\n", flotte->x_flotte, flotte->y_flotte, flotte->pt_mouvement_espace_flotte);
+        printf("Unite %d: pv = %d pa = %d pme = %d\n", i+1 , flotte->tab_unite[i].pt_vie, flotte->tab_unite[i].pt_action, flotte->tab_unite[i].pt_mouvement_unite);
     }
 
 }
@@ -134,10 +141,10 @@ void enlever_pt_mouvement_espace_flotte(Flotte *une_flotte, int distance)
 void reinitialiser_mouvement_flotte(Flotte *une_flotte)
 {
 	int i;
-	int min=0;
+	int min = une_flotte->pt_mouvement_espace_flotte;
 	for(i=0;i<une_flotte->taille_flotte;i++)
 	{
-		if(une_flotte->tab_unite[i].pt_mouvement_unite<min)
+		if((une_flotte->tab_unite[i].pt_mouvement_unite < min)||(une_flotte->pt_mouvement_espace_flotte == 0))
 		{
 			min = une_flotte->tab_unite[i].pt_mouvement_unite;
 		}
