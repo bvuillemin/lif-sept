@@ -7,7 +7,7 @@
 
 #include "planete.h"
 #include "unite.h"
-
+#include "joueur.h"
 
 /**
  * \file      Module case_terrain_combat
@@ -25,6 +25,7 @@ typedef struct
     char type_case_terrain_combat;/* N si non initialisé*/
     bool presence_unite;
 	Unite *unite;
+	int id_joueur;
 }Case_terrain_combat;
 
 void initialise_case_combat(Case_terrain_combat *une_case_terrain_combat);
@@ -37,6 +38,9 @@ int get_y_combat(const Case_terrain_combat *une_case_terrain_combat);
 void set_type_case_terrain_combat(Case_terrain_combat *une_case_terrain_combat, char type);
 char get_type_case_terrain_combat(Case_terrain_combat *une_case_terrain_combat);
 
+void set_id_joueur(Case_terrain_combat *une_case_terrain_combat, int id_joueur);
+int get_id_joueur(const Case_terrain_combat *une_case_terrain_combat);
+
 void set_presence_unite(Case_terrain_combat *une_case_terrain_combat,bool p);
 bool get_presence_unite(Case_terrain_combat *une_case_terrain_combat);
 
@@ -44,6 +48,7 @@ void detruit_case_terrain_combat(Case_terrain_combat **une_case_terrain_combat);
 void libere_case_terrain_combat(Case_terrain_combat *une_case_terrain_combat);
 
 void definir_case_terrain_combat(Case_terrain_combat *une_case_terrain_combat, char c);
+
 void set_unite(Case_terrain_combat *une_case_terrain_combat, Unite *une_unite);
 Unite * get_unite(Case_terrain_combat *une_case_terrain_combat);
 

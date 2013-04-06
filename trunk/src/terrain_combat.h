@@ -45,14 +45,14 @@ void modification_terrain_combat(const Terrain_combat *terrain_jeu_combat, const
 
 void affiche_terrain_combat(const Terrain_combat *terrain_jeu_combat); /*affiche tous les types du terrain*/
 
-bool unite_peut_se_deplacer(Unite *une_unite, int x, int y);
-int calcul_distance_unite(int x_depart, int y_depart, int x_arrivee, int y_arrivee);
+
 bool deplacement_unite(Terrain_combat *un_terrain_combat, Unite *une_unite, int x, int y);
 /*ajoute une unité sur la case de coordonnées (x,y)*/
 void ajoute_unite_terrain(Terrain_combat * un_terrain_combat, Unite * unite, int x, int y);
 
 void placer_unite_flotte(Terrain_combat * un_terrain_combat, Flotte * flotte1, Flotte * flotte2);
 
+bool case_libre(Terrain_combat * un_terrain_combat,int x, int y);
 /*void test_module_terrain_combat();*/
 
 

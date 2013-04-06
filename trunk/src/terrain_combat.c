@@ -115,25 +115,9 @@ void modification_terrain_combat(const Terrain_combat *terrain_combat, const cha
 }
 
 
-bool unite_peut_se_deplacer(Unite *une_unite, int x, int y)
-{
-    int x_min, y_min, x_max, y_max;
-    x_min = une_unite->x_unite - une_unite->pt_mouvement_unite;
-    y_min = une_unite->y_unite - une_unite->pt_mouvement_unite;
-    x_max = une_unite->x_unite + une_unite->pt_mouvement_unite;
-    y_max = une_unite->y_unite + une_unite->pt_mouvement_unite;
 
-    if((x>x_min) && (x<x_max) && (y>y_min) && (y<y_max) && (une_unite->pt_mouvement_unite != 0))
-    {
-        return true;
-    }
-    else {return false;}
-}
 
-int calcul_distance_unite(int x_depart, int y_depart, int x_arrivee, int y_arrivee)
-{
-    return ceil(sqrt(pow(x_depart - x_arrivee, 2) + pow(y_depart - y_arrivee, 2)) - 0.1); /*on enleve 0.1 pour etre un peu plus précis: si on se deplace de 7.05 on veut que ce soit 7*/
-}
+
 
 bool deplacement_unite(Terrain_combat *un_terrain_combat, Unite *une_unite, int x, int y)
 {
@@ -168,20 +152,22 @@ void ajoute_unite_terrain(Terrain_combat * un_terrain_combat, Unite * unite, int
 bool case_libre(Terrain_combat * un_terrain_combat,int x, int y)
 {
 	bool p;
-	p = get_presence_unite(un_terrain_combat->tab_terrain_combat[x*(terrain_combat->taille_combat_x)+y]);
+	p = get_presence_unite(un_terrain_combat->tab_terrain_combat+(x*(un_terrain_combat->taille_combat_x)+y));
 	return p;
 }
 
 void placer_unite_flotte(Terrain_combat * un_terrain_combat, Flotte * flotte1, Flotte * flotte2)
 {
 	int i,j,m,n;
-	for(i=0,i<(flotte1->taille_flotte),i++)
+	for(i=0;i<(flotte1->taille_flotte);i++)
 	{
-		m=flotte1->tab_unite[i]->x_unite;n=flotte1->tab_unite[i]->y_unite;
+		m=get_x_unite(flotte1->tab_unite+i);
+		n=get_y_unite(flotte1->tab_unite+i);
 		do
 		{
-			flotte1->tab_unite[i]->y_unite= (flotte1->tab_unite[i]->y_unite) +1	;
-			m=flotte1->tab_unite[i]->x_unite;n=flotte1->tab_unite[i]->y_unite;
+			set_y_unite(flotte1->tab_unite+i,n+1);
+			m=get_x_unite(flotte1->tab_unite+i);
+			n=get_y_unite(flotte1->tab_unite+i);
 		}while(!case_libre(un_terrain_combat, m,n));
 			ajoute_unite_terrain(un_terrain_combat, flotte1->tab_unite+i,m,n);
 	}

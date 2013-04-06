@@ -57,6 +57,9 @@ int get_pt_deplacement(const Unite *unite_jeu);
 void set_pt_mouvement_unite(Unite *unite_jeu, const int x);
 int get_pt_mouvement_unite(const Unite *unite_jeu);
 
+bool unite_peut_se_deplacer(Unite *une_unite, int x, int y);
+int calcul_distance_unite(int x_depart, int y_depart, int x_arrivee, int y_arrivee);
+
 void enlever_pt_mouvement_combat_unite(Unite *une_unite, int distance);
 
 void test_module_unite();

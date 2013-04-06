@@ -108,6 +108,26 @@ int get_pt_mouvement_unite(const Unite *unite_jeu)
     return unite_jeu->pt_mouvement_unite;
 }
 
+bool unite_peut_se_deplacer(Unite *une_unite, int x, int y)
+{
+    int x_min, y_min, x_max, y_max;
+    x_min = une_unite->x_unite - une_unite->pt_mouvement_unite;
+    y_min = une_unite->y_unite - une_unite->pt_mouvement_unite;
+    x_max = une_unite->x_unite + une_unite->pt_mouvement_unite;
+    y_max = une_unite->y_unite + une_unite->pt_mouvement_unite;
+
+    if((x>x_min) && (x<x_max) && (y>y_min) && (y<y_max) && (une_unite->pt_mouvement_unite != 0))
+    {
+        return true;
+    }
+    else {return false;}
+}
+
+int calcul_distance_unite(int x_depart, int y_depart, int x_arrivee, int y_arrivee)
+{
+    return ceil(sqrt(pow(x_depart - x_arrivee, 2) + pow(y_depart - y_arrivee, 2)) - 0.1); /*on enleve 0.1 pour etre un peu plus précis: si on se deplace de 7.05 on veut que ce soit 7*/
+}
+
 void enlever_pt_mouvement_combat_unite(Unite *une_unite, int distance)
 {
     int temp = get_pt_mouvement_unite(une_unite);

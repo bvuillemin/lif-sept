@@ -112,13 +112,12 @@ Unite * get_unite(Case_terrain_combat *une_case_terrain_combat)
 	return une_case_terrain_combat->unite;
 }
 
-void ajouter_unite(Case_terrain_combat *une_case_terrain_combat, Unite *une_unite,Joueur * joueur)
+void ajouter_unite(Case_terrain_combat *une_case_terrain_combat, Unite *une_unite)
 {
     une_case_terrain_combat->unite = une_unite;
     une_case_terrain_combat->presence_unite = true;
     une_case_terrain_combat->unite->x_unite = une_case_terrain_combat->x_combat;
     une_case_terrain_combat->unite->y_unite = une_case_terrain_combat->y_combat;
-	une_case_terrain_combat->id_joueur = joueur->numero_joueur;
 }
 
 void retirer_unite(Case_terrain_combat *une_case_terrain_combat)
