@@ -114,7 +114,6 @@ void ajouter_flotte_joueur(Joueur *un_joueur, Flotte une_flotte)
         un_joueur->tab_flotte[0] = une_flotte;
         un_joueur->nb_flotte ++;
     }
-
 }
 
 void recuperer_ressource_planete(Joueur *un_joueur, int *metal, int *argent, int *carburant, int *population)
