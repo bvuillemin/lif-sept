@@ -26,7 +26,7 @@ typedef struct
 }Niveau;
 
 void initilalise_niveau(Niveau *niveau, int niv, int exp);
-
+Niveau *creer_niveau(int niv, int exp);
 
 void set_niveau_unite(Niveau *niveau, int niv);
 int get_niveau_unite(const Niveau *niveau);
