@@ -51,8 +51,8 @@ void set_habitabilite(Planete *une_planete, int nb);
 int get_habitabilite(Planete *une_planete);
 void set_planete_principale(Planete *une_planete, int booleen);
 int get_planete_principale(Planete *une_planete);
-void set_planete_colonise(Planete *une_planete, int booleen);
-int get_planete_colonise(Planete *une_planete);
+void set_planete_colonisee(Planete *une_planete, int booleen);
+int get_planete_colonisee(Planete *une_planete);
 
 void set_metal(Planete *une_planete, int nb);
 int get_metal(Planete *une_planete);
