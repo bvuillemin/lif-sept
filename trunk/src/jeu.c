@@ -11,7 +11,7 @@ void initialise_jeu(Jeu *un_jeu)
 	un_jeu->tour_en_cours = 0;
 	un_jeu->joueur_en_cours = 0;
 	un_jeu->nb_joueur = 0;
-	un_jeu->tab_joueur =(Joueur *)malloc(sizeof(Joueur *) * 10);
+	un_jeu->tab_joueur =(Joueur *)malloc(sizeof(Joueur) * 10);
 }
 
 Jeu *creer_jeu()
@@ -51,18 +51,24 @@ void tour_suivant(Jeu *un_jeu)
 	int argent = 0;
 	int carburant = 0;
 	int population = 0;
+	int i;
 
-	/*recuperer_ressource_planete(&(un_jeu->tab_joueur[0]), &metal, &argent, &carburant, &population);
+	for(i=0;i<un_jeu->nb_joueur;i++)
+	{
+		metal = 0;
+		argent = 0;
+		carburant = 0;
+		population = 0;
 
-	un_jeu->tab_joueur[0].metal += metal;
-	un_jeu->tab_joueur[0].argent += argent;
-	un_jeu->tab_joueur[0].carburant += carburant;
-	un_jeu->tab_joueur[0].population += population;
-	printf("Ressources du tour %d: \nMetal: %d \nArgent: %d \nCarburant: %d \nPopulation: %d\n", un_jeu->tour_en_cours, metal, argent, carburant, population);
-	*/
+		recuperer_ressource_planete(&(un_jeu->tab_joueur[i]), &metal, &argent, &carburant, &population);
 
-    reinitialiser_mouvement_flotte(&(un_jeu->tab_joueur[0].tab_flotte[0]));
-	reinitialiser_mouvement_flotte(&(un_jeu->tab_joueur[1].tab_flotte[0]));
+		un_jeu->tab_joueur[i].metal += metal;
+		un_jeu->tab_joueur[i].argent += argent;
+		un_jeu->tab_joueur[i].carburant += carburant;
+		un_jeu->tab_joueur[i].population += population;
+		printf("Ressources du tour %d pour le joueur %d: \nMetal: %d \nArgent: %d \nCarburant: %d \nPopulation: %d\n\n", un_jeu->tour_en_cours, i, metal, argent, carburant, population);
+		reinitialiser_mouvement_flotte(&(un_jeu->tab_joueur[i].tab_flotte[0]));
+	}
 	un_jeu->tour_en_cours++;
 }
 
@@ -73,5 +79,9 @@ void afficher_info(Jeu *un_jeu)
 
 void afficher_ressource_joueur(Jeu *un_jeu)
 {
-	printf("Ressources du joueur %d: \nMetal: %d \nArgent: %d \nCarburant: %d \nPopulation: %d\n\n", un_jeu->tour_en_cours, un_jeu->tab_joueur[0].metal, un_jeu->tab_joueur[0].argent, un_jeu->tab_joueur[0].carburant, un_jeu->tab_joueur[0].population);
+	int i;
+	for(i=0;i<un_jeu->nb_joueur;i++)
+	{
+		printf("Ressources du joueur %d: \nMetal: %d \nArgent: %d \nCarburant: %d \nPopulation: %d\n\n", i, un_jeu->tab_joueur[i].metal, un_jeu->tab_joueur[i].argent, un_jeu->tab_joueur[i].carburant, un_jeu->tab_joueur[i].population);
+	}
 }

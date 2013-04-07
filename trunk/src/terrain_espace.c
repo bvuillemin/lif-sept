@@ -162,14 +162,18 @@ bool deplacement_flotte(Terrain_espace *un_terrain_espace, Flotte *une_flotte, i
         Case_terrain_espace *case_depart;
         Case_terrain_espace *case_arrivee;
 
-        x_depart = get_x_flotte(une_flotte);
-        y_depart = get_y_flotte(une_flotte);
-        case_depart = get_case_terrain_espace(un_terrain_espace, x_depart, y_depart);
-        case_arrivee = get_case_terrain_espace(un_terrain_espace, x, y);
-        ajouter_flotte(case_arrivee, une_flotte);
-        retirer_flotte(case_depart);
-        distance = calcul_distance(x_depart, y_depart, x, y);
-        enlever_pt_mouvement_espace_flotte(une_flotte, distance);
+		if(case_arrivee->presence_flotte == false)
+		{
+			x_depart = get_x_flotte(une_flotte);
+			y_depart = get_y_flotte(une_flotte);
+			case_depart = get_case_terrain_espace(un_terrain_espace, x_depart, y_depart);
+			case_arrivee = get_case_terrain_espace(un_terrain_espace, x, y);
+			ajouter_flotte(case_arrivee, une_flotte);
+			retirer_flotte(case_depart);
+			distance = calcul_distance(x_depart, y_depart, x, y);
+			enlever_pt_mouvement_espace_flotte(une_flotte, distance);
+		}
+		else {return false;}
         return true;
     }
     else {return false;}

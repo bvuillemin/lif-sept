@@ -42,30 +42,31 @@ int main()
 	char ressource[] = "ressource";
 	char info[] = "info";
 
-/*	Planete *terre;
-	Planete *jupiter;*/
+	Planete *terre;
+	Planete *jupiter;
 	Joueur *joueur;
 	Joueur *joueur2;
 	Jeu *jeu;
 
     int x = 1;
 	int y = 1;
+	int a;
 
     char nom_joueur[]="Pierre";
 	char nom_joueur2[]="Boulet";
-/*	char nom_terre[]="terre";
-	char nom_jupiter[]="jupiter";*/
+	char nom_terre[]="terre";
+	char nom_jupiter[]="jupiter";
 
 	un_terrain_espace = creer_terrain_espace(10, 10);
     modification_terrain_espace(un_terrain_espace, 'E');
 
-/*    ajouter_planete_terrain_espace(un_terrain_espace, 2, 1, nom_terre);
+    ajouter_planete_terrain_espace(un_terrain_espace, 2, 1, nom_terre);
     ajouter_planete_terrain_espace(un_terrain_espace, 8, 9, nom_jupiter);
     affiche_terrain_espace(un_terrain_espace);
 
     terre = get_planete_terrain_espace(un_terrain_espace, 2, 1);
     jupiter = get_planete_terrain_espace(un_terrain_espace, 8, 9);
-*/
+
 	joueur = creer_joueur(1, nom_joueur);
 	joueur2 = creer_joueur(2, nom_joueur2);
 	jeu = creer_jeu();
@@ -77,16 +78,16 @@ int main()
 	flotte2 = creer_flotte();
     unite3 = creer_unite(0, 0, 1, 1, 1, 1, 10);
     unite4 = creer_unite(0, 0, 1, 1, 1, 1, 10);
-/*
+
 	ajouter_planete_joueur(joueur, terre);
 	afficher_planete(joueur->tab_planete[0]);
 
 	ajouter_planete_joueur(joueur2, jupiter);
 	afficher_planete(joueur2->tab_planete[0]);
 
-    modification_production_planete(joueur->tab_planete[0], 100, 100, 100, 100);
+    modification_production_planete(joueur->tab_planete[0], 100, 50, 10, 100);
 	modification_production_planete(joueur2->tab_planete[0], 200, 50, 75, 0);
-*/
+
     ajouter_unite_flotte(flotte, unite1);
     ajouter_unite_flotte(flotte, unite2);
 
@@ -101,17 +102,15 @@ int main()
     printf("Affiche flotte 2\n");
     afficher_flotte(&joueur2->tab_flotte[0]);
 
-	ajouter_flotte(&(un_terrain_espace->tab_terrain_espace[2*(un_terrain_espace->taille_espace_x)+3]), &joueur->tab_flotte[0]);
-	ajouter_flotte(&(un_terrain_espace->tab_terrain_espace[9*(un_terrain_espace->taille_espace_x)+9]), &joueur2->tab_flotte[0]);
+	ajouter_flotte(get_case_terrain_espace(un_terrain_espace, 2, 3), &joueur->tab_flotte[0]);
+	ajouter_flotte(get_case_terrain_espace(un_terrain_espace, 9, 9), &joueur2->tab_flotte[0]);
 
 	ajouter_joueur(jeu, joueur);
 	ajouter_joueur(jeu, joueur2);
 
 	affiche_terrain_espace(un_terrain_espace);
 
-   /* ajouter_flotte(&(un_terrain_espace->tab_terrain_espace[2*(un_terrain_espace->taille_espace_x)+3]), flotte);
-    affiche_terrain_espace(un_terrain_espace);
-
+/*
     set_pt_mouvement_espace_flotte(flotte, 10);
     detruire_sauvegarde("test");
     sauvegarde_terrain(un_terrain_espace, "test");
@@ -122,9 +121,10 @@ int main()
     ouverture_terrain("test");
     system("clear");*/
 
-
     while(1)
     {
+		a = jeu->joueur_en_cours;
+
         printf("tapez planete, move, flotte, suivant, ressource ou exit\n");
         scanf("%s", menu);
         if(strcmp(menu, exit) == 0)
@@ -133,48 +133,25 @@ int main()
         }
         if(strcmp(menu, move) == 0)
         {
-			if(jeu->joueur_en_cours == 0)
+			printf("Coordonnées où bouger la flotte:\n");
+			scanf("%d", &x);
+			scanf("%d", &y);
+			//system("clear");
+			if(deplacement_flotte(un_terrain_espace, &(jeu->tab_joueur[a].tab_flotte[0]), x, y) == false)
 			{
-				printf("Coordonnées où bouger la flotte:\n");
-				scanf("%d", &x);
-				scanf("%d", &y);
-				//system("clear");
-				if(deplacement_flotte(un_terrain_espace, &joueur->tab_flotte[0], x, y) == false)
-				{
-					printf("Déplacement impossible\n");
-				}
-				affiche_terrain_espace(un_terrain_espace);
+				printf("Déplacement impossible\n");
 			}
-			if(jeu->joueur_en_cours == 1)
-			{
-				printf("Coordonnées où bouger la flotte:\n");
-				scanf("%d", &x);
-				scanf("%d", &y);
-				//system("clear");
-				if(deplacement_flotte(un_terrain_espace, &joueur2->tab_flotte[0], x, y) == false)
-				{
-					printf("Déplacement impossible\n");
-				}
-				affiche_terrain_espace(un_terrain_espace);
-			}
+			affiche_terrain_espace(un_terrain_espace);
         }
         if(strcmp(menu, info_planete) == 0)
         {
-  //          afficher_planete(terre);
-   //         afficher_planete(jupiter);
+            afficher_planete(terre);
+            afficher_planete(jupiter);
         }
 		if(strcmp(menu, info_flotte) == 0)
         {
-			if(jeu->joueur_en_cours == 0)
-			{
-				printf("Affiche flotte 1\n");
-				afficher_flotte(&joueur->tab_flotte[0]);
-			}
-			if(jeu->joueur_en_cours == 1)
-			{
-				printf("Affiche flotte 1\n");
-				afficher_flotte(&joueur2->tab_flotte[0]);
-			}
+			printf("Affiche flotte du joueur %d\n", a);
+			afficher_flotte(&(jeu->tab_joueur[a].tab_flotte[0]));
         }
 		if(strcmp(menu, ressource) == 0)
         {
