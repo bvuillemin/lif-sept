@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include <math.h>
 #include "unite.h"
 
 void initialise_unite(Unite *unite_jeu,int x_unite,int y_unite,int pt_vie, int pt_attaque, int pt_action, int pt_deplacement,int pt_mouvement)

@@ -59,7 +59,7 @@ bool get_presence_unite(Case_terrain_combat *une_case_terrain_combat)
 {
 	return une_case_terrain_combat->presence_unite;
 }
-
+/*
 void set_id_joueur(Case_terrain_combat *une_case_terrain_combat, int id_joueur)
 {
 	une_case_terrain_combat->id_joueur = id_joueur;
@@ -67,7 +67,7 @@ void set_id_joueur(Case_terrain_combat *une_case_terrain_combat, int id_joueur)
 int get_id_joueur(const Case_terrain_combat *une_case_terrain_combat)
 {
 	return une_case_terrain_combat->id_joueur;
-}
+}*/
 
 void definir_case_terrain_combat(Case_terrain_combat *une_case_terrain_combat, char c)
 {
