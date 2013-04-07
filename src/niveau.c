@@ -9,7 +9,7 @@ void initilalise_niveau(Niveau *niveau, int niv, int exp)
 	niveau -> experience = exp;
 }
 
-Niveau *creer_niveau(int niv, int exp)
+Niveau* creer_niveau(int niv, int exp)
 {
     Niveau *niveau=(Niveau *)malloc(sizeof(Niveau));
     initilalise_niveau(niveau, niv, exp);
