@@ -8,6 +8,8 @@
 
 void initialise_flotte(Flotte *flotte)
 {
+	flotte->x_flotte = 0;
+	flotte->y_flotte = 0;
     flotte->taille_maximum_flotte = 10; /*valeur temporaire qu'il faudra éventuellemnt modifié*/
     flotte->taille_flotte = 0;
 	flotte->pt_mouvement_espace_flotte = 0;
@@ -146,10 +148,10 @@ void enlever_pt_mouvement_espace_flotte(Flotte *une_flotte, int distance)
 void reinitialiser_mouvement_flotte(Flotte *une_flotte)
 {
 	int i;
-	int min = une_flotte->pt_mouvement_espace_flotte;
+	int min = 0;
 	for(i=0;i<une_flotte->taille_flotte;i++)
 	{
-		if((une_flotte->tab_unite[i].pt_mouvement_unite < min)||(une_flotte->pt_mouvement_espace_flotte == 0))
+		if((une_flotte->tab_unite[i].pt_mouvement_unite < min)||(min == 0))
 		{
 			min = une_flotte->tab_unite[i].pt_mouvement_unite;
 		}
