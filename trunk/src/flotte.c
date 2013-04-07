@@ -105,6 +105,10 @@ int ajouter_unite_flotte(Flotte *flotte, Unite *unite)
     }
 }
 
+Unite * get_unite_i_flotte(const Flotte * flotte, const int i)
+{
+	return flotte->tab_unite+i; 
+}
 int retirer_unite_flotte(Flotte *flotte,const int indice_unite)
 {
     int i;
@@ -123,10 +127,11 @@ int retirer_unite_flotte(Flotte *flotte,const int indice_unite)
 void afficher_flotte(Flotte *flotte)
 {
     int i;
+	printf("Coordonnes de la flotte: %d %d, pt mouvement %d, taille : %d\n", flotte->x_flotte, flotte->y_flotte, flotte->pt_mouvement_espace_flotte,flotte->taille_flotte);
     for(i=0;i<flotte->taille_flotte;i++)
     {
-		printf("Coordonnes de la flotte: %d %d, pt mouvement %d\n", flotte->x_flotte, flotte->y_flotte, flotte->pt_mouvement_espace_flotte);
-        printf("Unite %d: pv = %d pa = %d pme = %d\n", i+1 , flotte->tab_unite[i].pt_vie, flotte->tab_unite[i].pt_action, flotte->tab_unite[i].pt_mouvement_unite);
+		
+        printf("Unite %d: pv = %d pa = %d pme = %d  x= %d y=%d\n", i+1 , flotte->tab_unite[i].pt_vie, flotte->tab_unite[i].pt_action, flotte->tab_unite[i].pt_mouvement_unite, flotte->tab_unite[i].x_unite, flotte->tab_unite[i].y_unite);
     }
 
 }
