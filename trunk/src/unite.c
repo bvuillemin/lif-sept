@@ -4,22 +4,22 @@
 #include <math.h>
 #include "unite.h"
 
-void initialise_unite(Unite *unite_jeu,int x_unite,int y_unite,int pt_vie, int pt_attaque, int pt_action, int pt_deplacement,int pt_mouvement)
+void initialise_unite(Unite *unite_jeu, int pt_vie, int pt_attaque, int pt_action, int pt_deplacement,int pt_mouvement)
 {
     unite_jeu->pt_vie=pt_vie;
     unite_jeu->pt_attaque=pt_attaque;
     unite_jeu->pt_action=pt_action;
     unite_jeu->pt_deplacement=pt_deplacement;
     unite_jeu->pt_mouvement_unite=pt_mouvement;
-	unite_jeu->x_unite=x_unite;
-	unite_jeu->y_unite=y_unite;
+	unite_jeu->x_unite=0;
+	unite_jeu->y_unite=0;
     /*initialise_niveau(unite_jeu->niveau_unite, 0, 0);*/
 }
 
-Unite *creer_unite(int x_unite,int y_unite,int pt_vie, int pt_attaque, int pt_action, int pt_deplacement,int pt_mouvement)
+Unite *creer_unite(int pt_vie, int pt_attaque, int pt_action, int pt_deplacement,int pt_mouvement)
 {
     Unite *nouvelle_unite = (Unite *)malloc(sizeof(Unite));
-    initialise_unite(nouvelle_unite,x_unite,y_unite,pt_vie, pt_attaque, pt_action, pt_deplacement, pt_mouvement);
+    initialise_unite(nouvelle_unite, pt_vie, pt_attaque, pt_action, pt_deplacement, pt_mouvement);
     return nouvelle_unite;
 }
 
@@ -33,7 +33,7 @@ void libere_unite(Unite *unite_jeu)
     /*libere_niveau(unite_jeu->niveau_unite);*/
 }
 
-void detruit(Unite **unite_jeu)
+void detruire_unite(Unite **unite_jeu)
 {
     libere_unite(*unite_jeu);
     free(*unite_jeu);

@@ -75,6 +75,11 @@ int get_pt_mouvement_espace_flotte(Flotte *une_flotte)
 
 void libere_flotte(Flotte *flotte)
 {
+    int i;
+    for(i=0;i<flotte->taille_flotte;i++)
+    {
+        //detruire_unite(&(flotte->tab_unite[i]));
+    }
     free(flotte->tab_unite);
     flotte->tab_unite = NULL;
     flotte->taille_maximum_flotte = 10; /*valeur temporaire qu'il faudra éventuellemnt modifié*/

@@ -46,13 +46,14 @@ void initilalise_terrain_espace(Terrain_espace *terrain_jeu_espace, int taille_e
     int i, j;
     terrain_jeu_espace->taille_espace_x = taille_espace_x;
     terrain_jeu_espace->taille_espace_y = taille_espace_y;
-    terrain_jeu_espace->tab_terrain_espace = (Case_terrain_espace *)malloc(sizeof(Case_terrain_espace)*taille_espace_x*taille_espace_y);
-    for(i=0;i<terrain_jeu_espace->taille_espace_x;i++)
+    terrain_jeu_espace->tab_terrain_espace = (Case_terrain_espace *)malloc(sizeof(Case_terrain_espace)*(taille_espace_x*taille_espace_y+taille_espace_x));
+    for(i=0;i<terrain_jeu_espace->taille_espace_y;i++)
     {
-        for(j=0;j<terrain_jeu_espace->taille_espace_y;j++)
+        for(j=0;j<terrain_jeu_espace->taille_espace_x;j++)
         {
-           terrain_jeu_espace->tab_terrain_espace[j*(terrain_jeu_espace->taille_espace_x)+i].x_espace = i;
-           terrain_jeu_espace->tab_terrain_espace[j*(terrain_jeu_espace->taille_espace_x)+i].y_espace = j;
+            initialise_case_espace(&(terrain_jeu_espace->tab_terrain_espace[i*(terrain_jeu_espace->taille_espace_x)+j]));
+           terrain_jeu_espace->tab_terrain_espace[i*(terrain_jeu_espace->taille_espace_x)+j].x_espace = j;
+           terrain_jeu_espace->tab_terrain_espace[i*(terrain_jeu_espace->taille_espace_x)+j].y_espace = i;
         }
     }
 
@@ -67,6 +68,14 @@ Terrain_espace *creer_terrain_espace(int taille_espace_x, int taille_espace_y)
 
 void libere_terrain_espace(Terrain_espace *terrain_jeu_espace)
 {
+    int i, j;
+    for(i=0;i<terrain_jeu_espace->taille_espace_x;i++)
+    {
+        for(j=0;j<terrain_jeu_espace->taille_espace_y;j++)
+        {
+           //detruit_case_terrain_espace(&(terrain_jeu_espace->tab_terrain_espace[j*(terrain_jeu_espace->taille_espace_x)+i])));
+        }
+    }
     free(terrain_jeu_espace->tab_terrain_espace);
     terrain_jeu_espace->taille_espace_x=0;
     terrain_jeu_espace->taille_espace_y=0;
@@ -83,11 +92,11 @@ void affiche_terrain_espace(const Terrain_espace *terrain_espace)
 {
     int i, j;
     Case_terrain_espace *une_case;
-    for(i=0;i<terrain_espace->taille_espace_x;i++)
+    for(j=0;j<terrain_espace->taille_espace_y;j++)
     {
-        for(j=0;j<terrain_espace->taille_espace_y;j++)
+        for(i=0;i<terrain_espace->taille_espace_x;i++)
         {
-            une_case = get_case_terrain_espace(terrain_espace, j, i);
+            une_case = get_case_terrain_espace(terrain_espace, i, j);
             if(une_case->presence_flotte == true)
             {
                 printf("|F|");
@@ -161,13 +170,13 @@ bool deplacement_flotte(Terrain_espace *un_terrain_espace, Flotte *une_flotte, i
         int x_depart, y_depart;
         Case_terrain_espace *case_depart;
         Case_terrain_espace *case_arrivee;
+        x_depart = get_x_flotte(une_flotte);
+        y_depart = get_y_flotte(une_flotte);
+        case_depart = get_case_terrain_espace(un_terrain_espace, x_depart, y_depart);
+        case_arrivee = get_case_terrain_espace(un_terrain_espace, x, y);
 
 		if(case_arrivee->presence_flotte == false)
 		{
-			x_depart = get_x_flotte(une_flotte);
-			y_depart = get_y_flotte(une_flotte);
-			case_depart = get_case_terrain_espace(un_terrain_espace, x_depart, y_depart);
-			case_arrivee = get_case_terrain_espace(un_terrain_espace, x, y);
 			ajouter_flotte(case_arrivee, une_flotte);
 			retirer_flotte(case_depart);
 			distance = calcul_distance(x_depart, y_depart, x, y);

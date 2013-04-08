@@ -66,7 +66,7 @@ int get_population(Planete *une_planete);
 void modification_production_planete(Planete *une_planete, int metal, int argent, int carburant, int population);
 
 void libere_planete(Planete *planete);
-void detruit_planete(Planete **planete);
+void detruire_planete(Planete **planete);
 
 void afficher_planete(Planete *une_planete);
 
