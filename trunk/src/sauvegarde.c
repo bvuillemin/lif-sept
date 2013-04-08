@@ -4,6 +4,10 @@
 #include <stdbool.h>
 
 #include "terrain_espace.h"
+#include "planete.h"
+#include "flotte.h"
+#include "unite.h"
+#include "niveau.h"
 #include "sauvegarde.h"
 
 void detruire_sauvegarde(const char nom[30])
@@ -94,9 +98,9 @@ void sauvegarde_unite(const Unite *une_unite, const char nom[30])
     fprintf(f, "FinUnite\n");
     fclose(f);
 }
-void ouverture_terrain(FILE *f, long a)
+Terrain_espace* ouverture_terrain(FILE *f, long a)
 {
-    Terrain_espace *terrain_ouvert;
+    Terrain_espace* terrain_ouvert;
     char chaine[50], carre[1];
     int b, c;
     int i = 0;
@@ -118,9 +122,103 @@ void ouverture_terrain(FILE *f, long a)
             i++;
         }
     }
+    return terrain_ouvert;
 }
-void selection_ouverture(const char nom[30], long a)
+
+Planete* ouverture_planete(FILE *f, long a)
 {
+    Planete* planete_ouverte;
+    char chaine[50];
+    int b, c;
+    fseek (f, a, SEEK_SET);
+    fgets(chaine, 50, f);
+    planete_ouverte = creer_planete(chaine);
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    sscanf(fgets(chaine, 50, f), "%d", &c);
+    set_position_planete(planete_ouverte, b, c);
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    set_taille_utilisee(planete_ouverte, b);
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    set_taille_planete(planete_ouverte, b);
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    set_habitabilite(planete_ouverte, b);
+    if (sscanf(fgets(chaine, 50, f), "%d", &b) == 1)
+    {
+        set_planete_principale(planete_ouverte, 1);
+    }
+    else
+    {
+        set_planete_principale(planete_ouverte, 0);
+    };
+    if (sscanf(fgets(chaine, 50, f), "%d", &b) == 1)
+    {
+        set_planete_colonisee(planete_ouverte, 1);
+    }
+    else
+    {
+        set_planete_colonisee(planete_ouverte, 0);
+    };
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    set_metal(planete_ouverte, b);
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    set_argent(planete_ouverte, b);
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    set_carburant(planete_ouverte, b);
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    set_population(planete_ouverte, b);
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    return planete_ouverte;
+}
+
+Flotte* ouverture_flotte(FILE *f, long a)
+{
+    Flotte* flotte_ouverte;
+    char chaine[50];
+    int b;
+    fseek (f, a, SEEK_SET);
+    flotte_ouverte = creer_flotte();
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    set_x_flotte(flotte_ouverte, b);
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    set_y_flotte(flotte_ouverte, b);
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    set_pt_mouvement_espace_flotte(flotte_ouverte, b);
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    return flotte_ouverte;
+}
+
+Unite* ouverture_unite(FILE *f, long a)
+{
+    Unite* unite_ouverte;
+    char chaine[50];
+    int b, c, d, e, g, h, k;
+    fseek (f, a, SEEK_SET);
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    sscanf(fgets(chaine, 50, f), "%d", &c);
+    sscanf(fgets(chaine, 50, f), "%d", &d);
+    sscanf(fgets(chaine, 50, f), "%d", &e);
+    sscanf(fgets(chaine, 50, f), "%d", &g);
+    sscanf(fgets(chaine, 50, f), "%d", &h);
+    sscanf(fgets(chaine, 50, f), "%d", &k);
+    unite_ouverte = creer_unite(b, c, d, e, g, h, k);
+    return unite_ouverte;
+}
+
+/* Niveau* ouverture_niveau(FILE *f, long a)
+{
+    Niveau* niveau_ouvert;
+    char chaine[50];
+    int b, c;
+    fseek (f, a, SEEK_SET);
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    sscanf(fgets(chaine, 50, f), "%d", &c);
+    niveau_ouvert = creer_niveau(b, c);
+    return niveau_ouvert;
+}*/
+
+Terrain_espace* selection_ouverture(const char nom[30], long a)
+{
+    Terrain_espace* terrain_ouvert = NULL;
     FILE *f;
     char chaine[50];
     f = fopen(nom, "r");
@@ -136,7 +234,8 @@ void selection_ouverture(const char nom[30], long a)
     if (strcmp(chaine, "Terrain \n")==0)
     {
         printf("%s \n","GENIAL Terrain");
-        ouverture_terrain(f, a);
+        terrain_ouvert = ouverture_terrain(f, a);
+        printf("%ld", a);
     }
     if (strcmp(chaine, "Planete \n")==0)
     {
@@ -151,4 +250,38 @@ void selection_ouverture(const char nom[30], long a)
         printf("%s \n","GENIAL Unite");
     }
     fclose(f);
+    return terrain_ouvert;
 }
+
+/*int selection_ouverture(const char nom[30], long a)
+{
+    FILE *f;
+    char chaine[50];
+    f = fopen(nom, "r");
+    if (f==NULL)
+    {
+        printf("Erreur lors de l'ouverture de %s\n", nom);
+    }
+    fseek (f, a, SEEK_SET);
+    fgets(chaine, 50, f);
+    a = ftell(f);
+    printf("%ld \n", a);
+    printf("%s", chaine);
+    if (strcmp(chaine, "Terrain \n")==0)
+    {
+        return 1;
+    }
+    if (strcmp(chaine, "Planete \n")==0)
+    {
+        return 2;
+    }
+    if (strcmp(chaine, "Flotte \n")==0)
+    {
+        return 3;
+    }
+    if (strcmp(chaine, "Unite \n")==0)
+    {
+        return 4;
+    }
+    fclose(f);
+}*/
