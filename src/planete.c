@@ -43,7 +43,7 @@ void libere_planete(Planete *une_planete)
     une_planete->population = 0;
 }
 
-void detruit_planete(Planete **une_planete)
+void detruire_planete(Planete **une_planete)
 {
     libere_planete(*une_planete);
     free(*une_planete);
@@ -203,5 +203,5 @@ void test_module_planete()
 	{
 		printf ("Echec\n");
 	}
-    detruit_planete(&terre);
+    detruire_planete(&terre);
 }

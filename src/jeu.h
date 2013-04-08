@@ -22,7 +22,7 @@
      int tour_en_cours;
 	 int joueur_en_cours;
 	 int nb_joueur;
-	 Joueur* tab_joueur;
+	 Joueur *tab_joueur;
  }Jeu;
 
 void initialise_jeu(Jeu *un_jeu);
