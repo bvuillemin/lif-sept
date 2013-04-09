@@ -53,6 +53,7 @@ void enlever_pt_mouvement_espace_flotte(Flotte *une_flotte, int distance);
 void afficher_flotte(Flotte *flotte);
 void reinitialiser_mouvement_flotte(Flotte *une_flotte);
 void reinitialiser_deplacement_unite_flotte(Flotte *une_flotte);
+void reinitialiser_pt_action_unite_flotte(Flotte *une_flotte);
 
 void test_module_flotte();
 

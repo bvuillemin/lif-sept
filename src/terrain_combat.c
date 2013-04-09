@@ -222,15 +222,20 @@ void un_tour_combat(Terrain_combat * un_terrain_combat, Flotte * flotte)
 				scanf("%d %d",&a,&b);
 				p=deplacement_unite(un_terrain_combat, une_unite,a,b);
 			}while(!p);
+			enlever_pt_action_unite(une_unite, 1);
 			affiche_terrain_combat(un_terrain_combat);
 			afficher_flotte(flotte);
+			
 		}
 		if(!strcmp(controle,"attaquer"))
 		{
 			printf("Où voulez vous attaquer ?\n");
 			scanf("%d %d",&a,&b);
 			p=((peut_attaquer_hor_vert(un_terrain_combat, une_unite,a,b))||(peut_attaquer_diag(un_terrain_combat, une_unite,a,b)));
-			if(p==false){printf("impossible");} else {printf("on attaque!");}
+			if(p==false){printf("impossible\n");} 
+			else 
+			{printf("on attaque!\n");attaquer(un_terrain_combat,une_unite, a, b);}
+			enlever_pt_action_unite(une_unite, 2);
 			affiche_terrain_combat(un_terrain_combat);
 			afficher_flotte(flotte);
 		}
@@ -238,6 +243,24 @@ void un_tour_combat(Terrain_combat * un_terrain_combat, Flotte * flotte)
 	}
 	
 }
+
+void attaquer(Terrain_combat * un_terrain_combat,Unite * une_unite, int x, int y)
+{	
+	Unite * victime;
+	int pa_un, pv_vi;
+	
+	Case_terrain_combat * une_case;
+	une_case = get_case_terrain_combat(un_terrain_combat,x,y);
+	victime = get_unite(une_case);
+	pa_un = get_pt_attaque(une_unite);
+	pv_vi = get_pt_vie(victime);
+	if(get_presence_unite(une_case))
+	{
+		set_pt_vie(victime ,pv_vi - pa_un);
+	}
+	else {printf("n'a pas réussi à attaquer");}
+}
+
 bool peut_attaquer_hor_vert(Terrain_combat * un_terrain_combat, Unite * unite,int x,int y)
 {
 	int x_min, y_min, x_max, y_max, x_un, y_un, portee, pa;
@@ -265,7 +288,7 @@ bool peut_attaquer_diag(Terrain_combat * un_terrain_combat, Unite * unite,int x,
 	x_poss = abs( x - x_un);
 	y_poss = abs(y - y_un);
 	printf("poss = (%d,%d);unite (%d,%d); portee %d; x_pos %d \n",x,y,x_un,y_un,portee,x_poss);
-    if((x_poss==y_poss)&&(x_poss<= portee)&&(x_poss>0)&& (pa > 0))
+    if((x_poss==y_poss)&&(x_poss<= portee)&&(x_poss>0)&& (pa > 0)&& (get_presence_unite(get_case_terrain_combat(un_terrain_combat,x,y))))
     {
         return true;
     }
