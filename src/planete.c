@@ -33,7 +33,8 @@ void initialise_planete(Planete *une_planete, char nom_planete[30])
     une_planete->tab_fonction_creation[0] = creer_batiment_quartier_general;
     une_planete->tab_fonction_creation[1] = creer_batiment_metal;
 
-
+    une_planete->unite_en_cours =  0;
+    une_planete->unite_nb_tour_restant = 0;
 }
 
 Planete *creer_planete(char nom_planete[30])

@@ -34,6 +34,9 @@ typedef void (*Validation_creation_batiment)(struct sPlanete*);
      Validation_creation_batiment tab_fonction_validation[10];
      Creation_batiment tab_fonction_creation[10];
 
+     int unite_en_cours;
+     int unite_nb_tour_restant;
+
      int taille_utilisee;
      int taille_planete;
 	 int habitabilite;

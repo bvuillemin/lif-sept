@@ -165,7 +165,7 @@ int main()
     }*/
     afficher_planete(terre);
     afficher_batiment(terre);
-    creation_batiment(terre, 0);
+   /* creation_batiment(terre, 0);
     joueur_suivant(jeu);
     validation_batiment(terre);
     afficher_batiment(terre);
@@ -173,11 +173,18 @@ int main()
     joueur_suivant(jeu);
     validation_batiment(terre);
     afficher_batiment(terre);
+    joueur_suivant(jeu);*/
+
     joueur_suivant(jeu);
     joueur_suivant(jeu);
-
-
-
+    afficher_ressource_joueur(jeu);
+    creation_unite_planete(joueur, terre, 1);
+    afficher_ressource_joueur(jeu);
+    joueur_suivant(jeu);
+    validation_creation_unite_planete(un_terrain_espace, joueur, terre);
+    affiche_terrain_espace(un_terrain_espace);
+    printf("Affiche flotte du joueur %d\n", a);
+    afficher_flotte(&(jeu->tab_joueur[0].tab_flotte[0]));
 
     //detruit_terrain_espace(&un_terrain_espace);
 /*	un_terrain_combat = creer_terrain_combat(7,7);
