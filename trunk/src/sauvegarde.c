@@ -10,6 +10,45 @@
 #include "niveau.h"
 #include "sauvegarde.h"
 
+void initialise_sauvegarde(Sauvegarde *une_sauvegarde)
+{
+    une_sauvegarde->terrain_espace =(Terrain_espace *)malloc(sizeof(Terrain_espace));
+    une_sauvegarde->nb_planete = 0;
+    une_sauvegarde->tab_planete =(Planete *)malloc(sizeof(Planete) * 10);
+    une_sauvegarde->nb_flotte =0;
+    une_sauvegarde->tab_flotte =(Flotte *)malloc(sizeof(Flotte) * 10);
+}
+Sauvegarde *creer_sauvegarde()
+{
+    Sauvegarde *une_sauvegarde=(Sauvegarde *)malloc(sizeof(Sauvegarde));
+    initialise_sauvegarde(une_sauvegarde);
+    return une_sauvegarde;
+}
+void ajouter_terrain_espace_sauvegarde(Sauvegarde *une_sauvegarde, Terrain_espace *un_terrain_espace)
+{
+    une_sauvegarde->terrain_espace = un_terrain_espace;
+}
+void ajouter_planete_sauvegarde(Sauvegarde *une_sauvegarde, Planete *une_planete)
+{
+    int i;
+	i = une_sauvegarde->nb_planete;
+	if(une_sauvegarde->nb_planete < 10)
+	{
+		une_sauvegarde->tab_planete[i] = *une_planete;
+		une_sauvegarde->nb_planete ++;
+	}
+}
+void ajouter_flotte_sauvegarde(Sauvegarde *une_sauvegarde, Flotte *une_flotte)
+{
+    int i;
+	i = une_sauvegarde->nb_flotte;
+	if((une_sauvegarde->nb_flotte) < 10)
+	{
+		une_sauvegarde->tab_flotte[i] = *une_flotte;
+		une_sauvegarde->nb_flotte++;
+	}
+}
+
 void detruire_sauvegarde(const char nom[30])
 {
     FILE *f;
@@ -29,9 +68,9 @@ void sauvegarde_terrain(const Terrain_espace *terrain_jeu_espace, const char nom
     {
         printf("Erreur lors de l'ouverture de %s\n", nom);
     }
-    fprintf(f, "Terrain \n");
-    fprintf(f, "%d \n", terrain_jeu_espace->taille_espace_x);
-    fprintf(f, "%d \n", terrain_jeu_espace->taille_espace_y);
+    fprintf(f, "Terrain\n");
+    fprintf(f, "%d\n", terrain_jeu_espace->taille_espace_x);
+    fprintf(f, "%d\n", terrain_jeu_espace->taille_espace_y);
     for(i=0;i<terrain_jeu_espace->taille_espace_x;i++)
     {
         for(j=0;j<terrain_jeu_espace->taille_espace_y;j++)
@@ -51,52 +90,51 @@ void sauvegarde_planete(const Planete *une_planete, const char nom[30])
     {
         printf("Erreur lors de l'ouverture de %s\n", nom);
     }
-    fprintf(f, "Planete \n");
-    fprintf(f, "%s \n", une_planete->nom_planete);
-    fprintf(f, "%d \n", une_planete->x);
-    fprintf(f, "%d \n", une_planete->y);
-    fprintf(f, "%d \n", une_planete->taille_utilisee);
-    fprintf(f, "%d \n", une_planete->taille_planete);
-    fprintf(f, "%d \n", une_planete->planete_colonisee);
-    fprintf(f, "%d \n", une_planete->planete_principale);
+    fprintf(f, "Planete\n");
+    fprintf(f, "%s\n", une_planete->nom_planete);
+    fprintf(f, "%d\n", une_planete->x);
+    fprintf(f, "%d\n", une_planete->y);
+    fprintf(f, "%d\n", une_planete->taille_utilisee);
+    fprintf(f, "%d\n", une_planete->taille_planete);
+    fprintf(f, "%d\n", une_planete->habitabilite);
+    fprintf(f, "%d\n", une_planete->planete_principale);
+    fprintf(f, "%d\n", une_planete->planete_colonisee);
+    fprintf(f, "%d\n", une_planete->metal);
+    fprintf(f, "%d\n", une_planete->argent);
+    fprintf(f, "%d\n", une_planete->carburant);
+    fprintf(f, "%d\n", une_planete->population);
     fprintf(f, "FinPlanete\n");
     fclose(f);
 }
 void sauvegarde_flotte(const Flotte *une_flotte, const char nom[30])
 {
     FILE *f;
+    int i;
     f = fopen(nom, "a");
     if (f==NULL)
     {
         printf("Erreur lors de l'ouverture de %s\n", nom);
     }
-    fprintf(f, "Flotte \n");
-    fprintf(f, "%d \n", une_flotte->x_flotte);
-    fprintf(f, "%d \n", une_flotte->y_flotte);
-    fprintf(f, "%d \n", une_flotte->taille_maximum_flotte);
-    fprintf(f, "%d \n", une_flotte->taille_flotte);
-    fprintf(f, "%d \n", une_flotte->pt_mouvement_espace_flotte);
+    fprintf(f, "Flotte\n");
+    fprintf(f, "%d\n", une_flotte->x_flotte);
+    fprintf(f, "%d\n", une_flotte->y_flotte);
+    fprintf(f, "%d\n", une_flotte->taille_maximum_flotte);
+    fprintf(f, "%d\n", une_flotte->taille_flotte);
+    fprintf(f, "%d\n", une_flotte->pt_mouvement_espace_flotte);
+    for(i=0; i<une_flotte->taille_flotte; i++)
+    {
+        sauvegarde_unite(&une_flotte->tab_unite[i], f);
+    }
     fprintf(f, "FinFlotte\n");
     fclose(f);
 }
-void sauvegarde_unite(const Unite *une_unite, const char nom[30])
+void sauvegarde_unite(const Unite *une_unite, FILE* f)
 {
-    FILE *f;
-    f = fopen(nom, "a");
-    if (f==NULL)
-    {
-        printf("Erreur lors de l'ouverture de %s\n", nom);
-    }
-    fprintf(f, "Unite \n");
-    fprintf(f, "%d \n", une_unite->x_unite);
-    fprintf(f, "%d \n", une_unite->y_unite);
-    fprintf(f, "%d \n", une_unite->pt_vie);
-    fprintf(f, "%d \n", une_unite->pt_attaque);
-    fprintf(f, "%d \n", une_unite->pt_action);
-    fprintf(f, "%d \n", une_unite->pt_deplacement);
-    fprintf(f, "%d \n", une_unite->pt_mouvement_unite);
-    fprintf(f, "FinUnite\n");
-    fclose(f);
+    fprintf(f, "%d\n", une_unite->pt_vie);
+    fprintf(f, "%d\n", une_unite->pt_attaque);
+    fprintf(f, "%d\n", une_unite->pt_action);
+    fprintf(f, "%d\n", une_unite->pt_deplacement);
+    fprintf(f, "%d\n", une_unite->pt_mouvement_unite);
 }
 Terrain_espace* ouverture_terrain(FILE *f, long a)
 {
@@ -142,22 +180,10 @@ Planete* ouverture_planete(FILE *f, long a)
     set_taille_planete(planete_ouverte, b);
     sscanf(fgets(chaine, 50, f), "%d", &b);
     set_habitabilite(planete_ouverte, b);
-    if (sscanf(fgets(chaine, 50, f), "%d", &b) == 1)
-    {
-        set_planete_principale(planete_ouverte, 1);
-    }
-    else
-    {
-        set_planete_principale(planete_ouverte, 0);
-    };
-    if (sscanf(fgets(chaine, 50, f), "%d", &b) == 1)
-    {
-        set_planete_colonisee(planete_ouverte, 1);
-    }
-    else
-    {
-        set_planete_colonisee(planete_ouverte, 0);
-    };
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    set_planete_principale(planete_ouverte, b);
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    set_planete_colonisee(planete_ouverte, b);
     sscanf(fgets(chaine, 50, f), "%d", &b);
     set_metal(planete_ouverte, b);
     sscanf(fgets(chaine, 50, f), "%d", &b);
@@ -174,7 +200,7 @@ Flotte* ouverture_flotte(FILE *f, long a)
 {
     Flotte* flotte_ouverte;
     char chaine[50];
-    int b;
+    int b, i;
     fseek (f, a, SEEK_SET);
     flotte_ouverte = creer_flotte();
     sscanf(fgets(chaine, 50, f), "%d", &b);
@@ -182,43 +208,36 @@ Flotte* ouverture_flotte(FILE *f, long a)
     sscanf(fgets(chaine, 50, f), "%d", &b);
     set_y_flotte(flotte_ouverte, b);
     sscanf(fgets(chaine, 50, f), "%d", &b);
-    set_pt_mouvement_espace_flotte(flotte_ouverte, b);
+    set_taille_maximum_flotte(flotte_ouverte, b);
     sscanf(fgets(chaine, 50, f), "%d", &b);
+    set_taille_flotte(flotte_ouverte, b);
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    set_pt_mouvement_espace_flotte(flotte_ouverte, b);
+    for(i=0; i<flotte_ouverte->taille_flotte; i++)
+    {
+        flotte_ouverte->tab_unite[i] = *ouverture_unite(f);
+    }
     return flotte_ouverte;
 }
 
-Unite* ouverture_unite(FILE *f, long a)
+Unite* ouverture_unite(FILE *f)
 {
     Unite* unite_ouverte;
     char chaine[50];
-    int b, c, d, e, g, h, k;
-    fseek (f, a, SEEK_SET);
+    int b, c, d, e, g;
     sscanf(fgets(chaine, 50, f), "%d", &b);
     sscanf(fgets(chaine, 50, f), "%d", &c);
     sscanf(fgets(chaine, 50, f), "%d", &d);
     sscanf(fgets(chaine, 50, f), "%d", &e);
     sscanf(fgets(chaine, 50, f), "%d", &g);
-    sscanf(fgets(chaine, 50, f), "%d", &h);
-    sscanf(fgets(chaine, 50, f), "%d", &k);
-    unite_ouverte = creer_unite(b, c, d, e, g, h, k);
+    unite_ouverte = creer_unite(b, c, d, e, g);
     return unite_ouverte;
 }
 
-/* Niveau* ouverture_niveau(FILE *f, long a)
+Sauvegarde* selection_ouverture(const char nom[30], long a)
 {
-    Niveau* niveau_ouvert;
-    char chaine[50];
-    int b, c;
-    fseek (f, a, SEEK_SET);
-    sscanf(fgets(chaine, 50, f), "%d", &b);
-    sscanf(fgets(chaine, 50, f), "%d", &c);
-    niveau_ouvert = creer_niveau(b, c);
-    return niveau_ouvert;
-}*/
-
-Terrain_espace* selection_ouverture(const char nom[30], long a)
-{
-    Terrain_espace* terrain_ouvert = NULL;
+    Sauvegarde* une_sauvegarde;
+    une_sauvegarde = creer_sauvegarde();
     FILE *f;
     char chaine[50];
     f = fopen(nom, "r");
@@ -227,61 +246,47 @@ Terrain_espace* selection_ouverture(const char nom[30], long a)
         printf("Erreur lors de l'ouverture de %s\n", nom);
     }
     fseek (f, a, SEEK_SET);
+    if(fgetc(f)!=EOF)
+    {
+    fseek(f, -1, SEEK_CUR);
     fgets(chaine, 50, f);
     a = ftell(f);
-    printf("%ld \n", a);
+    printf("%ld\n", a);
     printf("%s", chaine);
-    if (strcmp(chaine, "Terrain \n")==0)
+    if (strcmp(chaine, "Terrain\n")==0)
     {
-        printf("%s \n","GENIAL Terrain");
-        terrain_ouvert = ouverture_terrain(f, a);
-        printf("%ld", a);
+        printf("%s\n","GENIAL Terrain");
+        Terrain_espace* un_terrain_espace;
+        un_terrain_espace = ouverture_terrain(f, a);
+        fgets(chaine, 50, f);
+        a = ftell(f);
+        printf("%ld\n", a);
+        une_sauvegarde = selection_ouverture(nom, a);
+        ajouter_terrain_espace_sauvegarde(une_sauvegarde, un_terrain_espace);
     }
-    if (strcmp(chaine, "Planete \n")==0)
+    else if (strcmp(chaine, "Planete\n")==0)
     {
-        printf("%s \n","GENIAL Planete");
+        printf("%s\n","GENIAL Planete");
+        Planete* une_planete;
+        une_planete = ouverture_planete(f, a);
+        fgets(chaine, 50, f);
+        a = ftell(f);
+        printf("%ld\n", a);
+        une_sauvegarde = selection_ouverture(nom, a);
+        ajouter_planete_sauvegarde(une_sauvegarde, une_planete);
     }
-    if (strcmp(chaine, "Flotte \n")==0)
+    else if (strcmp(chaine, "Flotte\n")==0)
     {
-        printf("%s \n","GENIAL Flotte");
+        printf("%s\n","GENIAL Flotte");
+        Flotte* une_flotte;
+        une_flotte = ouverture_flotte(f, a);
+        fgets(chaine, 50, f);
+        a = ftell(f);
+        printf("%ld\n", a);
+        une_sauvegarde = selection_ouverture(nom, a);
+        ajouter_flotte_sauvegarde(une_sauvegarde, une_flotte);
     }
-    if (strcmp(chaine, "Unite \n")==0)
-    {
-        printf("%s \n","GENIAL Unite");
     }
     fclose(f);
-    return terrain_ouvert;
+    return une_sauvegarde;
 }
-
-/*int selection_ouverture(const char nom[30], long a)
-{
-    FILE *f;
-    char chaine[50];
-    f = fopen(nom, "r");
-    if (f==NULL)
-    {
-        printf("Erreur lors de l'ouverture de %s\n", nom);
-    }
-    fseek (f, a, SEEK_SET);
-    fgets(chaine, 50, f);
-    a = ftell(f);
-    printf("%ld \n", a);
-    printf("%s", chaine);
-    if (strcmp(chaine, "Terrain \n")==0)
-    {
-        return 1;
-    }
-    if (strcmp(chaine, "Planete \n")==0)
-    {
-        return 2;
-    }
-    if (strcmp(chaine, "Flotte \n")==0)
-    {
-        return 3;
-    }
-    if (strcmp(chaine, "Unite \n")==0)
-    {
-        return 4;
-    }
-    fclose(f);
-}*/
