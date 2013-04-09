@@ -54,6 +54,11 @@ void placer_unite_flotte_en_haut(Terrain_combat * un_terrain_combat, Flotte * fl
 void placer_unite_flotte_en_bas(Terrain_combat * un_terrain_combat, Flotte * flotte);
 
 bool case_libre(Terrain_combat * un_terrain_combat,int x, int y);
+
+void un_tour_combat(Terrain_combat * un_terrain_combat, Flotte * flotte);
+bool peut_attaquer_diag(Terrain_combat * un_terrain_combat, Unite * unite,int x,int y);
+bool peut_attaquer_hor_vert(Terrain_combat * un_terrain_combat, Unite * unite,int x,int y);
+
 /*void test_module_terrain_combat();*/
 
 

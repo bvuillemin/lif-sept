@@ -20,21 +20,30 @@ typedef struct
 {
 	int x_unite;
 	int y_unite;
+	int portee;
+	int portee_total;
 	int pt_vie;
+	int pt_vie_total;
 	int pt_attaque;
+	int pt_attaque_total;
 	int pt_action;
+	int pt_action_total;
 	int pt_deplacement;/*dans le combat*/
+	int pt_deplacement_total;
 	int pt_mouvement_unite;/*dans l'espace*/
 	Niveau niveau_unite;
 	/*ressources nécessaires*/
 	/*compétence spéciale*/
 }Unite;
 
-void initialise_unite(Unite *unite_jeu,int pt_vie, int pt_attaque, int pt_action, int pt_deplacement,int pt_mouvement);
-Unite *creer_unite(int pt_vie, int pt_attaque, int pt_action, int pt_deplacement,int pt_mouvement);
+void initialise_unite(Unite *unite_jeu,int pt_vie, int pt_attaque, int pt_action, int pt_deplacement,int portee,int pt_mouvement);
+Unite *creer_unite(int pt_vie, int pt_attaque, int pt_action, int pt_deplacement,int portee,int pt_mouvement);
 
 void libere_unite(Unite *unite_jeu);
 void detruire_unite(Unite **unite_jeu);
+
+void set_portee(Unite *unite_jeu, const int x);
+int get_portee(const Unite *unite_jeu);
 
 void set_pt_vie(Unite *unite_jeu, const int x);
 int get_pt_vie(const Unite *unite_jeu);
@@ -57,10 +66,11 @@ int get_pt_deplacement(const Unite *unite_jeu);
 void set_pt_mouvement_unite(Unite *unite_jeu, const int x);
 int get_pt_mouvement_unite(const Unite *unite_jeu);
 
-bool unite_peut_se_deplacer(Unite *une_unite, int x, int y);
+bool unite_peut_se_deplacer(const Unite *une_unite, int x, int y);
 int calcul_distance_unite(int x_depart, int y_depart, int x_arrivee, int y_arrivee);
 
 void enlever_pt_mouvement_combat_unite(Unite *une_unite, int distance);
+void reinitialiser_mouvement_combat_unite(Unite *une_unite);
 
 void test_module_unite();
 
