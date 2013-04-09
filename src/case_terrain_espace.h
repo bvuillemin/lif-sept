@@ -28,7 +28,7 @@ typedef struct
 	Flotte *flotte;
 }Case_terrain_espace;
 
-void initialise_case_espace(Case_terrain_espace *une_case_terrain_espace);
+void initialiser_case_espace(Case_terrain_espace *une_case_terrain_espace);
 Case_terrain_espace *creer_case_espace();
 
 void set_x_espace(Case_terrain_espace *une_case_terrain_espace, int x_espace);
@@ -43,8 +43,8 @@ char get_type_case_terrain_espace(Case_terrain_espace *une_case_terrain_espace);
 Planete * get_planete(Case_terrain_espace *une_case_terrain_espace);
 Flotte * get_flotte(Case_terrain_espace *une_case_terrain_espace);
 
-void detruit_case_terrain_espace(Case_terrain_espace **une_case_terrain_espace);
-void libere_case_terrain_espace(Case_terrain_espace *une_case_terrain_espace);
+void detruire_case_terrain_espace(Case_terrain_espace *une_case_terrain_espace);
+void liberer_case_terrain_espace(Case_terrain_espace *une_case_terrain_espace);
 
 void definir_case_terrain_espace(Case_terrain_espace *une_case_terrain_espace, char c);
 void ajouter_planete(Case_terrain_espace *une_case_terrain_espace, Planete *une_planete);

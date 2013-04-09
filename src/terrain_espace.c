@@ -41,7 +41,7 @@ Planete* get_planete_terrain_espace(const Terrain_espace *terrain_espace, int x,
     return terrain_espace->tab_terrain_espace[y*(terrain_espace->taille_espace_x)+x].planete;
 }
 
-void initilalise_terrain_espace(Terrain_espace *terrain_jeu_espace, int taille_espace_x, int taille_espace_y)
+void initilaliser_terrain_espace(Terrain_espace *terrain_jeu_espace, int taille_espace_x, int taille_espace_y)
 {
     int i, j;
     terrain_jeu_espace->taille_espace_x = taille_espace_x;
@@ -51,9 +51,9 @@ void initilalise_terrain_espace(Terrain_espace *terrain_jeu_espace, int taille_e
     {
         for(j=0;j<terrain_jeu_espace->taille_espace_x;j++)
         {
-            initialise_case_espace(&(terrain_jeu_espace->tab_terrain_espace[i*(terrain_jeu_espace->taille_espace_x)+j]));
-           terrain_jeu_espace->tab_terrain_espace[i*(terrain_jeu_espace->taille_espace_x)+j].x_espace = j;
-           terrain_jeu_espace->tab_terrain_espace[i*(terrain_jeu_espace->taille_espace_x)+j].y_espace = i;
+            initialiser_case_espace(&(terrain_jeu_espace->tab_terrain_espace[i*(terrain_jeu_espace->taille_espace_x)+j]));
+            terrain_jeu_espace->tab_terrain_espace[i*(terrain_jeu_espace->taille_espace_x)+j].x_espace = j;
+            terrain_jeu_espace->tab_terrain_espace[i*(terrain_jeu_espace->taille_espace_x)+j].y_espace = i;
         }
     }
 
@@ -62,18 +62,18 @@ void initilalise_terrain_espace(Terrain_espace *terrain_jeu_espace, int taille_e
 Terrain_espace *creer_terrain_espace(int taille_espace_x, int taille_espace_y)
 {
     Terrain_espace *terrain_espace = (Terrain_espace *)malloc(sizeof(Terrain_espace));
-    initilalise_terrain_espace(terrain_espace, taille_espace_x, taille_espace_y);
+    initilaliser_terrain_espace(terrain_espace, taille_espace_x, taille_espace_y);
     return terrain_espace;
 }
 
-void libere_terrain_espace(Terrain_espace *terrain_jeu_espace)
+void liberer_terrain_espace(Terrain_espace *terrain_jeu_espace)
 {
     int i, j;
-    for(i=0;i<terrain_jeu_espace->taille_espace_x;i++)
+    for(i=0;i<terrain_jeu_espace->taille_espace_y;i++)
     {
-        for(j=0;j<terrain_jeu_espace->taille_espace_y;j++)
+        for(j=0;j<terrain_jeu_espace->taille_espace_x;j++)
         {
-           /*detruit_case_terrain_espace(&(terrain_jeu_espace->tab_terrain_espace[j*(terrain_jeu_espace->taille_espace_x)+i])));*/
+           liberer_case_terrain_espace(terrain_jeu_espace->tab_terrain_espace + (i*(terrain_jeu_espace->taille_espace_x)+j));
         }
     }
     free(terrain_jeu_espace->tab_terrain_espace);
@@ -81,9 +81,9 @@ void libere_terrain_espace(Terrain_espace *terrain_jeu_espace)
     terrain_jeu_espace->taille_espace_y=0;
 }
 
-void detruit_terrain_espace(Terrain_espace **terrain_jeu_espace)
+void detruire_terrain_espace(Terrain_espace **terrain_jeu_espace)
 {
-    libere_terrain_espace(*terrain_jeu_espace);
+    liberer_terrain_espace(*terrain_jeu_espace);
     free(*terrain_jeu_espace);
     *terrain_jeu_espace = NULL;
 }

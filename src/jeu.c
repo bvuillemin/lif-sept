@@ -21,6 +21,27 @@ Jeu *creer_jeu()
     return un_jeu;
 }
 
+
+void liberer_jeu(Jeu *un_jeu)
+{
+    int i;
+    for(i=0;i<un_jeu->nb_joueur;i++)
+    {
+        liberer_joueur(&(un_jeu->tab_joueur[i]));
+    }
+    free(un_jeu->tab_joueur);
+    un_jeu->tour_en_cours = 0;
+    un_jeu->joueur_en_cours = 0;
+    un_jeu->nb_joueur = 0;
+}
+
+void detruire_jeu(Jeu **un_jeu)
+{
+    liberer_jeu(*un_jeu);
+    free(*un_jeu);
+    *un_jeu = NULL;
+}
+
 void ajouter_joueur(Jeu *un_jeu, Joueur *un_joueur)
 {
 	int i;

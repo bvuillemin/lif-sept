@@ -6,7 +6,7 @@
 #include "planete.h"
 #include "flotte.h"
 
-void initialise_case_espace(Case_terrain_espace *une_case_terrain_espace)
+void initialiser_case_espace(Case_terrain_espace *une_case_terrain_espace)
 {
     une_case_terrain_espace->x_espace=0;
     une_case_terrain_espace->y_espace=0;
@@ -19,7 +19,7 @@ void initialise_case_espace(Case_terrain_espace *une_case_terrain_espace)
 Case_terrain_espace *creer_case_espace()
 {
     Case_terrain_espace *une_case_terrain_espace=(Case_terrain_espace *)malloc(sizeof(Case_terrain_espace));
-    initialise_case_espace(une_case_terrain_espace);
+    initialiser_case_espace(une_case_terrain_espace);
     return une_case_terrain_espace;
 }
 
@@ -71,20 +71,27 @@ void definir_case_terrain_espace(Case_terrain_espace *une_case_terrain_espace, c
     }
 }
 
-void libere_case_terrain_espace(Case_terrain_espace *une_case_terrain_espace)
+void liberer_case_terrain_espace(Case_terrain_espace *une_case_terrain_espace)
 {
-    detruire_planete(&(une_case_terrain_espace->planete));
+    if(une_case_terrain_espace->presence_flotte == true)
+    {
+        detruire_flotte(&(une_case_terrain_espace->flotte));
+        une_case_terrain_espace->presence_flotte = false;
+    }
+    if(une_case_terrain_espace->type_case_terrain_espace == 'P')
+    {
+        detruire_planete(&(une_case_terrain_espace->planete));
+    }
     une_case_terrain_espace->x_espace=0;
     une_case_terrain_espace->y_espace=0;
     une_case_terrain_espace->type_case_terrain_espace='N';
-    une_case_terrain_espace->presence_flotte=0;
 }
 
-void detruit_case_terrain_espace(Case_terrain_espace **une_case_terrain_espace)
+void detruire_case_terrain_espace(Case_terrain_espace *une_case_terrain_espace)
 {
-    libere_case_terrain_espace(*une_case_terrain_espace);
-    free(*une_case_terrain_espace);
-    *une_case_terrain_espace = NULL;
+    liberer_case_terrain_espace(une_case_terrain_espace);
+    free(une_case_terrain_espace);
+    une_case_terrain_espace = NULL;
 }
 
 void affiche_case_terrain_espace(const Case_terrain_espace *une_case_terrain_espace)

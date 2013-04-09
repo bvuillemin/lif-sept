@@ -21,11 +21,11 @@ int main()
 	test_module_unite();
 	test_module_case_terrain();
 	test_module_terrain();
-
+*/
     Flotte *flotte;
     Unite *unite1;
     Unite *unite2;
-
+/*
 	Flotte *flotte2;
     Unite *unite3;
     Unite *unite4;*/
@@ -58,53 +58,54 @@ int main()
 	char nom_terre[]="terre";
 	char nom_jupiter[]="jupiter";
 
-	un_terrain_espace = creer_terrain_espace(15, 10);
+	un_terrain_espace = creer_terrain_espace(15, 15);
     modification_terrain_espace(un_terrain_espace, 'E');
 
     ajouter_planete_terrain_espace(un_terrain_espace, 2, 1, nom_terre);
-    ajouter_planete_terrain_espace(un_terrain_espace, 8, 9, nom_jupiter);
+    ajouter_planete_terrain_espace(un_terrain_espace, 4, 4, nom_jupiter);
     affiche_terrain_espace(un_terrain_espace);
 
     terre = get_planete_terrain_espace(un_terrain_espace, 2, 1);
-    jupiter = get_planete_terrain_espace(un_terrain_espace, 8, 9);
+    jupiter = get_planete_terrain_espace(un_terrain_espace, 9, 9);
 
 	joueur = creer_joueur(1, nom_joueur);
 	/*joueur2 = creer_joueur(2, nom_joueur2);*/
 	jeu = creer_jeu();
 
-    /*flotte = creer_flotte();
-    unite1 = creer_unite(1, 1, 1, 1, 10);
-    unite2 = creer_unite(1, 1, 1, 1, 10);
-
+    flotte = creer_flotte();
+    unite1 = creer_unite(1, 1, 1, 1, 10, 10);
+    unite2 = creer_unite(1, 1, 1, 1, 10, 10);
+/*
 	flotte2 = creer_flotte();
     unite3 = creer_unite(1, 1, 1, 1, 10);
     unite4 = creer_unite(1, 1, 1, 1, 10);*/
 
 	ajouter_planete_joueur(joueur, terre);
-	afficher_planete(joueur->tab_planete[0]);
+	//afficher_planete(joueur->tab_planete[0]);
 
 	/*ajouter_planete_joueur(joueur2, jupiter);
 	afficher_planete(joueur2->tab_planete[0]);*/
 
-    modification_production_planete(joueur->tab_planete[0], 100, 50, 10, 100);
+   /* modification_production_planete(joueur->tab_planete[0], 100, 50, 10, 100);*/
 	/*modification_production_planete(joueur2->tab_planete[0], 200, 50, 75, 0);
-
+*/
     ajouter_unite_flotte(flotte, unite1);
     ajouter_unite_flotte(flotte, unite2);
-
+/*
 	ajouter_unite_flotte(flotte2, unite3);
     ajouter_unite_flotte(flotte2, unite4);
-
+*/
     ajouter_flotte_joueur(joueur, *flotte);
-	ajouter_flotte_joueur(joueur2, *flotte2);
+    afficher_flotte(&joueur->tab_flotte[0]);
+/*	ajouter_flotte_joueur(joueur2, *flotte2);
 
     printf("Affiche flotte 1\n");
     afficher_flotte(&joueur->tab_flotte[0]);
     printf("Affiche flotte 2\n");
-    afficher_flotte(&joueur2->tab_flotte[0]);
+    afficher_flotte(&joueur2->tab_flotte[0]);*/
 
     ajouter_flotte(get_case_terrain_espace(un_terrain_espace, 2, 3), &joueur->tab_flotte[0]);
-	ajouter_flotte(get_case_terrain_espace(un_terrain_espace, 9, 9), &joueur2->tab_flotte[0]);*/
+	//ajouter_flotte(get_case_terrain_espace(un_terrain_espace, 9, 9), &joueur2->tab_flotte[0]);
 
 	ajouter_joueur(jeu, joueur);
 	/*ajouter_joueur(jeu, joueur2);*/
@@ -175,7 +176,7 @@ int main()
     afficher_batiment(terre);
     joueur_suivant(jeu);*/
 
-    joueur_suivant(jeu);
+    /*joueur_suivant(jeu);
     joueur_suivant(jeu);
     afficher_ressource_joueur(jeu);
     creation_unite_planete(joueur, terre, 1);
@@ -184,13 +185,17 @@ int main()
     validation_creation_unite_planete(un_terrain_espace, joueur, terre);
     affiche_terrain_espace(un_terrain_espace);
     printf("Affiche flotte du joueur %d\n", a);
-    afficher_flotte(&(jeu->tab_joueur[0].tab_flotte[0]));
+    afficher_flotte(&(jeu->tab_joueur[0].tab_flotte[0]));*/
 
     //detruit_terrain_espace(&un_terrain_espace);
 /*	un_terrain_combat = creer_terrain_combat(7,7);
 	modification_terrain_combat(un_terrain_combat, 'E');
 	affiche_terrain_combat(un_terrain_combat);
 */
+
+    detruire_terrain_espace(&un_terrain_espace);
+    detruire_jeu(&jeu);
+
 	return 0;
 
 }
