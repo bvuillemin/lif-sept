@@ -9,6 +9,7 @@ void initialise_unite(Unite *unite_jeu, int pt_vie, int pt_attaque, int pt_actio
     unite_jeu->pt_vie=pt_vie;
     unite_jeu->pt_attaque=pt_attaque;
     unite_jeu->pt_action=pt_action;
+	unite_jeu->pt_action_total=pt_action;
     unite_jeu->pt_deplacement=pt_deplacement;
 	unite_jeu->pt_deplacement_total=pt_deplacement;
     unite_jeu->pt_mouvement_unite=pt_mouvement;
@@ -150,9 +151,20 @@ void enlever_pt_mouvement_combat_unite(Unite *une_unite, int distance)
     set_pt_deplacement(une_unite, temp);
 }
 
+void enlever_pt_action_unite(Unite *une_unite, int point)
+{
+	int temp = get_pt_action(une_unite);
+    temp = temp - point;
+    set_pt_action(une_unite, temp);
+}
+
 void reinitialiser_mouvement_combat_unite(Unite *une_unite)
 {
 	une_unite->pt_deplacement = une_unite->pt_deplacement_total;
+}
+void reinitialiser_pt_action(Unite *une_unite)
+{
+	une_unite->pt_action = une_unite->pt_action_total;
 }
 
 /*void test_module_unite()

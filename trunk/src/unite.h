@@ -70,8 +70,9 @@ bool unite_peut_se_deplacer(const Unite *une_unite, int x, int y);
 int calcul_distance_unite(int x_depart, int y_depart, int x_arrivee, int y_arrivee);
 
 void enlever_pt_mouvement_combat_unite(Unite *une_unite, int distance);
+void enlever_pt_action_unite(Unite *une_unite, int point);
 void reinitialiser_mouvement_combat_unite(Unite *une_unite);
-
+void reinitialiser_pt_action(Unite *une_unite);
 void test_module_unite();
 
 #endif

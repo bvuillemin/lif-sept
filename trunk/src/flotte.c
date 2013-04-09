@@ -180,6 +180,15 @@ void reinitialiser_deplacement_unite_flotte(Flotte *une_flotte)
 	}
 }
 
+void reinitialiser_pt_action_unite_flotte(Flotte *une_flotte)
+{
+	int i;
+	for(i=0;i<une_flotte->taille_flotte;i++)
+	{
+		reinitialiser_pt_action(une_flotte->tab_unite+i);
+	}
+}
+
 
 /*void test_module_flotte()
 {
