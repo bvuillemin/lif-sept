@@ -7,7 +7,7 @@
 
 /**
  * \file      Module terrain
- * \author    Les queues de cheval
+ * \author
  * \version   0.1
  * \date      13 mars 2013
  * \brief     Planète et ses particularités
@@ -15,18 +15,30 @@
  * \details
  */
 
- typedef struct
+
+struct sPlanete;
+typedef void (*Creation_batiment)(struct sPlanete*);
+typedef void (*Validation_creation_batiment)(struct sPlanete*);
+
+ typedef struct sPlanete
  {
      int x;
      int y;
      char nom_planete[30];
-     /*lien sur proprietaire
-     tab de batiments*/
+     /*lien sur proprietaire*/
+
+     int batiment[10];
+     int batiment_en_cours; /*indice dans le tableau du batiment en cours de construction*/
+     int batiment_nb_tour_restant; /*entier indiquant le nombre de tours restants, si 0 on peut construire un batiment*/
+
+     Validation_creation_batiment tab_fonction_validation[10];
+     Creation_batiment tab_fonction_creation[10];
+
      int taille_utilisee;
      int taille_planete;
 	 int habitabilite;
-     int planete_principale; /*1 si oui, 0 sinon */
-     int planete_colonisee; /*1 si oui, 0 sinon */
+     bool planete_principale; /*1 si oui, 0 sinon */
+     bool planete_colonisee; /*1 si oui, 0 sinon */
 
      int metal;
      int argent;
@@ -49,10 +61,10 @@ void set_taille_planete(Planete *une_planete, int taille_planete);
 int get_taille_planete(Planete *une_planete);
 void set_habitabilite(Planete *une_planete, int nb);
 int get_habitabilite(Planete *une_planete);
-void set_planete_principale(Planete *une_planete, int booleen);
-int get_planete_principale(Planete *une_planete);
-void set_planete_colonisee(Planete *une_planete, int booleen);
-int get_planete_colonisee(Planete *une_planete);
+void set_planete_principale(Planete *une_planete, bool booleen);
+bool get_planete_principale(Planete *une_planete);
+void set_planete_colonisee(Planete *une_planete, bool booleen);
+bool get_planete_colonisee(Planete *une_planete);
 
 void set_metal(Planete *une_planete, int nb);
 int get_metal(Planete *une_planete);
@@ -69,6 +81,10 @@ void libere_planete(Planete *planete);
 void detruire_planete(Planete **planete);
 
 void afficher_planete(Planete *une_planete);
+void afficher_batiment(Planete *une_planete);
+
+void creation_batiment(Planete *une_planete, int choix);
+void validation_batiment(Planete *une_planete);
 
 void test_module_planete();
 

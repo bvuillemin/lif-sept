@@ -9,7 +9,7 @@
 
 /**
  * \file      Module terrain
- * \author    Les queues de cheval
+ * \author
  * \version   0.1
  * \date      13 mars 2013
  * \brief     Planète et ses particularités

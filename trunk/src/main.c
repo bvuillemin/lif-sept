@@ -20,7 +20,7 @@ int main()
     test_module_flotte();
 	test_module_unite();
 	test_module_case_terrain();
-	test_module_terrain();*/
+	test_module_terrain();
 
     Flotte *flotte;
     Unite *unite1;
@@ -28,7 +28,7 @@ int main()
 
 	Flotte *flotte2;
     Unite *unite3;
-    Unite *unite4;
+    Unite *unite4;*/
 
 	Terrain_espace *un_terrain_espace;
 	/*Terrain_combat * un_terrain_combat;*/
@@ -42,18 +42,19 @@ int main()
 	char passer_tour[] = "suivant";
 	char ressource[] = "ressource";
 	char info[] = "info";
+	char coloniser[] = "coloniser";
 
 	Planete *terre;
 	Planete *jupiter;
 	Joueur *joueur;
-	Joueur *joueur2;
+	/*Joueur *joueur2;*/
 	Jeu *jeu;
 
-    int x = 1;
-	int y = 1;
+    int x = 0;
+	int y = 0;
 
     char nom_joueur[]="Pierre";
-	char nom_joueur2[]="Boulet";
+	/*char nom_joueur2[]="Boulet";*/
 	char nom_terre[]="terre";
 	char nom_jupiter[]="jupiter";
 
@@ -68,25 +69,25 @@ int main()
     jupiter = get_planete_terrain_espace(un_terrain_espace, 8, 9);
 
 	joueur = creer_joueur(1, nom_joueur);
-	joueur2 = creer_joueur(2, nom_joueur2);
+	/*joueur2 = creer_joueur(2, nom_joueur2);*/
 	jeu = creer_jeu();
 
-    flotte = creer_flotte();
+    /*flotte = creer_flotte();
     unite1 = creer_unite(1, 1, 1, 1, 10);
     unite2 = creer_unite(1, 1, 1, 1, 10);
 
 	flotte2 = creer_flotte();
     unite3 = creer_unite(1, 1, 1, 1, 10);
-    unite4 = creer_unite(1, 1, 1, 1, 10);
+    unite4 = creer_unite(1, 1, 1, 1, 10);*/
 
 	ajouter_planete_joueur(joueur, terre);
 	afficher_planete(joueur->tab_planete[0]);
 
-	ajouter_planete_joueur(joueur2, jupiter);
-	afficher_planete(joueur2->tab_planete[0]);
+	/*ajouter_planete_joueur(joueur2, jupiter);
+	afficher_planete(joueur2->tab_planete[0]);*/
 
     modification_production_planete(joueur->tab_planete[0], 100, 50, 10, 100);
-	modification_production_planete(joueur2->tab_planete[0], 200, 50, 75, 0);
+	/*modification_production_planete(joueur2->tab_planete[0], 200, 50, 75, 0);
 
     ajouter_unite_flotte(flotte, unite1);
     ajouter_unite_flotte(flotte, unite2);
@@ -103,26 +104,16 @@ int main()
     afficher_flotte(&joueur2->tab_flotte[0]);
 
     ajouter_flotte(get_case_terrain_espace(un_terrain_espace, 2, 3), &joueur->tab_flotte[0]);
-	ajouter_flotte(get_case_terrain_espace(un_terrain_espace, 9, 9), &joueur2->tab_flotte[0]);
+	ajouter_flotte(get_case_terrain_espace(un_terrain_espace, 9, 9), &joueur2->tab_flotte[0]);*/
 
 	ajouter_joueur(jeu, joueur);
-	ajouter_joueur(jeu, joueur2);
+	/*ajouter_joueur(jeu, joueur2);*/
 
 
 	affiche_terrain_espace(un_terrain_espace);
 
-/*
-    set_pt_mouvement_espace_flotte(flotte, 10);
-    detruire_sauvegarde("test");
-    sauvegarde_terrain(un_terrain_espace, "test");
-    sauvegarde_planete(un_terrain_espace->tab_terrain_espace[1*(un_terrain_espace->taille_espace_x)+2].planete, "test");
-    sauvegarde_flotte(flotte, "test");
-    sauvegarde_unite(unite1, "test");
-    sauvegarde_unite(unite2, "test");
-    ouverture_terrain("test");
-    system("clear");*/
 
-    while(1)
+   /* while(1)
     {
 		a = jeu->joueur_en_cours;
 
@@ -166,7 +157,27 @@ int main()
         {
 			afficher_info(jeu);
         }
-    }
+        if(strcmp(menu, coloniser) == 0)
+        {
+			colonisation_planete(&(jeu->tab_joueur[a]), terre);
+			colonisation_planete(&(jeu->tab_joueur[a]), jupiter);
+        }
+    }*/
+    afficher_planete(terre);
+    afficher_batiment(terre);
+    creation_batiment(terre, 0);
+    joueur_suivant(jeu);
+    validation_batiment(terre);
+    afficher_batiment(terre);
+    creation_batiment(terre, 1);
+    joueur_suivant(jeu);
+    validation_batiment(terre);
+    afficher_batiment(terre);
+    joueur_suivant(jeu);
+    joueur_suivant(jeu);
+
+
+
 
     //detruit_terrain_espace(&un_terrain_espace);
 /*	un_terrain_combat = creer_terrain_combat(7,7);
