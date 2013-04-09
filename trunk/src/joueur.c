@@ -163,6 +163,29 @@ Joueur *creer_joueur(int num_joueur, char nom[30])
 }
 
 
+void liberer_joueur(Joueur *un_joueur)
+{
+    un_joueur->numero_joueur = 0;
+    un_joueur->metal = 0;
+    un_joueur->argent = 0;
+    un_joueur->carburant = 0;
+    un_joueur->population = 0;
+
+    un_joueur->nb_planete = 0;
+    un_joueur->nb_planete_possible = 0;
+    un_joueur->tab_planete = NULL;
+    un_joueur->nb_flotte = 0;
+    un_joueur->nb_flotte_possible = 0;
+    un_joueur->tab_flotte = NULL;
+}
+
+void detruire_joueur(Joueur **un_joueur)
+{
+    liberer_joueur(*un_joueur);
+    free(*un_joueur);
+    *un_joueur = NULL;
+}
+
 
 void ajouter_metal(Joueur *un_joueur, int nb)
 {
@@ -238,7 +261,7 @@ void validation_creation_unite_planete(Terrain_espace *un_terrain_espace, Joueur
     {
         if(une_planete->unite_en_cours == 1)
         {
-            une_unite = creer_unite(PT_VIE_UNITE_1, PT_ATTAQUE_UNITE_1, PT_ACTION_UNITE_1, PT_DEPLACEMENT_UNITE_1, PT_MOUVEMENT_UNITE_1);
+            une_unite = creer_unite(PT_VIE_UNITE_1, PT_ATTAQUE_UNITE_1, PT_ACTION_UNITE_1, PT_DEPLACEMENT_UNITE_1, 10, PT_MOUVEMENT_UNITE_1);
             une_flotte = creer_flotte();
             ajouter_unite_flotte(une_flotte, une_unite);
             ajouter_flotte_joueur(un_joueur, *une_flotte);

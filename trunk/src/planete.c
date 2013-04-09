@@ -48,7 +48,7 @@ void libere_planete(Planete *une_planete)
 {
     une_planete->x = 0;
     une_planete->y = 0;
-    free(une_planete->nom_planete);
+    //free(une_planete->nom_planete);
     une_planete->planete_colonisee = 0;
     une_planete->planete_principale = 0;
 	une_planete->habitabilite = 0;

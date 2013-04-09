@@ -227,7 +227,7 @@ Unite* ouverture_unite(FILE *f)
     sscanf(fgets(chaine, 50, f), "%d", &d);
     sscanf(fgets(chaine, 50, f), "%d", &e);
     sscanf(fgets(chaine, 50, f), "%d", &g);
-    unite_ouverte = creer_unite(b, c, d, e, g);
+    unite_ouverte = creer_unite(b, c, d, e, 10, g);
     return unite_ouverte;
 }
 

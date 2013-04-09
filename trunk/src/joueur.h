@@ -47,6 +47,8 @@ int get_nb_planete(Joueur *un_joueur);
 
 void initialise_joueur(Joueur *un_joueur,int num_joueur, char nom[30]);
 Joueur *creer_joueur(int num_joueur, char nom[30]);
+void liberer_joueur(Joueur *un_joueur);
+void detruire_joueur(Joueur **un_joueur);
 
 void ajouter_metal(Joueur *un_joueur, int nb);
 void retirer_metal(Joueur *un_joueur, int nb);

@@ -27,6 +27,9 @@
 
 void initialise_jeu(Jeu *un_jeu);
 Jeu *creer_jeu();
+void liberer_jeu(Jeu *un_jeu);
+void detruire_jeu(Jeu **un_jeu);
+
 void ajouter_joueur(Jeu *un_jeu, Joueur *un_joueur);
 void joueur_suivant(Jeu *un_jeu);
 void tour_suivant(Jeu *un_jeu);

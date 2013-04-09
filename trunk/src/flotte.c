@@ -6,7 +6,7 @@
 #include "terrain_espace.h"
 #include "unite.h"
 
-void initialise_flotte(Flotte *flotte)
+void initialiser_flotte(Flotte *flotte)
 {
 	flotte->x_flotte = 0;
 	flotte->y_flotte = 0;
@@ -19,7 +19,7 @@ void initialise_flotte(Flotte *flotte)
 Flotte *creer_flotte()
 {
     Flotte *flotte=(Flotte *)malloc(sizeof(Flotte));
-    initialise_flotte(flotte);
+    initialiser_flotte(flotte);
     return flotte;
 }
 
@@ -73,12 +73,12 @@ int get_pt_mouvement_espace_flotte(Flotte *une_flotte)
     return une_flotte->pt_mouvement_espace_flotte;
 }
 
-void libere_flotte(Flotte *flotte)
+void liberer_flotte(Flotte *flotte)
 {
     int i;
     for(i=0;i<flotte->taille_flotte;i++)
     {
-        /*detruire_unite(&(flotte->tab_unite[i]));*/
+        libere_unite(&(flotte->tab_unite[i]));
     }
     free(flotte->tab_unite);
     flotte->tab_unite = NULL;
@@ -86,9 +86,9 @@ void libere_flotte(Flotte *flotte)
     flotte->taille_flotte = 0;
 }
 
-void detruit_flotte(Flotte **flotte)
+void detruire_flotte(Flotte **flotte)
 {
-    libere_flotte(*flotte);
+    liberer_flotte(*flotte);
     free(*flotte);
     *flotte = NULL;
 }
@@ -104,6 +104,7 @@ int ajouter_unite_flotte(Flotte *flotte, Unite *unite)
 		{
 			flotte->pt_mouvement_espace_flotte = unite->pt_mouvement_unite;
 		}
+		free(unite);
         return 1;
     }
     else
@@ -123,6 +124,7 @@ Unite * get_unite_i_flotte(const Flotte * flotte, const int i)
 		return NULL;
 	}
 }
+
 int retirer_unite_flotte(Flotte *flotte,const int indice_unite)
 {
     int i;
@@ -144,7 +146,7 @@ void afficher_flotte(Flotte *flotte)
 	printf("Coordonnes de la flotte: %d %d, pt mouvement %d, taille : %d\n", flotte->x_flotte, flotte->y_flotte, flotte->pt_mouvement_espace_flotte,flotte->taille_flotte);
     for(i=0;i<flotte->taille_flotte;i++)
     {
-		
+
         printf("Unite %d: pv = %d pa = %d pde = %d pme = %d  x= %d y=%d\n", i+1 , flotte->tab_unite[i].pt_vie, flotte->tab_unite[i].pt_action, flotte->tab_unite[i].pt_deplacement, flotte->tab_unite[i].pt_mouvement_unite, flotte->tab_unite[i].x_unite, flotte->tab_unite[i].y_unite);
     }
 
@@ -230,5 +232,4 @@ void reinitialiser_pt_action_unite_flotte(Flotte *une_flotte)
 
 
 }*/
-
 

@@ -27,7 +27,7 @@
      Unite *tab_unite;
  }Flotte;
 
-void initialise_flotte(Flotte *flotte);
+void initialiser_flotte(Flotte *flotte);
 Flotte *creer_flotte();
 
 void set_taille_maximum_flotte(Flotte *flotte,const int max);
@@ -41,8 +41,8 @@ int get_y_flotte(Flotte *une_flotte);
 void set_pt_mouvement_espace_flotte(Flotte *une_flotte, int pt);
 int get_pt_mouvement_espace_flotte(Flotte *une_flotte);
 
-void libere_flotte(Flotte *flotte);
-void detruit_flotte(Flotte **flotte);
+void liberer_flotte(Flotte *flotte);
+void detruire_flotte(Flotte **flotte);
 
 int ajouter_unite_flotte(Flotte *flotte, Unite *unite); /*renvoie 1 en cas de succès, 0 en cas d'échecs*/
 Unite * get_unite_i_flotte(const Flotte * flotte, const int i);

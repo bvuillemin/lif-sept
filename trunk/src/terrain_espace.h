@@ -24,11 +24,11 @@ typedef struct
     Case_terrain_espace *tab_terrain_espace; /*x en abscisse, y en ordonnée, on commence à 0 (à modifier?)*/
 }Terrain_espace;
 
-void initilalise_terrain_espace(Terrain_espace *terrain_jeu_espace, int taille_x, int taille_y);
+void initilaliser_terrain_espace(Terrain_espace *terrain_jeu_espace, int taille_x, int taille_y);
 Terrain_espace *creer_terrain_espace(int taille_x, int taille_y);
 
-void libere_terrain_espace(Terrain_espace *terrain_jeu_espace);
-void detruit_terrain_espace(Terrain_espace **terrain_jeu_espace);
+void liberer_terrain_espace(Terrain_espace *terrain_jeu_espace);
+void detruire_terrain_espace(Terrain_espace **terrain_jeu_espace);
 
 void set_taille_espace_x(Terrain_espace *terrain_jeu_espace, int x);
 int get_taille_espace_x(const Terrain_espace *terrain_jeu_espace);
