@@ -78,7 +78,7 @@ void libere_flotte(Flotte *flotte)
     int i;
     for(i=0;i<flotte->taille_flotte;i++)
     {
-        //detruire_unite(&(flotte->tab_unite[i]));
+        /*detruire_unite(&(flotte->tab_unite[i]));*/
     }
     free(flotte->tab_unite);
     flotte->tab_unite = NULL;
@@ -114,7 +114,14 @@ int ajouter_unite_flotte(Flotte *flotte, Unite *unite)
 
 Unite * get_unite_i_flotte(const Flotte * flotte, const int i)
 {
-	return flotte->tab_unite+i; 
+	if(i< flotte->taille_flotte)
+	{
+		return flotte->tab_unite+i; 
+	}
+	else
+	{
+		return NULL;
+	}
 }
 int retirer_unite_flotte(Flotte *flotte,const int indice_unite)
 {
@@ -138,7 +145,7 @@ void afficher_flotte(Flotte *flotte)
     for(i=0;i<flotte->taille_flotte;i++)
     {
 		
-        printf("Unite %d: pv = %d pa = %d pme = %d  x= %d y=%d\n", i+1 , flotte->tab_unite[i].pt_vie, flotte->tab_unite[i].pt_action, flotte->tab_unite[i].pt_mouvement_unite, flotte->tab_unite[i].x_unite, flotte->tab_unite[i].y_unite);
+        printf("Unite %d: pv = %d pa = %d pde = %d pme = %d  x= %d y=%d\n", i+1 , flotte->tab_unite[i].pt_vie, flotte->tab_unite[i].pt_action, flotte->tab_unite[i].pt_deplacement, flotte->tab_unite[i].pt_mouvement_unite, flotte->tab_unite[i].x_unite, flotte->tab_unite[i].y_unite);
     }
 
 }
@@ -162,6 +169,15 @@ void reinitialiser_mouvement_flotte(Flotte *une_flotte)
 		}
 	}
 	une_flotte->pt_mouvement_espace_flotte = min;
+}
+
+void reinitialiser_deplacement_unite_flotte(Flotte *une_flotte)
+{
+	int i;
+	for(i=0;i<une_flotte->taille_flotte;i++)
+	{
+		une_flotte->tab_unite[i].pt_deplacement = une_flotte->tab_unite[i].pt_deplacement_total;
+	}
 }
 
 

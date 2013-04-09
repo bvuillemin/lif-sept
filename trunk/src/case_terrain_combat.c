@@ -4,7 +4,6 @@
 
 #include "case_terrain_combat.h"
 #include "planete.h"
-#include "joueur.h"
 
 void initialise_case_combat(Case_terrain_combat *une_case_terrain_combat)
 {
@@ -112,14 +111,15 @@ Unite * get_unite(Case_terrain_combat *une_case_terrain_combat)
 {
 	return une_case_terrain_combat->unite;
 }
-/*
+
 void ajouter_unite(Case_terrain_combat *une_case_terrain_combat, Unite *une_unite)
 {
     une_case_terrain_combat->unite = une_unite;
     une_case_terrain_combat->presence_unite = true;
     une_case_terrain_combat->unite->x_unite = une_case_terrain_combat->x_combat;
     une_case_terrain_combat->unite->y_unite = une_case_terrain_combat->y_combat;
-}*/
+	printf("à l'ajout de l'unité : (%d,%d) et (%d,%d)\n", une_case_terrain_combat->unite->x_unite,une_case_terrain_combat->unite->y_unite,une_unite->x_unite,une_unite->y_unite);
+}
 
 void retirer_unite(Case_terrain_combat *une_case_terrain_combat)
 {

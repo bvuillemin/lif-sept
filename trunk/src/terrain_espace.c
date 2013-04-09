@@ -73,7 +73,7 @@ void libere_terrain_espace(Terrain_espace *terrain_jeu_espace)
     {
         for(j=0;j<terrain_jeu_espace->taille_espace_y;j++)
         {
-           //detruit_case_terrain_espace(&(terrain_jeu_espace->tab_terrain_espace[j*(terrain_jeu_espace->taille_espace_x)+i])));
+           /*detruit_case_terrain_espace(&(terrain_jeu_espace->tab_terrain_espace[j*(terrain_jeu_espace->taille_espace_x)+i])));*/
         }
     }
     free(terrain_jeu_espace->tab_terrain_espace);
