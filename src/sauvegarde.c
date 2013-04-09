@@ -136,14 +136,13 @@ void sauvegarde_unite(const Unite *une_unite, FILE* f)
     fprintf(f, "%d\n", une_unite->pt_deplacement);
     fprintf(f, "%d\n", une_unite->pt_mouvement_unite);
 }
-Terrain_espace* ouverture_terrain(FILE *f, long a)
+Terrain_espace* ouverture_terrain(FILE *f)
 {
     Terrain_espace* terrain_ouvert;
     char chaine[50], carre[1];
     int b, c;
     int i = 0;
     int j = 0;
-    fseek (f, a, SEEK_SET);
     sscanf(fgets(chaine, 50, f), "%d", &b);
     sscanf(fgets(chaine, 50, f), "%d", &c);
     terrain_ouvert = creer_terrain_espace(b, c);
@@ -163,12 +162,11 @@ Terrain_espace* ouverture_terrain(FILE *f, long a)
     return terrain_ouvert;
 }
 
-Planete* ouverture_planete(FILE *f, long a)
+Planete* ouverture_planete(FILE *f)
 {
     Planete* planete_ouverte;
     char chaine[50];
     int b, c;
-    fseek (f, a, SEEK_SET);
     fgets(chaine, 50, f);
     planete_ouverte = creer_planete(chaine);
     sscanf(fgets(chaine, 50, f), "%d", &b);
@@ -196,12 +194,11 @@ Planete* ouverture_planete(FILE *f, long a)
     return planete_ouverte;
 }
 
-Flotte* ouverture_flotte(FILE *f, long a)
+Flotte* ouverture_flotte(FILE *f)
 {
     Flotte* flotte_ouverte;
     char chaine[50];
     int b, i;
-    fseek (f, a, SEEK_SET);
     flotte_ouverte = creer_flotte();
     sscanf(fgets(chaine, 50, f), "%d", &b);
     set_x_flotte(flotte_ouverte, b);
@@ -257,7 +254,7 @@ Sauvegarde* selection_ouverture(const char nom[30], long a)
     {
         printf("%s\n","GENIAL Terrain");
         Terrain_espace* un_terrain_espace;
-        un_terrain_espace = ouverture_terrain(f, a);
+        un_terrain_espace = ouverture_terrain(f);
         fgets(chaine, 50, f);
         a = ftell(f);
         printf("%ld\n", a);
@@ -268,7 +265,7 @@ Sauvegarde* selection_ouverture(const char nom[30], long a)
     {
         printf("%s\n","GENIAL Planete");
         Planete* une_planete;
-        une_planete = ouverture_planete(f, a);
+        une_planete = ouverture_planete(f);
         fgets(chaine, 50, f);
         a = ftell(f);
         printf("%ld\n", a);
@@ -279,7 +276,7 @@ Sauvegarde* selection_ouverture(const char nom[30], long a)
     {
         printf("%s\n","GENIAL Flotte");
         Flotte* une_flotte;
-        une_flotte = ouverture_flotte(f, a);
+        une_flotte = ouverture_flotte(f);
         fgets(chaine, 50, f);
         a = ftell(f);
         printf("%ld\n", a);
