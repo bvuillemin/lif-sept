@@ -61,5 +61,7 @@ void recuperer_ressource_planete(Joueur *un_joueur, int *metal, int *argent, int
 void ajouter_planete_joueur(Joueur *un_joueur, Planete *une_planete);
 void ajouter_flotte_joueur(Joueur *un_joueur, Flotte une_flotte);
 
+void colonisation_planete(Joueur *un_joueur, Planete *une_planete);
+
 
 #endif

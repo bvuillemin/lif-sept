@@ -103,6 +103,11 @@ void ajouter_planete_joueur(Joueur *un_joueur, Planete *une_planete)
     {
         (un_joueur->tab_planete)[i] = une_planete;
         un_joueur->nb_planete ++;
+        une_planete->planete_colonisee = true;
+        if(i==0)
+        {
+            une_planete->planete_principale = true;
+        }
     }
 }
 
@@ -194,4 +199,31 @@ void retirer_population(Joueur *un_joueur, int nb)
     un_joueur->population = un_joueur->population - nb;
 }
 
+void colonisation_planete(Joueur *un_joueur, Planete *une_planete)
+{
+    int i = un_joueur->nb_planete;
+
+    if(une_planete->planete_colonisee == true)
+    {
+        printf("Colonisation impossible\n\n");
+    }
+
+    else
+    {
+        if(i< un_joueur->nb_planete_possible)
+        {
+            (un_joueur->tab_planete)[i] = une_planete;
+            un_joueur->nb_planete ++;
+            une_planete->planete_colonisee = true;
+            if(i==0)
+            {
+                une_planete->planete_principale = true;
+            }
+        }
+        else
+        {
+            printf("Vous possédez trop de planètes!!\n\n");
+        }
+    }
+}
 
