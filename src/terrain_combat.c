@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include <string.h>
 #include <math.h>
 #include "case_terrain_combat.h"
 #include "terrain_combat.h"
@@ -114,7 +115,7 @@ void modification_terrain_combat(const Terrain_combat *terrain_combat, const cha
 
 bool deplacement_unite(Terrain_combat *un_terrain_combat, Unite *une_unite, int x, int y)
 {
-    if((unite_peut_se_deplacer(une_unite, x, y))&& (!get_presence_unite(get_case_terrain_combat(un_terrain_combat,x,y))))
+    if((unite_peut_se_deplacer(une_unite, x, y))&& (!get_presence_unite(get_case_terrain_combat(un_terrain_combat,x,y))) &&(x<un_terrain_combat->taille_combat_x) && (y<un_terrain_combat->taille_combat_y)&&(x>=0)&&(y>=0))
     {
         int distance;
         int x_depart, y_depart;
@@ -123,7 +124,7 @@ bool deplacement_unite(Terrain_combat *un_terrain_combat, Unite *une_unite, int 
 
         x_depart = get_x_unite(une_unite);
         y_depart = get_y_unite(une_unite);
-	printf("case départ :(%d,%d) \n",x_depart,y_depart);
+		printf("case départ :(%d,%d) \n",x_depart,y_depart);
         case_depart = get_case_terrain_combat(un_terrain_combat, x_depart, y_depart);
         case_arrivee = get_case_terrain_combat(un_terrain_combat, x, y);
         ajouter_unite(case_arrivee, une_unite);
@@ -194,14 +195,15 @@ void placer_unite_flotte_en_bas(Terrain_combat * un_terrain_combat, Flotte * flo
 
 void un_tour_combat(Terrain_combat * un_terrain_combat, Flotte * flotte)
 {
-	int a,b,controle;
+	int a,b;
+	char  controle[] ="control";
 	Unite * une_unite;
 	bool p;
 	do{
 		printf("Que voulez vous faire ? jouer ou passer ?");
-		scanf("%s", &controle);
-	}while((controle!="jouer")||(controle!="passer"));
-	if((controle=="jouer"))
+		scanf("%s", controle);
+	}while((strcmp(controle,"jouer"))&&(strcmp(controle,"passer")));
+	if((!strcmp(controle,"jouer")))
 	{
 		do
 		{	
@@ -211,9 +213,9 @@ void un_tour_combat(Terrain_combat * un_terrain_combat, Flotte * flotte)
 		}while(une_unite==NULL);
 		do{
 		printf("Que voulez vous faire ? attaquer,deplacer ou passer ?");
-		scanf("%s", &controle);
-		}while((controle!="attaquer")||(controle!="deplacer")||(controle!="passer"));
-		if(controle =="deplacer")
+		scanf("%s", controle);
+		}while((strcmp(controle,"attaquer"))&&(strcmp(controle,"deplacer"))&&(strcmp(controle,"passer")));
+		if(!strcmp(controle,"deplacer"))
 		{
 			do{
 				printf("Où voulez vous la déplacer ?\n");
@@ -223,13 +225,12 @@ void un_tour_combat(Terrain_combat * un_terrain_combat, Flotte * flotte)
 			affiche_terrain_combat(un_terrain_combat);
 			afficher_flotte(flotte);
 		}
-		if(controle =="attaquer")
+		if(!strcmp(controle,"attaquer"))
 		{
-			do{
-				printf("Où voulez vous attaquer ?\n");
-				scanf("%d %d",&a,&b);
-				p=deplacement_unite(un_terrain_combat, une_unite,a,b);
-			}while(!p);
+			printf("Où voulez vous attaquer ?\n");
+			scanf("%d %d",&a,&b);
+			p=((peut_attaquer_hor_vert(un_terrain_combat, une_unite,a,b))||(peut_attaquer_diag(un_terrain_combat, une_unite,a,b)));
+			if(p==false){printf("impossible");} else {printf("on attaque!");}
 			affiche_terrain_combat(un_terrain_combat);
 			afficher_flotte(flotte);
 		}
@@ -261,9 +262,9 @@ bool peut_attaquer_diag(Terrain_combat * un_terrain_combat, Unite * unite,int x,
 	pa = get_pt_action(unite);
 	x_un=get_x_unite(unite);y_un=get_y_unite(unite);
 	
-	x_poss = x - x_un;
-	y_poss = y - y_un;
-	printf("poss = (%d,%d);unite (%d,%d)\n",x,y,x_un,y_un);
+	x_poss = abs( x - x_un);
+	y_poss = abs(y - y_un);
+	printf("poss = (%d,%d);unite (%d,%d); portee %d; x_pos %d \n",x,y,x_un,y_un,portee,x_poss);
     if((x_poss==y_poss)&&(x_poss<= portee)&&(x_poss>0)&& (pa > 0))
     {
         return true;
