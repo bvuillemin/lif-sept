@@ -32,6 +32,6 @@ Terrain_espace* ouverture_terrain(FILE *f);
 Planete* ouverture_planete(FILE *f);
 Flotte* ouverture_flotte(FILE *f);
 Unite* ouverture_unite(FILE *f);
-Sauvegarde* selection_ouverture(const char nom[30], long a);
+Sauvegarde* selection_ouverture(const char nom[30]);
 
 #endif
