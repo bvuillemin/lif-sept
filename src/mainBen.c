@@ -39,7 +39,7 @@ int main()
     sauvegarde_terrain(un_terrain_espace, "test");
     sauvegarde_flotte(une_flotte, "test");
     sauvegarde_planete(une_planete, "test");
-    une_sauvegarde = selection_ouverture("test", 0);
+    une_sauvegarde = selection_ouverture("test");
     affiche_terrain_espace(une_sauvegarde->terrain_espace);
     a = get_taille_espace_x(une_sauvegarde->terrain_espace);
     b = get_taille_espace_x(une_sauvegarde->terrain_espace);
