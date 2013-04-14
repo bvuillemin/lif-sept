@@ -56,6 +56,8 @@ void initilaliser_terrain_espace(Terrain_espace *terrain_jeu_espace, int taille_
             terrain_jeu_espace->tab_terrain_espace[i*(terrain_jeu_espace->taille_espace_x)+j].y_espace = i;
         }
     }
+	terrain_jeu_espace->affichage_x=1;
+	terrain_jeu_espace->affichage_y=1;
 
 }
 
@@ -79,6 +81,8 @@ void liberer_terrain_espace(Terrain_espace *terrain_jeu_espace)
     free(terrain_jeu_espace->tab_terrain_espace);
     terrain_jeu_espace->taille_espace_x=0;
     terrain_jeu_espace->taille_espace_y=0;
+	terrain_jeu_espace->affichage_x=0;
+	terrain_jeu_espace->affichage_y=0;
 }
 
 void detruire_terrain_espace(Terrain_espace **terrain_jeu_espace)

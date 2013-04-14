@@ -9,7 +9,7 @@
 #include "unite.h"
 #include "niveau.h"
 #include "sauvegarde.h"
-
+/*
 void initialise_sauvegarde(Sauvegarde *une_sauvegarde)
 {
     une_sauvegarde->terrain_espace =(Terrain_espace *)malloc(sizeof(Terrain_espace));
@@ -287,4 +287,4 @@ Sauvegarde* selection_ouverture(const char nom[30])
     }
     fclose(f);
     return une_sauvegarde;
-}
+}*/

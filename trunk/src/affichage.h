@@ -12,13 +12,17 @@
 
 /**
  * \file      Module terrain
- * \author    Les queues de cheval
+ * \author   
  * \version   0.1
  * \date      13 mars 2013
- * \brief     Niveau des unites
+ * \brief     
  *
  * \details
  */
+
+void affichage_ecran(Terrain_espace *un_terrain_espace);
+SDL_Surface* creer_affichage_terrain(Terrain_espace *un_terrain_espace);
+SDL_Surface* affichage_terrain(Terrain_espace *un_terrain_espace, SDL_Surface *carte);
 
 
 #endif
