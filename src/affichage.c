@@ -155,6 +155,21 @@ void affichage_ecran(Terrain_espace *un_terrain_espace)
 	SDL_Quit();
 }
 
+void pause()
+{
+    int continuer = 1;
+    SDL_Event event;
+  
+    while (continuer)
+    {
+        SDL_WaitEvent(&event);
+        switch(event.type)
+        {
+            case SDL_QUIT:
+                continuer = 0;
+        }
+    }
+}
 
 void affichage_ecran_combat(Terrain_combat *un_terrain_combat)
 {
@@ -165,6 +180,9 @@ void affichage_ecran_combat(Terrain_combat *un_terrain_combat)
         exit(EXIT_FAILURE); /* On quitte le programme*/
     }
   	SDL_SetVideoMode(TAILLE_ECRAN_COMBAT_X,TAILLE_ECRAN_COMBAT_Y,32,SDL_HWSURFACE|SDL_RESIZABLE|SDL_DOUBLEBUF);
-  
+	SDL_WM_SetCaption("Conquest Of Space","combat");
+  	pause();
     SDL_Quit();
 }
+
+
