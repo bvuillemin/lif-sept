@@ -11,7 +11,7 @@
 #include "unite.h"
 #include "planete.h"
 #include "niveau.h"
-
+#include "terrain_combat.h"
 /**
  * \file      Module terrain
  * \author   
@@ -27,4 +27,8 @@ SDL_Surface* creer_affichage_terrain(Terrain_espace *un_terrain_espace);
 SDL_Surface* affichage_terrain(Terrain_espace *un_terrain_espace, SDL_Surface *carte);
 
 
+/*pour le combat :*/
+void affichage_ecran_combat(Terrain_combat *un_terrain_combat);
+SDL_Surface* creer_affichage_terrain_combat(Terrain_combat *un_terrain_combat);
+SDL_Surface* affichage_terrain_combat(Terrain_combat *un_terrain_combat, SDL_Surface *carte);
 #endif

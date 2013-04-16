@@ -2,9 +2,9 @@
 #include <stdio.h>
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
-
+#include "constante.h"
 #include "terrain_espace.h"
-
+#include "terrain_combat.h"
 SDL_Surface* creer_affichage_terrain(Terrain_espace *un_terrain_espace)
 {
 	SDL_Surface *carte = NULL;
@@ -13,7 +13,7 @@ SDL_Surface* creer_affichage_terrain(Terrain_espace *un_terrain_espace)
 	SDL_Rect position_planete;
 	SDL_Rect position_planete2;
 	SDL_Rect position;
-	SDL_Surface *image_une_case;
+	SDL_Surface *image_une_case = NULL;
 	int i, j;/*
 	Case_terrain_espace *une_case;*/
 
@@ -149,4 +149,18 @@ void affichage_ecran(Terrain_espace *un_terrain_espace)
 		}
 	}
 	SDL_Quit();
+}
+
+
+void affichage_ecran_combat(Terrain_combat *un_terrain_combat)
+{
+	
+	 if (SDL_Init(SDL_INIT_VIDEO) == -1) /*Démarrage de la SDL. Si erreur :*/
+    {
+        fprintf(stderr, "Erreur d'initialisation de la SDL : %s\n", SDL_GetError()); /* Écriture de l'erreur*/
+        exit(EXIT_FAILURE); /* On quitte le programme*/
+    }
+  	SDL_SetVideoMode(TAILLE_ECRAN_COMBAT_X,TAILLE_ECRAN_COMBAT_Y,32,SDL_HWSURFACE|SDL_RESIZABLE|SDL_DOUBLEBUF);
+  
+    SDL_Quit();
 }
