@@ -9,7 +9,7 @@
 #include "unite.h"
 #include "niveau.h"
 #include "sauvegarde.h"
-/*
+
 void initialise_sauvegarde(Sauvegarde *une_sauvegarde)
 {
     une_sauvegarde->terrain_espace =(Terrain_espace *)malloc(sizeof(Terrain_espace));
@@ -246,8 +246,8 @@ Unite* ouverture_unite(FILE *f)
 Sauvegarde* selection_ouverture(const char nom[30])
 {
     Sauvegarde* une_sauvegarde;
-    une_sauvegarde = creer_sauvegarde();
     FILE *f;
+    une_sauvegarde = creer_sauvegarde();
     char chaine[50];
     f = fopen(nom, "r");
     if (f==NULL)
@@ -262,7 +262,6 @@ Sauvegarde* selection_ouverture(const char nom[30])
     printf("%s", chaine);
     if (strcmp(chaine, "Terrain\n")==0)
     {
-        printf("%s\n","GENIAL Terrain");
         Terrain_espace* un_terrain_espace;
         un_terrain_espace = ouverture_terrain(f);
         fgets(chaine, 50, f);
@@ -270,7 +269,6 @@ Sauvegarde* selection_ouverture(const char nom[30])
     }
     else if (strcmp(chaine, "Planete\n")==0)
     {
-        printf("%s\n","GENIAL Planete");
         Planete* une_planete;
         une_planete = ouverture_planete(f);
         fgets(chaine, 50, f);
@@ -278,7 +276,6 @@ Sauvegarde* selection_ouverture(const char nom[30])
     }
     else if (strcmp(chaine, "Flotte\n")==0)
     {
-        printf("%s\n","GENIAL Flotte");
         Flotte* une_flotte;
         une_flotte = ouverture_flotte(f);
         fgets(chaine, 50, f);
@@ -287,4 +284,4 @@ Sauvegarde* selection_ouverture(const char nom[30])
     }
     fclose(f);
     return une_sauvegarde;
-}*/
+}
