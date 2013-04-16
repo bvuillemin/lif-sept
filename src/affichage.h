@@ -2,7 +2,7 @@
 #define _AFFICHAGE_H_
 
 #include <SDL/SDL.h>
-#ifdef __APPLE__ 
+#ifdef __APPLE__
 #include "SDL_image.h"
 #else
 #include <SDL/SDL_image.h>
@@ -18,17 +18,18 @@
 #include "terrain_combat.h"
 /**
  * \file      Module terrain
- * \author   
+ * \author
  * \version   0.1
  * \date      13 mars 2013
- * \brief     
+ * \brief
  *
  * \details
  */
 
-void affichage_ecran(Terrain_espace *un_terrain_espace);
+void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace);
 SDL_Surface* creer_affichage_terrain(Terrain_espace *un_terrain_espace);
 SDL_Surface* affichage_terrain(Terrain_espace *un_terrain_espace, SDL_Surface *carte);
+SDL_Surface* affichage_ressource(Jeu *un_jeu, SDL_Surface *surface_ressource);
 
 void pause();
 
