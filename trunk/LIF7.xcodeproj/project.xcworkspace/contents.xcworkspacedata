@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:LIF7.xcodeproj">
+      location = "self:HelloSDL.xcodeproj">
    </FileRef>
 </Workspace>

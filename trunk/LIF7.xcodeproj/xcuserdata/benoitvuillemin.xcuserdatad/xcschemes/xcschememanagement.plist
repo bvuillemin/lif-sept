@@ -4,7 +4,7 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>LIF7.xcscheme</key>
+		<key>HelloSDL.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
@@ -12,7 +12,7 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>25C5CDCE1701D5B000AA780C</key>
+		<key>9C93E39013942B5A0096FAB3</key>
 		<dict>
 			<key>primary</key>
 			<true/>
