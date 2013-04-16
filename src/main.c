@@ -107,6 +107,7 @@ int main(int argc, char *argv[])
 	ajouter_joueur(jeu, joueur);
 	ajouter_joueur(jeu, joueur2);
 
+	affichage_ecran(jeu, un_terrain_espace);
 
 	while(1)
     {

@@ -16,35 +16,51 @@
 
 SDL_Surface* affichage_ressource(Jeu *un_jeu, SDL_Surface *surface_ressource)
 {
-    SDL_Surface *texte;
+    SDL_Surface *nom_ressource;
+	SDL_Surface *texte_ressource;
+	SDL_Surface *nombre_tour;
+	SDL_Surface *bouton_passer_tour = NULL;
     SDL_Rect position;
     TTF_Font *police = NULL;
+	SDL_Color couleur_blanche = {255, 255, 255};
     char ressource[200] = "";
+	char tour[50] = "";
 
     TTF_Init();
     police = TTF_OpenFont("space_age.ttf", 14);
-    SDL_Color couleur_blanche = {255, 255, 255};
+	texte_ressource = IMG_Load("ressource.png");
 
     sprintf(ressource, "Ressources:  Metal:%d  Argent:%d  Carburant:%d  Population:%d", get_metal_joueur(&un_jeu->tab_joueur[0]), get_argent_joueur(&un_jeu->tab_joueur[0]), get_carburant_joueur(&un_jeu->tab_joueur[0]), get_population_joueur(&un_jeu->tab_joueur[0]));
-    texte = TTF_RenderText_Blended(police, ressource, couleur_blanche);
+    nom_ressource = TTF_RenderText_Blended(police, ressource, couleur_blanche);
     position.x = 10;
     position.y = 2;
-    SDL_BlitSurface(texte, NULL, surface_ressource, &position);
-    return surface_ressource;
+    SDL_BlitSurface(nom_ressource, NULL, texte_ressource, &position);
 
-    SDL_FreeSurface(texte);
+	sprintf(tour, "Tour en cours: %d", un_jeu->tour_en_cours);
+	nombre_tour = TTF_RenderText_Blended(police, tour, couleur_blanche);
+	position.x = TAILLE_FENETRE_X - 250;
+	SDL_BlitSurface(nombre_tour, NULL, texte_ressource, &position);
+    
+	position.x = TAILLE_FENETRE_X - 30;
+	bouton_passer_tour = SDL_CreateRGBSurface(SDL_SWSURFACE, 20, 20, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
+	SDL_FillRect(bouton_passer_tour, NULL, SDL_MapRGB(surface_ressource->format, 62, 210, 76));
+	SDL_BlitSurface(bouton_passer_tour, NULL, texte_ressource, &position);
+
+    SDL_FreeSurface(nom_ressource);
+	SDL_FreeSurface(nombre_tour);
+	SDL_FreeSurface(bouton_passer_tour);
+	SDL_FreeSurface(surface_ressource);
     TTF_CloseFont(police);
     TTF_Quit();
-}
 
+	return texte_ressource;
+}
 
 SDL_Surface* creer_affichage_terrain(Terrain_espace *un_terrain_espace)
 {
 	SDL_Surface *carte = NULL;
 	SDL_Surface *planete = NULL;
-	SDL_Surface *planete2 = NULL;
 	SDL_Rect position_planete;
-	SDL_Rect position_planete2;
 	SDL_Rect position;
 	SDL_Surface *image_une_case = NULL;
     SDL_Surface *fond = NULL;
@@ -53,14 +69,11 @@ SDL_Surface* creer_affichage_terrain(Terrain_espace *un_terrain_espace)
 
 	position_planete.x = 0;
 	position_planete.y = 0;
-	position_planete2.x = 0;
-	position_planete2.y = 0;
 	position.x = 0;
 	position.y = 0;
 
-	carte = SDL_CreateRGBSurface(SDL_HWSURFACE, un_terrain_espace->taille_espace_x * 100, un_terrain_espace->taille_espace_y * 100, 32, 0, 0, 0, 0);
+	carte = SDL_CreateRGBSurface(SDL_HWSURFACE, un_terrain_espace->taille_espace_x * 100, un_terrain_espace->taille_espace_y * 100, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
 	planete = IMG_Load("2.png");
-	planete2 = IMG_Load("3.png");
 	image_une_case = IMG_Load("quadrillage.png");
     fond = IMG_Load("fond.png");
     SDL_BlitSurface(fond, NULL, carte, &position);
@@ -82,7 +95,6 @@ SDL_Surface* creer_affichage_terrain(Terrain_espace *un_terrain_espace)
 	}
 
     SDL_FreeSurface(planete);
-    SDL_FreeSurface(planete2);
     SDL_FreeSurface(image_une_case);
     SDL_FreeSurface(fond);
 
@@ -94,8 +106,8 @@ SDL_Surface* affichage_terrain(Terrain_espace *un_terrain_espace, SDL_Surface *c
 	SDL_Rect affichage;
 	SDL_Rect position;
 
-	affichage.w = 1080;
-	affichage.h = 600;
+	affichage.w = TAILLE_TERRAIN_ESPACE_X;
+	affichage.h = TAILLE_TERRAIN_ESPACE_Y;
 
 	position.x = 0;
 	position.y = 0;
@@ -114,37 +126,33 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 	SDL_Surface *ecran = NULL;
 	SDL_Surface *carte = NULL;
 	SDL_Surface *ressource = NULL;
+	SDL_Surface *texte_ressource = NULL;
 	SDL_Surface *deplacement_carte = NULL;
     SDL_Surface *interface = NULL;
-	SDL_Rect position1;
-	SDL_Rect position2;
-    SDL_Rect position3;
+	SDL_Rect position;
 	SDL_Event event;
 	int continuer = 1;
 
-	position1.x = 200;
-	position1.y = 20;
-
-	position2.x = 0;
-	position2.y = 0;
-
-    position3.x = 0;
-	position3.y = 20;
-
+	position.x = 0;
+	position.y = 20;
 	SDL_Init(SDL_INIT_VIDEO);
 	SDL_EnableKeyRepeat(10, 10);
-	ecran = SDL_SetVideoMode(1280, 720, 32, SDL_SWSURFACE);
+	ecran = SDL_SetVideoMode(TAILLE_FENETRE_X, TAILLE_FENETRE_Y, NOMBRE_BITS_COULEUR, SDL_SWSURFACE);
 	interface = IMG_Load("interface.png");
-    SDL_BlitSurface(interface, NULL, ecran, &position3);
+    SDL_BlitSurface(interface, NULL, ecran, &position);
 
+	position.x = 0;
+	position.y = 0;
 	ressource = IMG_Load("ressource.png");
 	ressource = affichage_ressource(un_jeu, ressource);
-	SDL_BlitSurface(ressource, NULL, ecran, &position2);
+	SDL_BlitSurface(ressource, NULL, ecran, &position);
 
+	position.x = 200;
+	position.y = 20;
 	carte = creer_affichage_terrain(un_terrain_espace);
-	deplacement_carte = SDL_CreateRGBSurface(SDL_SWSURFACE, 1080, 600, 32, 0, 0, 0, 0);
+	deplacement_carte = SDL_CreateRGBSurface(SDL_SWSURFACE, TAILLE_TERRAIN_ESPACE_X, TAILLE_TERRAIN_ESPACE_Y, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
 	deplacement_carte = affichage_terrain(un_terrain_espace, carte, deplacement_carte);
-	SDL_BlitSurface(deplacement_carte, NULL, ecran, &position1);
+	SDL_BlitSurface(deplacement_carte, NULL, ecran, &position);
 
 	SDL_Flip(ecran);
 
@@ -156,6 +164,22 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 		case SDL_QUIT:
 			continuer = 0;
 			break;
+		case SDL_MOUSEBUTTONUP:
+			if (event.button.button == SDL_BUTTON_LEFT)
+			{
+				if ((event.button.x > TAILLE_FENETRE_X - 30) && (event.button.x < TAILLE_FENETRE_X - 10) && (event.button.y > 0) && (event.button.y < 20))
+				{
+					joueur_suivant(un_jeu);
+					position.x = 0;
+					position.y = 0;
+					ressource = affichage_ressource(un_jeu, ressource);
+					SDL_BlitSurface(ressource, NULL, ecran, &position);
+					SDL_Flip(ecran);
+					position.x = 200;
+					position.y = 20;
+				}
+			}
+			break;
 		case SDL_KEYDOWN:
 			switch(event.key.keysym.sym)
 			{
@@ -163,28 +187,28 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 				if((un_terrain_espace->affichage_y > 0) && (un_terrain_espace->affichage_y <= (un_terrain_espace->taille_espace_y *100) -600 ))
 				{un_terrain_espace->affichage_y--;
 				deplacement_carte = affichage_terrain(un_terrain_espace, carte, deplacement_carte);
-				SDL_BlitSurface(deplacement_carte, NULL, ecran, &position1);
+				SDL_BlitSurface(deplacement_carte, NULL, ecran, &position);
 				SDL_Flip(ecran);}
 				break;
 			case SDLK_DOWN:
 				if((un_terrain_espace->affichage_y>=0) && (un_terrain_espace->affichage_y < (un_terrain_espace->taille_espace_y *100) - 600 ))
 				{un_terrain_espace->affichage_y++;
 				deplacement_carte = affichage_terrain(un_terrain_espace, carte, deplacement_carte);
-				SDL_BlitSurface(deplacement_carte, NULL, ecran, &position1);
+				SDL_BlitSurface(deplacement_carte, NULL, ecran, &position);
 				SDL_Flip(ecran);}
 				break;
 			case SDLK_RIGHT:
 				if((un_terrain_espace->affichage_x >= 0) && (un_terrain_espace->affichage_x < (un_terrain_espace->taille_espace_x * 100) -1080))
 				{un_terrain_espace->affichage_x++;
 				deplacement_carte = affichage_terrain(un_terrain_espace, carte, deplacement_carte);
-				SDL_BlitSurface(deplacement_carte, NULL, ecran, &position1);
+				SDL_BlitSurface(deplacement_carte, NULL, ecran, &position);
 				SDL_Flip(ecran);}
 				break;
 			case SDLK_LEFT:
 				if((un_terrain_espace->affichage_x>0) && (un_terrain_espace->affichage_x <= (un_terrain_espace->taille_espace_x *100) -1080))
 				{un_terrain_espace->affichage_x--;
 				deplacement_carte = affichage_terrain(un_terrain_espace, carte, deplacement_carte);
-				SDL_BlitSurface(deplacement_carte, NULL, ecran, &position1);
+				SDL_BlitSurface(deplacement_carte, NULL, ecran, &position);
 				SDL_Flip(ecran);}
 				break;
 			default :
@@ -226,7 +250,7 @@ void affichage_ecran_combat(Terrain_combat *un_terrain_combat)
         fprintf(stderr, "Erreur d'initialisation de la SDL : %s\n", SDL_GetError()); /* Écriture de l'erreur*/
         exit(EXIT_FAILURE); /* On quitte le programme*/
     }
-  	SDL_SetVideoMode(TAILLE_ECRAN_COMBAT_X,TAILLE_ECRAN_COMBAT_Y,32,SDL_HWSURFACE|SDL_RESIZABLE|SDL_DOUBLEBUF);
+  	SDL_SetVideoMode(TAILLE_ECRAN_COMBAT_X,TAILLE_ECRAN_COMBAT_Y,NOMBRE_BITS_COULEUR,SDL_HWSURFACE|SDL_RESIZABLE|SDL_DOUBLEBUF);
 	SDL_WM_SetCaption("Conquest Of Space","combat");
   	pause();
     SDL_Quit();
