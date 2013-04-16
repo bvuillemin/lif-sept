@@ -73,11 +73,11 @@ void definir_case_terrain_espace(Case_terrain_espace *une_case_terrain_espace, c
 
 void liberer_case_terrain_espace(Case_terrain_espace *une_case_terrain_espace)
 {
-    if(une_case_terrain_espace->presence_flotte == true)
+    /*if(une_case_terrain_espace->presence_flotte == true)
     {
         detruire_flotte(&(une_case_terrain_espace->flotte));
         une_case_terrain_espace->presence_flotte = false;
-    }
+    }*/
     if(une_case_terrain_espace->type_case_terrain_espace == 'P')
     {
         detruire_planete(&(une_case_terrain_espace->planete));

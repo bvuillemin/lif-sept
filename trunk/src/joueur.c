@@ -114,14 +114,16 @@ void ajouter_planete_joueur(Joueur *un_joueur, Planete *une_planete)
     }
 }
 
-void ajouter_flotte_joueur(Joueur *un_joueur, Flotte une_flotte)
+void ajouter_flotte_joueur(Joueur *un_joueur, Flotte *une_flotte)
 {
     int i = un_joueur->nb_flotte;
     if(i< un_joueur->nb_flotte_possible)
     {
-        un_joueur->tab_flotte[0] = une_flotte;
+        un_joueur->tab_flotte[i] = *une_flotte;
         un_joueur->nb_flotte ++;
+        free(une_flotte);
     }
+
 }
 
 void recuperer_ressource_planete(Joueur *un_joueur, int *metal, int *argent, int *carburant, int *population)
@@ -165,12 +167,19 @@ Joueur *creer_joueur(int num_joueur, char nom[30])
 
 void liberer_joueur(Joueur *un_joueur)
 {
+    int i;
+    for(i=0;i<un_joueur->nb_flotte;i++)
+    {
+        liberer_flotte(&(un_joueur->tab_flotte[i]));
+    }
     un_joueur->numero_joueur = 0;
     un_joueur->metal = 0;
     un_joueur->argent = 0;
     un_joueur->carburant = 0;
     un_joueur->population = 0;
+    free(un_joueur->tab_planete);
 
+    free(un_joueur->tab_flotte);
     un_joueur->nb_planete = 0;
     un_joueur->nb_planete_possible = 0;
     un_joueur->tab_planete = NULL;
@@ -264,7 +273,7 @@ void validation_creation_unite_planete(Terrain_espace *un_terrain_espace, Joueur
             une_unite = creer_unite(PT_VIE_UNITE_1, PT_ATTAQUE_UNITE_1, PT_ACTION_UNITE_1, PT_DEPLACEMENT_UNITE_1, 10, PT_MOUVEMENT_UNITE_1);
             une_flotte = creer_flotte();
             ajouter_unite_flotte(une_flotte, une_unite);
-            ajouter_flotte_joueur(un_joueur, *une_flotte);
+            ajouter_flotte_joueur(un_joueur, une_flotte);
             ajouter_flotte(get_case_terrain_espace(un_terrain_espace, une_planete->x, une_planete->y), &un_joueur->tab_flotte[0]);
         }
     }

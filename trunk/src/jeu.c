@@ -27,7 +27,7 @@ void liberer_jeu(Jeu *un_jeu)
     int i;
     for(i=0;i<un_jeu->nb_joueur;i++)
     {
-        liberer_joueur(&(un_jeu->tab_joueur[i]));
+        liberer_joueur(&un_jeu->tab_joueur[i]);
     }
     free(un_jeu->tab_joueur);
     un_jeu->tour_en_cours = 0;
@@ -51,6 +51,7 @@ void ajouter_joueur(Jeu *un_jeu, Joueur *un_joueur)
 		un_jeu->tab_joueur[i] = *un_joueur;
 		un_jeu->nb_joueur ++;
 	}
+	free(un_joueur);
 }
 
 void joueur_suivant(Jeu *un_jeu)
