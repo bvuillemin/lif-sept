@@ -31,26 +31,26 @@ typedef struct
 void initialise_case_combat(Case_terrain_combat *une_case_terrain_combat);
 Case_terrain_combat *creer_case_combat();
 
-void set_x_combat(Case_terrain_combat *une_case_terrain_combat, int x_combat);
+void set_x_combat(Case_terrain_combat *une_case_terrain_combat, const int x_combat);
 int get_x_combat(const Case_terrain_combat *une_case_terrain_combat);
-void set_y_combat(Case_terrain_combat *une_case_terrain_combat, int y_combat);
+void set_y_combat(Case_terrain_combat *une_case_terrain_combat, const int y_combat);
 int get_y_combat(const Case_terrain_combat *une_case_terrain_combat);
-void set_type_case_terrain_combat(Case_terrain_combat *une_case_terrain_combat, char type);
-char get_type_case_terrain_combat(Case_terrain_combat *une_case_terrain_combat);
+void set_type_case_terrain_combat(Case_terrain_combat *une_case_terrain_combat, const char type);
+char get_type_case_terrain_combat(const Case_terrain_combat *une_case_terrain_combat);
 
 /*void set_id_joueur(Case_terrain_combat *une_case_terrain_combat, int id_joueur);
 int get_id_joueur(const Case_terrain_combat *une_case_terrain_combat);*/
 
-void set_presence_unite(Case_terrain_combat *une_case_terrain_combat,bool p);
-bool get_presence_unite(Case_terrain_combat *une_case_terrain_combat);
+void set_presence_unite(Case_terrain_combat *une_case_terrain_combat,const bool p);
+bool get_presence_unite(const Case_terrain_combat *une_case_terrain_combat);
 
 void detruit_case_terrain_combat(Case_terrain_combat **une_case_terrain_combat);
 void libere_case_terrain_combat(Case_terrain_combat *une_case_terrain_combat);
 
-void definir_case_terrain_combat(Case_terrain_combat *une_case_terrain_combat, char c);
+void definir_case_terrain_combat(Case_terrain_combat *une_case_terrain_combat, const char c);
 
 void set_unite(Case_terrain_combat *une_case_terrain_combat, Unite *une_unite);
-Unite * get_unite(Case_terrain_combat *une_case_terrain_combat);
+Unite * get_unite(const Case_terrain_combat *une_case_terrain_combat);
 
 void ajouter_unite(Case_terrain_combat *une_case_terrain_combat, Unite *une_unite);
 void retirer_unite(Case_terrain_combat *une_case_terrain_combat);

@@ -64,7 +64,7 @@ SDL_Surface* affichage_terrain(Terrain_espace *un_terrain_espace, SDL_Surface *c
 	affichage.x = un_terrain_espace->affichage_x;
 	affichage.y = un_terrain_espace->affichage_y;
 
-	//SDL_FillRect(resultat, &position, SDL_MapRGB(resultat->format, 255, 255, 255));
+	/*SDL_FillRect(resultat, &position, SDL_MapRGB(resultat->format, 255, 255, 255));*/
 	SDL_BlitSurface(carte, &affichage, resultat, &position);
 	
 	return resultat;
@@ -142,6 +142,7 @@ void affichage_ecran(Terrain_espace *un_terrain_espace)
 				SDL_BlitSurface(deplacement_carte, NULL, ecran, &position1);
 				SDL_Flip(ecran);}
 				break;
+			default :
 			}
 			break;
 		}

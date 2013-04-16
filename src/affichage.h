@@ -1,11 +1,13 @@
 #ifndef _AFFICHAGE_H_
 #define _AFFICHAGE_H_
 
+#include <SDL/SDL.h>
+#include <SDL/SDL_image.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "terrain.h"
-#include "case.h"
+#include "terrain_espace.h"
+#include "case_terrain_espace.h"
 #include "unite.h"
 #include "planete.h"
 #include "niveau.h"

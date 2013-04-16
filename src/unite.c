@@ -4,7 +4,7 @@
 #include <math.h>
 #include "unite.h"
 
-void initialise_unite(Unite *unite_jeu, int pt_vie, int pt_attaque, int pt_action, int pt_deplacement,int portee,int pt_mouvement)
+void initialise_unite(Unite *unite_jeu, const int pt_vie,const int pt_attaque,const int pt_action,const int pt_deplacement,const int portee,const int pt_mouvement)
 {
     unite_jeu->pt_vie=pt_vie;
     unite_jeu->pt_attaque=pt_attaque;
@@ -20,7 +20,7 @@ void initialise_unite(Unite *unite_jeu, int pt_vie, int pt_attaque, int pt_actio
     /*initialise_niveau(unite_jeu->niveau_unite, 0, 0);*/
 }
 
-Unite *creer_unite(int pt_vie, int pt_attaque, int pt_action, int pt_deplacement,int portee,int pt_mouvement)
+Unite *creer_unite(const int pt_vie,const int pt_attaque,const int pt_action,const int pt_deplacement,const int portee,const int pt_mouvement)
 {
     Unite *nouvelle_unite = (Unite *)malloc(sizeof(Unite));
     initialise_unite(nouvelle_unite, pt_vie, pt_attaque, pt_action, pt_deplacement,portee, pt_mouvement);
@@ -139,19 +139,19 @@ bool unite_peut_se_deplacer(const Unite *une_unite, int x, int y)
     else {return false;}
 }
 
-int calcul_distance_unite(int x_depart, int y_depart, int x_arrivee, int y_arrivee)
+int calcul_distance_unite(const int x_depart, const int y_depart, const int x_arrivee, const int y_arrivee)
 {
     return ceil(sqrt(pow(x_depart - x_arrivee, 2) + pow(y_depart - y_arrivee, 2)) - 0.1); /*on enleve 0.1 pour etre un peu plus précis: si on se deplace de 7.05 on veut que ce soit 7*/
 }
 
-void enlever_pt_mouvement_combat_unite(Unite *une_unite, int distance)
+void enlever_pt_mouvement_combat_unite(Unite *une_unite, const int distance)
 {
     int temp = get_pt_deplacement(une_unite);
     temp = temp - distance;
     set_pt_deplacement(une_unite, temp);
 }
 
-void enlever_pt_action_unite(Unite *une_unite, int point)
+void enlever_pt_action_unite(Unite *une_unite, const int point)
 {
 	int temp = get_pt_action(une_unite);
     temp = temp - point;

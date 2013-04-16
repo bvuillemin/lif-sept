@@ -25,19 +25,19 @@ typedef struct
     Case_terrain_combat *tab_terrain_combat; /*x en abscisse, y en ordonnée, on commence à 0 (à modifier?)*/
 }Terrain_combat;
 
-void initilalise_terrain_combat(Terrain_combat *terrain_jeu_combat, int taille_x, int taille_y);
-Terrain_combat *creer_terrain_combat(int taille_x, int taille_y);
+void initilalise_terrain_combat(Terrain_combat *terrain_jeu_combat, const int taille_x,const int taille_y);
+Terrain_combat *creer_terrain_combat(const int taille_x,const int taille_y);
 
 void libere_terrain_combat(Terrain_combat *terrain_jeu_combat);
 void detruit_terrain_combat(Terrain_combat **terrain_jeu_combat);
 
-void set_taille_combat_x(Terrain_combat *terrain_jeu_combat, int x);
+void set_taille_combat_x(Terrain_combat *terrain_jeu_combat,const int x);
 int get_taille_combat_x(const Terrain_combat *terrain_jeu_combat);
-void set_taille_combat_y(Terrain_combat *terrain_jeu_combat, int y);
+void set_taille_combat_y(Terrain_combat *terrain_jeu_combat,const int y);
 int get_taille_combat_y(const Terrain_combat *terrain_jeu_combat);
 
 /*modifie une case du terrain*/
-void set_case_terrain_combat(const Terrain_combat *terrain_jeu_combat, int x, int y, char c);
+void set_case_terrain_combat(const Terrain_combat *terrain_jeu_combat,const int x,const int y,const char c);
 Case_terrain_combat * get_case_terrain_combat(const Terrain_combat *terrain_jeu_combat, const int x, const int y);
 
 
@@ -46,19 +46,19 @@ void modification_terrain_combat(const Terrain_combat *terrain_jeu_combat, const
 void affiche_terrain_combat(const Terrain_combat *terrain_jeu_combat); /*affiche tous les types du terrain*/
 
 
-bool deplacement_unite(Terrain_combat *un_terrain_combat, Unite *une_unite, int x, int y);
+bool deplacement_unite(Terrain_combat *un_terrain_combat, Unite *une_unite, const int x,const int y);
 /*ajoute une unité sur la case de coordonnées (x,y)*/
-void ajoute_unite_terrain(Terrain_combat * un_terrain_combat, Unite * unite, int x, int y);
+void ajoute_unite_terrain(Terrain_combat * un_terrain_combat, Unite * unite,const int x,const int y);
 
 void placer_unite_flotte_en_haut(Terrain_combat * un_terrain_combat, Flotte * flotte);
 void placer_unite_flotte_en_bas(Terrain_combat * un_terrain_combat, Flotte * flotte);
 
-bool case_libre(Terrain_combat * un_terrain_combat,int x, int y);
+bool case_libre(const Terrain_combat * un_terrain_combat,const int x,const int y);
 
 void un_tour_combat(Terrain_combat * un_terrain_combat, Flotte * flotte);
-bool peut_attaquer_diag(Terrain_combat * un_terrain_combat, Unite * unite,int x,int y);
-bool peut_attaquer_hor_vert(Terrain_combat * un_terrain_combat, Unite * unite,int x,int y);
-void attaquer(Terrain_combat * un_terrain_combat,Unite * une_unite, int x, int y);
+bool peut_attaquer_diag(Terrain_combat * un_terrain_combat, Unite * unite,const int x,const int y);
+bool peut_attaquer_hor_vert(Terrain_combat * un_terrain_combat, const Unite * unite,const int x,const int y);
+void attaquer(Terrain_combat * un_terrain_combat,Unite * une_unite,const int x,const int y);
 /*void test_module_terrain_combat();*/
 
 

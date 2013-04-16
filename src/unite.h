@@ -36,8 +36,8 @@ typedef struct
 	/*compétence spéciale*/
 }Unite;
 
-void initialise_unite(Unite *unite_jeu,int pt_vie, int pt_attaque, int pt_action, int pt_deplacement,int portee,int pt_mouvement);
-Unite *creer_unite(int pt_vie, int pt_attaque, int pt_action, int pt_deplacement,int portee,int pt_mouvement);
+void initialise_unite(Unite *unite_jeu,const int pt_vie,const int pt_attaque,const int pt_action,const int pt_deplacement,const int portee,const int pt_mouvement);
+Unite *creer_unite(const int pt_vie,const int pt_attaque,const int pt_action,const int pt_deplacement,const int portee,const int pt_mouvement);
 
 void libere_unite(Unite *unite_jeu);
 void detruire_unite(Unite **unite_jeu);
@@ -66,11 +66,11 @@ int get_pt_deplacement(const Unite *unite_jeu);
 void set_pt_mouvement_unite(Unite *unite_jeu, const int x);
 int get_pt_mouvement_unite(const Unite *unite_jeu);
 
-bool unite_peut_se_deplacer(const Unite *une_unite, int x, int y);
-int calcul_distance_unite(int x_depart, int y_depart, int x_arrivee, int y_arrivee);
+bool unite_peut_se_deplacer(const Unite *une_unite, const int x, const int y);
+int calcul_distance_unite(const int x_depart, const int y_depart, const int x_arrivee, const int y_arrivee);
 
-void enlever_pt_mouvement_combat_unite(Unite *une_unite, int distance);
-void enlever_pt_action_unite(Unite *une_unite, int point);
+void enlever_pt_mouvement_combat_unite(Unite *une_unite, const int distance);
+void enlever_pt_action_unite(Unite *une_unite, const int point);
 void reinitialiser_mouvement_combat_unite(Unite *une_unite);
 void reinitialiser_pt_action(Unite *une_unite);
 void test_module_unite();

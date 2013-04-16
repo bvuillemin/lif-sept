@@ -21,7 +21,7 @@ Case_terrain_combat *creer_case_combat()
     return une_case_terrain_combat;
 }
 
-void set_x_combat(Case_terrain_combat *une_case_terrain_combat, int x)
+void set_x_combat(Case_terrain_combat *une_case_terrain_combat, const int x)
 {
     une_case_terrain_combat->x_combat = x;
 }
@@ -31,7 +31,7 @@ int get_x_combat(const Case_terrain_combat *une_case_terrain_combat)
     return une_case_terrain_combat->x_combat;
 }
 
-void set_y_combat(Case_terrain_combat *une_case_terrain_combat, int y)
+void set_y_combat(Case_terrain_combat *une_case_terrain_combat, const int y)
 {
     une_case_terrain_combat->y_combat = y;
 }
@@ -41,21 +41,21 @@ int get_y_combat(const Case_terrain_combat *une_case_terrain_combat)
     return une_case_terrain_combat->y_combat;
 }
 
-void set_type_case_terrain_combat(Case_terrain_combat *une_case_terrain_combat, char type)
+void set_type_case_terrain_combat(Case_terrain_combat *une_case_terrain_combat, const char type)
 {
 	une_case_terrain_combat->type_case_terrain_combat = type;
 }
 
-char get_type_case_terrain_combat(Case_terrain_combat *une_case_terrain_combat)
+char get_type_case_terrain_combat(const Case_terrain_combat *une_case_terrain_combat)
 {
 	return une_case_terrain_combat->type_case_terrain_combat;
 }
 
-void set_presence_unite(Case_terrain_combat *une_case_terrain_combat,bool p)
+void set_presence_unite(Case_terrain_combat *une_case_terrain_combat, const bool p)
 {
 	une_case_terrain_combat->presence_unite = p;
 }
-bool get_presence_unite(Case_terrain_combat *une_case_terrain_combat)
+bool get_presence_unite(const Case_terrain_combat *une_case_terrain_combat)
 {
 	return une_case_terrain_combat->presence_unite;
 }
@@ -69,7 +69,7 @@ int get_id_joueur(const Case_terrain_combat *une_case_terrain_combat)
 	return une_case_terrain_combat->id_joueur;
 }*/
 
-void definir_case_terrain_combat(Case_terrain_combat *une_case_terrain_combat, char c)
+void definir_case_terrain_combat(Case_terrain_combat *une_case_terrain_combat, const char c)
 {
     if((c == 'E')||(c == '1')||(c == '2')) /*'2' pour les unites du joueur 2, '1' pour les unités du joueur 1, 'E' pour l'espace */
     {
@@ -107,7 +107,7 @@ void set_unite(Case_terrain_combat *une_case_terrain_combat, Unite *une_unite)
     une_case_terrain_combat->unite->y_unite = une_case_terrain_combat->y_combat;
 }
 
-Unite * get_unite(Case_terrain_combat *une_case_terrain_combat)
+Unite * get_unite(const Case_terrain_combat *une_case_terrain_combat)
 {
 	return une_case_terrain_combat->unite;
 }

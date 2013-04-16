@@ -5,7 +5,7 @@
 #include "planete.h"
 #include "batiment.h"
 
-void initialise_planete(Planete *une_planete, char nom_planete[30])
+void initialise_planete(Planete *une_planete,const char nom_planete[30])
 {
     int i;
     une_planete->x = 0;
@@ -48,7 +48,7 @@ void libere_planete(Planete *une_planete)
 {
     une_planete->x = 0;
     une_planete->y = 0;
-    //free(une_planete->nom_planete);
+    /*free(une_planete->nom_planete);*/
     une_planete->planete_colonisee = 0;
     une_planete->planete_principale = 0;
 	une_planete->habitabilite = 0;
@@ -67,7 +67,7 @@ void detruire_planete(Planete **une_planete)
     *une_planete = NULL;
 }
 
-void set_nom_planete(Planete *une_planete, char nom[30])
+void set_nom_planete(Planete *une_planete,const char nom[30])
 {
     strcpy(une_planete->nom_planete, nom);
 }
@@ -77,113 +77,113 @@ char* get_nom_planete(Planete *une_planete)
     return une_planete->nom_planete;
 }
 
-void set_position_planete(Planete *une_planete, int x, int y)
+void set_position_planete(Planete *une_planete,const int x,const int y)
 {
     une_planete->x = x;
     une_planete->y = y;
 }
 
-int get_position_x_planete(Planete *une_planete)
+int get_position_x_planete(const Planete *une_planete)
 {
     return une_planete->x;
 }
 
-int get_position_y_planete(Planete *une_planete)
+int get_position_y_planete(const Planete *une_planete)
 {
     return une_planete->y;
 }
 
-void set_taille_utilisee(Planete *une_planete, int taille_utilisee)
+void set_taille_utilisee(Planete *une_planete,const int taille_utilisee)
 {
     une_planete->taille_utilisee = taille_utilisee;
 }
 
-int get_taille_utilisee(Planete *une_planete)
+int get_taille_utilisee(const Planete *une_planete)
 {
     return une_planete->taille_utilisee;
 }
 
-void set_taille_planete(Planete *une_planete, int taille_planete)
+void set_taille_planete(Planete *une_planete,const int taille_planete)
 {
     une_planete->taille_planete = 20;
 }
 
-int get_taille_planete(Planete *une_planete)
+int get_taille_planete(const Planete *une_planete)
 {
     return une_planete->taille_planete;
 }
 
-void set_habitabilite(Planete *une_planete, int nb)
+void set_habitabilite(Planete *une_planete,const int nb)
 {
 	une_planete->habitabilite=nb;
 }
 
-int get_habitabilite(Planete *une_planete)
+int get_habitabilite(const Planete *une_planete)
 {
 	return une_planete->habitabilite;
 }
 
-void set_planete_principale(Planete *une_planete, bool booleen)
+void set_planete_principale(Planete *une_planete,const bool booleen)
 {
     une_planete->planete_principale = booleen;
 }
 
-bool get_planete_principale(Planete *une_planete)
+bool get_planete_principale(const Planete *une_planete)
 {
     return une_planete->planete_principale;
 }
 
-void set_planete_colonisee(Planete *une_planete, bool booleen)
+void set_planete_colonisee(Planete *une_planete,const bool booleen)
 {
    une_planete->planete_colonisee = booleen;
 }
 
-bool get_planete_colonisee(Planete *une_planete)
+bool get_planete_colonisee(const Planete *une_planete)
 {
     return une_planete->planete_colonisee;
 }
 
-void set_metal(Planete *une_planete, int nb)
+void set_metal(Planete *une_planete,const int nb)
 {
     une_planete->metal = nb;
 }
 
-int get_metal(Planete *une_planete)
+int get_metal(const Planete *une_planete)
 {
     return une_planete->metal;
 }
 
-void set_argent(Planete *une_planete, int nb)
+void set_argent(Planete *une_planete,const int nb)
 {
     une_planete->argent = nb;
 }
 
-int get_argent(Planete *une_planete)
+int get_argent(const Planete *une_planete)
 {
     return une_planete->argent;
 }
 
-void set_carburant(Planete *une_planete, int nb)
+void set_carburant(Planete *une_planete,const int nb)
 {
     une_planete->carburant = nb;
 }
 
-int get_carburant(Planete *une_planete)
+int get_carburant(const Planete *une_planete)
 {
     return une_planete->carburant;
 }
 
-void set_population(Planete *une_planete, int nb)
+void set_population(Planete *une_planete,const int nb)
 {
     une_planete->population = nb;
 }
 
-int get_population(Planete *une_planete)
+int get_population(const Planete *une_planete)
 {
     return une_planete->population;
 }
 
-void modification_production_planete(Planete *une_planete, int metal, int argent, int carburant, int population)
+void modification_production_planete(Planete *une_planete,const int metal,const int argent,const int carburant,const int population)
 {
 	une_planete->metal = metal;
 	une_planete->argent = argent;
