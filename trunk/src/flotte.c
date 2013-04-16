@@ -33,42 +33,42 @@ void set_taille_flotte(Flotte *flotte,const int nb)
     flotte->taille_flotte = nb;
 }
 
-int get_taille_maximum_flotte(Flotte *flotte)
+int get_taille_maximum_flotte(const Flotte *flotte)
 {
     return flotte->taille_maximum_flotte;
 }
 
-int get_taille_flotte(Flotte *flotte)
+int get_taille_flotte(const Flotte *flotte)
 {
     return flotte->taille_flotte;
 }
 
-void set_x_flotte(Flotte *une_flotte, int x)
+void set_x_flotte(Flotte *une_flotte,const int x)
 {
     une_flotte->x_flotte = x;
 }
 
-int get_x_flotte(Flotte *une_flotte)
+int get_x_flotte(const Flotte *une_flotte)
 {
     return une_flotte->x_flotte;
 }
 
-void set_y_flotte(Flotte *une_flotte, int y)
+void set_y_flotte(Flotte *une_flotte,const int y)
 {
     une_flotte->y_flotte = y;
 }
 
-int get_y_flotte(Flotte *une_flotte)
+int get_y_flotte(const Flotte *une_flotte)
 {
     return une_flotte->y_flotte;
 }
 
-void set_pt_mouvement_espace_flotte(Flotte *une_flotte, int pt)
+void set_pt_mouvement_espace_flotte(Flotte *une_flotte,const int pt)
 {
     une_flotte->pt_mouvement_espace_flotte = pt;
 }
 
-int get_pt_mouvement_espace_flotte(Flotte *une_flotte)
+int get_pt_mouvement_espace_flotte(const Flotte *une_flotte)
 {
     return une_flotte->pt_mouvement_espace_flotte;
 }
@@ -140,7 +140,7 @@ int retirer_unite_flotte(Flotte *flotte,const int indice_unite)
     else{return 0;}
 }
 
-void afficher_flotte(Flotte *flotte)
+void afficher_flotte(const Flotte *flotte)
 {
     int i;
 	printf("Coordonnes de la flotte: %d %d, pt mouvement %d, taille : %d\n", flotte->x_flotte, flotte->y_flotte, flotte->pt_mouvement_espace_flotte,flotte->taille_flotte);
@@ -152,7 +152,7 @@ void afficher_flotte(Flotte *flotte)
 
 }
 
-void enlever_pt_mouvement_espace_flotte(Flotte *une_flotte, int distance)
+void enlever_pt_mouvement_espace_flotte(Flotte *une_flotte,const int distance)
 {
     int temp = get_pt_mouvement_espace_flotte(une_flotte);
     temp = temp - distance;

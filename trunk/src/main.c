@@ -1,8 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <SDL/SDL.h>
-#include <SDL/SDL_image.h>
 
 #include "planete.h"
 #include "case_terrain_espace.h"
@@ -17,13 +15,14 @@
 #include "jeu.h"
 #include "batiment.h"
 #include "constante.h"
+#include "affichage.h"
 
 int main(int argc, char *argv[])
 {
 	Terrain_espace *un_terrain_espace;
-
+/*
 	Planete *terre;
-	Planete *jupiter;
+	Planete *jupiter;*/
 	char nom_terre[]="terre";
 	char nom_jupiter[]="jupiter";
 

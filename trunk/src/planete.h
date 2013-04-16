@@ -50,35 +50,35 @@ typedef void (*Validation_creation_batiment)(struct sPlanete*);
 
  }Planete;
 
-void initialise_planete(Planete *une_planete, char nom_planete[30]);
+void initialise_planete(Planete *une_planete, const char nom_planete[30]);
 Planete *creer_planete(char nom_planete[30]);
 
-void set_nom_planete(Planete *une_planete, char nom[30]);
+void set_nom_planete(Planete *une_planete,const char nom[30]);
 char* get_nom_planete(Planete *une_planete);
-void set_position_planete(Planete *une_planete, int x, int y);
-int get_position_x_planete(Planete *une_planete);
-int get_position_y_planete(Planete *une_planete);
-void set_taille_utilisee(Planete *une_planete, int taille_utilisee);
-int get_taille_utilisee(Planete *une_planete);
-void set_taille_planete(Planete *une_planete, int taille_planete);
-int get_taille_planete(Planete *une_planete);
-void set_habitabilite(Planete *une_planete, int nb);
-int get_habitabilite(Planete *une_planete);
-void set_planete_principale(Planete *une_planete, bool booleen);
-bool get_planete_principale(Planete *une_planete);
-void set_planete_colonisee(Planete *une_planete, bool booleen);
-bool get_planete_colonisee(Planete *une_planete);
+void set_position_planete(Planete *une_planete,const int x,const int y);
+int get_position_x_planete(const Planete *une_planete);
+int get_position_y_planete(const Planete *une_planete);
+void set_taille_utilisee(Planete *une_planete,const int taille_utilisee);
+int get_taille_utilisee(const Planete *une_planete);
+void set_taille_planete(Planete *une_planete,const int taille_planete);
+int get_taille_planete(const Planete *une_planete);
+void set_habitabilite(Planete *une_planete,const int nb);
+int get_habitabilite(const Planete *une_planete);
+void set_planete_principale(Planete *une_planete, const bool booleen);
+bool get_planete_principale(const Planete *une_planete);
+void set_planete_colonisee(Planete *une_planete,const bool booleen);
+bool get_planete_colonisee(const Planete *une_planete);
 
-void set_metal(Planete *une_planete, int nb);
-int get_metal(Planete *une_planete);
-void set_argent(Planete *une_planete, int nb);
-int get_argent(Planete *une_planete);
-void set_carburant(Planete *une_planete, int nb);
-int get_carburant(Planete *une_planete);
-void set_population(Planete *une_planete, int nb);
-int get_population(Planete *une_planete);
+void set_metal(Planete *une_planete,const int nb);
+int get_metal(const Planete *une_planete);
+void set_argent(Planete *une_planete,const int nb);
+int get_argent(const Planete *une_planete);
+void set_carburant(Planete *une_planete,const int nb);
+int get_carburant(const Planete *une_planete);
+void set_population(Planete *une_planete,const int nb);
+int get_population(const Planete *une_planete);
 
-void modification_production_planete(Planete *une_planete, int metal, int argent, int carburant, int population);
+void modification_production_planete(Planete *une_planete,const int metal,const int argent,const int carburant,const int population);
 
 void libere_planete(Planete *planete);
 void detruire_planete(Planete **planete);
