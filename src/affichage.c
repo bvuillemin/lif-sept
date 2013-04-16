@@ -14,8 +14,8 @@ SDL_Surface* creer_affichage_terrain(Terrain_espace *un_terrain_espace)
 	SDL_Rect position_planete2;
 	SDL_Rect position;
 	SDL_Surface *image_une_case;
-	int i, j;
-	Case_terrain_espace *une_case;
+	int i, j;/*
+	Case_terrain_espace *une_case;*/
 
 	position_planete.x = 0;
 	position_planete.y = 0;
@@ -143,6 +143,7 @@ void affichage_ecran(Terrain_espace *un_terrain_espace)
 				SDL_Flip(ecran);}
 				break;
 			default :
+				break;
 			}
 			break;
 		}
