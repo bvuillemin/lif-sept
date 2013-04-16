@@ -9,7 +9,8 @@
 #define NB_TOUR_UNITE_1 1
 #define NB_METAL_UNITE_1 100
 
-#define TAILLE_ECRAN_COMBAT_X 100
-#define TAILLE_ECRAN_COMBAT_Y 100
+/*l'ecran du combat (ou/et du l'espace)*/
+#define TAILLE_ECRAN_COMBAT_X 640
+#define TAILLE_ECRAN_COMBAT_Y 400
 
 #endif

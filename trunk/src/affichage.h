@@ -30,6 +30,7 @@ void affichage_ecran(Terrain_espace *un_terrain_espace);
 SDL_Surface* creer_affichage_terrain(Terrain_espace *un_terrain_espace);
 SDL_Surface* affichage_terrain(Terrain_espace *un_terrain_espace, SDL_Surface *carte);
 
+void pause();
 
 /*pour le combat :*/
 void affichage_ecran_combat(Terrain_combat *un_terrain_combat);
