@@ -18,6 +18,7 @@ SDL_Surface* creer_affichage_terrain(Terrain_espace *un_terrain_espace)
 	SDL_Rect position_planete2;
 	SDL_Rect position;
 	SDL_Surface *image_une_case = NULL;
+    SDL_Surface *fond = NULL;
 	int i, j;/*
 	Case_terrain_espace *une_case;*/
 
@@ -31,8 +32,9 @@ SDL_Surface* creer_affichage_terrain(Terrain_espace *un_terrain_espace)
 	carte = SDL_CreateRGBSurface(SDL_HWSURFACE, un_terrain_espace->taille_espace_x * 100, un_terrain_espace->taille_espace_y * 100, 32, 0, 0, 0, 0);
 	planete = IMG_Load("2.png");
 	planete2 = IMG_Load("3.png");
-	image_une_case = IMG_Load("fond.png");
-
+	image_une_case = IMG_Load("quadrillage.png");
+    fond = IMG_Load("fond.png");
+    SDL_BlitSurface(fond, NULL, carte, &position);
 	for(i=0;i< un_terrain_espace->taille_espace_x;i++)
 	{
 		for(j=0;j< un_terrain_espace->taille_espace_y;j++)
@@ -42,7 +44,6 @@ SDL_Surface* creer_affichage_terrain(Terrain_espace *un_terrain_espace)
 			SDL_BlitSurface(image_une_case, NULL, carte, &position);
 		}
 	}
-
 	position_planete.x = (2 * 100);
 	position_planete.y = (1 * 100);
 	SDL_BlitSurface(planete, NULL, carte, &position_planete);
@@ -80,8 +81,10 @@ void affichage_ecran(Terrain_espace *un_terrain_espace)
 	SDL_Surface *carte = NULL;
 	SDL_Surface *ressource = NULL;
 	SDL_Surface *deplacement_carte = NULL;
+    SDL_Surface *interface = NULL;
 	SDL_Rect position1;
 	SDL_Rect position2;
+    SDL_Rect position3;
 	SDL_Event event;
 	int continuer = 1;
 
@@ -91,13 +94,16 @@ void affichage_ecran(Terrain_espace *un_terrain_espace)
 	position2.x = 0;
 	position2.y = 0;
 
+    position3.x = 0;
+	position3.y = 20;
+    
 	SDL_Init(SDL_INIT_VIDEO);
 	SDL_EnableKeyRepeat(10, 10);
 	ecran = SDL_SetVideoMode(1280, 720, 32, SDL_SWSURFACE);
-	SDL_FillRect(ecran , NULL, SDL_MapRGB(ecran->format, 22, 117, 172));
+	interface = IMG_Load("interface.png");
+    SDL_BlitSurface(interface, NULL, ecran, &position3);
 	
-	ressource = SDL_CreateRGBSurface(SDL_SWSURFACE, 1280, 20, 32, 0, 0, 0, 0);
-	SDL_FillRect(ressource , NULL, SDL_MapRGB(ecran->format, 255, 232, 41));
+	ressource = IMG_Load("ressource.png");
 	SDL_BlitSurface(ressource, NULL, ecran, &position2);
 
 	carte = creer_affichage_terrain(un_terrain_espace);
