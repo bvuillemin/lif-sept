@@ -247,8 +247,9 @@ Sauvegarde* selection_ouverture(const char nom[30])
 {
     Sauvegarde* une_sauvegarde;
     FILE *f;
+	char chaine[50];
     une_sauvegarde = creer_sauvegarde();
-    char chaine[50];
+    
     f = fopen(nom, "r");
     if (f==NULL)
     {
