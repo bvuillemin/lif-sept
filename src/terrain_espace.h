@@ -19,12 +19,12 @@
 
 typedef struct
 {
-    int taille_espace_x;
-    int taille_espace_y;
+    int taille_espace_x; /*en nombre de cases*/
+    int taille_espace_y; /*en nombre de cases*/
     Case_terrain_espace *tab_terrain_espace; /*x en abscisse, y en ordonnée, on commence à 0 (à modifier?)*/
 
-	int affichage_x;
-	int affichage_y;
+	int affichage_x; /*en pixels. Permet l'affichage du terrain, le point désigné par x et y étant le point en haut à gauche de la fenêtre*/
+	int affichage_y; /*en pixels*/
 }Terrain_espace;
 
 void initilaliser_terrain_espace(Terrain_espace *terrain_jeu_espace, int taille_x, int taille_y);

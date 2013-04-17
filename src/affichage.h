@@ -25,6 +25,10 @@
  *
  * \details
  */
+bool test_souris_rectangle (SDL_Rect taille_surface, int x, int y);
+void initialise_sdl_rect(SDL_Rect un_rectangle, int x, int y, int w, int h);
+bool booleen_case_pointeur_souris(Terrain_espace *un_terrain_espace, int x, int y);
+Case_terrain_espace* case_pointeur_souris(Terrain_espace *un_terrain_espace, int x, int y) ;
 
 void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace);
 SDL_Surface* creer_affichage_terrain(Terrain_espace *un_terrain_espace);

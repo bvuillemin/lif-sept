@@ -111,6 +111,7 @@ void ajouter_planete_joueur(Joueur *un_joueur, Planete *une_planete)
         {
             une_planete->planete_principale = true;
         }
+		une_planete->indice_joueur = un_joueur->numero_joueur;
     }
 }
 
