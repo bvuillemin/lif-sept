@@ -10,6 +10,7 @@ void initialise_planete(Planete *une_planete,const char nom_planete[30])
     int i;
     une_planete->x = 0;
     une_planete->y = 0;
+	une_planete->indice_joueur = 0;
     strcpy(une_planete->nom_planete, nom_planete);
     une_planete->planete_colonisee = false;
     une_planete->planete_principale = false;
@@ -48,6 +49,7 @@ void libere_planete(Planete *une_planete)
 {
     une_planete->x = 0;
     une_planete->y = 0;
+	une_planete->indice_joueur = 0;
     /*free(une_planete->nom_planete);*/
     une_planete->planete_colonisee = 0;
     une_planete->planete_principale = 0;

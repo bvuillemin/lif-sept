@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdbool.h>
 #include <SDL/SDL.h>
 #ifdef __APPLE__
 #include "SDL_image.h"
@@ -14,6 +15,43 @@
 #include "terrain_espace.h"
 #include "terrain_combat.h"
 
+bool test_souris_rectangle (SDL_Rect taille_surface, int x, int y) /*Va tester si le clic souris c'est fait dans un rectangle, utile pour les menus*/
+{
+	if((x > taille_surface.x) && (x< taille_surface.x + taille_surface.w) && (y > taille_surface.y) && (y< taille_surface.y + taille_surface.h))
+	{
+		return true;
+	}
+	else return false;
+}
+
+void initialise_sdl_rect(SDL_Rect un_rectangle, int x, int y, int w, int h) /*Va modifier les atrributs d'un SDL_rect*/
+{
+	un_rectangle.x = x;
+	un_rectangle.y = y;
+	un_rectangle.w = w;
+	un_rectangle.h = h;
+}
+
+bool booleen_case_pointeur_souris(Terrain_espace *un_terrain_espace, int x, int y) /*Fonction qui va renvoyer la case pointée par la souris, les coordonnées x et y sont en pixels*/
+{
+	x = (un_terrain_espace->affichage_x + x - (TAILLE_FENETRE_X - TAILLE_TERRAIN_ESPACE_X)) / 100;
+	y = (un_terrain_espace->affichage_y + y - 20) / 100;
+	if ((x >= 0) && (x < un_terrain_espace->taille_espace_x) && (y >= 0) && (y < un_terrain_espace->taille_espace_y))
+	{
+		return true;
+	}
+	else return false;
+}
+
+Case_terrain_espace* case_pointeur_souris(Terrain_espace *un_terrain_espace, int x, int y) /*Fonction qui va renvoyer la case pointée par la souris, les coordonnées x et y sont en pixels*/
+{
+	x = (un_terrain_espace->affichage_x + x - (TAILLE_FENETRE_X - TAILLE_TERRAIN_ESPACE_X)) / 100;
+	y = (un_terrain_espace->affichage_y + y - 20) / 100;
+	if ((x >= 0) && (x < un_terrain_espace->taille_espace_x) && (y >= 0) && (y < un_terrain_espace->taille_espace_y))
+	{
+		return &(un_terrain_espace->tab_terrain_espace[y*(un_terrain_espace->taille_espace_x)+x]);
+	}
+}
 
 SDL_Surface* affichage_ressource(Jeu *un_jeu, SDL_Surface *surface_ressource)
 {
@@ -31,15 +69,15 @@ SDL_Surface* affichage_ressource(Jeu *un_jeu, SDL_Surface *surface_ressource)
     police = TTF_OpenFont("space_age.ttf", 14);
 	texte_ressource = IMG_Load("ressource.png");
 
-    sprintf(ressource, "Ressources:  Metal:%d  Argent:%d  Carburant:%d  Population:%d", get_metal_joueur(&un_jeu->tab_joueur[0]), get_argent_joueur(&un_jeu->tab_joueur[0]), get_carburant_joueur(&un_jeu->tab_joueur[0]), get_population_joueur(&un_jeu->tab_joueur[0]));
+    sprintf(ressource, "Ressources:  Metal:%d Argent:%d Carburant:%d Population:%d", get_metal_joueur(&un_jeu->tab_joueur[un_jeu->joueur_en_cours]), get_argent_joueur(&un_jeu->tab_joueur[un_jeu->joueur_en_cours]), get_carburant_joueur(&un_jeu->tab_joueur[un_jeu->joueur_en_cours]), get_population_joueur(&un_jeu->tab_joueur[un_jeu->joueur_en_cours]));
     nom_ressource = TTF_RenderText_Blended(police, ressource, couleur_blanche);
     position.x = 10;
     position.y = 2;
     SDL_BlitSurface(nom_ressource, NULL, texte_ressource, &position);
 
-	sprintf(tour, "Tour en cours: %d", un_jeu->tour_en_cours);
+	sprintf(tour, "Tour en cours:%d Joueur en cours:%d", un_jeu->tour_en_cours, un_jeu->joueur_en_cours);
 	nombre_tour = TTF_RenderText_Blended(police, tour, couleur_blanche);
-	position.x = TAILLE_FENETRE_X - 250;
+	position.x = TAILLE_FENETRE_X - 410;
 	SDL_BlitSurface(nombre_tour, NULL, texte_ressource, &position);
     
 	position.x = TAILLE_FENETRE_X - 30;
@@ -122,6 +160,7 @@ SDL_Surface* affichage_terrain(Terrain_espace *un_terrain_espace, SDL_Surface *c
 	return resultat;
 }
 
+
 void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 {
 	SDL_Surface *ecran = NULL;
@@ -130,34 +169,35 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 	SDL_Surface *texte_ressource = NULL;
 	SDL_Surface *deplacement_carte = NULL;
     SDL_Surface *interface = NULL;
-	SDL_Rect position;
+	SDL_Rect position = {0, 0, 0, 0};
+	SDL_Rect bouton_tour = {TAILLE_FENETRE_X - 30, 0, 300, 50};
+	SDL_Rect position_affichage_carte = {200, 20, 0, 0};
 	SDL_Event event;
 	int continuer = 1;
+	int x = 0, y = 0;
+	Case_terrain_espace *une_case_terrain_espace;
 
-	position.x = 0;
-	position.y = 20;
+	initialise_sdl_rect(position, 0, 20, 0, 0);
 	SDL_Init(SDL_INIT_VIDEO);
 	SDL_EnableKeyRepeat(10, 10);
-	ecran = SDL_SetVideoMode(TAILLE_FENETRE_X, TAILLE_FENETRE_Y, NOMBRE_BITS_COULEUR, SDL_SWSURFACE);
+
+	ecran = SDL_SetVideoMode(TAILLE_FENETRE_X, TAILLE_FENETRE_Y, NOMBRE_BITS_COULEUR, SDL_SWSURFACE); /*Chargement du fond*/
 	interface = IMG_Load("interface.png");
     SDL_BlitSurface(interface, NULL, ecran, &position);
 
-	position.x = 0;
-	position.y = 0;
+	initialise_sdl_rect(position, 0, 0, 0, 0); /*affichage de la barre de ressources*/
 	ressource = IMG_Load("ressource.png");
 	ressource = affichage_ressource(un_jeu, ressource);
 	SDL_BlitSurface(ressource, NULL, ecran, &position);
 
-	position.x = 200;
-	position.y = 20;
-	carte = creer_affichage_terrain(un_terrain_espace);
+	carte = creer_affichage_terrain(un_terrain_espace); /*Creation du terrain en entier, celui-ci est stocké en mémoire*/
 	deplacement_carte = SDL_CreateRGBSurface(SDL_SWSURFACE, TAILLE_TERRAIN_ESPACE_X, TAILLE_TERRAIN_ESPACE_Y, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
-	deplacement_carte = affichage_terrain(un_terrain_espace, carte, deplacement_carte);
-	SDL_BlitSurface(deplacement_carte, NULL, ecran, &position);
+	deplacement_carte = affichage_terrain(un_terrain_espace, carte, deplacement_carte); /*affichage d'une partie du terrain*/
+	SDL_BlitSurface(deplacement_carte, NULL, ecran, &position_affichage_carte);
 
 	SDL_Flip(ecran);
 
-	while (continuer)
+	while (continuer) /*boucle d'événement principale*/
 	{
 		SDL_WaitEvent(&event);
 		switch(event.type)
@@ -168,16 +208,20 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 		case SDL_MOUSEBUTTONUP:
 			if (event.button.button == SDL_BUTTON_LEFT)
 			{
-				if ((event.button.x > TAILLE_FENETRE_X - 30) && (event.button.x < TAILLE_FENETRE_X - 10) && (event.button.y > 0) && (event.button.y < 20))
+				x = event.button.x;
+				y = event.button.y;
+				if(booleen_case_pointeur_souris(un_terrain_espace, x, y))
+				{
+					une_case_terrain_espace = case_pointeur_souris(un_terrain_espace, x, y);
+					printf ("Case x = %d, y = %d", une_case_terrain_espace->x_espace, une_case_terrain_espace->y_espace);
+				}
+				if (test_souris_rectangle(bouton_tour, x, y))
 				{
 					joueur_suivant(un_jeu);
-					position.x = 0;
-					position.y = 0;
+					initialise_sdl_rect(position, 0, 0, 0, 0);
 					ressource = affichage_ressource(un_jeu, ressource);
 					SDL_BlitSurface(ressource, NULL, ecran, &position);
 					SDL_Flip(ecran);
-					position.x = 200;
-					position.y = 20;
 				}
 			}
 			break;
@@ -188,28 +232,28 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 				if((un_terrain_espace->affichage_y > 0) && (un_terrain_espace->affichage_y <= (un_terrain_espace->taille_espace_y *100) -600 ))
 				{un_terrain_espace->affichage_y--;
 				deplacement_carte = affichage_terrain(un_terrain_espace, carte, deplacement_carte);
-				SDL_BlitSurface(deplacement_carte, NULL, ecran, &position);
+				SDL_BlitSurface(deplacement_carte, NULL, ecran, &position_affichage_carte);
 				SDL_Flip(ecran);}
 				break;
 			case SDLK_DOWN:
 				if((un_terrain_espace->affichage_y>=0) && (un_terrain_espace->affichage_y < (un_terrain_espace->taille_espace_y *100) - 600 ))
 				{un_terrain_espace->affichage_y++;
 				deplacement_carte = affichage_terrain(un_terrain_espace, carte, deplacement_carte);
-				SDL_BlitSurface(deplacement_carte, NULL, ecran, &position);
+				SDL_BlitSurface(deplacement_carte, NULL, ecran, &position_affichage_carte);
 				SDL_Flip(ecran);}
 				break;
 			case SDLK_RIGHT:
 				if((un_terrain_espace->affichage_x >= 0) && (un_terrain_espace->affichage_x < (un_terrain_espace->taille_espace_x * 100) -1080))
 				{un_terrain_espace->affichage_x++;
 				deplacement_carte = affichage_terrain(un_terrain_espace, carte, deplacement_carte);
-				SDL_BlitSurface(deplacement_carte, NULL, ecran, &position);
+				SDL_BlitSurface(deplacement_carte, NULL, ecran, &position_affichage_carte);
 				SDL_Flip(ecran);}
 				break;
 			case SDLK_LEFT:
 				if((un_terrain_espace->affichage_x>0) && (un_terrain_espace->affichage_x <= (un_terrain_espace->taille_espace_x *100) -1080))
 				{un_terrain_espace->affichage_x--;
 				deplacement_carte = affichage_terrain(un_terrain_espace, carte, deplacement_carte);
-				SDL_BlitSurface(deplacement_carte, NULL, ecran, &position);
+				SDL_BlitSurface(deplacement_carte, NULL, ecran, &position_affichage_carte);
 				SDL_Flip(ecran);}
 				break;
 			default :
