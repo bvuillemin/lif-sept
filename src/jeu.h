@@ -22,6 +22,7 @@
      int tour_en_cours;
 	 int joueur_en_cours;
 	 int nb_joueur;
+	 Flotte *selection_flotte;
 	 Joueur *tab_joueur;
  }Jeu;
 

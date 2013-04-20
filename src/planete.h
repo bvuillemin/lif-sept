@@ -26,7 +26,6 @@ typedef void (*Validation_creation_batiment)(struct sPlanete*);
      int y;
      char nom_planete[30];
 	 int indice_joueur;
-     /*lien sur proprietaire*/
 
      int batiment[10];
      int batiment_en_cours; /*indice dans le tableau du batiment en cours de construction*/

@@ -117,6 +117,7 @@ void ajouter_planete_joueur(Joueur *un_joueur, Planete *une_planete)
 
 void ajouter_flotte_joueur(Joueur *un_joueur, Flotte *une_flotte)
 {
+    une_flotte->indice_joueur = un_joueur->numero_joueur;
     int i = un_joueur->nb_flotte;
     if(i< un_joueur->nb_flotte_possible)
     {

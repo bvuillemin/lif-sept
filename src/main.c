@@ -60,11 +60,11 @@ int main(int argc, char *argv[])
     modification_terrain_espace(un_terrain_espace, 'E');
 
     ajouter_planete_terrain_espace(un_terrain_espace, 2, 1, nom_terre);
-    ajouter_planete_terrain_espace(un_terrain_espace, 8, 9, nom_jupiter);
+    ajouter_planete_terrain_espace(un_terrain_espace, 4, 3, nom_jupiter);
     affiche_terrain_espace(un_terrain_espace);
 
     terre = get_planete_terrain_espace(un_terrain_espace, 2, 1);
-    jupiter = get_planete_terrain_espace(un_terrain_espace, 8, 9);
+    jupiter = get_planete_terrain_espace(un_terrain_espace, 4, 3);
 
 	joueur = creer_joueur(1, nom_joueur);
 	joueur2 = creer_joueur(2, nom_joueur2);
@@ -123,7 +123,6 @@ int main(int argc, char *argv[])
 			printf("Coordonnées où bouger la flotte:\n");
 			scanf("%d", &x);
 			scanf("%d", &y);
-			//system("clear");
 			if(deplacement_flotte(un_terrain_espace, &(jeu->tab_joueur[a].tab_flotte[0]), x, y) == false)
 			{
 				printf("Déplacement impossible\n");

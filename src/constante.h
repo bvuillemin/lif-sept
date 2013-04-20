@@ -14,7 +14,7 @@
 #define TAILLE_FENETRE_X 1280
 #define TAILLE_FENETRE_Y 768
 #define NOMBRE_BITS_COULEUR 32
-#define TAILLE_TERRAIN_ESPACE_X 1080
+#define TAILLE_TERRAIN_ESPACE_X 1280
 #define TAILLE_TERRAIN_ESPACE_Y 600
 
 /*l'ecran du combat (ou/et du l'espace)*/

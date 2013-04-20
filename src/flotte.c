@@ -10,6 +10,7 @@ void initialiser_flotte(Flotte *flotte)
 {
 	flotte->x_flotte = 0;
 	flotte->y_flotte = 0;
+	flotte->indice_joueur = 0;
     flotte->taille_maximum_flotte = 10; /*valeur temporaire qu'il faudra éventuellemnt modifié*/
     flotte->taille_flotte = 0;
 	flotte->pt_mouvement_espace_flotte = 0;
@@ -117,7 +118,7 @@ Unite * get_unite_i_flotte(const Flotte * flotte, const int i)
 {
 	if(i< flotte->taille_flotte)
 	{
-		return flotte->tab_unite+i; 
+		return flotte->tab_unite+i;
 	}
 	else
 	{

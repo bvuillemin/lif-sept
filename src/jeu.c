@@ -11,7 +11,8 @@ void initialise_jeu(Jeu *un_jeu)
 	un_jeu->tour_en_cours = 0;
 	un_jeu->joueur_en_cours = 0;
 	un_jeu->nb_joueur = 0;
-	un_jeu->tab_joueur =(Joueur *)malloc(sizeof(Joueur) * 10);
+	un_jeu->selection_flotte = NULL;
+    un_jeu->tab_joueur =(Joueur *)malloc(sizeof(Joueur) * 10);
 }
 
 Jeu *creer_jeu()
@@ -33,6 +34,7 @@ void liberer_jeu(Jeu *un_jeu)
     un_jeu->tour_en_cours = 0;
     un_jeu->joueur_en_cours = 0;
     un_jeu->nb_joueur = 0;
+    un_jeu->selection_flotte = NULL;
 }
 
 void detruire_jeu(Jeu **un_jeu)
