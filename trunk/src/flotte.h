@@ -21,6 +21,8 @@
  {
      int x_flotte;
      int y_flotte;
+     int indice_joueur;
+
      int taille_maximum_flotte;
      int taille_flotte;
      int pt_mouvement_espace_flotte;
