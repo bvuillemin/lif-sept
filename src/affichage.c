@@ -397,18 +397,62 @@ void pause()
         }
     }
 }
+void affiche_ecran_terrain_combat(const Terrain_combat *terrain_combat, SDL_Surface * une_surface)
+{
+	SDL_Surface * quadrillage =NULL;
+	SDL_Surface * planete =NULL;
+	SDL_Rect pos,pos_plan;
+	int i, j;
+    Case_terrain_combat *une_case;
+	pos.x = 0 ;pos_plan.x=0;
+	pos.y = 0;pos_plan.y=0;
+	quadrillage = IMG_Load("quadrillage.png");
+	planete = IMG_Load("1.png");
+    for(j=0;j<terrain_combat->taille_combat_y;j++)
+    {
+        for(i=0;i<terrain_combat->taille_combat_x;i++)
+        {
+            une_case = get_case_terrain_combat(terrain_combat, i, j);
+            if(une_case->presence_unite == true)
+            {
+				pos.x=i*100;pos.y=j*100; SDL_BlitSurface(quadrillage,NULL,une_surface,&pos);
+				SDL_BlitSurface(planete,NULL,une_surface,&pos_plan);
+            }
+            else{
+					pos.x=i*100;pos.y=j*100; SDL_BlitSurface(quadrillage,NULL,une_surface,&pos);}
+        }
+        printf("\n");
+    }
+}
 
 void affichage_ecran_combat(Terrain_combat *un_terrain_combat)
 {
-
+	SDL_Surface *ecran = NULL;
+	int x,y;
+	Uint32 couleur;
+	x=get_taille_combat_x(un_terrain_combat);
+	y=get_taille_combat_y(un_terrain_combat);
 	 if (SDL_Init(SDL_INIT_VIDEO) == -1) /*Démarrage de la SDL. Si erreur :*/
     {
         fprintf(stderr, "Erreur d'initialisation de la SDL : %s\n", SDL_GetError()); /* Écriture de l'erreur*/
         exit(EXIT_FAILURE); /* On quitte le programme*/
     }
-  	SDL_SetVideoMode(TAILLE_ECRAN_COMBAT_X,TAILLE_ECRAN_COMBAT_Y,NOMBRE_BITS_COULEUR,SDL_HWSURFACE|SDL_RESIZABLE|SDL_DOUBLEBUF);
-	SDL_WM_SetCaption("Conquest Of Space","combat");
+  	ecran =SDL_SetVideoMode(x*100,y*100,32,SDL_HWSURFACE|SDL_RESIZABLE|SDL_DOUBLEBUF);
+	  if (ecran == NULL) /*Si l'ouverture a échoué, on le note et on arrête*/
+    {
+        fprintf(stderr, "Impossible de charger le mode vidéo : %s\n", SDL_GetError());
+        exit(EXIT_FAILURE);
+    }
+	couleur = SDL_MapRGB(ecran->format,0,0,0);
+	SDL_FillRect(ecran, NULL, couleur);
+	SDL_Flip(ecran);
+	
+	
+	
+	affiche_ecran_terrain_combat(un_terrain_combat,ecran);SDL_Flip(ecran);
+	
   	pause();
+	
     SDL_Quit();
 }
 

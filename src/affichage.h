@@ -39,6 +39,22 @@ void pause();
 
 /*pour le combat :*/
 void affichage_ecran_combat(Terrain_combat *un_terrain_combat);
+void afficher_ecran_terrain_combat(const Terrain_combat *un_terrain_combat, SDL_Surface * une_surface);
 SDL_Surface* creer_affichage_terrain_combat(Terrain_combat *un_terrain_combat);
 SDL_Surface* affichage_terrain_combat(Terrain_combat *un_terrain_combat, SDL_Surface *carte);
+
+/*
+SDL_Surface * surface = NULL;
+SDL_Rect position;
+Uint32 couleur;
+
+couleur = SDL_MapRGB(surface->format,r,g,b);
+surface =SDL_SetVideoMode(TAILLE_ECRAN_COMBAT_X,TAILLE_ECRAN_COMBAT_Y,nb_couleur,SDL_HWSURFACE|SDL_RESIZABLE|SDL_DOUBLEBUF)
+SDL_CreateRGBSurface(options, taille_x, taille_y, nb_couleurs, 0, 0, 0, 0)
+SDL_FillRect(surface, NULL, couleur)
+SDL_BlitSurface(surface_a_coller,NULL,surface_support,&position)
+SDL_WM_SetCaption("nom_fenetre","nom_icone");
+SDL_WM_SetIcon(IMG_Load("sdl_icone.bmp"), NULL);
+SDL_FreeSurface(surface)
+*/
 #endif
