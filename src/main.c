@@ -66,8 +66,8 @@ int main(int argc, char *argv[])
     terre = get_planete_terrain_espace(un_terrain_espace, 2, 1);
     jupiter = get_planete_terrain_espace(un_terrain_espace, 4, 3);
 
-	joueur = creer_joueur(1, nom_joueur);
-	joueur2 = creer_joueur(2, nom_joueur2);
+	joueur = creer_joueur(0, nom_joueur);
+	joueur2 = creer_joueur(1, nom_joueur2);
 	jeu = creer_jeu();
 
     flotte = creer_flotte();
@@ -102,7 +102,7 @@ int main(int argc, char *argv[])
     afficher_flotte(&joueur2->tab_flotte[0]);
 
     ajouter_flotte(get_case_terrain_espace(un_terrain_espace, 2, 3), &joueur->tab_flotte[0]);
-	ajouter_flotte(get_case_terrain_espace(un_terrain_espace, 9, 9), &joueur2->tab_flotte[0]);
+	ajouter_flotte(get_case_terrain_espace(un_terrain_espace, 5, 5), &joueur2->tab_flotte[0]);
 
 	ajouter_joueur(jeu, joueur);
 	ajouter_joueur(jeu, joueur2);
