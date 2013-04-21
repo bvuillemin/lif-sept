@@ -407,25 +407,28 @@ void affiche_ecran_terrain_combat(const Terrain_combat *terrain_combat, SDL_Surf
 	pos.x = 0 ;pos_plan.x=0;
 	pos.y = 0;pos_plan.y=0;
 	quadrillage = IMG_Load("quadrillage.png");
-	planete = IMG_Load("1.png");
+	planete = IMG_Load("vaisseau_bleu.png");
     for(j=0;j<terrain_combat->taille_combat_y;j++)
     {
         for(i=0;i<terrain_combat->taille_combat_x;i++)
         {
+			pos.x=i*100;pos.y=j*100;
             une_case = get_case_terrain_combat(terrain_combat, i, j);
-            if(une_case->presence_unite == true)
+			
+            if(get_presence_unite(une_case))
             {
-				pos.x=i*100;pos.y=j*100; SDL_BlitSurface(quadrillage,NULL,une_surface,&pos);
+				pos_plan.x=i*100;pos_plan.y=j*100;
 				SDL_BlitSurface(planete,NULL,une_surface,&pos_plan);
             }
-            else{
-					pos.x=i*100;pos.y=j*100; SDL_BlitSurface(quadrillage,NULL,une_surface,&pos);}
+			SDL_BlitSurface(quadrillage,NULL,une_surface,&pos);
         }
         printf("\n");
     }
+	SDL_FreeSurface(planete);
+	SDL_FreeSurface(quadrillage);
 }
 
-void affichage_ecran_combat(Terrain_combat *un_terrain_combat)
+void affichage_ecran_combat(const Terrain_combat *un_terrain_combat)
 {
 	SDL_Surface *ecran = NULL;
 	int x,y;
@@ -437,7 +440,7 @@ void affichage_ecran_combat(Terrain_combat *un_terrain_combat)
         fprintf(stderr, "Erreur d'initialisation de la SDL : %s\n", SDL_GetError()); /* Écriture de l'erreur*/
         exit(EXIT_FAILURE); /* On quitte le programme*/
     }
-  	ecran =SDL_SetVideoMode(x*100,y*100,32,SDL_HWSURFACE|SDL_RESIZABLE|SDL_DOUBLEBUF);
+  	ecran =SDL_SetVideoMode(x*100+100,y*100+100,32,SDL_HWSURFACE|SDL_RESIZABLE|SDL_DOUBLEBUF);
 	  if (ecran == NULL) /*Si l'ouverture a échoué, on le note et on arrête*/
     {
         fprintf(stderr, "Impossible de charger le mode vidéo : %s\n", SDL_GetError());
