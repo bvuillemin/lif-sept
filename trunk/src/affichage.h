@@ -38,7 +38,7 @@ SDL_Surface* affichage_ressource(Jeu *un_jeu, SDL_Surface *surface_ressource);
 void pause();
 
 /*pour le combat :*/
-void affichage_ecran_combat(const Terrain_combat *un_terrain_combat);
+SDL_Surface* affichage_ecran_combat(const Terrain_combat *un_terrain_combat);
 void afficher_ecran_terrain_combat(const Terrain_combat *un_terrain_combat, SDL_Surface * une_surface);
 SDL_Surface* creer_affichage_terrain_combat(Terrain_combat *un_terrain_combat);
 SDL_Surface* affichage_terrain_combat(Terrain_combat *un_terrain_combat, SDL_Surface *carte);

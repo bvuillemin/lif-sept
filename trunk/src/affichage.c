@@ -397,13 +397,21 @@ void pause()
         }
     }
 }
-void affiche_ecran_terrain_combat(const Terrain_combat *terrain_combat, SDL_Surface * une_surface)
-{
+
+SDL_Surface * affiche_ecran_terrain_combat(const Terrain_combat *terrain_combat)
+{	
+	SDL_Surface * carte =NULL;
+	SDL_Surface * fond =NULL;
 	SDL_Surface * quadrillage =NULL;
 	SDL_Surface * planete =NULL;
 	SDL_Rect pos,pos_plan;
-	int i, j;
+	int i, j, x,y;
     Case_terrain_combat *une_case;
+	x=get_taille_combat_x(terrain_combat);
+	y=get_taille_combat_y(terrain_combat);
+	carte =SDL_CreateRGBSurface(SDL_HWSURFACE, x* 100, y* 100, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
+	fond = IMG_Load("fond.png");
+    SDL_BlitSurface(fond, NULL, carte, &pos);
 	pos.x = 0 ;pos_plan.x=0;
 	pos.y = 0;pos_plan.y=0;
 	quadrillage = IMG_Load("quadrillage.png");
@@ -418,29 +426,34 @@ void affiche_ecran_terrain_combat(const Terrain_combat *terrain_combat, SDL_Surf
             if(get_presence_unite(une_case))
             {
 				pos_plan.x=i*100;pos_plan.y=j*100;
-				SDL_BlitSurface(planete,NULL,une_surface,&pos_plan);
+				SDL_BlitSurface(planete,NULL,carte,&pos_plan);
             }
-			SDL_BlitSurface(quadrillage,NULL,une_surface,&pos);
+			SDL_BlitSurface(quadrillage,NULL,carte,&pos);
         }
         printf("\n");
     }
 	SDL_FreeSurface(planete);
 	SDL_FreeSurface(quadrillage);
+	return carte;
 }
 
 void affichage_ecran_combat(const Terrain_combat *un_terrain_combat)
 {
+	SDL_Rect position_affichage_carte;
 	SDL_Surface *ecran = NULL;
-	int x,y;
+	SDL_Surface *carte = NULL;
+	
 	Uint32 couleur;
-	x=get_taille_combat_x(un_terrain_combat);
-	y=get_taille_combat_y(un_terrain_combat);
+	
+	position_affichage_carte.x=0;
+	position_affichage_carte.y=0;
+	
 	 if (SDL_Init(SDL_INIT_VIDEO) == -1) /*Démarrage de la SDL. Si erreur :*/
     {
         fprintf(stderr, "Erreur d'initialisation de la SDL : %s\n", SDL_GetError()); /* Écriture de l'erreur*/
         exit(EXIT_FAILURE); /* On quitte le programme*/
     }
-  	ecran =SDL_SetVideoMode(x*100+100,y*100+100,32,SDL_HWSURFACE|SDL_RESIZABLE|SDL_DOUBLEBUF);
+  	ecran =SDL_SetVideoMode(/*TAILLE_FENETRE_X*/1500,/*TAILLE_FENETRE_Y*/1000,NOMBRE_BITS_COULEUR,SDL_HWSURFACE|SDL_RESIZABLE|SDL_DOUBLEBUF);
 	  if (ecran == NULL) /*Si l'ouverture a échoué, on le note et on arrête*/
     {
         fprintf(stderr, "Impossible de charger le mode vidéo : %s\n", SDL_GetError());
@@ -452,7 +465,9 @@ void affichage_ecran_combat(const Terrain_combat *un_terrain_combat)
 	
 	
 	
-	affiche_ecran_terrain_combat(un_terrain_combat,ecran);SDL_Flip(ecran);
+	carte = affiche_ecran_terrain_combat(un_terrain_combat);
+	SDL_BlitSurface(carte, NULL, ecran, &position_affichage_carte);
+	SDL_Flip(ecran);
 	
   	pause();
 	
