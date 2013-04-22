@@ -127,7 +127,6 @@ void ajouter_unite(Case_terrain_combat *une_case_terrain_combat, Unite *une_unit
     une_case_terrain_combat->presence_unite = true;
     une_case_terrain_combat->unite->x_unite = une_case_terrain_combat->x_combat;
     une_case_terrain_combat->unite->y_unite = une_case_terrain_combat->y_combat;
-	printf("à l'ajout de l'unité : (%d,%d) et (%d,%d)\n", une_case_terrain_combat->unite->x_unite,une_case_terrain_combat->unite->y_unite,une_unite->x_unite,une_unite->y_unite);
 }
 
 void retirer_unite(Case_terrain_combat *une_case_terrain_combat)
