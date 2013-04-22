@@ -39,10 +39,11 @@ void pause();
 
 /*pour le combat :*/
 SDL_Surface* affichage_ecran_combat(const Terrain_combat *un_terrain_combat);
-void afficher_ecran_terrain_combat(const Terrain_combat *un_terrain_combat, SDL_Surface * une_surface);
+void afficher_ecran_terrain_combat( Terrain_combat *un_terrain_combat, SDL_Surface * une_surface);
 SDL_Surface* creer_affichage_terrain_combat(Terrain_combat *un_terrain_combat);
 SDL_Surface* affichage_terrain_combat(Terrain_combat *un_terrain_combat, SDL_Surface *carte);
-
+SDL_Rect coordonnee_clic(SDL_Rect position);
+void selection(Terrain_combat *un_terrain_combat,SDL_Rect position);
 /*
 SDL_Surface * surface = NULL;
 SDL_Rect position;

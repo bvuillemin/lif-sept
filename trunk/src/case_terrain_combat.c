@@ -11,6 +11,7 @@ void initialise_case_combat(Case_terrain_combat *une_case_terrain_combat)
     une_case_terrain_combat->y_combat=0;
     une_case_terrain_combat->type_case_terrain_combat='N';
     une_case_terrain_combat->presence_unite=0;
+	une_case_terrain_combat->selection_unite=0;
 	une_case_terrain_combat->unite = NULL;
 }
 
@@ -58,6 +59,14 @@ void set_presence_unite(Case_terrain_combat *une_case_terrain_combat, const bool
 bool get_presence_unite(const Case_terrain_combat *une_case_terrain_combat)
 {
 	return une_case_terrain_combat->presence_unite;
+}
+void set_selection_unite(Case_terrain_combat *une_case_terrain_combat, const bool p)
+{
+	une_case_terrain_combat->selection_unite = p;
+}
+bool get_selection_unite(const Case_terrain_combat *une_case_terrain_combat)
+{
+	return une_case_terrain_combat->selection_unite;
 }
 /*
 void set_id_joueur(Case_terrain_combat *une_case_terrain_combat, int id_joueur)
