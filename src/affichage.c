@@ -491,6 +491,7 @@ SDL_Surface * affiche_ecran_terrain_combat(const Terrain_combat *terrain_combat)
         }
         printf("\n");
     }
+	SDL_FreeSurface(selection);
 	SDL_FreeSurface(planete);
 	SDL_FreeSurface(quadrillage);
 	return carte;
@@ -517,6 +518,26 @@ SDL_Rect coordonnee_case_du_clic(SDL_Rect position)
 	else{position.y=0;}
 	return position;
 }
+void affiche_deplacement_unite(Terrain_combat *un_terrain_combat,SDL_Rect position)
+{
+	SDL_Rect pos;
+	bool p;
+	Case_terrain_combat * une_case;
+	Unite * une_unite;
+	p=0;
+	pos =coordonnee_case_du_clic(position);
+	if(get_une_case_selectionnee(un_terrain_combat))
+	{
+		une_case = get_selection(un_terrain_combat);
+		une_unite = get_unite(une_case);
+		p=deplacement_unite(un_terrain_combat, une_unite ,pos.x,pos.y);
+	}
+	if(p)
+	{
+		set_selection_unite(une_case, 0);set_selection(un_terrain_combat,NULL);set_une_case_selectionnee(un_terrain_combat,0);
+	}
+}
+
 void selection(Terrain_combat *un_terrain_combat,SDL_Rect position)
 {	
 	SDL_Rect pos;
@@ -526,9 +547,10 @@ void selection(Terrain_combat *un_terrain_combat,SDL_Rect position)
 	une_case = get_case_terrain_combat(un_terrain_combat, pos.x, pos.y);
 	if(get_selection_unite(une_case))
 	{	set_une_case_selectionnee(un_terrain_combat,0);
+		set_selection(un_terrain_combat,NULL);
 		set_selection_unite(une_case, 0);
 	}else if(get_presence_unite(une_case) && !get_une_case_selectionnee(un_terrain_combat)){
-		set_selection_unite(une_case, 1);
+		set_selection_unite(une_case, 1);set_selection(un_terrain_combat,une_case);
 		set_une_case_selectionnee(un_terrain_combat,1);}
 }
 void affichage_ecran_combat(Terrain_combat *un_terrain_combat)
@@ -560,8 +582,6 @@ void affichage_ecran_combat(Terrain_combat *un_terrain_combat)
 	SDL_FillRect(ecran, NULL, couleur);
 	SDL_Flip(ecran);
 
-
-
 	carte = affiche_ecran_terrain_combat(un_terrain_combat);
 	SDL_BlitSurface(carte, NULL, ecran, &position_affichage_carte);
 	SDL_Flip(ecran);
@@ -578,7 +598,9 @@ void affichage_ecran_combat(Terrain_combat *un_terrain_combat)
 				pos_clic.x=evenement.button.x + position_affichage_carte.x;
 				pos_clic.y=evenement.button.y + position_affichage_carte.y;
 				selection(un_terrain_combat,pos_clic);
+				affiche_deplacement_unite(un_terrain_combat, pos_clic);
 				carte=affiche_ecran_terrain_combat(un_terrain_combat);
+				
 			break;
 			case SDL_KEYUP:	
 			printf("%d,%d\n",position_affichage_carte.x,position_affichage_carte.y);
