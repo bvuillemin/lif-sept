@@ -56,5 +56,11 @@ SDL_BlitSurface(surface_a_coller,NULL,surface_support,&position)
 SDL_WM_SetCaption("nom_fenetre","nom_icone");
 SDL_WM_SetIcon(IMG_Load("sdl_icone.bmp"), NULL);
 SDL_FreeSurface(surface)
+
+SDL_WaitEvent : elle attend qu'un événement se produise. Cette fonction est dite bloquante car elle suspend l'exécution du programme tant qu'aucun événement ne s'est produit ;
+
+SDL_PollEvent : cette fonction fait la même chose mais n'est pas bloquante. Elle vous dit si un événement s'est produit ou non. Même si aucun événement ne s'est produit, elle rend la main à votre programme de suite.
+
+
 */
 #endif
