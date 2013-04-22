@@ -27,7 +27,7 @@ void initialise_planete(Planete *une_planete,const char nom_planete[30])
         une_planete->batiment[i] = 0;
     }
 
-    une_planete->batiment_en_cours = 0;
+    une_planete->batiment_en_cours = -1;
     une_planete->batiment_nb_tour_restant = 0;
     une_planete->tab_fonction_validation[0] = validation_creer_batiment_quartier_general;
     une_planete->tab_fonction_validation[1] = validation_creer_batiment_metal;

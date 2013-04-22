@@ -101,11 +101,12 @@ SDL_Surface* affichage_planete(Case_terrain_espace *une_case_terrain_espace, SDL
     SDL_Surface *planete = NULL;
     SDL_Surface *fond_planete = NULL;
     SDL_Surface *batiment_1;
-    SDL_Rect position;
+    SDL_Rect position_texte;
     SDL_Rect position_batiment;
     TTF_Font *police = NULL;
         SDL_Color couleur_blanche = {255, 255, 255};
     char texte_planete[200] = "";
+    char texte_batiment[100] = "";
     Planete *une_planete = une_case_terrain_espace->planete;
     int i;
 
@@ -118,16 +119,28 @@ SDL_Surface* affichage_planete(Case_terrain_espace *une_case_terrain_espace, SDL
 get_nom_planete(une_planete), get_taille_utilisee(une_planete), get_taille_planete(une_planete),
 get_metal(une_planete), get_argent(une_planete), get_carburant(une_planete), get_population(une_planete));
     planete = TTF_RenderText_Blended(police, texte_planete, couleur_blanche);
-    position.x = 10;
-    position.y = 10;
-    SDL_BlitSurface(planete, NULL, fond_planete, &position);
+    position_texte.x = 10;
+    position_texte.y = 10;
+    SDL_BlitSurface(planete, NULL, fond_planete, &position_texte);
 
     batiment_1 = SDL_CreateRGBSurface(SDL_SWSURFACE, 100, 100, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
-    SDL_FillRect(batiment_1, NULL, SDL_MapRGB(info_planete->format, 23, 195, 15));
+
     for(i=0;i<5;i++)
     {
+        if(i == une_planete->batiment_en_cours)
+        {
+            SDL_FillRect(batiment_1, NULL, SDL_MapRGB(info_planete->format, 100, 0, 0));
+        }
+        else
+        {
+            SDL_FillRect(batiment_1, NULL, SDL_MapRGB(info_planete->format, 0, 200, 0));
+        }
+        sprintf(texte_batiment, "%d", une_planete->batiment[i]);
+        planete = TTF_RenderText_Blended(police, texte_batiment, couleur_blanche);
+        initialise_sdl_rect(&position_texte, 15 + 120 * i, 40, 0, 0);
         initialise_sdl_rect(&position_batiment, 10 + 120*i, 35, 0, 0);
         SDL_BlitSurface(batiment_1, NULL, fond_planete, &position_batiment);
+        SDL_BlitSurface(planete, NULL, fond_planete, &position_texte);
     }
 
     TTF_CloseFont(police);
@@ -377,15 +390,17 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
                 {
                     if(un_jeu->selection_flotte->indice_joueur == un_jeu->joueur_en_cours)
                     {
-                        deplacement_flotte(un_terrain_espace, un_jeu->selection_flotte, x/100, y/100);
-                        carte_flotte = creer_affichage_flotte(un_terrain_espace);
-                        SDL_SetColorKey(carte_flotte, SDL_SRCCOLORKEY, SDL_MapRGB(carte_flotte->format, 0, 0, 0));
-                        initialise_sdl_rect(&affichage_carte, un_terrain_espace->affichage_x, un_terrain_espace->affichage_y, TAILLE_TERRAIN_ESPACE_X, TAILLE_TERRAIN_ESPACE_Y);
-                        SDL_BlitSurface(carte, &affichage_carte, ecran, &position_affichage_carte);
-                        SDL_BlitSurface(carte_flotte, &affichage_carte, ecran, &position_affichage_carte);
-                        info = affichage_flotte(une_case_terrain_espace, info);
-                        SDL_BlitSurface(info, NULL, ecran, &position_affichage_info);
-                        SDL_Flip(ecran);
+                        if(deplacement_flotte(un_terrain_espace, un_jeu->selection_flotte, x/100, y/100) == true)
+                        {
+                            carte_flotte = creer_affichage_flotte(un_terrain_espace);
+                            SDL_SetColorKey(carte_flotte, SDL_SRCCOLORKEY, SDL_MapRGB(carte_flotte->format, 0, 0, 0));
+                            initialise_sdl_rect(&affichage_carte, un_terrain_espace->affichage_x, un_terrain_espace->affichage_y, TAILLE_TERRAIN_ESPACE_X, TAILLE_TERRAIN_ESPACE_Y);
+                            SDL_BlitSurface(carte, &affichage_carte, ecran, &position_affichage_carte);
+                            SDL_BlitSurface(carte_flotte, &affichage_carte, ecran, &position_affichage_carte);
+                            info = affichage_flotte(une_case_terrain_espace, info);
+                            SDL_BlitSurface(info, NULL, ecran, &position_affichage_info);
+                            SDL_Flip(ecran);
+                        }
                     }
                 }
             }

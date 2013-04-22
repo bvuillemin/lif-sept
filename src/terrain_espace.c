@@ -154,7 +154,7 @@ bool peut_se_deplacer(Flotte *une_flotte, int x, int y)
     x_max = une_flotte->x_flotte + une_flotte->pt_mouvement_espace_flotte;
     y_max = une_flotte->y_flotte + une_flotte->pt_mouvement_espace_flotte;
 
-    if((x>x_min) && (x<x_max) && (y>y_min) && (y<y_max) && (une_flotte->pt_mouvement_espace_flotte != 0))
+    if((x>=x_min) && (x<=x_max) && (y>=y_min) && (y<=y_max) && (une_flotte->pt_mouvement_espace_flotte >= 0))
     {
         return true;
     }
