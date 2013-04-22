@@ -94,6 +94,10 @@ void tour_suivant(Jeu *un_jeu)
 		printf("Ressources du tour %d pour le joueur %d: \nMetal: %d \nArgent: %d \nCarburant: %d \nPopulation: %d\n\n", un_jeu->tour_en_cours, i, metal, argent, carburant, population);
 		reinitialiser_mouvement_flotte(&(un_jeu->tab_joueur[i].tab_flotte[0]));
 		un_jeu->tab_joueur[i].tab_planete[0]->batiment_nb_tour_restant --;
+		if(un_jeu->tab_joueur[i].tab_planete[0]->batiment_nb_tour_restant == 0)
+		{
+		    validation_batiment(un_jeu->tab_joueur[i].tab_planete[0]);
+		}
 		un_jeu->tab_joueur[i].tab_planete[0]->unite_nb_tour_restant --;
 	}
 	un_jeu->tour_en_cours++;
