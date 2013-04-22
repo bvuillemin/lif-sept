@@ -23,6 +23,7 @@
 	 int joueur_en_cours;
 	 int nb_joueur;
 	 Flotte *selection_flotte;
+	 Planete *selection_planete;
 	 Joueur *tab_joueur;
  }Jeu;
 

@@ -12,6 +12,7 @@ void initialise_jeu(Jeu *un_jeu)
 	un_jeu->joueur_en_cours = 0;
 	un_jeu->nb_joueur = 0;
 	un_jeu->selection_flotte = NULL;
+	un_jeu->selection_planete = NULL;
     un_jeu->tab_joueur =(Joueur *)malloc(sizeof(Joueur) * 10);
 }
 
