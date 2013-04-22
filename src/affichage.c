@@ -525,9 +525,11 @@ void selection(Terrain_combat *un_terrain_combat,SDL_Rect position)
 	pos=coordonnee_case_du_clic(pos);
 	une_case = get_case_terrain_combat(un_terrain_combat, pos.x, pos.y);
 	if(get_selection_unite(une_case))
-	{
+	{	set_une_case_selectionnee(un_terrain_combat,0);
 		set_selection_unite(une_case, 0);
-	}else{set_selection_unite(une_case, 1);}
+	}else if(get_presence_unite(une_case) && !get_une_case_selectionnee(un_terrain_combat)){
+		set_selection_unite(une_case, 1);
+		set_une_case_selectionnee(un_terrain_combat,1);}
 }
 void affichage_ecran_combat(Terrain_combat *un_terrain_combat)
 {
@@ -573,8 +575,8 @@ void affichage_ecran_combat(Terrain_combat *un_terrain_combat)
 			continuer =0; 
 			break;
 			case SDL_MOUSEBUTTONUP: /* Clic de la souris */
-				pos_clic.x=evenement.button.x;
-				pos_clic.y=evenement.button.y;
+				pos_clic.x=evenement.button.x + position_affichage_carte.x;
+				pos_clic.y=evenement.button.y + position_affichage_carte.y;
 				selection(un_terrain_combat,pos_clic);
 				carte=affiche_ecran_terrain_combat(un_terrain_combat);
 			break;

@@ -22,6 +22,7 @@ typedef struct
 {
     int taille_combat_x;
     int taille_combat_y;
+	bool une_case_selectionnee;
     Case_terrain_combat *tab_terrain_combat; /*x en abscisse, y en ordonnée, on commence à 0 (à modifier?)*/
 }Terrain_combat;
 
@@ -35,6 +36,9 @@ void set_taille_combat_x(Terrain_combat *terrain_jeu_combat,const int x);
 int get_taille_combat_x(const Terrain_combat *terrain_jeu_combat);
 void set_taille_combat_y(Terrain_combat *terrain_jeu_combat,const int y);
 int get_taille_combat_y(const Terrain_combat *terrain_jeu_combat);
+
+void set_une_case_selectionnee(Terrain_combat *terrain_jeu_combat,const bool y);
+bool get_une_case_selectionnee(const Terrain_combat *terrain_jeu_combat);
 
 /*modifie une case du terrain*/
 void set_case_terrain_combat(const Terrain_combat *terrain_jeu_combat,const int x,const int y,const char c);

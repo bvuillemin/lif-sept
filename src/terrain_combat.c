@@ -26,7 +26,15 @@ int get_taille_combat_y(const Terrain_combat *terrain_jeu_combat)
 {
     return terrain_jeu_combat->taille_combat_y;
 }
+void set_une_case_selectionnee(Terrain_combat *terrain_jeu_combat,const bool y)
+{
+    terrain_jeu_combat->une_case_selectionnee = y;
+}
 
+bool get_une_case_selectionnee(const Terrain_combat *terrain_jeu_combat)
+{
+    return terrain_jeu_combat->une_case_selectionnee;
+}
 Case_terrain_combat* get_case_terrain_combat(const Terrain_combat *terrain_combat, const int x, const int y)
 {
     return terrain_combat->tab_terrain_combat+(y*(terrain_combat->taille_combat_x)+x);
@@ -42,6 +50,7 @@ void initilalise_terrain_combat(Terrain_combat *terrain_jeu_combat,const int tai
     int i, j;
     terrain_jeu_combat->taille_combat_x = taille_combat_x;
     terrain_jeu_combat->taille_combat_y = taille_combat_y;
+	terrain_jeu_combat->une_case_selectionnee=0;
     terrain_jeu_combat->tab_terrain_combat = (Case_terrain_combat *)malloc(sizeof(Case_terrain_combat)*(taille_combat_x*taille_combat_y+taille_combat_x));
     for(i=0;i<terrain_jeu_combat->taille_combat_y;i++)
     {
