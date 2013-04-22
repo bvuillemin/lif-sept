@@ -128,7 +128,7 @@ get_metal(une_planete), get_argent(une_planete), get_carburant(une_planete), get
 
     for(i=0;i<5;i++)
     {
-        if((i == une_planete->batiment_en_cours) && (une_planete->batiment_nb_tour_restant ==0))
+        if((i == une_planete->batiment_en_cours) && (une_planete->batiment_nb_tour_restant != 0))
         {
             SDL_FillRect(batiment_1, NULL, SDL_MapRGB(info_planete->format, 100, 0, 0));
         }
@@ -142,6 +142,13 @@ get_metal(une_planete), get_argent(une_planete), get_carburant(une_planete), get
         initialise_sdl_rect(&position_batiment, 10 + 120*i, 35, 0, 0);
         SDL_BlitSurface(batiment_1, NULL, fond_planete, &position_batiment);
         SDL_BlitSurface(planete, NULL, fond_planete, &position_texte);
+
+        if((i == une_planete->batiment_en_cours) && (une_planete->batiment_nb_tour_restant != 0))
+        {
+            sprintf(texte_batiment, "Nb tours: %d", une_planete->batiment_nb_tour_restant);
+            initialise_sdl_rect(&position_texte, 15 + 120 * i, 70, 0, 0);
+            SDL_BlitSurface(planete, NULL, fond_planete, &position_texte);
+        }
     }
 
     TTF_CloseFont(police);
@@ -633,7 +640,7 @@ void affichage_ecran_combat(Terrain_combat *un_terrain_combat)
 				selection(un_terrain_combat,pos_clic);
 				affiche_deplacement_unite(un_terrain_combat, pos_clic);
 				carte=affiche_ecran_terrain_combat(un_terrain_combat);
-				
+
 			break;
 			case SDL_KEYUP:
 			printf("%d,%d\n",position_affichage_carte.x,position_affichage_carte.y);
