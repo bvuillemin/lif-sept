@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include <string.h>
 #include <SDL/SDL.h>
 #ifdef __APPLE__
 #include "SDL_image.h"
@@ -402,7 +403,7 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
                         if(test_souris_rectangle(test, x, y))
                         {
                             creation_batiment(un_jeu->selection_planete, i);
-                           // info = affichage_planete(une_case_terrain_espace, info);
+                           /* info = affichage_planete(une_case_terrain_espace, info);*/
                             SDL_BlitSurface(info, NULL, ecran, &position_affichage_info);
                             SDL_Flip(ecran);
                         }
@@ -593,25 +594,57 @@ void selection(Terrain_combat *un_terrain_combat,SDL_Rect position)
 		set_selection_unite(une_case, 1);set_selection(un_terrain_combat,une_case);
 		set_une_case_selectionnee(un_terrain_combat,1);}
 }
+char *affiche_info_unite(Terrain_combat *un_terrain_combat)
+{
+	Unite * unite;
+	char infos[255] = "";
+	int a,b,c,d;
+	if(get_une_case_selectionnee(un_terrain_combat))
+	{
+		unite = get_unite(get_selection(un_terrain_combat));
+		a = get_pt_vie(unite);
+		b = get_pt_action(unite);
+		d = get_pt_deplacement(unite);
+		c = get_portee(unite);
+		
+		sprintf(infos,"pv = %d pa=%d po=%d pd=%d ",a,b,c,d);
+	}
+
+	return infos;
+}
 void affichage_ecran_combat(Terrain_combat *un_terrain_combat)
 {
-	SDL_Rect pos_clic, position_affichage_carte;
+	SDL_Rect pos_clic,pos_texte,pos_interface, position_affichage_carte;
 	SDL_Surface *ecran = NULL;
+	SDL_Surface *interface = NULL;
 	SDL_Surface *carte = NULL;
+	SDL_Surface* texte =NULL;
+
+	TTF_Font *police = NULL;
+	SDL_Color couleur_police = {255,255,255};
+	char infos[255] = "";
 
 	bool continuer;
 	SDL_Event evenement;
 
 	Uint32 couleur;
 	continuer=1;
+	pos_interface.x=0;
+	pos_interface.y=TAILLE_FENETRE_Y - TAILLE_FENETRE_Y/3;
 	position_affichage_carte.x=0;
 	position_affichage_carte.y=0;
-
+	
 	 if (SDL_Init(SDL_INIT_VIDEO) == -1) /*Démarrage de la SDL. Si erreur :*/
     {
         fprintf(stderr, "Erreur d'initialisation de la SDL : %s\n", SDL_GetError()); /* Écriture de l'erreur*/
         exit(EXIT_FAILURE); /* On quitte le programme*/
     }
+	if(TTF_Init() == -1)
+	{
+    	fprintf(stderr, "Erreur d'initialisation de TTF_Init : %s\n", TTF_GetError());
+   		exit(EXIT_FAILURE);
+	}
+
   	ecran =SDL_SetVideoMode(TAILLE_FENETRE_X,TAILLE_FENETRE_Y,NOMBRE_BITS_COULEUR,SDL_HWSURFACE|SDL_RESIZABLE|SDL_DOUBLEBUF);
 	  if (ecran == NULL) /*Si l'ouverture a échoué, on le note et on arrête*/
     {
@@ -621,11 +654,18 @@ void affichage_ecran_combat(Terrain_combat *un_terrain_combat)
 	couleur = SDL_MapRGB(ecran->format,0,0,0);
 	SDL_FillRect(ecran, NULL, couleur);
 	SDL_Flip(ecran);
-
+	
+	interface = SDL_CreateRGBSurface(SDL_HWSURFACE, TAILLE_FENETRE_X, TAILLE_FENETRE_Y/3, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
+	SDL_FillRect(interface, NULL, couleur);
 	carte = affiche_ecran_terrain_combat(un_terrain_combat);
 	SDL_BlitSurface(carte, NULL, ecran, &position_affichage_carte);
+	SDL_BlitSurface(interface, NULL, ecran, &pos_interface);
 	SDL_Flip(ecran);
-	SDL_EnableKeyRepeat(10, 10);
+	SDL_EnableKeyRepeat(5, 5);
+
+	police = TTF_OpenFont("space_age.ttf",16);TTF_SetFontStyle(police, TTF_STYLE_ITALIC | TTF_STYLE_UNDERLINE);
+	
+	pos_texte.x=100;pos_texte.y=TAILLE_FENETRE_Y - TAILLE_FENETRE_Y/3;
 	while(continuer)
 	{
 		SDL_WaitEvent(&evenement);
@@ -640,7 +680,8 @@ void affichage_ecran_combat(Terrain_combat *un_terrain_combat)
 				selection(un_terrain_combat,pos_clic);
 				affiche_deplacement_unite(un_terrain_combat, pos_clic);
 				carte=affiche_ecran_terrain_combat(un_terrain_combat);
-
+				strcpy(infos,affiche_info_unite(un_terrain_combat));
+				texte = TTF_RenderText_Solid(police,infos,couleur_police);
 			break;
 			case SDL_KEYUP:
 			printf("%d,%d\n",position_affichage_carte.x,position_affichage_carte.y);
@@ -669,11 +710,22 @@ void affichage_ecran_combat(Terrain_combat *un_terrain_combat)
             }
             break;
 		}
+		
 		SDL_FillRect(ecran, NULL, couleur);
 		SDL_BlitSurface(carte, &position_affichage_carte,  ecran,NULL);
+		SDL_BlitSurface(interface, NULL, ecran, &pos_interface);
+		
+		SDL_BlitSurface(texte, NULL, ecran, &pos_texte);
 		SDL_Flip(ecran);
 	}
-  	/*pause();*/
+	
+	
+	
+	
+
+	TTF_CloseFont(police);
+	TTF_Quit();
+	SDL_FreeSurface(texte);
 	SDL_FreeSurface(carte);
     SDL_Quit();
 }
