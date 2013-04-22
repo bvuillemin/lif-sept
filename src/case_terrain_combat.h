@@ -24,6 +24,7 @@ typedef struct
     int x_combat,y_combat;
     char type_case_terrain_combat;/* N si non initialisé*/
     bool presence_unite;
+	bool selection_unite;
 	Unite *unite;
 	/*int id_joueur;*/
 }Case_terrain_combat;
@@ -40,6 +41,9 @@ char get_type_case_terrain_combat(const Case_terrain_combat *une_case_terrain_co
 
 /*void set_id_joueur(Case_terrain_combat *une_case_terrain_combat, int id_joueur);
 int get_id_joueur(const Case_terrain_combat *une_case_terrain_combat);*/
+
+void set_selection_unite(Case_terrain_combat *une_case_terrain_combat,const bool p);
+bool get_selection_unite(const Case_terrain_combat *une_case_terrain_combat);
 
 void set_presence_unite(Case_terrain_combat *une_case_terrain_combat,const bool p);
 bool get_presence_unite(const Case_terrain_combat *une_case_terrain_combat);

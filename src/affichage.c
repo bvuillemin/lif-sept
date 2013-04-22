@@ -14,6 +14,7 @@
 #include "constante.h"
 #include "terrain_espace.h"
 #include "terrain_combat.h"
+#include "math.h"
 
 bool test_souris_rectangle (SDL_Rect taille_surface, int x, int y) /*Va tester si le clic souris c'est fait dans un rectangle, utile pour les menus*/
 {
@@ -101,12 +102,11 @@ SDL_Surface* affichage_planete(Case_terrain_espace *une_case_terrain_espace, SDL
     SDL_Surface *planete = NULL;
     SDL_Surface *fond_planete = NULL;
     SDL_Surface *batiment_1;
-    SDL_Rect position_texte;
+    SDL_Rect position;
     SDL_Rect position_batiment;
     TTF_Font *police = NULL;
         SDL_Color couleur_blanche = {255, 255, 255};
     char texte_planete[200] = "";
-    char texte_batiment[100] = "";
     Planete *une_planete = une_case_terrain_espace->planete;
     int i;
 
@@ -119,28 +119,16 @@ SDL_Surface* affichage_planete(Case_terrain_espace *une_case_terrain_espace, SDL
 get_nom_planete(une_planete), get_taille_utilisee(une_planete), get_taille_planete(une_planete),
 get_metal(une_planete), get_argent(une_planete), get_carburant(une_planete), get_population(une_planete));
     planete = TTF_RenderText_Blended(police, texte_planete, couleur_blanche);
-    position_texte.x = 10;
-    position_texte.y = 10;
-    SDL_BlitSurface(planete, NULL, fond_planete, &position_texte);
+    position.x = 10;
+    position.y = 10;
+    SDL_BlitSurface(planete, NULL, fond_planete, &position);
 
     batiment_1 = SDL_CreateRGBSurface(SDL_SWSURFACE, 100, 100, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
-
+    SDL_FillRect(batiment_1, NULL, SDL_MapRGB(info_planete->format, 23, 195, 15));
     for(i=0;i<5;i++)
     {
-        if(i == une_planete->batiment_en_cours)
-        {
-            SDL_FillRect(batiment_1, NULL, SDL_MapRGB(info_planete->format, 100, 0, 0));
-        }
-        else
-        {
-            SDL_FillRect(batiment_1, NULL, SDL_MapRGB(info_planete->format, 0, 200, 0));
-        }
-        sprintf(texte_batiment, "%d", une_planete->batiment[i]);
-        planete = TTF_RenderText_Blended(police, texte_batiment, couleur_blanche);
-        initialise_sdl_rect(&position_texte, 15 + 120 * i, 40, 0, 0);
         initialise_sdl_rect(&position_batiment, 10 + 120*i, 35, 0, 0);
         SDL_BlitSurface(batiment_1, NULL, fond_planete, &position_batiment);
-        SDL_BlitSurface(planete, NULL, fond_planete, &position_texte);
     }
 
     TTF_CloseFont(police);
@@ -327,8 +315,8 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 
 	carte = creer_affichage_terrain(un_terrain_espace); /*Creation du terrain en entier, celui-ci est stocké en mémoire*/
 	carte_flotte = creer_affichage_flotte(un_terrain_espace);
-	//deplacement_carte = SDL_CreateRGBSurface(SDL_SWSURFACE, TAILLE_TERRAIN_ESPACE_X, TAILLE_TERRAIN_ESPACE_Y, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
-	//deplacement_carte = affichage_terrain(un_terrain_espace, carte, carte_flotte, deplacement_carte); /*affichage d'une partie du terrain*/
+	/*deplacement_carte = SDL_CreateRGBSurface(SDL_SWSURFACE, TAILLE_TERRAIN_ESPACE_X, TAILLE_TERRAIN_ESPACE_Y, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);*/
+	/*deplacement_carte = affichage_terrain(un_terrain_espace, carte, carte_flotte, deplacement_carte);*/ /*affichage d'une partie du terrain*/
 	initialise_sdl_rect(&affichage_carte, 0, 0, TAILLE_TERRAIN_ESPACE_X, TAILLE_TERRAIN_ESPACE_Y);
 	SDL_BlitSurface(carte, &affichage_carte, ecran, &position_affichage_carte);
 	SDL_SetColorKey(carte_flotte, SDL_SRCCOLORKEY, SDL_MapRGB(carte_flotte->format, 0, 0, 0));
@@ -390,17 +378,15 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
                 {
                     if(un_jeu->selection_flotte->indice_joueur == un_jeu->joueur_en_cours)
                     {
-                        if(deplacement_flotte(un_terrain_espace, un_jeu->selection_flotte, x/100, y/100) == true)
-                        {
-                            carte_flotte = creer_affichage_flotte(un_terrain_espace);
-                            SDL_SetColorKey(carte_flotte, SDL_SRCCOLORKEY, SDL_MapRGB(carte_flotte->format, 0, 0, 0));
-                            initialise_sdl_rect(&affichage_carte, un_terrain_espace->affichage_x, un_terrain_espace->affichage_y, TAILLE_TERRAIN_ESPACE_X, TAILLE_TERRAIN_ESPACE_Y);
-                            SDL_BlitSurface(carte, &affichage_carte, ecran, &position_affichage_carte);
-                            SDL_BlitSurface(carte_flotte, &affichage_carte, ecran, &position_affichage_carte);
-                            info = affichage_flotte(une_case_terrain_espace, info);
-                            SDL_BlitSurface(info, NULL, ecran, &position_affichage_info);
-                            SDL_Flip(ecran);
-                        }
+                        deplacement_flotte(un_terrain_espace, un_jeu->selection_flotte, x/100, y/100);
+                        carte_flotte = creer_affichage_flotte(un_terrain_espace);
+                        SDL_SetColorKey(carte_flotte, SDL_SRCCOLORKEY, SDL_MapRGB(carte_flotte->format, 0, 0, 0));
+                        initialise_sdl_rect(&affichage_carte, un_terrain_espace->affichage_x, un_terrain_espace->affichage_y, TAILLE_TERRAIN_ESPACE_X, TAILLE_TERRAIN_ESPACE_Y);
+                        SDL_BlitSurface(carte, &affichage_carte, ecran, &position_affichage_carte);
+                        SDL_BlitSurface(carte_flotte, &affichage_carte, ecran, &position_affichage_carte);
+                        info = affichage_flotte(une_case_terrain_espace, info);
+                        SDL_BlitSurface(info, NULL, ecran, &position_affichage_info);
+                        SDL_Flip(ecran);
                     }
                 }
             }
@@ -472,6 +458,7 @@ SDL_Surface * affiche_ecran_terrain_combat(const Terrain_combat *terrain_combat)
 	SDL_Surface * fond =NULL;
 	SDL_Surface * quadrillage =NULL;
 	SDL_Surface * planete =NULL;
+	SDL_Surface * selection =NULL;
 	SDL_Rect pos,pos_plan;
 	int i, j, x,y;
     Case_terrain_combat *une_case;
@@ -483,6 +470,7 @@ SDL_Surface * affiche_ecran_terrain_combat(const Terrain_combat *terrain_combat)
 	fond = IMG_Load("fond.png");
     SDL_BlitSurface(fond, NULL, carte, &pos);
 	quadrillage = IMG_Load("quadrillage.png");
+	selection = IMG_Load("../Graphics/selection.png");
 	planete = IMG_Load("vaisseau_bleu.png");
     for(j=0;j<terrain_combat->taille_combat_y;j++)
     {
@@ -496,7 +484,10 @@ SDL_Surface * affiche_ecran_terrain_combat(const Terrain_combat *terrain_combat)
 				pos_plan.x=i*100;pos_plan.y=j*100;
 				SDL_BlitSurface(planete,NULL,carte,&pos_plan);
             }
-			SDL_BlitSurface(quadrillage,NULL,carte,&pos);
+			if(get_selection_unite(une_case))
+			{
+				SDL_BlitSurface(selection,NULL,carte,&pos);
+			}else{SDL_BlitSurface(quadrillage,NULL,carte,&pos);}
         }
         printf("\n");
     }
@@ -504,10 +495,43 @@ SDL_Surface * affiche_ecran_terrain_combat(const Terrain_combat *terrain_combat)
 	SDL_FreeSurface(quadrillage);
 	return carte;
 }
-
-void affichage_ecran_combat(const Terrain_combat *un_terrain_combat)
+SDL_Rect coordonnee_clic(SDL_Rect position)
 {
-	SDL_Rect position_affichage_carte;
+	
+	if(position.x>=100){
+		position.x = ceil(position.x/100)*100;}
+	else{position.x=0;}
+	if(position.y>=100){
+		position.y = ceil(position.y/100)*100;}
+	else{position.y=0;}
+	return position;
+}
+SDL_Rect coordonnee_case_du_clic(SDL_Rect position)
+{
+	
+	if(position.x>=100){
+		position.x = ceil(position.x/100);}
+	else{position.x=0;}
+	if(position.y>=100){
+		position.y = ceil(position.y/100);}
+	else{position.y=0;}
+	return position;
+}
+void selection(Terrain_combat *un_terrain_combat,SDL_Rect position)
+{	
+	SDL_Rect pos;
+	Case_terrain_combat *une_case;
+	pos=position;
+	pos=coordonnee_case_du_clic(pos);
+	une_case = get_case_terrain_combat(un_terrain_combat, pos.x, pos.y);
+	if(get_selection_unite(une_case))
+	{
+		set_selection_unite(une_case, 0);
+	}else{set_selection_unite(une_case, 1);}
+}
+void affichage_ecran_combat(Terrain_combat *un_terrain_combat)
+{
+	SDL_Rect pos_clic, position_affichage_carte;
 	SDL_Surface *ecran = NULL;
 	SDL_Surface *carte = NULL;
 
@@ -546,7 +570,16 @@ void affichage_ecran_combat(const Terrain_combat *un_terrain_combat)
 		switch(evenement.type)
 		{
 			case SDL_QUIT:
-			continuer =0;
+			continuer =0; 
+			break;
+			case SDL_MOUSEBUTTONUP: /* Clic de la souris */
+				pos_clic.x=evenement.button.x;
+				pos_clic.y=evenement.button.y;
+				selection(un_terrain_combat,pos_clic);
+				carte=affiche_ecran_terrain_combat(un_terrain_combat);
+			break;
+			case SDL_KEYUP:	
+			printf("%d,%d\n",position_affichage_carte.x,position_affichage_carte.y);
 			break;
 			case SDL_KEYDOWN: /* Si appui sur une touche */
              switch (evenement.key.keysym.sym)
@@ -555,16 +588,16 @@ void affichage_ecran_combat(const Terrain_combat *un_terrain_combat)
                     continuer = 0;
                     break;
 				 case SDLK_z: /*Flèche haut*/
-               		position_affichage_carte.y++;
+               		position_affichage_carte.y--;
                 	break;
             	case SDLK_s: /* Flèche bas*/
-            	    position_affichage_carte.y--;
+            	    position_affichage_carte.y++;
            		    break;
         	    case SDLK_d: /* Flèche droite*/
-               		position_affichage_carte.x--;
+               		position_affichage_carte.x++;
                		break;
   	      	    case SDLK_q: /*Flèche gauche*/
-  	     	        position_affichage_carte.x++;
+  	     	        position_affichage_carte.x--;
              	    break;
 				default:
                     break;
@@ -573,7 +606,7 @@ void affichage_ecran_combat(const Terrain_combat *un_terrain_combat)
             break;
 		}
 		SDL_FillRect(ecran, NULL, couleur);
-		SDL_BlitSurface(carte, &position_affichage_carte, ecran, NULL);
+		SDL_BlitSurface(carte, &position_affichage_carte,  ecran,NULL);
 		SDL_Flip(ecran);
 	}
   	/*pause();*/
