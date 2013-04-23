@@ -48,8 +48,8 @@ int get_nb_planete(Joueur *un_joueur);
 void set_numero_joueur(Joueur *un_joueur, int i);
 int get_numero_joueur(const Joueur *un_joueur);
 
-void initialise_joueur(Joueur *un_joueur,int num_joueur, char nom[30]);
-Joueur *creer_joueur(int num_joueur, char nom[30]);
+void initialise_joueur(Joueur *un_joueur,char nom[30]);
+Joueur *creer_joueur(char nom[30]);
 void liberer_joueur(Joueur *un_joueur);
 void detruire_joueur(Joueur **un_joueur);
 
@@ -66,6 +66,8 @@ void recuperer_ressource_planete(Joueur *un_joueur, int *metal, int *argent, int
 
 void ajouter_planete_joueur(Joueur *un_joueur, Planete *une_planete);
 void ajouter_flotte_joueur(Joueur *un_joueur, Flotte *une_flotte);
+
+Flotte * get_ieme_flotte_joueur(const Joueur *un_joueur,int i);
 
 void colonisation_planete(Joueur *un_joueur, Planete *une_planete);
 void creation_unite_planete(Joueur *un_joueur, Planete *une_planete, int choix);
