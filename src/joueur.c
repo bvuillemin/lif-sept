@@ -4,7 +4,7 @@
 
 #include "planete.h"
 #include "joueur.h"
-#include "terrain_espace.h"
+#include "flotte.h"/*"terrain_espace.h"*/
 #include "constante.h"
 
 
@@ -26,6 +26,15 @@ int get_couleur(const Joueur *un_joueur)
     return un_joueur->couleur_joueur;
 }
 
+void set_numero_joueur(Joueur *un_joueur, int i)
+{
+        un_joueur->numero_joueur = i;
+}
+
+int get_numero_joueur(const Joueur *un_joueur)
+{
+    return un_joueur->numero_joueur;
+}
 void set_metal_joueur(Joueur *un_joueur, int nb)
 {
     un_joueur->metal = nb;
@@ -264,22 +273,7 @@ void colonisation_planete(Joueur *un_joueur, Planete *une_planete)
     }
 }
 
-void validation_creation_unite_planete(Terrain_espace *un_terrain_espace, Joueur *un_joueur, Planete *une_planete)
-{
-    Unite *une_unite;
-    Flotte *une_flotte;
-    if(une_planete->unite_nb_tour_restant == 0)
-    {
-        if(une_planete->unite_en_cours == 1)
-        {
-            une_unite = creer_unite(PT_VIE_UNITE_1, PT_ATTAQUE_UNITE_1, PT_ACTION_UNITE_1, PT_DEPLACEMENT_UNITE_1, 10, PT_MOUVEMENT_UNITE_1);
-            une_flotte = creer_flotte();
-            ajouter_unite_flotte(une_flotte, une_unite);
-            ajouter_flotte_joueur(un_joueur, une_flotte);
-            ajouter_flotte(get_case_terrain_espace(un_terrain_espace, une_planete->x, une_planete->y), &un_joueur->tab_flotte[0]);
-        }
-    }
-}
+
 
 void creation_unite_planete(Joueur *un_joueur, Planete *une_planete, int choix)
 {

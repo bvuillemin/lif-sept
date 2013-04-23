@@ -640,14 +640,14 @@ void affichage_ecran_acceuil(Terrain_combat *un_terrain_combat)
   	ecran =SDL_SetVideoMode(TAILLE_FENETRE_X,TAILLE_FENETRE_Y,NOMBRE_BITS_COULEUR,SDL_HWSURFACE|SDL_RESIZABLE|SDL_DOUBLEBUF);
 	couleur = SDL_MapRGB(ecran->format,0,0,0);
 	SDL_FillRect(ecran, NULL, couleur);
-	SDL_Flip(ecran);
+	
 	pos_jeu.x=100;pos_jeu.y=2*TAILLE_FENETRE_Y/3;
 	pos_charger.x=500;pos_charger.y=2*TAILLE_FENETRE_Y/3;
 	pos_quitter.x=900;pos_quitter.y=2*TAILLE_FENETRE_Y/3;
 	SDL_BlitSurface(nouveau_jeu, NULL, ecran, &pos_jeu);
 	SDL_BlitSurface(charger, NULL, ecran, &pos_charger);
 	SDL_BlitSurface(quitter, NULL, ecran, &pos_quitter);
-
+	SDL_Flip(ecran);
 	while(continuer)
 	{
 		SDL_WaitEvent(&evenement);
