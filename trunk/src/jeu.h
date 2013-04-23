@@ -4,8 +4,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
-
+#include "terrain_espace.h"
+#include "terrain_combat.h"
 #include "joueur.h"
+#include "constante.h"
 
 /**
  * \file      Module terrain
@@ -37,5 +39,6 @@ void joueur_suivant(Jeu *un_jeu);
 void tour_suivant(Jeu *un_jeu);
 void afficher_ressource_joueur(Jeu *un_jeu);
 void afficher_info(Jeu *un_jeu);
+void validation_creation_unite_planete(Terrain_espace *un_terrain_espace, Joueur *un_joueur, Planete *une_planete);
 
 #endif
