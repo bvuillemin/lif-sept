@@ -612,6 +612,59 @@ char *affiche_info_unite(Terrain_combat *un_terrain_combat)
 
 	return infos;
 }
+
+void affichage_ecran_acceuil(Terrain_combat *un_terrain_combat)
+{
+	SDL_Surface *ecran = NULL;
+	SDL_Surface *nouveau_jeu = NULL;
+	SDL_Surface *charger = NULL;
+	SDL_Surface* quitter =NULL;
+	SDL_Rect pos_jeu,pos_charger,pos_quitter;
+	
+	Uint32 couleur;
+	
+	bool continuer;
+	SDL_Event evenement;
+	
+	continuer=1;
+	nouveau_jeu = IMG_Load("../Graphics/Nouvelle_Partie.png");
+	charger = IMG_Load("../Graphics/Charger.png");
+	quitter = IMG_Load("../Graphics/Quitter.png");
+	if (SDL_Init(SDL_INIT_VIDEO) == -1) /*Démarrage de la SDL. Si erreur :*/
+    {
+        fprintf(stderr, "Erreur d'initialisation de la SDL : %s\n", SDL_GetError()); /* Écriture de l'erreur*/
+        exit(EXIT_FAILURE); /* On quitte le programme*/
+    }
+
+	SDL_WM_SetCaption("Conquest of Space", "COS");
+  	ecran =SDL_SetVideoMode(TAILLE_FENETRE_X,TAILLE_FENETRE_Y,NOMBRE_BITS_COULEUR,SDL_HWSURFACE|SDL_RESIZABLE|SDL_DOUBLEBUF);
+	couleur = SDL_MapRGB(ecran->format,0,0,0);
+	SDL_FillRect(ecran, NULL, couleur);
+	SDL_Flip(ecran);
+	pos_jeu.x=100;pos_jeu.y=2*TAILLE_FENETRE_Y/3;
+	pos_charger.x=500;pos_charger.y=2*TAILLE_FENETRE_Y/3;
+	pos_quitter.x=900;pos_quitter.y=2*TAILLE_FENETRE_Y/3;
+	SDL_BlitSurface(nouveau_jeu, NULL, ecran, &pos_jeu);
+	SDL_BlitSurface(charger, NULL, ecran, &pos_charger);
+	SDL_BlitSurface(quitter, NULL, ecran, &pos_quitter);
+
+	while(continuer)
+	{
+		SDL_WaitEvent(&evenement);
+		switch(evenement.type)
+		{
+			case SDL_QUIT:
+			continuer =0;
+			break;
+		}
+	}
+	SDL_FreeSurface(nouveau_jeu);
+	SDL_FreeSurface(charger);
+	SDL_FreeSurface(quitter);
+    SDL_Quit();
+	
+}
+
 void affichage_ecran_combat(Terrain_combat *un_terrain_combat)
 {
 	SDL_Rect pos_clic,pos_texte,pos_interface, position_affichage_carte;
@@ -644,7 +697,8 @@ void affichage_ecran_combat(Terrain_combat *un_terrain_combat)
     	fprintf(stderr, "Erreur d'initialisation de TTF_Init : %s\n", TTF_GetError());
    		exit(EXIT_FAILURE);
 	}
-
+	
+	SDL_WM_SetCaption("Conquest of Space", "COS");
   	ecran =SDL_SetVideoMode(TAILLE_FENETRE_X,TAILLE_FENETRE_Y,NOMBRE_BITS_COULEUR,SDL_HWSURFACE|SDL_RESIZABLE|SDL_DOUBLEBUF);
 	  if (ecran == NULL) /*Si l'ouverture a échoué, on le note et on arrête*/
     {
@@ -725,6 +779,7 @@ void affichage_ecran_combat(Terrain_combat *un_terrain_combat)
 
 	TTF_CloseFont(police);
 	TTF_Quit();
+	SDL_FreeSurface(interface);
 	SDL_FreeSurface(texte);
 	SDL_FreeSurface(carte);
     SDL_Quit();
