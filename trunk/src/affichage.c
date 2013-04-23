@@ -594,10 +594,9 @@ void selection(Terrain_combat *un_terrain_combat,SDL_Rect position)
 		set_selection_unite(une_case, 1);set_selection(un_terrain_combat,une_case);
 		set_une_case_selectionnee(un_terrain_combat,1);}
 }
-char *affiche_info_unite(Terrain_combat *un_terrain_combat)
+void affiche_info_unite(Terrain_combat *un_terrain_combat,char * infos)
 {
 	Unite * unite;
-	char infos[255] = "";
 	int a,b,c,d;
 	if(get_une_case_selectionnee(un_terrain_combat))
 	{
@@ -610,7 +609,6 @@ char *affiche_info_unite(Terrain_combat *un_terrain_combat)
 		sprintf(infos,"pv = %d pa=%d po=%d pd=%d ",a,b,c,d);
 	}
 
-	return infos;
 }
 
 void affichage_ecran_acceuil(Terrain_combat *un_terrain_combat)
@@ -734,7 +732,7 @@ void affichage_ecran_combat(Terrain_combat *un_terrain_combat)
 				selection(un_terrain_combat,pos_clic);
 				affiche_deplacement_unite(un_terrain_combat, pos_clic);
 				carte=affiche_ecran_terrain_combat(un_terrain_combat);
-				strcpy(infos,affiche_info_unite(un_terrain_combat));
+				affiche_info_unite(un_terrain_combat,infos);
 				texte = TTF_RenderText_Solid(police,infos,couleur_police);
 			break;
 			case SDL_KEYUP:

@@ -150,9 +150,9 @@ void recuperer_ressource_planete(Joueur *un_joueur, int *metal, int *argent, int
 }
 
 
-void initialise_joueur(Joueur *un_joueur, int num_joueur, char nom[20])
+void initialise_joueur(Joueur *un_joueur, char nom[20])
 {
-    un_joueur->numero_joueur = num_joueur;
+    un_joueur->numero_joueur = -1;
 	/*un_joueur->bleu;
 	strcpy(un_joueur->nom_joueur, nom);*/
 	un_joueur->metal = 0;
@@ -168,10 +168,10 @@ void initialise_joueur(Joueur *un_joueur, int num_joueur, char nom[20])
 
 }
 
-Joueur *creer_joueur(int num_joueur, char nom[30])
+Joueur *creer_joueur(char nom[30])
 {
     Joueur *un_joueur=(Joueur *)malloc(sizeof(Joueur));
-    initialise_joueur(un_joueur,num_joueur, nom);
+    initialise_joueur(un_joueur,nom);
     return un_joueur;
 }
 
@@ -244,6 +244,8 @@ void retirer_population(Joueur *un_joueur, int nb)
 {
     un_joueur->population = un_joueur->population - nb;
 }
+
+
 
 void colonisation_planete(Joueur *un_joueur, Planete *une_planete)
 {
