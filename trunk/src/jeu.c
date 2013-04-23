@@ -58,7 +58,7 @@ void ajouter_joueur(Jeu *un_jeu, Joueur *un_joueur)
 	free(un_joueur);
 }
 
-void joueur_suivant(Jeu *un_jeu)
+void joueur_suivant(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 {
 	if(un_jeu->joueur_en_cours +1 < un_jeu->nb_joueur)
 	{
@@ -66,17 +66,18 @@ void joueur_suivant(Jeu *un_jeu)
 	}
 	else
 	{
-		tour_suivant(un_jeu);
+		tour_suivant(un_jeu, un_terrain_espace);
 		un_jeu->joueur_en_cours = 0;
 	}
 }
 
-void tour_suivant(Jeu *un_jeu)
+void tour_suivant(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 {
 	int metal = 0;
 	int argent = 0;
 	int carburant = 0;
 	int population = 0;
+	Case_terrain_espace *une_case_terrain_espace;
 	int i;
 
 	for(i=0;i<un_jeu->nb_joueur;i++)
@@ -86,20 +87,27 @@ void tour_suivant(Jeu *un_jeu)
 		carburant = 0;
 		population = 0;
 
-		recuperer_ressource_planete(&(un_jeu->tab_joueur[i]), &metal, &argent, &carburant, &population);
+		recuperer_ressource_planete(&un_jeu->tab_joueur[i], &metal, &argent, &carburant, &population);
 
 		un_jeu->tab_joueur[i].metal += metal;
 		un_jeu->tab_joueur[i].argent += argent;
 		un_jeu->tab_joueur[i].carburant += carburant;
 		un_jeu->tab_joueur[i].population += population;
-		printf("Ressources du tour %d pour le joueur %d: \nMetal: %d \nArgent: %d \nCarburant: %d \nPopulation: %d\n\n", un_jeu->tour_en_cours, i, metal, argent, carburant, population);
+		/*printf("Ressources du tour %d pour le joueur %d: \nMetal: %d \nArgent: %d \nCarburant: %d \nPopulation: %d\n\n", un_jeu->tour_en_cours, i, metal, argent, carburant, population);*/
 		reinitialiser_mouvement_flotte(&(un_jeu->tab_joueur[i].tab_flotte[0]));
+
 		un_jeu->tab_joueur[i].tab_planete[0]->batiment_nb_tour_restant --;
-		if(un_jeu->tab_joueur[i].tab_planete[0]->batiment_nb_tour_restant == 0)
+		if(un_jeu->tab_joueur[i].tab_planete[0]->batiment_nb_tour_restant == 0) /*a completer pour gerer automatiquement chaque planete de chaque joueur*/
 		{
 		    validation_batiment(un_jeu->tab_joueur[i].tab_planete[0]);
 		}
-		un_jeu->tab_joueur[i].tab_planete[0]->unite_nb_tour_restant --;
+
+		un_jeu->tab_joueur[i].tab_planete[0]->unite_nb_tour_restant --; /*de meme*/
+		if(un_jeu->tab_joueur[i].tab_planete[0]->unite_nb_tour_restant == 0)
+		{
+		    une_case_terrain_espace = get_case_terrain_espace(un_terrain_espace, un_jeu->tab_joueur[i].tab_planete[0]->x, un_jeu->tab_joueur[i].tab_planete[0]->y);
+		    validation_creation_unite_planete(une_case_terrain_espace, &un_jeu->tab_joueur[i]);
+		}
 	}
 	un_jeu->tour_en_cours++;
 }
@@ -108,10 +116,12 @@ void afficher_info(Jeu *un_jeu)
 {
 	printf("Joueur en cours %d, tour en cours %d \n", un_jeu->joueur_en_cours, un_jeu->tour_en_cours);
 }
-void validation_creation_unite_planete(Terrain_espace *un_terrain_espace, Joueur *un_joueur, Planete *une_planete)
+
+void validation_creation_unite_planete(Case_terrain_espace *une_case_terrain_espace, Joueur *un_joueur)
 {
     Unite *une_unite;
     Flotte *une_flotte;
+    Planete *une_planete = get_planete(une_case_terrain_espace);
     if(une_planete->unite_nb_tour_restant == 0)
     {
         if(une_planete->unite_en_cours == 1)
@@ -120,7 +130,7 @@ void validation_creation_unite_planete(Terrain_espace *un_terrain_espace, Joueur
             une_flotte = creer_flotte();
             ajouter_unite_flotte(une_flotte, une_unite);
             ajouter_flotte_joueur(un_joueur, une_flotte);
-            ajouter_flotte(get_case_terrain_espace(un_terrain_espace, une_planete->x, une_planete->y), &un_joueur->tab_flotte[0]);
+            ajouter_flotte(une_case_terrain_espace, &un_joueur->tab_flotte[un_joueur->nb_flotte]);
         }
     }
 }

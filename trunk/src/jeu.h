@@ -35,10 +35,10 @@ void liberer_jeu(Jeu *un_jeu);
 void detruire_jeu(Jeu **un_jeu);
 
 void ajouter_joueur(Jeu *un_jeu, Joueur *un_joueur);
-void joueur_suivant(Jeu *un_jeu);
-void tour_suivant(Jeu *un_jeu);
+void joueur_suivant(Jeu *un_jeu, Terrain_espace *un_terrain_espace);
+void tour_suivant(Jeu *un_jeu, Terrain_espace *un_terrain_espace);
 void afficher_ressource_joueur(Jeu *un_jeu);
 void afficher_info(Jeu *un_jeu);
-void validation_creation_unite_planete(Terrain_espace *un_terrain_espace, Joueur *un_joueur, Planete *une_planete);
+void validation_creation_unite_planete(Case_terrain_espace *une_case_terrain_espace, Joueur *un_joueur);
 
 #endif
