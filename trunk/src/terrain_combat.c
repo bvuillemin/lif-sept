@@ -134,7 +134,7 @@ void modification_terrain_combat(const Terrain_combat *terrain_combat, const cha
 
 bool deplacement_unite(Terrain_combat *un_terrain_combat, Unite *une_unite,const int x,const int y)
 {
-    if((unite_peut_se_deplacer(une_unite, x, y))&& (!get_presence_unite(get_case_terrain_combat(un_terrain_combat,x,y))) &&(x<un_terrain_combat->taille_combat_x) && (y<un_terrain_combat->taille_combat_y)&&(x>=0)&&(y>=0))
+    if((unite_peut_se_deplacer(une_unite, x, y))&& (!get_presence_unite(get_case_terrain_combat(un_terrain_combat,x,y))) &&(x<un_terrain_combat->taille_combat_x) && (y<un_terrain_combat->taille_combat_y)&&(x>=0)&&(y>=0)&&(get_pt_action(une_unite)>0))
     {
         int distance;
         int x_depart, y_depart;
@@ -150,6 +150,7 @@ bool deplacement_unite(Terrain_combat *un_terrain_combat, Unite *une_unite,const
         retirer_unite(case_depart);
         distance = calcul_distance_unite(x_depart, y_depart, x, y);
         enlever_pt_mouvement_combat_unite(une_unite, distance);
+	enlever_pt_action_unite(une_unite, 1);
         return true;
     }
     else { printf("\nimpossible de déplacer l'unité\n");return false;}
@@ -273,7 +274,7 @@ void attaquer(Terrain_combat * un_terrain_combat,Unite * une_unite,const int x,c
 	victime = get_unite(une_case);
 	pa_un = get_pt_attaque(une_unite);
 	pv_vi = get_pt_vie(victime);
-	if(get_presence_unite(une_case))
+	if(get_presence_unite(une_case)&&(get_pt_action(une_unite)>0))
 	{
 		set_pt_vie(victime ,pv_vi - pa_un);
 	}
