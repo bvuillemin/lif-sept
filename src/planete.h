@@ -91,6 +91,4 @@ void validation_batiment(Planete *une_planete);
 
 void test_module_planete();
 
-
-
 #endif
