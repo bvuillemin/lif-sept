@@ -426,9 +426,11 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 					SDL_BlitSurface(ressource, NULL, ecran, &position);
 					SDL_FillRect(info, NULL, SDL_MapRGB(ecran->format, 0, 0, 0));
 					SDL_BlitSurface(info, NULL, ecran, &position_affichage_info);
-					SDL_BlitSurface(carte, &affichage_carte, ecran, &position_affichage_carte);
+					carte_flotte = creer_affichage_flotte(un_terrain_espace);
+                    SDL_SetColorKey(carte_flotte, SDL_SRCCOLORKEY, SDL_MapRGB(carte_flotte->format, 0, 0, 0));
+                    SDL_BlitSurface(carte, &affichage_carte, ecran, &position_affichage_carte);
                     SDL_BlitSurface(carte_flotte, &affichage_carte, ecran, &position_affichage_carte);
-					SDL_Flip(ecran);
+                    SDL_Flip(ecran);
 				}
 				if(interface_affichee == 1 || interface_affichee==3)
 				{

@@ -130,6 +130,7 @@ void ajouter_flotte_joueur(Joueur *un_joueur, Flotte *une_flotte)
     une_flotte->indice_joueur = un_joueur->numero_joueur;
     if(i< un_joueur->nb_flotte_possible)
     {
+        une_flotte->indice_tableau_joueur = i;
         un_joueur->tab_flotte[i] = *une_flotte;
         un_joueur->nb_flotte ++;
         free(une_flotte);
