@@ -185,12 +185,48 @@ bool deplacement_flotte(Terrain_espace *un_terrain_espace, Flotte *une_flotte, i
 			retirer_flotte(case_depart);
 			distance = calcul_distance(x_depart, y_depart, x, y);
 			enlever_pt_mouvement_espace_flotte(une_flotte, distance);
+			return true;
 		}
-		else {return false;}
+		if(case_arrivee->presence_flotte == true)
+		{
+		    if(fusion_flotte(un_terrain_espace, une_flotte, x, y))
+		    {
+		        return true;
+		    }
+		}
+    }
+    return false;
+}
+
+bool fusion_flotte(Terrain_espace *un_terrain_espace, Flotte *une_flotte, int x, int y)
+{
+    int i;
+    int distance;
+    int x_depart, y_depart;
+    Case_terrain_espace *case_depart;
+    Case_terrain_espace *case_arrivee;
+    Flotte *flotte_arrivee;
+
+    x_depart = get_x_flotte(une_flotte);
+    y_depart = get_y_flotte(une_flotte);
+    case_depart = get_case_terrain_espace(un_terrain_espace, x_depart, y_depart);
+    case_arrivee = get_case_terrain_espace(un_terrain_espace, x, y);
+    flotte_arrivee = get_flotte(case_arrivee);
+
+    if((flotte_arrivee->taille_flotte + une_flotte->taille_flotte <= flotte_arrivee->taille_maximum_flotte) && (une_flotte->indice_joueur == flotte_arrivee->indice_joueur))
+    {
+        for(i=0;i<une_flotte->taille_flotte;i++)
+        {
+            ajouter_unite_flotte(flotte_arrivee, &une_flotte->tab_unite[i]);
+            retirer_unite_flotte(une_flotte, i);
+        }
+        distance = calcul_distance(x_depart, y_depart, x, y);
+        enlever_pt_mouvement_espace_flotte(flotte_arrivee, distance);
+        retirer_flotte(case_depart);
+        liberer_flotte(une_flotte);
         return true;
     }
-    else {return false;}
-
+    return false;
 }
 
 /*void test_module_terrain_espace()

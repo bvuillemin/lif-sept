@@ -11,6 +11,7 @@ void initialiser_flotte(Flotte *flotte)
 	flotte->x_flotte = 0;
 	flotte->y_flotte = 0;
 	flotte->indice_joueur = 0;
+	flotte->indice_tableau_joueur = 0;
     flotte->taille_maximum_flotte = 10; /*valeur temporaire qu'il faudra éventuellemnt modifié*/
     flotte->taille_flotte = 0;
 	flotte->pt_mouvement_espace_flotte = 0;

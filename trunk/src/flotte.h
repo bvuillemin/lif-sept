@@ -22,6 +22,7 @@
      int x_flotte;
      int y_flotte;
      int indice_joueur;
+     int indice_tableau_joueur;
 
      int taille_maximum_flotte;
      int taille_flotte;

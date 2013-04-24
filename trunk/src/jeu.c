@@ -130,7 +130,7 @@ void validation_creation_unite_planete(Case_terrain_espace *une_case_terrain_esp
             une_flotte = creer_flotte();
             ajouter_unite_flotte(une_flotte, une_unite);
             ajouter_flotte_joueur(un_joueur, une_flotte);
-            ajouter_flotte(une_case_terrain_espace, &un_joueur->tab_flotte[un_joueur->nb_flotte]);
+            ajouter_flotte(une_case_terrain_espace, &un_joueur->tab_flotte[un_joueur->nb_flotte - 1]);
         }
     }
 }
