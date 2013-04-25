@@ -560,6 +560,9 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
     }
 }*/
 
+
+
+
 SDL_Surface * affiche_ecran_terrain_combat(const Terrain_combat *terrain_combat)
 {
 	SDL_Surface * carte =NULL;
@@ -570,6 +573,7 @@ SDL_Surface * affiche_ecran_terrain_combat(const Terrain_combat *terrain_combat)
 	SDL_Rect pos,pos_plan;
 	int i, j, x,y;
     Case_terrain_combat *une_case;
+
 	x=get_taille_combat_x(terrain_combat);
 	y=get_taille_combat_y(terrain_combat);
 	carte =SDL_CreateRGBSurface(SDL_HWSURFACE, x* 100, y* 100, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
@@ -579,16 +583,24 @@ SDL_Surface * affiche_ecran_terrain_combat(const Terrain_combat *terrain_combat)
     SDL_BlitSurface(fond, NULL, carte, &pos);
 	quadrillage = IMG_Load("quadrillage.png");
 	selection = IMG_Load("../Graphics/selection.png");
-	planete = IMG_Load("vaisseau_bleu.png");
+	
     for(j=0;j<terrain_combat->taille_combat_y;j++)
     {
         for(i=0;i<terrain_combat->taille_combat_x;i++)
         {
 			pos.x=i*100;pos.y=j*100;
             une_case = get_case_terrain_combat(terrain_combat, i, j);
-
-            if(get_presence_unite(une_case))
-            {
+            if(get_presence_unite(une_case)&&(get_indice_joueur_unite(get_unite(une_case))==0))
+            {	planete = IMG_Load("../Graphics/vaisseau_1.png");
+				pos_plan.x=i*100;pos_plan.y=j*100;
+				SDL_BlitSurface(planete,NULL,carte,&pos_plan);
+            }
+			else if(get_presence_unite(une_case)&&(get_indice_joueur_unite(get_unite(une_case))==1))
+            {	planete = IMG_Load("../Graphics/vaisseau_2.png");
+				pos_plan.x=i*100;pos_plan.y=j*100;
+				SDL_BlitSurface(planete,NULL,carte,&pos_plan);
+            }else if(get_presence_unite(une_case))
+            {	planete = IMG_Load("../Graphics/vaisseau_3.png");
 				pos_plan.x=i*100;pos_plan.y=j*100;
 				SDL_BlitSurface(planete,NULL,carte,&pos_plan);
             }
@@ -666,7 +678,7 @@ void affiche_info_unite(Terrain_combat *un_terrain_combat,char * infos)
 	Unite * unite;
 	int a,b,c,d;
 	if(get_une_case_selectionnee(un_terrain_combat))
-	{
+	{	
 		unite = get_unite(get_selection(un_terrain_combat));
 		a = get_pt_vie(unite);
 		b = get_pt_action(unite);
@@ -674,6 +686,11 @@ void affiche_info_unite(Terrain_combat *un_terrain_combat,char * infos)
 		c = get_portee(unite);
 
 		sprintf(infos,"pv = %d pa=%d po=%d pd=%d ",a,b,c,d);
+	}
+	else
+	{
+		
+		sprintf(infos," ");
 	}
 
 }

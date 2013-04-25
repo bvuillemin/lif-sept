@@ -25,6 +25,17 @@ Flotte *creer_flotte()
     return flotte;
 }
 
+void set_indice_joueur_flotte(Flotte *flotte,const int i)
+{
+    flotte->indice_joueur = i;
+}
+
+int get_indice_joueur_flotte(const Flotte *flotte)
+{
+    return flotte->indice_joueur;
+}
+
+
 void set_taille_maximum_flotte(Flotte *flotte,const int max)
 {
     flotte->taille_maximum_flotte = max;
@@ -102,6 +113,7 @@ int ajouter_unite_flotte(Flotte *flotte, Unite *unite)
     {
         flotte->tab_unite[flotte->taille_flotte] = *unite;
         flotte->taille_flotte ++;
+	set_indice_joueur_unite(unite,flotte->indice_joueur);
 		if((unite->pt_mouvement_unite < min)||(flotte->pt_mouvement_espace_flotte == 0))
 		{
 			flotte->pt_mouvement_espace_flotte = unite->pt_mouvement_unite;

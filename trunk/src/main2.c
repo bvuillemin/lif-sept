@@ -16,8 +16,11 @@
 #include "affichage.h"
 
 int main()
-{
-	
+{	
+	/*Jeu * jeu;
+	Joueur * joueur1;
+	Joueur * joueur2;*/
+
 	Terrain_combat * un_match;
 	  Flotte *flotte1;
     Unite *unite1;
@@ -32,12 +35,29 @@ int main()
 	char c;
 	bool p;*/
 	
+	/*jeu = creer_jeu();
+	afficher_info(jeu);
+	joueur1=creer_joueur("allie");
+	joueur2=creer_joueur("ennemi");
+	ajouter_joueur(jeu, joueur1);
+	ajouter_joueur(jeu, joueur2);
+	afficher_info(jeu);
+	printf("nb flotte j1 %d ; nb flotte j2 %d \n",get_nb_flotte_joueur(joueur1),get_nb_flotte_joueur(joueur2));
+
+	*/flotte1 = creer_flotte();/*
+	printf("nb flotte j1 %d ; nb flotte j2 %d \n",get_nb_flotte_joueur(joueur1),get_nb_flotte_joueur(joueur2));*/
+	flotte2 = creer_flotte();/*
+	printf("nb flotte j1 %d ; nb flotte j2 %d \n",get_nb_flotte_joueur(joueur1),get_nb_flotte_joueur(joueur2));
+	ajouter_flotte_joueur(joueur1, flotte1);
+	ajouter_flotte_joueur(joueur2, flotte2);
+	printf("nb flotte j1 %d ; nb flotte j2 %d \n",get_nb_flotte_joueur(joueur1),get_nb_flotte_joueur(joueur2));*/
+	
 	unite1 = creer_unite(10,5,2,2,2,5);
     unite2 = creer_unite(40,3,2,4,2,8);
     unite3 = creer_unite(10,5,2,2,1,5);
 
     printf("Verif de la création de flottes\n");
-    flotte1 = creer_flotte();
+   
 afficher_flotte(flotte1);
     ajouter_unite_flotte(flotte1, unite1);
     ajouter_unite_flotte(flotte1, unite2);
@@ -48,7 +68,7 @@ afficher_flotte(flotte1);
     unite5 = creer_unite(30,3,2,4,2,8);
     unite6 = creer_unite(30,5,2,2,1,5);
  printf("Verif de la création de flottes\n");
-    flotte2 = creer_flotte();
+    
 afficher_flotte(flotte2);
     ajouter_unite_flotte(flotte2, unite4);
     ajouter_unite_flotte(flotte2, unite5);

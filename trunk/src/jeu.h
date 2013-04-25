@@ -41,4 +41,10 @@ void afficher_ressource_joueur(Jeu *un_jeu);
 void afficher_info(Jeu *un_jeu);
 void validation_creation_unite_planete(Case_terrain_espace *une_case_terrain_espace, Joueur *un_joueur);
 
+
+
+/**/
+void placer_joueur_combat(Terrain_combat * un_terrain_combat,Joueur* joueur);
+void placer_unite_flotte_en_haut(Terrain_combat * un_terrain_combat, Flotte * flotte);
+void placer_unite_flotte_en_bas(Terrain_combat * un_terrain_combat, Flotte * flotte);
 #endif
