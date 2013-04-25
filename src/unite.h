@@ -18,6 +18,7 @@
 
 typedef struct
 {
+	int indice_joueur;
 	int x_unite;
 	int y_unite;
 	int portee;
@@ -65,6 +66,9 @@ int get_pt_deplacement(const Unite *unite_jeu);
 
 void set_pt_mouvement_unite(Unite *unite_jeu, const int x);
 int get_pt_mouvement_unite(const Unite *unite_jeu);
+
+void set_indice_joueur_unite(Unite *unite,const int i);
+int get_indice_joueur_unite(const Unite *unite);
 
 bool unite_peut_se_deplacer(const Unite *une_unite, const int x, const int y);
 int calcul_distance_unite(const int x_depart, const int y_depart, const int x_arrivee, const int y_arrivee);

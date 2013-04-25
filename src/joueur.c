@@ -124,9 +124,15 @@ void ajouter_planete_joueur(Joueur *un_joueur, Planete *une_planete)
     }
 }
 
+int get_nb_flotte_joueur(Joueur *un_joueur)
+{
+	return un_joueur->nb_flotte;
+}
+
 void ajouter_flotte_joueur(Joueur *un_joueur, Flotte *une_flotte)
 {
-	int i = un_joueur->nb_flotte;
+	int i ;
+	i= un_joueur->nb_flotte;
     une_flotte->indice_joueur = un_joueur->numero_joueur;
     if(i< un_joueur->nb_flotte_possible)
     {
@@ -136,6 +142,19 @@ void ajouter_flotte_joueur(Joueur *un_joueur, Flotte *une_flotte)
         free(une_flotte);
     }
 
+}
+
+Flotte * get_ieme_flotte_joueur(const Joueur *un_joueur,int i)
+{
+	return un_joueur->tab_flotte+i;
+}
+
+void ajouter_unite_ieme_flotte_joueur(Joueur *un_joueur, Unite * unite, int i)
+{
+	Flotte * flotte;
+	flotte=creer_flotte();
+	flotte = get_ieme_flotte_joueur(un_joueur,i);
+	ajouter_unite_flotte(flotte, unite);
 }
 
 void recuperer_ressource_planete(Joueur *un_joueur, int *metal, int *argent, int *carburant, int *population)

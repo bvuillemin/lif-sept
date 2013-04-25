@@ -114,7 +114,7 @@ void tour_suivant(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 
 void afficher_info(Jeu *un_jeu)
 {
-	printf("Joueur en cours %d, tour en cours %d \n", un_jeu->joueur_en_cours, un_jeu->tour_en_cours);
+	printf("Joueur en cours %d, tour en cours %d , nb de joueurs %d \n", un_jeu->joueur_en_cours, un_jeu->tour_en_cours,un_jeu->nb_joueur);
 }
 
 void validation_creation_unite_planete(Case_terrain_espace *une_case_terrain_espace, Joueur *un_joueur)
@@ -142,3 +142,50 @@ void afficher_ressource_joueur(Jeu *un_jeu)
 		printf("Ressources du joueur %d: \nMetal: %d \nArgent: %d \nCarburant: %d \nPopulation: %d\n\n", i, un_jeu->tab_joueur[i].metal, un_jeu->tab_joueur[i].argent, un_jeu->tab_joueur[i].carburant, un_jeu->tab_joueur[i].population);
 	}
 }
+
+
+void placer_unite_flotte_en_haut(Terrain_combat * un_terrain_combat, Flotte * flotte)
+{
+	int i,m,n;
+	Unite * une_unite;
+	for(i=0;i<(flotte->taille_flotte);i++)
+	{
+		une_unite=get_unite_i_flotte(flotte,i);
+		m=get_x_unite(une_unite);
+		n=get_y_unite(une_unite);
+		while(case_libre(un_terrain_combat, m,n))
+		{
+			set_y_unite(une_unite,n+1);
+			m=get_x_unite(une_unite);
+			n=get_y_unite(une_unite);
+		}
+			ajoute_unite_terrain(un_terrain_combat, une_unite,m,n);
+	}
+	
+}
+
+void placer_unite_flotte_en_bas(Terrain_combat * un_terrain_combat, Flotte * flotte)
+{
+	int i,m,n;
+	Unite * une_unite;
+	for(i=0;i<(flotte->taille_flotte);i++)
+	{
+		une_unite=get_unite_i_flotte(flotte,i);
+		m=(un_terrain_combat->taille_combat_x)-1;
+		n=(un_terrain_combat->taille_combat_y)-1;
+		set_x_unite(une_unite,m);
+		set_y_unite(une_unite,n);
+		while(case_libre(un_terrain_combat, m,n))
+		{
+			set_y_unite(une_unite,n-1);
+			m=get_x_unite(une_unite);
+			n=get_y_unite(une_unite);
+		}
+			ajoute_unite_terrain(un_terrain_combat, une_unite,m,n);
+	}
+	
+}
+
+
+
+

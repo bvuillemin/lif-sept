@@ -58,8 +58,7 @@ bool deplacement_unite(Terrain_combat *un_terrain_combat, Unite *une_unite, cons
 /*ajoute une unité sur la case de coordonnées (x,y)*/
 void ajoute_unite_terrain(Terrain_combat * un_terrain_combat, Unite * unite,const int x,const int y);
 
-void placer_unite_flotte_en_haut(Terrain_combat * un_terrain_combat, Flotte * flotte);
-void placer_unite_flotte_en_bas(Terrain_combat * un_terrain_combat, Flotte * flotte);
+
 
 bool case_libre(const Terrain_combat * un_terrain_combat,const int x,const int y);
 
