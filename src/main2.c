@@ -17,9 +17,9 @@
 
 int main()
 {	
-	/*Jeu * jeu;
+	Jeu * jeu;
 	Joueur * joueur1;
-	Joueur * joueur2;*/
+	Joueur * joueur2;
 
 	Terrain_combat * un_match;
 	  Flotte *flotte1;
@@ -35,35 +35,38 @@ int main()
 	char c;
 	bool p;*/
 	
-	/*jeu = creer_jeu();
+	jeu = creer_jeu();
 	afficher_info(jeu);
 	joueur1=creer_joueur("allie");
 	joueur2=creer_joueur("ennemi");
 	ajouter_joueur(jeu, joueur1);
 	ajouter_joueur(jeu, joueur2);
 	afficher_info(jeu);
+	joueur1=get_ieme_joueur_jeu(jeu,0);
+	joueur2=get_ieme_joueur_jeu(jeu,1);
 	printf("nb flotte j1 %d ; nb flotte j2 %d \n",get_nb_flotte_joueur(joueur1),get_nb_flotte_joueur(joueur2));
 
-	*/flotte1 = creer_flotte();/*
-	printf("nb flotte j1 %d ; nb flotte j2 %d \n",get_nb_flotte_joueur(joueur1),get_nb_flotte_joueur(joueur2));*/
-	flotte2 = creer_flotte();/*
-	printf("nb flotte j1 %d ; nb flotte j2 %d \n",get_nb_flotte_joueur(joueur1),get_nb_flotte_joueur(joueur2));
+	flotte1 = creer_flotte();
+	flotte2 = creer_flotte();
 	ajouter_flotte_joueur(joueur1, flotte1);
 	ajouter_flotte_joueur(joueur2, flotte2);
-	printf("nb flotte j1 %d ; nb flotte j2 %d \n",get_nb_flotte_joueur(joueur1),get_nb_flotte_joueur(joueur2));*/
-	
+	flotte1 = get_ieme_flotte_joueur(joueur1,0);
+	flotte2 = get_ieme_flotte_joueur(joueur2,0);
 	unite1 = creer_unite(10,5,2,2,2,5);
     unite2 = creer_unite(40,3,2,4,2,8);
     unite3 = creer_unite(10,5,2,2,1,5);
 
     printf("Verif de la création de flottes\n");
-   
+	 printf("flotte1 %d\n",flotte1->indice_joueur);
+   printf("flotte2 %d\n",flotte2->indice_joueur);
 afficher_flotte(flotte1);
     ajouter_unite_flotte(flotte1, unite1);
+	printf("flotte1 unite1 %d\n",get_indice_joueur_unite(get_unite_i_flotte(flotte1,0)));
     ajouter_unite_flotte(flotte1, unite2);
+	printf("flotte1 unite2 %d\n",get_indice_joueur_unite(get_unite_i_flotte(flotte1,1)));
     ajouter_unite_flotte(flotte1, unite3);
 	afficher_flotte(flotte1);
-
+	
     unite4 = creer_unite(30,5,2,2,2,5);
     unite5 = creer_unite(30,3,2,4,2,8);
     unite6 = creer_unite(30,5,2,2,1,5);
@@ -71,8 +74,10 @@ afficher_flotte(flotte1);
     
 afficher_flotte(flotte2);
     ajouter_unite_flotte(flotte2, unite4);
+	printf("flotte2 unite1 %d\n",get_indice_joueur_unite(get_unite_i_flotte(flotte2,0)));
     ajouter_unite_flotte(flotte2, unite5);
-    ajouter_unite_flotte(flotte2, unite6);
+    printf("flotte2 unite2 %d\n",get_indice_joueur_unite(get_unite_i_flotte(flotte2,0)));
+	ajouter_unite_flotte(flotte2, unite6);
 	afficher_flotte(flotte2);
 
 	un_match=creer_terrain_combat(15,10);
@@ -87,6 +92,7 @@ afficher_flotte(flotte2);
 	placer_unite_flotte_en_bas(un_match,flotte2);
 	afficher_flotte(flotte2);
 	affiche_terrain_combat(un_match);
+
 	/*i=0;
 	
 	while(c!='q')
