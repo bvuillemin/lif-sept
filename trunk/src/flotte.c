@@ -111,9 +111,10 @@ int ajouter_unite_flotte(Flotte *flotte, Unite *unite)
 	int min = flotte->pt_mouvement_espace_flotte;
 	if(flotte->taille_flotte < flotte->taille_maximum_flotte)
     {
+	set_indice_joueur_unite(unite,flotte->indice_joueur);
         flotte->tab_unite[flotte->taille_flotte] = *unite;
         flotte->taille_flotte ++;
-	set_indice_joueur_unite(unite,flotte->indice_joueur);
+	
 		if((unite->pt_mouvement_unite < min)||(flotte->pt_mouvement_espace_flotte == 0))
 		{
 			flotte->pt_mouvement_espace_flotte = unite->pt_mouvement_unite;

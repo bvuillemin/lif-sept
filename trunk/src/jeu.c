@@ -142,7 +142,10 @@ void afficher_ressource_joueur(Jeu *un_jeu)
 		printf("Ressources du joueur %d: \nMetal: %d \nArgent: %d \nCarburant: %d \nPopulation: %d\n\n", i, un_jeu->tab_joueur[i].metal, un_jeu->tab_joueur[i].argent, un_jeu->tab_joueur[i].carburant, un_jeu->tab_joueur[i].population);
 	}
 }
-
+Joueur * get_ieme_joueur_jeu(Jeu * un_jeu,int i)
+{
+	return un_jeu->tab_joueur + i;
+}
 
 void placer_unite_flotte_en_haut(Terrain_combat * un_terrain_combat, Flotte * flotte)
 {
