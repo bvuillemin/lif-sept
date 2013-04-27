@@ -80,7 +80,7 @@ afficher_flotte(flotte2);
 	ajouter_unite_flotte(flotte2, unite6);
 	afficher_flotte(flotte2);
 
-	un_match=creer_terrain_combat(7,5);
+	un_match=creer_terrain_combat(10,5);
 	modification_terrain_combat(un_match,'E');
 	affiche_terrain_combat(un_match);
 
