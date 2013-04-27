@@ -739,6 +739,13 @@ void affichage_ecran_acceuil(Terrain_combat *un_terrain_combat)
     SDL_Quit();
 
 }
+void attaque_ecran(Terrain_combat * un_terrain_combat, SDL_Rect pos)
+{
+	Case_terrain_combat * une_case;
+	une_case = get_selection(un_terrain_combat);
+	coordonnee_case_du_clic(pos);
+	attaquer(un_terrain_combat,get_unite(une_case),pos.x,pos.y);
+}
 
 void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat)
 {
@@ -780,21 +787,26 @@ void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat)
         fprintf(stderr, "Impossible de charger le mode vidéo : %s\n", SDL_GetError());
         exit(EXIT_FAILURE);
     }
-	couleur = SDL_MapRGB(ecran->format,0,0,0);
+	couleur = SDL_MapRGB(ecran->format,150,0,0);
 	SDL_FillRect(ecran, NULL, couleur);
 	SDL_Flip(ecran);
 
+	
+	couleur = SDL_MapRGB(ecran->format,0,0,0);
 	interface = SDL_CreateRGBSurface(SDL_HWSURFACE, TAILLE_FENETRE_X, TAILLE_FENETRE_Y/3, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
 	SDL_FillRect(interface, NULL, couleur);
 	carte = affiche_ecran_terrain_combat(un_terrain_combat);
 	SDL_BlitSurface(carte, NULL, ecran, &position_affichage_carte);
 	SDL_BlitSurface(interface, NULL, ecran, &pos_interface);
+
 	SDL_Flip(ecran);
 	SDL_EnableKeyRepeat(5, 5);
 
 	police = TTF_OpenFont("space_age.ttf",16);TTF_SetFontStyle(police, TTF_STYLE_ITALIC | TTF_STYLE_UNDERLINE);
 
 	pos_texte.x=100;pos_texte.y=TAILLE_FENETRE_Y - TAILLE_FENETRE_Y/3;
+
+	
 	while(continuer)
 	{
 		SDL_WaitEvent(&evenement);
@@ -832,6 +844,21 @@ void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat)
                		break;
   	      	    case SDLK_q: /*Flèche gauche*/
   	     	        position_affichage_carte.x--;
+             	    break;
+  	      	    case SDLK_p: 
+					passer_tour_combat(jeu,un_terrain_combat);
+             	    break;
+  	      	    case SDLK_a: 
+					if(get_une_case_selectionnee(un_terrain_combat)){
+					switch (evenement.type)
+					{
+						case SDL_MOUSEBUTTONUP: /* Clic de la souris */
+							pos_clic.x=evenement.button.x + position_affichage_carte.x;
+							pos_clic.y=evenement.button.y + position_affichage_carte.y;
+							attaque_ecran(un_terrain_combat,pos_clic);
+							
+						break;
+					}}
              	    break;
 				default:
                     break;

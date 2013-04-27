@@ -49,6 +49,6 @@ void placer_joueur_combat(Terrain_combat * un_terrain_combat,Jeu * un_jeu);
 void placer_unite_flotte_en_haut(Terrain_combat * un_terrain_combat, Flotte * flotte);
 void placer_unite_flotte_en_bas(Terrain_combat * un_terrain_combat, Flotte * flotte);
 void selectionner_case_combat(Jeu *jeu,Terrain_combat *un_terrain_combat,const int x, const int y);
-
+void passer_tour_combat(Jeu * jeu, Terrain_combat * un_terrain_combat);
 
 #endif

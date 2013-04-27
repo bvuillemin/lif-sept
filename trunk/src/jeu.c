@@ -218,3 +218,54 @@ void selectionner_case_combat(Jeu *jeu,Terrain_combat *un_terrain_combat,const i
 		set_une_case_selectionnee(un_terrain_combat,1);}
 }
 
+
+void passer_tour_combat(Jeu * jeu, Terrain_combat * un_terrain_combat)
+{
+	Joueur * joueur;
+	Flotte * flotte;
+	if(jeu->joueur_en_cours == 0)
+	{
+		joueur=get_ieme_joueur_jeu(jeu, 0);
+		flotte = get_ieme_flotte_joueur(joueur,0);
+		reinitialiser_deplacement_unite_flotte(flotte);
+		reinitialiser_pt_action_unite_flotte(flotte);
+		
+		jeu->joueur_en_cours = 1;
+	}
+	else if (jeu->joueur_en_cours == 1)
+	{
+		joueur=get_ieme_joueur_jeu(jeu, 1);
+		flotte = get_ieme_flotte_joueur(joueur,0);
+		reinitialiser_deplacement_unite_flotte(flotte);
+		reinitialiser_pt_action_unite_flotte(flotte);
+		jeu->joueur_en_cours = 0;
+	}else{printf("ERREUR ! \n");}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
