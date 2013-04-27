@@ -215,7 +215,10 @@ SDL_Surface* affichage_flotte(Case_terrain_espace *une_case_terrain_espace, SDL_
 {
     SDL_Surface *flotte = NULL;
     SDL_Surface *fond_flotte = NULL;
+    SDL_Surface *une_unite = NULL;
     SDL_Rect position;
+    SDL_Rect position_une_unite;
+    int i;
     TTF_Font *police = NULL;
         SDL_Color couleur_blanche = {255, 255, 255};
     char texte_flotte[200] = "";
@@ -228,9 +231,20 @@ SDL_Surface* affichage_flotte(Case_terrain_espace *une_case_terrain_espace, SDL_
 
     sprintf(texte_flotte, "Coordonnes de la flotte: %d %d, pt mouvement %d, taille : %d\n", une_flotte->x_flotte, une_flotte->y_flotte, une_flotte->pt_mouvement_espace_flotte,une_flotte->taille_flotte);
     flotte = TTF_RenderText_Blended(police, texte_flotte, couleur_blanche);
-    position.x = 10;
-    position.y = 10;
+    initialise_sdl_rect(&position, 10, 10, 0, 0);
     SDL_BlitSurface(flotte, NULL, fond_flotte, &position);
+
+    une_unite = SDL_CreateRGBSurface(SDL_SWSURFACE, 100, 100, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
+    for(i=0; i<une_flotte->taille_flotte;i++)
+    {
+        SDL_FillRect(une_unite, NULL, SDL_MapRGB(info_flotte->format, 100, 0, 0));
+        initialise_sdl_rect(&position_une_unite, 10 + 120*i, 35, 0, 0);
+        SDL_BlitSurface(une_unite, NULL, fond_flotte, &position_une_unite);
+        sprintf(texte_flotte, "%d", une_flotte->tab_unite[i].pt_vie);
+        flotte = TTF_RenderText_Blended(police, texte_flotte, couleur_blanche);
+        initialise_sdl_rect(&position, 15 + 120*i, 40, 0, 0);
+        SDL_BlitSurface(flotte, NULL, fond_flotte, &position);
+    }
 
     TTF_CloseFont(police);
     TTF_Quit();
@@ -486,7 +500,7 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
                 {
                     if(un_jeu->selection_flotte->indice_joueur == un_jeu->joueur_en_cours)
                     {
-                        deplacement_flotte(un_terrain_espace, un_jeu->selection_flotte, x/100, y/100);
+                        deplacement_flotte(&un_jeu->tab_joueur[un_jeu->joueur_en_cours], un_terrain_espace, un_jeu->selection_flotte, x/100, y/100);
                         carte_flotte = creer_affichage_flotte(un_terrain_espace);
                         SDL_SetColorKey(carte_flotte, SDL_SRCCOLORKEY, SDL_MapRGB(carte_flotte->format, 0, 0, 0));
                         initialise_sdl_rect(&affichage_carte, un_terrain_espace->affichage_x, un_terrain_espace->affichage_y, TAILLE_TERRAIN_ESPACE_X, TAILLE_TERRAIN_ESPACE_Y);
@@ -583,7 +597,7 @@ SDL_Surface * affiche_ecran_terrain_combat(const Terrain_combat *terrain_combat)
     SDL_BlitSurface(fond, NULL, carte, &pos);
 	quadrillage = IMG_Load("quadrillage.png");
 	selection = IMG_Load("../Graphics/selection.png");
-	
+
     for(j=0;j<terrain_combat->taille_combat_y;j++)
     {
         for(i=0;i<terrain_combat->taille_combat_x;i++)
@@ -663,15 +677,15 @@ void selection(Jeu * jeu,Terrain_combat *un_terrain_combat,SDL_Rect position)
 	SDL_Rect pos;
 	pos=position;
 	pos=coordonnee_case_du_clic(pos);
-	selectionner_case_combat(jeu,un_terrain_combat, pos.x, pos.y);
-	
+//	selectionner_case_combat(jeu,un_terrain_combat, pos.x, pos.y);
+
 }
 void affiche_info_unite(Terrain_combat *un_terrain_combat,char * infos)
 {
 	Unite * unite;
 	int a,b,c,d;
 	if(get_une_case_selectionnee(un_terrain_combat))
-	{	
+	{
 		unite = get_unite(get_selection(un_terrain_combat));
 		a = get_pt_vie(unite);
 		b = get_pt_action(unite);
@@ -682,7 +696,7 @@ void affiche_info_unite(Terrain_combat *un_terrain_combat,char * infos)
 	}
 	else
 	{
-		
+
 		sprintf(infos," ");
 	}
 
@@ -791,7 +805,7 @@ void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat)
 	SDL_FillRect(ecran, NULL, couleur);
 	SDL_Flip(ecran);
 
-	
+
 	couleur = SDL_MapRGB(ecran->format,0,0,0);
 	interface = SDL_CreateRGBSurface(SDL_HWSURFACE, TAILLE_FENETRE_X, TAILLE_FENETRE_Y/3, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
 	SDL_FillRect(interface, NULL, couleur);
@@ -806,7 +820,7 @@ void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat)
 
 	pos_texte.x=100;pos_texte.y=TAILLE_FENETRE_Y - TAILLE_FENETRE_Y/3;
 
-	
+
 	while(continuer)
 	{
 		SDL_WaitEvent(&evenement);
@@ -845,10 +859,10 @@ void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat)
   	      	    case SDLK_q: /*Flèche gauche*/
   	     	        position_affichage_carte.x--;
              	    break;
-  	      	    case SDLK_p: 
-					passer_tour_combat(jeu,un_terrain_combat);
+  	      	    case SDLK_p:
+//					passer_tour_combat(jeu,un_terrain_combat);
              	    break;
-  	      	    case SDLK_a: 
+  	      	    case SDLK_a:
 					if(get_une_case_selectionnee(un_terrain_combat)){
 					switch (evenement.type)
 					{
@@ -856,7 +870,7 @@ void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat)
 							pos_clic.x=evenement.button.x + position_affichage_carte.x;
 							pos_clic.y=evenement.button.y + position_affichage_carte.y;
 							attaque_ecran(un_terrain_combat,pos_clic);
-							
+
 						break;
 					}}
              	    break;

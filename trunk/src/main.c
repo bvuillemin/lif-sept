@@ -95,17 +95,20 @@ int main(int argc, char *argv[])
 
 	ajouter_unite_flotte(flotte2, unite3);
     ajouter_unite_flotte(flotte2, unite4);
-
+/*
     ajouter_flotte_joueur(&jeu->tab_joueur[0], flotte);
-	ajouter_flotte_joueur(&jeu->tab_joueur[1], flotte2);
+	ajouter_flotte_joueur(&jeu->tab_joueur[0], flotte2);
 
     printf("Affiche flotte 1\n");
     afficher_flotte(&jeu->tab_joueur[0].tab_flotte[0]);
     printf("Affiche flotte 2\n");
-    afficher_flotte(&jeu->tab_joueur[1].tab_flotte[0]);
+    afficher_flotte(&jeu->tab_joueur[0].tab_flotte[1]);
 
     ajouter_flotte(get_case_terrain_espace(un_terrain_espace, 2, 3), &jeu->tab_joueur[0].tab_flotte[0]);
-	ajouter_flotte(get_case_terrain_espace(un_terrain_espace, 5, 5), &jeu->tab_joueur[1].tab_flotte[0]);
+	ajouter_flotte(get_case_terrain_espace(un_terrain_espace, 5, 5), &jeu->tab_joueur[0].tab_flotte[1]);
+*/
+	ajouter_flotte_jeu(jeu, un_terrain_espace,flotte, 0, 2, 3);
+	ajouter_flotte_jeu(jeu, un_terrain_espace,flotte2, 0, 5, 5);
 
 	affichage_ecran(jeu, un_terrain_espace);
 
@@ -116,6 +119,8 @@ int main(int argc, char *argv[])
         scanf("%s", menu);
         if(strcmp(menu, exit) == 0)
         {
+            detruire_terrain_espace(&un_terrain_espace);
+            detruire_jeu(&jeu);
             return 0;
         }
         if(strcmp(menu, move) == 0)
@@ -123,7 +128,7 @@ int main(int argc, char *argv[])
 			printf("Coordonnées où bouger la flotte:\n");
 			scanf("%d", &x);
 			scanf("%d", &y);
-			if(deplacement_flotte(un_terrain_espace, &(jeu->tab_joueur[a].tab_flotte[0]), x, y) == false)
+			if(deplacement_flotte(&jeu->tab_joueur[a], un_terrain_espace, &(jeu->tab_joueur[a].tab_flotte[0]), x, y) == false)
 			{
 				printf("Déplacement impossible\n");
 			}
@@ -138,6 +143,7 @@ int main(int argc, char *argv[])
         {
 			printf("Affiche flotte du joueur %d\n", a);
 			afficher_flotte(&(jeu->tab_joueur[a].tab_flotte[0]));
+			afficher_flotte(&(jeu->tab_joueur[a].tab_flotte[1]));
         }
 		if(strcmp(menu, ressource) == 0)
         {

@@ -40,7 +40,7 @@ typedef struct
 void initialise_unite(Unite *unite_jeu,const int pt_vie,const int pt_attaque,const int pt_action,const int pt_deplacement,const int portee,const int pt_mouvement);
 Unite *creer_unite(const int pt_vie,const int pt_attaque,const int pt_action,const int pt_deplacement,const int portee,const int pt_mouvement);
 
-void libere_unite(Unite *unite_jeu);
+void liberer_unite(Unite *unite_jeu);
 void detruire_unite(Unite **unite_jeu);
 
 void set_portee(Unite *unite_jeu, const int x);

@@ -5,6 +5,7 @@
 
 #include "case_terrain_espace.h"
 #include "terrain_espace.h"
+#include "joueur.h"
 
 void set_taille_espace_x(Terrain_espace *terrain_jeu_espace, int x)
 {
@@ -166,7 +167,7 @@ int calcul_distance(int x_depart, int y_depart, int x_arrivee, int y_arrivee)
     return ceil(sqrt(pow(x_depart - x_arrivee, 2) + pow(y_depart - y_arrivee, 2)) - 0.1); /*on enleve 0.1 pour etre un peu plus précis: si on se deplace de 7.05 on veut que ce soit 7*/
 }
 
-bool deplacement_flotte(Terrain_espace *un_terrain_espace, Flotte *une_flotte, int x, int y)
+bool deplacement_flotte(Joueur *un_joueur, Terrain_espace *un_terrain_espace, Flotte *une_flotte, int x, int y)
 {
     if(peut_se_deplacer(une_flotte, x, y))
     {
@@ -189,8 +190,9 @@ bool deplacement_flotte(Terrain_espace *un_terrain_espace, Flotte *une_flotte, i
 		}
 		if(case_arrivee->presence_flotte == true)
 		{
-		    if(fusion_flotte(un_terrain_espace, une_flotte, x, y))
+		    if(fusion_flotte(un_joueur, un_terrain_espace, une_flotte, x, y))
 		    {
+		        //free(une_flotte);
 		        return true;
 		    }
 		}
@@ -198,32 +200,42 @@ bool deplacement_flotte(Terrain_espace *un_terrain_espace, Flotte *une_flotte, i
     return false;
 }
 
-bool fusion_flotte(Terrain_espace *un_terrain_espace, Flotte *une_flotte, int x, int y)
+bool fusion_flotte(Joueur *un_joueur, Terrain_espace *un_terrain_espace, Flotte *une_flotte, int x, int y)
 {
     int i;
+    int nb_unite = une_flotte->taille_flotte;
     int distance;
-    int x_depart, y_depart;
+    int x_depart = get_x_flotte(une_flotte);
+    int y_depart = get_y_flotte(une_flotte);
     Case_terrain_espace *case_depart;
     Case_terrain_espace *case_arrivee;
     Flotte *flotte_arrivee;
 
-    x_depart = get_x_flotte(une_flotte);
-    y_depart = get_y_flotte(une_flotte);
     case_depart = get_case_terrain_espace(un_terrain_espace, x_depart, y_depart);
     case_arrivee = get_case_terrain_espace(un_terrain_espace, x, y);
     flotte_arrivee = get_flotte(case_arrivee);
 
     if((flotte_arrivee->taille_flotte + une_flotte->taille_flotte <= flotte_arrivee->taille_maximum_flotte) && (une_flotte->indice_joueur == flotte_arrivee->indice_joueur))
     {
-        for(i=0;i<une_flotte->taille_flotte;i++)
+        for(i=0;i<nb_unite;i++)
         {
-            ajouter_unite_flotte(flotte_arrivee, &une_flotte->tab_unite[i]);
-            retirer_unite_flotte(une_flotte, i);
+            transferer_unite_flotte(flotte_arrivee, &une_flotte->tab_unite[i]);
         }
         distance = calcul_distance(x_depart, y_depart, x, y);
         enlever_pt_mouvement_espace_flotte(flotte_arrivee, distance);
         retirer_flotte(case_depart);
-        liberer_flotte(une_flotte);
+        if(une_flotte->indice_tableau_joueur < flotte_arrivee->indice_tableau_joueur)
+        {
+            case_arrivee->flotte = &un_joueur->tab_flotte[flotte_arrivee->indice_tableau_joueur - 1];
+        }
+        else
+        {
+            case_arrivee->flotte = &un_joueur->tab_flotte[flotte_arrivee->indice_tableau_joueur];
+        }
+        retirer_flotte_joueur(un_joueur, une_flotte->indice_tableau_joueur);
+        //liberer_flotte(une_flotte);
+        //free(une_flotte);
+
         return true;
     }
     return false;

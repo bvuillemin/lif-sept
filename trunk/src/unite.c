@@ -27,7 +27,7 @@ Unite *creer_unite(const int pt_vie,const int pt_attaque,const int pt_action,con
     return nouvelle_unite;
 }
 
-void libere_unite(Unite *unite_jeu)
+void liberer_unite(Unite *unite_jeu)
 {
     unite_jeu->pt_vie=0;
     unite_jeu->pt_attaque=0;
@@ -39,7 +39,7 @@ void libere_unite(Unite *unite_jeu)
 
 void detruire_unite(Unite **unite_jeu)
 {
-    libere_unite(*unite_jeu);
+    liberer_unite(*unite_jeu);
     free(*unite_jeu);
     *unite_jeu = NULL;
 }
@@ -136,7 +136,7 @@ int get_pt_mouvement_unite(const Unite *unite_jeu)
 bool unite_peut_se_deplacer(const Unite *une_unite, int x, int y)
 {
     int x_min, y_min, x_max, y_max;
-	
+
     x_min = une_unite->x_unite - une_unite->pt_deplacement;
     y_min = une_unite->y_unite - une_unite->pt_deplacement;
     x_max = une_unite->x_unite + une_unite->pt_deplacement;

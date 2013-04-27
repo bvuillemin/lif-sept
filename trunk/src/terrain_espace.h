@@ -6,6 +6,7 @@
 #include <stdbool.h>
 
 #include "case_terrain_espace.h"
+#include "joueur.h"
 
 /**
  * \file      Module terrain_espace
@@ -51,8 +52,8 @@ int calcul_distance(int x_depart, int y_depart, int x_arrivee, int y_arrivee);
 
 bool peut_se_deplacer(Flotte *une_flotte, int x, int y);
 void calcul_deplacement_flotte(Flotte *une_flotte);
-bool deplacement_flotte(Terrain_espace *un_terrain_espace, Flotte *une_flotte, int x, int y);
-bool fusion_flotte(Terrain_espace *un_terrain_espace, Flotte *une_flotte, int x, int y);
+bool deplacement_flotte(Joueur *un_joueur, Terrain_espace *un_terrain_espace, Flotte *une_flotte, int x, int y);
+bool fusion_flotte(Joueur *un_joueur, Terrain_espace *un_terrain_espace, Flotte *une_flotte, int x, int y);
 
 /*void test_module_terrain_espace();*/
 

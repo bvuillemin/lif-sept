@@ -141,7 +141,20 @@ void ajouter_flotte_joueur(Joueur *un_joueur, Flotte *une_flotte)
         un_joueur->nb_flotte ++;
         free(une_flotte);
     }
+}
 
+void retirer_flotte_joueur(Joueur *un_joueur, int indice_flotte)
+{
+    int i;
+    if(indice_flotte < un_joueur->nb_flotte - 1)
+    {
+        for(i=indice_flotte;i<un_joueur->nb_flotte - 1;i++)
+        {
+            un_joueur->tab_flotte[i] = un_joueur->tab_flotte[i+1];
+            un_joueur->tab_flotte[i].indice_tableau_joueur = i;
+        }
+        liberer_flotte(&un_joueur->tab_flotte[un_joueur->nb_flotte - 1]);
+    }
 }
 
 Flotte * get_ieme_flotte_joueur(const Joueur *un_joueur,int i)
