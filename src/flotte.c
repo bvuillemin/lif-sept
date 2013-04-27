@@ -91,12 +91,16 @@ void liberer_flotte(Flotte *flotte)
     int i;
     for(i=0;i<flotte->taille_flotte;i++)
     {
-        libere_unite(&(flotte->tab_unite[i]));
+        liberer_unite(&(flotte->tab_unite[i]));
     }
     free(flotte->tab_unite);
     flotte->tab_unite = NULL;
     flotte->taille_maximum_flotte = 10; /*valeur temporaire qu'il faudra éventuellemnt modifié*/
     flotte->taille_flotte = 0;
+    flotte->x_flotte = 0;
+    flotte->y_flotte = 0;
+    flotte->pt_mouvement_espace_flotte = 0;
+    flotte->indice_tableau_joueur = 0;
 }
 
 void detruire_flotte(Flotte **flotte)
@@ -114,12 +118,34 @@ int ajouter_unite_flotte(Flotte *flotte, Unite *unite)
 	set_indice_joueur_unite(unite,flotte->indice_joueur);
         flotte->tab_unite[flotte->taille_flotte] = *unite;
         flotte->taille_flotte ++;
-	
+
 		if((unite->pt_mouvement_unite < min)||(flotte->pt_mouvement_espace_flotte == 0))
 		{
 			flotte->pt_mouvement_espace_flotte = unite->pt_mouvement_unite;
 		}
+		//liberer_unite(unite); //free//
 		free(unite);
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+int transferer_unite_flotte(Flotte *flotte, Unite *unite)
+{
+	int min = flotte->pt_mouvement_espace_flotte;
+	if(flotte->taille_flotte < flotte->taille_maximum_flotte)
+    {
+        flotte->tab_unite[flotte->taille_flotte] = *unite;
+        flotte->taille_flotte ++;
+		if((unite->pt_mouvement_unite < min)||(flotte->pt_mouvement_espace_flotte == 0))
+		{
+			flotte->pt_mouvement_espace_flotte = unite->pt_mouvement_unite;
+		}
+		liberer_unite(unite); //free//
+		//free(unite);
         return 1;
     }
     else
