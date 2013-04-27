@@ -16,6 +16,7 @@
 #include "planete.h"
 #include "niveau.h"
 #include "terrain_combat.h"
+#include "jeu.h"
 /**
  * \file      Module terrain
  * \author
@@ -39,12 +40,13 @@ void pause();
 void affichage_ecran_acceuil(Terrain_combat *un_terrain_combat);
 
 /*pour le combat :*/
-SDL_Surface* affichage_ecran_combat(const Terrain_combat *un_terrain_combat);
-void afficher_ecran_terrain_combat( Terrain_combat *un_terrain_combat, SDL_Surface * une_surface);
-SDL_Surface* creer_affichage_terrain_combat(Terrain_combat *un_terrain_combat);
-SDL_Surface* affichage_terrain_combat(Terrain_combat *un_terrain_combat, SDL_Surface *carte);
+SDL_Surface* affichage_ecran_terrain_combat(const Terrain_combat *un_terrain_combat);
+void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat);
 SDL_Rect coordonnee_clic(SDL_Rect position);
-void selection(Terrain_combat *un_terrain_combat,SDL_Rect position);
+SDL_Rect coordonnee_case_du_clic(SDL_Rect position);
+void affiche_deplacement_unite(Terrain_combat *un_terrain_combat,SDL_Rect position);
+void selection(Jeu * jeu,Terrain_combat *un_terrain_combat,SDL_Rect position);
+void affiche_info_unite(Terrain_combat *un_terrain_combat,char * infos);
 /*
 SDL_Surface * surface = NULL;
 SDL_Rect position;

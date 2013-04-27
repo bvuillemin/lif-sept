@@ -45,7 +45,10 @@ void validation_creation_unite_planete(Case_terrain_espace *une_case_terrain_esp
 Joueur * get_ieme_joueur_jeu(Jeu * un_jeu,int i);
 
 /**/
-void placer_joueur_combat(Terrain_combat * un_terrain_combat,Joueur* joueur);
+void placer_joueur_combat(Terrain_combat * un_terrain_combat,Jeu * un_jeu);
 void placer_unite_flotte_en_haut(Terrain_combat * un_terrain_combat, Flotte * flotte);
 void placer_unite_flotte_en_bas(Terrain_combat * un_terrain_combat, Flotte * flotte);
+void selectionner_case_combat(Jeu *jeu,Terrain_combat *un_terrain_combat,const int x, const int y);
+
+
 #endif

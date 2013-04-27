@@ -15,7 +15,7 @@
 #include "constante.h"
 #include "terrain_espace.h"
 #include "terrain_combat.h"
-#include "math.h"
+#include <math.h>
 
 bool test_souris_rectangle (SDL_Rect taille_surface, int x, int y) /*Va tester si le clic souris c'est fait dans un rectangle, utile pour les menus*/
 {
@@ -658,20 +658,13 @@ void affiche_deplacement_unite(Terrain_combat *un_terrain_combat,SDL_Rect positi
 	}
 }
 
-void selection(Terrain_combat *un_terrain_combat,SDL_Rect position)
+void selection(Jeu * jeu,Terrain_combat *un_terrain_combat,SDL_Rect position)
 {
 	SDL_Rect pos;
-	Case_terrain_combat *une_case;
 	pos=position;
 	pos=coordonnee_case_du_clic(pos);
-	une_case = get_case_terrain_combat(un_terrain_combat, pos.x, pos.y);
-	if(get_selection_unite(une_case))
-	{	set_une_case_selectionnee(un_terrain_combat,0);
-		set_selection(un_terrain_combat,NULL);
-		set_selection_unite(une_case, 0);
-	}else if(get_presence_unite(une_case) && !get_une_case_selectionnee(un_terrain_combat)){
-		set_selection_unite(une_case, 1);set_selection(un_terrain_combat,une_case);
-		set_une_case_selectionnee(un_terrain_combat,1);}
+	selectionner_case_combat(jeu,un_terrain_combat, pos.x, pos.y);
+	
 }
 void affiche_info_unite(Terrain_combat *un_terrain_combat,char * infos)
 {
@@ -747,7 +740,7 @@ void affichage_ecran_acceuil(Terrain_combat *un_terrain_combat)
 
 }
 
-void affichage_ecran_combat(Terrain_combat *un_terrain_combat)
+void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat)
 {
 	SDL_Rect pos_clic,pos_texte,pos_interface, position_affichage_carte;
 	SDL_Surface *ecran = NULL;
@@ -813,7 +806,7 @@ void affichage_ecran_combat(Terrain_combat *un_terrain_combat)
 			case SDL_MOUSEBUTTONUP: /* Clic de la souris */
 				pos_clic.x=evenement.button.x + position_affichage_carte.x;
 				pos_clic.y=evenement.button.y + position_affichage_carte.y;
-				selection(un_terrain_combat,pos_clic);
+				selection(jeu,un_terrain_combat,pos_clic);
 				affiche_deplacement_unite(un_terrain_combat, pos_clic);
 				carte=affiche_ecran_terrain_combat(un_terrain_combat);
 				affiche_info_unite(un_terrain_combat,infos);

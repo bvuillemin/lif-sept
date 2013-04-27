@@ -80,7 +80,7 @@ afficher_flotte(flotte2);
 	ajouter_unite_flotte(flotte2, unite6);
 	afficher_flotte(flotte2);
 
-	un_match=creer_terrain_combat(15,10);
+	un_match=creer_terrain_combat(7,5);
 	modification_terrain_combat(un_match,'E');
 	affiche_terrain_combat(un_match);
 
@@ -113,7 +113,7 @@ afficher_flotte(flotte2);
 		printf("ok!\n");
 	}*/
 	affichage_ecran_acceuil(un_match);
-	affichage_ecran_combat(un_match);
+	affichage_ecran_combat(jeu,un_match);
 	return 0;
 
 }
