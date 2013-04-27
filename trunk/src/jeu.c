@@ -151,18 +151,25 @@ void placer_unite_flotte_en_haut(Terrain_combat * un_terrain_combat, Flotte * fl
 {
 	int i,m,n;
 	Unite * une_unite;
+	m=0;n=0;
 	for(i=0;i<(flotte->taille_flotte);i++)
 	{
+		
 		une_unite=get_unite_i_flotte(flotte,i);
-		m=get_x_unite(une_unite);
 		n=get_y_unite(une_unite);
 		while(case_libre(un_terrain_combat, m,n))
 		{
-			set_y_unite(une_unite,n+1);
-			m=get_x_unite(une_unite);
-			n=get_y_unite(une_unite);
+			if(n== un_terrain_combat->taille_combat_y -1)
+			{
+				m++;
+				n=0;
+			}else{
+				n++;
+			}
 		}
-			ajoute_unite_terrain(un_terrain_combat, une_unite,m,n);
+		set_x_unite(une_unite,m);
+		set_y_unite(une_unite,n);
+		ajoute_unite_terrain(un_terrain_combat, une_unite,m,n);
 	}
 	
 }
@@ -171,18 +178,24 @@ void placer_unite_flotte_en_bas(Terrain_combat * un_terrain_combat, Flotte * flo
 {
 	int i,m,n;
 	Unite * une_unite;
+	m=(un_terrain_combat->taille_combat_x)-1;
 	for(i=0;i<(flotte->taille_flotte);i++)
 	{
 		une_unite=get_unite_i_flotte(flotte,i);
-		m=(un_terrain_combat->taille_combat_x)-1;
 		n=(un_terrain_combat->taille_combat_y)-1;
 		set_x_unite(une_unite,m);
 		set_y_unite(une_unite,n);
 		while(case_libre(un_terrain_combat, m,n))
 		{
-			set_y_unite(une_unite,n-1);
-			m=get_x_unite(une_unite);
-			n=get_y_unite(une_unite);
+			if(n==0)
+			{
+				m--;
+				n=(un_terrain_combat->taille_combat_y)-1;
+				set_y_unite(une_unite,n);
+			}else{
+				set_y_unite(une_unite,n-1);
+				n=get_y_unite(une_unite);
+			}
 		}
 			ajoute_unite_terrain(un_terrain_combat, une_unite,m,n);
 	}
@@ -190,5 +203,18 @@ void placer_unite_flotte_en_bas(Terrain_combat * un_terrain_combat, Flotte * flo
 }
 
 
-
+void selectionner_case_combat(Jeu *jeu,Terrain_combat *un_terrain_combat,const int x, const int y)
+{
+	Case_terrain_combat *une_case;
+	Unite * unite;
+	une_case = get_case_terrain_combat(un_terrain_combat, x,y);
+	unite = get_unite(une_case);
+	if(get_selection_unite(une_case))
+	{	set_une_case_selectionnee(un_terrain_combat,0);
+		set_selection(un_terrain_combat,NULL);
+		set_selection_unite(une_case, 0);
+	}else if(get_presence_unite(une_case) && !get_une_case_selectionnee(un_terrain_combat) && (get_indice_joueur_unite(unite)== jeu-> joueur_en_cours)){
+		set_selection_unite(une_case, 1);set_selection(un_terrain_combat,une_case);
+		set_une_case_selectionnee(un_terrain_combat,1);}
+}
 

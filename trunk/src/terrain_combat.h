@@ -58,8 +58,6 @@ bool deplacement_unite(Terrain_combat *un_terrain_combat, Unite *une_unite, cons
 /*ajoute une unité sur la case de coordonnées (x,y)*/
 void ajoute_unite_terrain(Terrain_combat * un_terrain_combat, Unite * unite,const int x,const int y);
 
-
-
 bool case_libre(const Terrain_combat * un_terrain_combat,const int x,const int y);
 
 void un_tour_combat(Terrain_combat * un_terrain_combat, Flotte * flotte);
