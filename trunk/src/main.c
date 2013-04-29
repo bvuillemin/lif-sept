@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
 	char nom_terre[]="terre";
 	char nom_jupiter[]="jupiter";
 
-	un_terrain_espace = creer_terrain_espace(15, 10);
+	un_terrain_espace = creer_terrain_espace(20, 15);
     modification_terrain_espace(un_terrain_espace, 'E');
 
     ajouter_planete_terrain_espace(un_terrain_espace, 2, 1, nom_terre);
