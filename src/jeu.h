@@ -24,9 +24,12 @@
      int tour_en_cours;
 	 int joueur_en_cours;
 	 int nb_joueur;
+	 Joueur *tab_joueur;
+
 	 Flotte *selection_flotte;
 	 Planete *selection_planete;
-	 Joueur *tab_joueur;
+	 bool tab_unite_selectionnee[10];
+
  }Jeu;
 
 void initialise_jeu(Jeu *un_jeu);

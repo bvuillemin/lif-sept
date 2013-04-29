@@ -153,7 +153,7 @@ void retirer_flotte_joueur(Joueur *un_joueur, int indice_flotte)
             un_joueur->tab_flotte[i] = un_joueur->tab_flotte[i+1];
             un_joueur->tab_flotte[i].indice_tableau_joueur = i;
         }
-        liberer_flotte(&un_joueur->tab_flotte[un_joueur->nb_flotte - 1]);
+       // liberer_flotte(&un_joueur->tab_flotte[un_joueur->nb_flotte - 1]);
     }
 }
 

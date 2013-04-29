@@ -8,12 +8,17 @@
 
 void initialise_jeu(Jeu *un_jeu)
 {
+    int i;
 	un_jeu->tour_en_cours = 0;
 	un_jeu->joueur_en_cours = 0;
 	un_jeu->nb_joueur = 0;
 	un_jeu->selection_flotte = NULL;
 	un_jeu->selection_planete = NULL;
     un_jeu->tab_joueur =(Joueur *)malloc(sizeof(Joueur) * 10);
+    for(i=0;i<10;i++)
+    {
+        un_jeu->tab_unite_selectionnee[i] = false;
+    }
 }
 
 Jeu *creer_jeu()
@@ -36,6 +41,10 @@ void liberer_jeu(Jeu *un_jeu)
     un_jeu->joueur_en_cours = 0;
     un_jeu->nb_joueur = 0;
     un_jeu->selection_flotte = NULL;
+    for(i=0;i<10;i++)
+    {
+        un_jeu->tab_unite_selectionnee[i] = false;
+    }
 }
 
 void detruire_jeu(Jeu **un_jeu)
