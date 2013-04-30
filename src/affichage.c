@@ -56,6 +56,15 @@ Case_terrain_espace* case_pointeur_souris(Terrain_espace *un_terrain_espace, int
 	else return NULL;
 }
 
+void reinitialiser_tableau_selection_unite(Jeu *un_jeu)
+{
+    int i;
+    for(i=0;i<10;i++)
+    {
+        un_jeu->tab_unite_selectionnee[i] = false;
+    }
+}
+
 SDL_Surface* affichage_ressource(Jeu *un_jeu, SDL_Surface *surface_ressource)
 {
     SDL_Surface *nom_ressource;
@@ -466,31 +475,7 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 			continuer = 0;
 			break;
 		case SDL_MOUSEBUTTONUP:
-            if ((event.button.button == SDL_BUTTON_LEFT) && (SDL_GetModState() == KMOD_LCTRL))
-            {
-                if(interface_affichee == 2)
-				{
-				    /*test d'appui sur l'une des cases d'unité*/
-                    for(i=0;i<5;i++)
-				    {
-				        initialise_sdl_rect(&test, 10+ 120*i, TAILLE_TERRAIN_ESPACE_Y + 55, 100, 100);
-                        if(test_souris_rectangle(test, x, y) && (SDL_GetModState() == KMOD_LCTRL))
-                        {
-                            un_jeu->tab_unite_selectionnee[i] = true;
-                        }
-                        if(test_souris_rectangle(test, x, y))
-                        {
-                            for(j=0;j<10;j++)
-                            {
-                                un_jeu->tab_unite_selectionnee[j] = false;
-                            }
-                            un_jeu->tab_unite_selectionnee[i] = true;
-                        }
-				    }
-				    maj_affichage(un_jeu, un_terrain_espace, ecran, carte, interface_affichee, NULL);
-				}
-            }
-			if (event.button.button == SDL_BUTTON_LEFT)
+            if (event.button.button == SDL_BUTTON_LEFT)
 			{
                 x = event.button.x;
                 y = event.button.y;
@@ -502,17 +487,20 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
                         un_jeu->selection_planete = une_case_terrain_espace->planete;
                         interface_affichee = 1;
                         maj_affichage(un_jeu, un_terrain_espace, ecran, carte, interface_affichee, une_case_terrain_espace);
+                        reinitialiser_tableau_selection_unite(un_jeu);
                     }
                     if(une_case_terrain_espace->presence_flotte == true)
                     {
                         un_jeu->selection_flotte = une_case_terrain_espace->flotte;
                         interface_affichee = 2;
                         maj_affichage(un_jeu, un_terrain_espace, ecran, carte, interface_affichee, NULL);
+                        reinitialiser_tableau_selection_unite(un_jeu);
                     }
                     if(test_souris_rectangle(position_affichage_carte, x, y) && (une_case_terrain_espace->type_case_terrain_espace != 'P') && (une_case_terrain_espace->presence_flotte == false) && !(test_souris_rectangle(position_panneau_unite, x, y)))
                     {
                         interface_affichee = 0;
                         maj_affichage(un_jeu, un_terrain_espace, ecran, carte, interface_affichee, NULL);
+                        reinitialiser_tableau_selection_unite(un_jeu);
                     }
 				}
 				if (test_souris_rectangle(bouton_tour, x, y)) /*pour passer au joueur suivant*/
@@ -523,6 +511,7 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 				}
 				if(interface_affichee == 1 || interface_affichee==3)
 				{
+				    reinitialiser_tableau_selection_unite(un_jeu);
 				    /*test d'appui sur l'une des cases de batiment*/
 				    for(i=0;i<5;i++)
 				    {
@@ -563,11 +552,18 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
                     for(i=0;i<5;i++)
 				    {
 				        initialise_sdl_rect(&test, 10+ 120*i, TAILLE_TERRAIN_ESPACE_Y + 55, 100, 100);
-                        if(test_souris_rectangle(test, x, y) && (SDL_GetModState() == KMOD_LCTRL))
+                        if(test_souris_rectangle(test, x, y) && (SDL_GetModState() & KMOD_LCTRL))
                         {
-                            un_jeu->tab_unite_selectionnee[i] = true;
+                            if(un_jeu->tab_unite_selectionnee[i] == true)
+                            {
+                                un_jeu->tab_unite_selectionnee[i] = false;
+                            }
+                            else
+                            {
+                                un_jeu->tab_unite_selectionnee[i] = true;
+                            }
                         }
-                        if(test_souris_rectangle(test, x, y))
+                        if(test_souris_rectangle(test, x, y) && !(SDL_GetModState() & KMOD_LCTRL))
                         {
                             for(j=0;j<10;j++)
                             {
@@ -588,6 +584,10 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
                 {
                     if((un_jeu->selection_flotte->indice_joueur == un_jeu->joueur_en_cours) && (un_jeu->selection_flotte->pt_mouvement_espace_flotte >= 0))
                     {
+                        if(test_unite_selectionnee(un_jeu))
+                        {
+                            deplacement_unite_flotte(un_jeu, &un_jeu->tab_joueur[un_jeu->joueur_en_cours], un_terrain_espace, un_jeu->selection_flotte, x/100, y/100);
+                        }
                         if(deplacement_flotte(&un_jeu->tab_joueur[un_jeu->joueur_en_cours], un_terrain_espace, un_jeu->selection_flotte, x/100, y/100))
                         {
                             maj_affichage(un_jeu, un_terrain_espace, ecran, carte, interface_affichee, NULL);
