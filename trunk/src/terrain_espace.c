@@ -250,6 +250,8 @@ bool fusion_flotte(Joueur *un_joueur, Terrain_espace *un_terrain_espace, Flotte 
     return false;
 }
 
+
+
 /*void test_module_terrain_espace()
 {
     Terrain_espace_espace *terrain_espace;

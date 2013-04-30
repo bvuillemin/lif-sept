@@ -55,6 +55,7 @@ void calcul_deplacement_flotte(Flotte *une_flotte);
 bool deplacement_flotte(Joueur *un_joueur, Terrain_espace *un_terrain_espace, Flotte *une_flotte, int x, int y);
 bool fusion_flotte(Joueur *un_joueur, Terrain_espace *un_terrain_espace, Flotte *une_flotte, int x, int y);
 
+
 /*void test_module_terrain_espace();*/
 
 
