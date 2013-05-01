@@ -120,9 +120,10 @@ SDL_Surface* affichage_creation_unite(Case_terrain_espace *une_case_terrain_espa
     int i;
 
     police = TTF_OpenFont("charcoalcy.ttf", 14);
-    SDL_FillRect(panneau_unite, NULL, SDL_MapRGB(panneau_unite->format, 0, 0, 0));
-
     unite = SDL_CreateRGBSurface(SDL_SWSURFACE, 100, 100, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
+    SDL_FillRect(unite, NULL, SDL_MapRGB(unite->format, 60, 60, 60));
+    SDL_SetColorKey(unite, SDL_SRCCOLORKEY, SDL_MapRGB(unite->format, 60, 60, 60));
+
     for(i=0;i<1;i++)
     {
         if(((i + 1)== une_planete->unite_en_cours) && (une_planete->unite_nb_tour_restant != 0))
@@ -173,7 +174,8 @@ SDL_Surface* affichage_planete(Case_terrain_espace *une_case_terrain_espace, SDL
 
     police = TTF_OpenFont("charcoalcy.ttf", 14);
     fond_planete = SDL_CreateRGBSurface(SDL_SRCALPHA, TAILLE_FENETRE_X, TAILLE_FENETRE_Y - TAILLE_TERRAIN_ESPACE_Y, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
-    SDL_FillRect(fond_planete, NULL, SDL_MapRGB(info_planete->format, 0, 00, 0));
+    SDL_FillRect(fond_planete, NULL, SDL_MapRGB(info_planete->format, 60, 60, 60));
+    SDL_SetColorKey(fond_planete, SDL_SRCCOLORKEY, SDL_MapRGB(fond_planete->format, 60, 60, 60));
 
     sprintf(texte_planete, "Nom de la planete: %s Occupation de la planete: %d/%d Production: Metal:%d Argent:%d Carburant:%d Population:%d",
 get_nom_planete(une_planete), get_taille_utilisee(une_planete), get_taille_planete(une_planete),
@@ -237,7 +239,8 @@ SDL_Surface* affichage_flotte(Jeu *un_jeu, SDL_Surface *info_flotte)
 
     police = TTF_OpenFont("charcoalcy.ttf", 14);
     fond_flotte = SDL_CreateRGBSurface(SDL_SWSURFACE, TAILLE_FENETRE_X, TAILLE_FENETRE_Y - TAILLE_TERRAIN_ESPACE_Y, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
-    SDL_FillRect(fond_flotte, NULL, SDL_MapRGB(info_flotte->format, 0, 0, 0));
+    SDL_FillRect(fond_flotte, NULL, SDL_MapRGB(fond_flotte->format, 60, 60, 60));
+    SDL_SetColorKey(fond_flotte, SDL_SRCCOLORKEY, SDL_MapRGB(fond_flotte->format, 60, 60, 60));
 
     sprintf(texte_flotte, "Coordonnes de la flotte: %d %d, pt mouvement %d, taille : %d", une_flotte->x_flotte, une_flotte->y_flotte, une_flotte->pt_mouvement_espace_flotte,une_flotte->taille_flotte);
     flotte = TTF_RenderText_Blended(police, texte_flotte, couleur_blanche);
@@ -371,7 +374,7 @@ void maj_affichage(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *
     SDL_Rect position_interface = {0, TAILLE_FENETRE_Y - 158};
     SDL_Rect position_mini_carte = {TAILLE_FENETRE_X - 240, TAILLE_FENETRE_Y - 158};
 	SDL_Rect position_affichage_carte = {0, 30, TAILLE_TERRAIN_ESPACE_X, TAILLE_TERRAIN_ESPACE_Y};
-	SDL_Rect position_affichage_info = {0,TAILLE_TERRAIN_ESPACE_Y + 20 , TAILLE_FENETRE_X, TAILLE_FENETRE_Y - TAILLE_TERRAIN_ESPACE_Y};
+	SDL_Rect position_affichage_info = {0,TAILLE_TERRAIN_ESPACE_Y + 25 , TAILLE_FENETRE_X, TAILLE_FENETRE_Y - TAILLE_TERRAIN_ESPACE_Y};
 	SDL_Rect affichage_carte = {0, 0, 0, 0};
 	SDL_Rect position_panneau_unite = {TAILLE_FENETRE_X - 300, 20, 300, TAILLE_TERRAIN_ESPACE_Y};
 	SDL_Rect bordure_g = {0, 50, 4, TAILLE_FENETRE_Y - 208};
@@ -406,9 +409,9 @@ void maj_affichage(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *
     SDL_FillRect(ecran, &bordure_g, SDL_MapRGB(ecran->format, 255, 255, 255));
     SDL_FillRect(ecran, &bordure_d, SDL_MapRGB(ecran->format, 255, 255, 255));
 
-    panneau_unite = SDL_CreateRGBSurface(SDL_SWSURFACE, 200, TAILLE_TERRAIN_ESPACE_Y, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
-    SDL_FillRect(panneau_unite, NULL, SDL_MapRGB(ecran->format, 0, 0, 0));
-    initialise_sdl_rect(&position_panneau_unite, TAILLE_FENETRE_X - 200, 20, 200, TAILLE_TERRAIN_ESPACE_Y);
+     
+    panneau_unite = IMG_Load("interface_barrelaterale.png");
+    initialise_sdl_rect(&position_panneau_unite, TAILLE_FENETRE_X - 214, 35, 200, TAILLE_TERRAIN_ESPACE_Y-300);
 
 	if(interface_affichee == 1)
 	{
