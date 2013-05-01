@@ -6,18 +6,23 @@
 
 void initialise_unite(Unite *unite_jeu, const int pt_vie,const int pt_attaque,const int pt_action,const int pt_deplacement,const int portee,const int pt_mouvement)
 {
+	unite_jeu->x_unite=0;
+	unite_jeu->y_unite=0;
+
+	unite_jeu->portee = portee;
+	unite_jeu->portee_total = portee;
     unite_jeu->pt_vie=pt_vie;
+	unite_jeu->pt_vie_total = pt_vie;
+
     unite_jeu->pt_attaque=pt_attaque;
+	unite_jeu->pt_attaque_total = pt_attaque;
     unite_jeu->pt_action=pt_action;
 	unite_jeu->pt_action_total=pt_action;
+
     unite_jeu->pt_deplacement=pt_deplacement;
 	unite_jeu->pt_deplacement_total=pt_deplacement;
     unite_jeu->pt_mouvement_unite=pt_mouvement;
-	unite_jeu->portee=portee;
-	unite_jeu->portee_total=unite_jeu->portee;
-	unite_jeu->x_unite=0;
-	unite_jeu->y_unite=0;
-    /*initialise_niveau(unite_jeu->niveau_unite, 0, 0);*/
+	/*initialise_niveau(unite_jeu->niveau_unite, 0, 0);*/
 }
 
 Unite *creer_unite(const int pt_vie,const int pt_attaque,const int pt_action,const int pt_deplacement,const int portee,const int pt_mouvement)
@@ -29,11 +34,22 @@ Unite *creer_unite(const int pt_vie,const int pt_attaque,const int pt_action,con
 
 void liberer_unite(Unite *unite_jeu)
 {
-    unite_jeu->pt_vie=0;
-    unite_jeu->pt_attaque=0;
-    unite_jeu->pt_action=0;
-    unite_jeu->pt_deplacement=0;
-    unite_jeu->pt_mouvement_unite=0;
+	unite_jeu->x_unite = 0;
+	unite_jeu->y_unite = 0;
+
+	unite_jeu->portee = 0;
+	unite_jeu->portee_total = 0;
+	unite_jeu->pt_vie= 0;
+	unite_jeu->pt_vie_total = 0;
+
+	unite_jeu->pt_attaque = 0;
+	unite_jeu->pt_attaque_total = 0;
+	unite_jeu->pt_action = 0;
+	unite_jeu->pt_action_total = 0;
+
+	unite_jeu->pt_deplacement = 0;
+	unite_jeu->pt_deplacement_total = 0;
+	unite_jeu->pt_mouvement_unite = 0;
     /*libere_niveau(unite_jeu->niveau_unite);*/
 }
 

@@ -28,7 +28,6 @@ Jeu *creer_jeu()
     return un_jeu;
 }
 
-
 void liberer_jeu(Jeu *un_jeu)
 {
     int i;
@@ -140,6 +139,7 @@ void validation_creation_unite_planete(Jeu *un_jeu, Terrain_espace *un_terrain_e
         }
     }
 }
+
 void afficher_ressource_joueur(Jeu *un_jeu)
 {
 	int i;
@@ -154,7 +154,6 @@ void ajouter_flotte_jeu(Jeu *un_jeu,Terrain_espace *un_terrain_espace, Flotte *u
     ajouter_flotte_joueur(&un_jeu->tab_joueur[indice_joueur], une_flotte);
     ajouter_flotte(get_case_terrain_espace(un_terrain_espace, x, y), &un_jeu->tab_joueur[indice_joueur].tab_flotte[un_jeu->tab_joueur[indice_joueur].nb_flotte - 1]);
 }
-
 
 bool test_unite_selectionnee(Jeu *un_jeu)
 {
@@ -176,15 +175,25 @@ bool deplacement_unite_flotte(Jeu *un_jeu, Joueur *un_joueur, Terrain_espace *un
         int distance, i;
         int x_depart, y_depart;
         Case_terrain_espace *case_arrivee;
+		Flotte *une_nouvelle_flotte;
         x_depart = get_x_flotte(une_flotte);
         y_depart = get_y_flotte(une_flotte);
+		une_nouvelle_flotte = creer_flotte();
         case_arrivee = get_case_terrain_espace(un_terrain_espace, x, y);
-        Flotte *une_nouvelle_flotte = creer_flotte();
+        
 
         if((x_depart == x) && (y_depart == y))
         {
             return false;
         }
+		if(case_arrivee->presence_flotte == true)
+		{
+			if(fusion_flotte(un_joueur, un_terrain_espace, une_flotte, x, y))
+			{
+				//free(une_flotte);
+				return true;
+			}
+		}
 		if(case_arrivee->presence_flotte == false)
 		{
 		    for(i=0;i<10;i++)
@@ -192,21 +201,13 @@ bool deplacement_unite_flotte(Jeu *un_jeu, Joueur *un_joueur, Terrain_espace *un
 		        if(un_jeu->tab_unite_selectionnee[i] == true)
 		        {
 		            ajouter_unite_flotte(une_nouvelle_flotte, &une_flotte->tab_unite[i]);
-		            retirer_unite_flotte(une_nouvelle_flotte, i);
+		            retirer_unite_flotte(une_flotte, i);
 		        }
 		    }
             ajouter_flotte_jeu(un_jeu, un_terrain_espace,une_nouvelle_flotte, un_jeu->joueur_en_cours, x, y);
 			distance = calcul_distance(x_depart, y_depart, x, y);
 			enlever_pt_mouvement_espace_flotte(une_nouvelle_flotte, distance);
 			return true;
-		}
-		if(case_arrivee->presence_flotte == true)
-		{
-		    if(fusion_flotte(un_joueur, un_terrain_espace, une_flotte, x, y))
-		    {
-		        //free(une_flotte);
-		        return true;
-		    }
 		}
     }
     return false;
