@@ -115,7 +115,7 @@ int ajouter_unite_flotte(Flotte *flotte, Unite *unite)
 	int min = flotte->pt_mouvement_espace_flotte;
 	if(flotte->taille_flotte < flotte->taille_maximum_flotte)
     {
-	set_indice_joueur_unite(unite,flotte->indice_joueur);
+		set_indice_joueur_unite(unite,flotte->indice_joueur);
         flotte->tab_unite[flotte->taille_flotte] = *unite;
         flotte->taille_flotte ++;
 
@@ -171,7 +171,7 @@ int retirer_unite_flotte(Flotte *flotte,const int indice_unite)
     int i;
     if(flotte->taille_flotte > 0)
     {
-        for(i=indice_unite;i<flotte->taille_maximum_flotte - 1;i++)
+        for(i=indice_unite;i<flotte->taille_flotte - 1;i++)
         {
             flotte->tab_unite[i] = flotte->tab_unite[i+1];
         }

@@ -75,11 +75,11 @@ int main(int argc, char *argv[])
 
     flotte = creer_flotte();
     unite1 = creer_unite(1, 1, 1, 1, 1, 10);
-    unite2 = creer_unite(1, 1, 1, 1, 1, 10);
+    unite2 = creer_unite(2, 2, 2, 2, 2, 10);
 
 	flotte2 = creer_flotte();
-    unite3 = creer_unite(1, 1, 1, 1, 1, 10);
-    unite4 = creer_unite(1, 1, 1, 1, 1, 10);
+    unite3 = creer_unite(3, 3, 3, 3, 3, 10);
+    unite4 = creer_unite(4, 4, 4, 4, 4, 10);
 
 	ajouter_planete_joueur(&jeu->tab_joueur[0], terre);
 	afficher_planete(jeu->tab_joueur[0].tab_planete[0]);
@@ -107,8 +107,8 @@ int main(int argc, char *argv[])
     ajouter_flotte(get_case_terrain_espace(un_terrain_espace, 2, 3), &jeu->tab_joueur[0].tab_flotte[0]);
 	ajouter_flotte(get_case_terrain_espace(un_terrain_espace, 5, 5), &jeu->tab_joueur[0].tab_flotte[1]);
 */
-	ajouter_flotte_jeu(jeu, un_terrain_espace,flotte, 0, 2, 3);
-	ajouter_flotte_jeu(jeu, un_terrain_espace,flotte2, 0, 5, 5);
+	ajouter_flotte_jeu(jeu, un_terrain_espace, flotte, 0, 2, 3);
+	ajouter_flotte_jeu(jeu, un_terrain_espace, flotte2, 0, 5, 5);
 
 	affichage_ecran(jeu, un_terrain_espace);
 

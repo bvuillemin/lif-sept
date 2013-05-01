@@ -587,9 +587,11 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
                         if(test_unite_selectionnee(un_jeu))
                         {
                             deplacement_unite_flotte(un_jeu, &un_jeu->tab_joueur[un_jeu->joueur_en_cours], un_terrain_espace, un_jeu->selection_flotte, x/100, y/100);
+							maj_affichage(un_jeu, un_terrain_espace, ecran, carte, interface_affichee, NULL);
                         }
-                        if(deplacement_flotte(&un_jeu->tab_joueur[un_jeu->joueur_en_cours], un_terrain_espace, un_jeu->selection_flotte, x/100, y/100))
+						else
                         {
+							deplacement_flotte(&un_jeu->tab_joueur[un_jeu->joueur_en_cours], un_terrain_espace, un_jeu->selection_flotte, x/100, y/100);
                             maj_affichage(un_jeu, un_terrain_espace, ecran, carte, interface_affichee, NULL);
                         }
                     }

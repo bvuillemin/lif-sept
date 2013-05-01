@@ -21,14 +21,17 @@ typedef struct
 	int indice_joueur;
 	int x_unite;
 	int y_unite;
+
 	int portee;
 	int portee_total;
 	int pt_vie;
 	int pt_vie_total;
+
 	int pt_attaque;
 	int pt_attaque_total;
 	int pt_action;
 	int pt_action_total;
+
 	int pt_deplacement;/*dans le combat*/
 	int pt_deplacement_total;
 	int pt_mouvement_unite;/*dans l'espace*/
