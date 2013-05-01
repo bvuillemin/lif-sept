@@ -40,8 +40,8 @@ typedef void (*Validation_creation_batiment)(struct sPlanete*);
      int taille_utilisee;
      int taille_planete;
 	 int habitabilite;
-     bool planete_principale; /*1 si oui, 0 sinon */
-     bool planete_colonisee; /*1 si oui, 0 sinon */
+     bool planete_principale;
+     bool planete_colonisee;
 
      int metal;
      int argent;

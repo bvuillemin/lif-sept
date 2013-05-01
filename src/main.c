@@ -28,6 +28,10 @@ int main(int argc, char *argv[])
     Unite *unite3;
     Unite *unite4;
 
+	Flotte *flotte3;
+	Unite *unite5;
+	Unite *unite6;
+
 	Terrain_espace *un_terrain_espace;
 	/*Terrain_combat * un_terrain_combat;*/
 
@@ -81,6 +85,10 @@ int main(int argc, char *argv[])
     unite3 = creer_unite(3, 3, 3, 3, 3, 10);
     unite4 = creer_unite(4, 4, 4, 4, 4, 10);
 
+	flotte3 = creer_flotte();
+	unite5 = creer_unite(5, 5, 5, 5, 5, 10);
+	unite6 = creer_unite(6, 6, 6, 6, 6, 10);
+
 	ajouter_planete_joueur(&jeu->tab_joueur[0], terre);
 	afficher_planete(jeu->tab_joueur[0].tab_planete[0]);
 
@@ -95,6 +103,9 @@ int main(int argc, char *argv[])
 
 	ajouter_unite_flotte(flotte2, unite3);
     ajouter_unite_flotte(flotte2, unite4);
+
+	ajouter_unite_flotte(flotte3, unite5);
+	ajouter_unite_flotte(flotte3, unite6);
 /*
     ajouter_flotte_joueur(&jeu->tab_joueur[0], flotte);
 	ajouter_flotte_joueur(&jeu->tab_joueur[0], flotte2);
@@ -109,6 +120,7 @@ int main(int argc, char *argv[])
 */
 	ajouter_flotte_jeu(jeu, un_terrain_espace, flotte, 0, 2, 3);
 	ajouter_flotte_jeu(jeu, un_terrain_espace, flotte2, 0, 5, 5);
+	ajouter_flotte_jeu(jeu, un_terrain_espace, flotte3, 1, 0, 4);
 
 	affichage_ecran(jeu, un_terrain_espace);
 

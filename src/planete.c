@@ -31,8 +31,17 @@ void initialise_planete(Planete *une_planete,const char nom_planete[30])
     une_planete->batiment_nb_tour_restant = 0;
     une_planete->tab_fonction_validation[0] = validation_creer_batiment_quartier_general;
     une_planete->tab_fonction_validation[1] = validation_creer_batiment_metal;
+	une_planete->tab_fonction_validation[2] = validation_creer_batiment_argent;
+	une_planete->tab_fonction_validation[3] = validation_creer_batiment_carburant;
+	une_planete->tab_fonction_validation[4] = validation_creer_batiment_population;
+	une_planete->tab_fonction_validation[5] = validation_creer_batiment_spatioport;
+
     une_planete->tab_fonction_creation[0] = creer_batiment_quartier_general;
     une_planete->tab_fonction_creation[1] = creer_batiment_metal;
+	une_planete->tab_fonction_creation[2] = creer_batiment_argent;
+	une_planete->tab_fonction_creation[3] = creer_batiment_carburant;
+	une_planete->tab_fonction_creation[4] = creer_batiment_population;
+	une_planete->tab_fonction_creation[5] = creer_batiment_spatioport;
 
     une_planete->unite_en_cours =  -1;
     une_planete->unite_nb_tour_restant = 0;
