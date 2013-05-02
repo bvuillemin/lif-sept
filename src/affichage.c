@@ -11,8 +11,8 @@
 #else
 #include <SDL/SDL_image.h>
 #include <SDL/SDL_ttf.h>
-#include "SDL/SDL_rotozoom.h"
-#include "SDL/SDL_framerate.h"
+//#include "SDL/SDL_rotozoom.h"
+//#include "SDL/SDL_framerate.h"
 #endif
 
 #include "jeu.h"
@@ -439,14 +439,14 @@ SDL_Surface* affichage_minimap(Terrain_espace *un_terrain_espace)
 	SDL_Rect position_rect_affichage;
 	SDL_Rect position_un_pixel;
 	int i;
-	float x, y;
+	float x, y, x_affichage, y_affichage;
 
 	minimap = SDL_CreateRGBSurface(SDL_HWSURFACE, TAILLE_MINIMAP_X, TAILLE_MINIMAP_Y, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
 	fond_minimap = IMG_Load("fond_minimap.png");
 	SDL_BlitSurface(fond_minimap, NULL, minimap, NULL);
 
-	x = TAILLE_MINIMAP_X * ((float)((float)TAILLE_FENETRE_X/100)/ un_terrain_espace->taille_espace_x);
-	y = TAILLE_MINIMAP_Y * ((float)((float)TAILLE_FENETRE_Y/100) / un_terrain_espace->taille_espace_y);
+	x = TAILLE_MINIMAP_X * ((float)((float)TAILLE_TERRAIN_ESPACE_X/100)/ un_terrain_espace->taille_espace_x);
+	y = TAILLE_MINIMAP_Y * ((float)((float)TAILLE_TERRAIN_ESPACE_Y/100) / un_terrain_espace->taille_espace_y);
 	rect_affichage = SDL_CreateRGBSurface(SDL_HWSURFACE, x, y, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
 	
 	un_pixel = SDL_CreateRGBSurface(SDL_HWSURFACE, 2, 2, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
@@ -471,28 +471,101 @@ SDL_Surface* affichage_minimap(Terrain_espace *un_terrain_espace)
 		initialise_sdl_rect(&position_un_pixel, rect_affichage->w - 2, i, 0, 0);
 		SDL_BlitSurface(un_pixel, NULL, rect_affichage, &position_un_pixel);
 	}
-	initialise_sdl_rect(&position_un_pixel, 1, 1, 0, 0);
-	SDL_BlitSurface(un_pixel, NULL, rect_affichage, &position_un_pixel);
-
-	initialise_sdl_rect(&position_rect_affichage, un_terrain_espace->affichage_x/ (TAILLE_FENETRE_Y/TAILLE_MINIMAP_X), un_terrain_espace->affichage_x/ (TAILLE_FENETRE_Y/TAILLE_MINIMAP_X), 0, 0);
+	x_affichage = ((float)un_terrain_espace->affichage_x/(un_terrain_espace->taille_espace_x * 100)) * TAILLE_MINIMAP_X;
+	y_affichage = ((float)un_terrain_espace->affichage_y/(un_terrain_espace->taille_espace_y * 100)) * TAILLE_MINIMAP_Y;
+	initialise_sdl_rect(&position_rect_affichage, x_affichage, y_affichage, 0, 0);
 	SDL_BlitSurface(rect_affichage, NULL, minimap, &position_rect_affichage);
 
 	SDL_FreeSurface(fond_minimap);
 	SDL_FreeSurface(rect_affichage);
+	SDL_FreeSurface(un_pixel);
 	return minimap;
+}
+
+void initialiser_affichage(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface *carte, SDL_Surface **tab_surface)
+{
+	SDL_Surface *carte_flotte = NULL;
+	SDL_Surface *ressource_g = NULL;
+	SDL_Surface *ressource_d = NULL;
+	SDL_Surface *deplacement_carte = NULL;
+	SDL_Surface *interface = NULL;
+	SDL_Surface *mini_carte = NULL;
+	SDL_Surface *info = NULL;
+	SDL_Surface *panneau_unite = NULL;
+	SDL_Surface *minimap = NULL;
+
+	SDL_Rect position = {0, 0, 0, 0};
+	SDL_Rect position_interface = {0, TAILLE_FENETRE_Y - 158};
+	SDL_Rect position_mini_carte = {TAILLE_FENETRE_X - 240, TAILLE_FENETRE_Y - 158};
+	SDL_Rect position_affichage_carte = {0, 30, TAILLE_TERRAIN_ESPACE_X, TAILLE_TERRAIN_ESPACE_Y};
+	SDL_Rect position_affichage_info = {0,TAILLE_TERRAIN_ESPACE_Y + 25 , TAILLE_FENETRE_X, TAILLE_FENETRE_Y - TAILLE_TERRAIN_ESPACE_Y};
+	SDL_Rect affichage_carte = {0, 0, 0, 0};
+	SDL_Rect position_panneau_unite = {TAILLE_FENETRE_X - 300, 20, 300, TAILLE_TERRAIN_ESPACE_Y};
+	SDL_Rect bordure_g = {0, 50, 4, TAILLE_FENETRE_Y - 208};
+	SDL_Rect bordure_d = {TAILLE_FENETRE_X - 4, 50, 4, TAILLE_FENETRE_Y - 208};
+	SDL_Rect position_ressource_d = {TAILLE_FENETRE_X - 50, 0};
+	SDL_Rect position_minimap = {TAILLE_FENETRE_X - TAILLE_MINIMAP_X, TAILLE_FENETRE_Y - TAILLE_MINIMAP_Y, 0, 0};
+
+	tab_surface[0] = carte;
+	tab_surface[1] = carte_flotte;
+	tab_surface[2] = ressource_g;
+	tab_surface[3] = ressource_d;
+	tab_surface[4] = deplacement_carte;
+	tab_surface[5] = interface;
+	tab_surface[6] = mini_carte;
+	tab_surface[7] = info;
+	tab_surface[8] = panneau_unite;
+	tab_surface[9] = minimap;
+
+	carte = creer_affichage_terrain(un_terrain_espace);
+
+	info = SDL_CreateRGBSurface(SDL_HWSURFACE, TAILLE_FENETRE_X, TAILLE_FENETRE_Y - TAILLE_TERRAIN_ESPACE_Y, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
+	SDL_FillRect(info, NULL, SDL_MapRGB(ecran->format, 0, 0, 0));
+	SDL_BlitSurface(info, NULL, ecran, &position_affichage_info);
+
+	/*Creation du terrain en entier, celui-ci est stocké en mémoire*/
+	carte_flotte = creer_affichage_flotte(un_terrain_espace);
+	initialise_sdl_rect(&affichage_carte, un_terrain_espace->affichage_x, un_terrain_espace->affichage_y, TAILLE_TERRAIN_ESPACE_X, TAILLE_TERRAIN_ESPACE_Y);
+	SDL_BlitSurface(carte, &affichage_carte, ecran, &position_affichage_carte);
+	SDL_SetColorKey(carte_flotte, SDL_SRCCOLORKEY, SDL_MapRGB(carte_flotte->format, 0, 0, 0));
+	SDL_BlitSurface(carte_flotte, &affichage_carte, ecran, &position_affichage_carte);
+
+	/*affichage de la barre de ressources*/
+	ressource_g = IMG_Load("interface_ressources_g.png");
+	ressource_g = affichage_ressource(un_jeu, ressource_g);
+	SDL_BlitSurface(ressource_g, NULL, ecran, &position);
+	ressource_d = IMG_Load("interface_ressources_d.png");
+	SDL_BlitSurface(ressource_d, NULL, ecran, &position_ressource_d);
+
+	/*affichage de l'interface*/
+	interface = IMG_Load("interface_bas.png");
+	SDL_BlitSurface(interface, NULL, ecran, &position_interface);
+	mini_carte = IMG_Load("interface_carte.png");
+	SDL_BlitSurface(mini_carte, NULL, ecran, &position_mini_carte);
+
+	/*affichage des bordures sur les côtés de la carte*/
+	SDL_FillRect(ecran, &bordure_g, SDL_MapRGB(ecran->format, 255, 255, 255));
+	SDL_FillRect(ecran, &bordure_d, SDL_MapRGB(ecran->format, 255, 255, 255));
+
+	panneau_unite = IMG_Load("interface_barrelaterale.png");
+	initialise_sdl_rect(&position_panneau_unite, TAILLE_FENETRE_X - 214, 35, 200, TAILLE_TERRAIN_ESPACE_Y-300);
+
+	/*affichage de la minimap*/
+	minimap = affichage_minimap(un_terrain_espace);
+	SDL_BlitSurface(minimap, NULL, ecran, &position_minimap);
 }
 
 void maj_affichage(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface *carte, int interface_affichee, Case_terrain_espace *une_case_terrain_espace)
  {
-	SDL_Surface *carte_flotte = NULL;
-	SDL_Surface *ressource_g = NULL;
-    SDL_Surface *ressource_d = NULL;
-	SDL_Surface *deplacement_carte = NULL;
-    SDL_Surface *interface = NULL;
-    SDL_Surface *mini_carte = NULL;
-    SDL_Surface *info = NULL;
-    SDL_Surface *panneau_unite = NULL;
-	SDL_Surface *minimap = NULL;
+	 SDL_Surface *carte_flotte = NULL;
+	 SDL_Surface *ressource_g = NULL;
+	 SDL_Surface *ressource_d = NULL;
+	 SDL_Surface *deplacement_carte = NULL;
+	 SDL_Surface *interface = NULL;
+	 SDL_Surface *mini_carte = NULL;
+	 SDL_Surface *info = NULL;
+	 SDL_Surface *panneau_unite = NULL;
+	 SDL_Surface *minimap = NULL;
 
     SDL_Rect position = {0, 0, 0, 0};
     SDL_Rect position_interface = {0, TAILLE_FENETRE_Y - 158};
@@ -504,7 +577,7 @@ void maj_affichage(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *
 	SDL_Rect bordure_g = {0, 50, 4, TAILLE_FENETRE_Y - 208};
     SDL_Rect bordure_d = {TAILLE_FENETRE_X - 4, 50, 4, TAILLE_FENETRE_Y - 208};
     SDL_Rect position_ressource_d = {TAILLE_FENETRE_X - 50, 0};
-	SDL_Rect position_minimap = {TAILLE_FENETRE_X - TAILLE_MINIMAP_X, TAILLE_FENETRE_Y-TAILLE_MINIMAP_Y, 0, 0};
+	SDL_Rect position_minimap = {TAILLE_FENETRE_X - TAILLE_MINIMAP_X, TAILLE_FENETRE_Y - TAILLE_MINIMAP_Y, 0, 0};
 
 	info = SDL_CreateRGBSurface(SDL_HWSURFACE, TAILLE_FENETRE_X, TAILLE_FENETRE_Y - TAILLE_TERRAIN_ESPACE_Y, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
 	SDL_FillRect(info, NULL, SDL_MapRGB(ecran->format, 0, 0, 0));
@@ -534,13 +607,15 @@ void maj_affichage(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *
     SDL_FillRect(ecran, &bordure_g, SDL_MapRGB(ecran->format, 255, 255, 255));
     SDL_FillRect(ecran, &bordure_d, SDL_MapRGB(ecran->format, 255, 255, 255));
 
-	/*affichage de la minimap*/
-	minimap = affichage_minimap(un_terrain_espace);
-	SDL_BlitSurface(minimap, NULL, ecran, &position_minimap);
-     
     panneau_unite = IMG_Load("interface_barrelaterale.png");
     initialise_sdl_rect(&position_panneau_unite, TAILLE_FENETRE_X - 214, 35, 200, TAILLE_TERRAIN_ESPACE_Y-300);
 
+	if(interface_affichee == 0)
+	{
+		/*affichage de la minimap*/
+		minimap = affichage_minimap(un_terrain_espace);
+		SDL_BlitSurface(minimap, NULL, ecran, &position_minimap);
+	}
 	if(interface_affichee == 1)
 	{
 	    info = affichage_planete(une_case_terrain_espace, info);
@@ -584,6 +659,7 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 {
 	SDL_Surface *ecran = NULL;
 	SDL_Surface *carte = NULL;
+	SDL_Surface **tab_surface;
 	SDL_Rect position = {0, 0, 0, 0};
     SDL_Rect bouton_tour = {TAILLE_FENETRE_X - 30, 0, 300, 50};
 	SDL_Rect position_affichage_carte = {0, 30, TAILLE_TERRAIN_ESPACE_X, TAILLE_TERRAIN_ESPACE_Y};
@@ -596,6 +672,12 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 	int interface_affichee =0; /*1 pour une planete, 2 pour une planete ennemie, 3 pour une flotte, 4 pour une flotte ennemie, 5 pour la création d'unités sur une planète*/
 	Case_terrain_espace *une_case_terrain_espace;
 
+	tab_surface = (SDL_Surface **)malloc(sizeof(SDL_Surface *) * 10);
+	for(j=0;j<10;j++)
+	{
+		tab_surface[j] = (SDL_Surface *)malloc(sizeof(SDL_Surface));
+	}
+
 	initialise_sdl_rect(&position, 0, 20, 0, 0);
 	SDL_Init(SDL_INIT_VIDEO);
 	TTF_Init();
@@ -606,6 +688,9 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 
 	initialise_sdl_rect(&position, 0, 0, 0, 0);
     maj_affichage(un_jeu, un_terrain_espace, ecran, carte, interface_affichee, NULL);
+
+	initialiser_affichage(un_jeu, un_terrain_espace, ecran, carte, *tab_surface);
+	SDL_Flip(ecran);
 
 	while (continuer) /*boucle d'événement principale*/
 	{
@@ -757,19 +842,19 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 			switch(event.key.keysym.sym)
 			{
 			case SDLK_UP:
-				if((un_terrain_espace->affichage_y > 0) && (un_terrain_espace->affichage_y <= (un_terrain_espace->taille_espace_y *100) - TAILLE_TERRAIN_ESPACE_Y ))
+				if((un_terrain_espace->affichage_y - DEPLACEMENT_AFFICHAGE> 0) && (un_terrain_espace->affichage_y - DEPLACEMENT_AFFICHAGE<= (un_terrain_espace->taille_espace_y *100) - TAILLE_TERRAIN_ESPACE_Y ))
 				{un_terrain_espace->affichage_y-=5;}
 				break;
 			case SDLK_DOWN:
-				if((un_terrain_espace->affichage_y>=0) && (un_terrain_espace->affichage_y < (un_terrain_espace->taille_espace_y *100) - TAILLE_TERRAIN_ESPACE_Y ))
+				if((un_terrain_espace->affichage_y + DEPLACEMENT_AFFICHAGE>=0) && (un_terrain_espace->affichage_y + DEPLACEMENT_AFFICHAGE< (un_terrain_espace->taille_espace_y *100) - TAILLE_TERRAIN_ESPACE_Y ))
 				{un_terrain_espace->affichage_y+=5;}
 				break;
 			case SDLK_RIGHT:
-				if((un_terrain_espace->affichage_x >= 0) && (un_terrain_espace->affichage_x < (un_terrain_espace->taille_espace_x * 100) - TAILLE_TERRAIN_ESPACE_X))
+				if((un_terrain_espace->affichage_x + DEPLACEMENT_AFFICHAGE>= 0) && (un_terrain_espace->affichage_x + DEPLACEMENT_AFFICHAGE< (un_terrain_espace->taille_espace_x * 100) - TAILLE_TERRAIN_ESPACE_X))
 				{un_terrain_espace->affichage_x+=5;}
 				break;
 			case SDLK_LEFT:
-				if((un_terrain_espace->affichage_x>0) && (un_terrain_espace->affichage_x <= (un_terrain_espace->taille_espace_x *100) - TAILLE_TERRAIN_ESPACE_X))
+				if((un_terrain_espace->affichage_x - DEPLACEMENT_AFFICHAGE>0) && (un_terrain_espace->affichage_x - DEPLACEMENT_AFFICHAGE<= (un_terrain_espace->taille_espace_x *100) - TAILLE_TERRAIN_ESPACE_X))
 				{un_terrain_espace->affichage_x-=5;}
 				break;
 			default :
@@ -934,7 +1019,7 @@ void affiche_info_unite(Terrain_combat *un_terrain_combat,char * infos)
 	}
 
 }
-
+/*
 void pause()
 {
     SDL_Init(SDL_INIT_VIDEO);
@@ -1085,7 +1170,7 @@ void ecran_titre(void)
             exit(0);
     }
     pause();
-}
+}*/
 
 void affichage_ecran_acceuil(Terrain_combat *un_terrain_combat)
 {
