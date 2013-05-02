@@ -37,6 +37,8 @@ SDL_Surface* affichage_terrain(Terrain_espace *un_terrain_espace, SDL_Surface *c
 SDL_Surface* affichage_ressource(Jeu *un_jeu, SDL_Surface *surface_ressource);
 
 void pause();
+void input_handle(void);
+void ecran_titre(void);
 void affichage_ecran_acceuil(Terrain_combat *un_terrain_combat);
 
 /*pour le combat :*/

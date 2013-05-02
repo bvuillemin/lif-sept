@@ -6,9 +6,13 @@
 #ifdef __APPLE__
 #include "SDL_image.h"
 #include "SDL_ttf.h"
+#include "SDL_rotozoom.h"
+#include "SDL_framerate.h"
 #else
 #include <SDL/SDL_image.h>
 #include <SDL/SDL_ttf.h>
+#include "SDL/SDL_rotozoom.h"
+#include "SDL/SDL_framerate.h"
 #endif
 
 #include "jeu.h"
@@ -929,6 +933,158 @@ void affiche_info_unite(Terrain_combat *un_terrain_combat,char * infos)
 		sprintf(infos," ");
 	}
 
+}
+
+void pause()
+{
+    SDL_Init(SDL_INIT_VIDEO);
+    int continuer = 1;
+    SDL_Event event;
+    
+    while (continuer)
+    {
+        SDL_WaitEvent(&event);
+        switch(event.type)
+        {
+            case SDL_QUIT:
+                continuer = 0;
+        }
+    }
+}
+
+
+void input_handle(void)
+{
+    SDL_Event event;
+    
+    while (SDL_PollEvent(&event)) {
+        
+        switch (event.type) {
+            case SDL_QUIT:
+                SDL_Quit();
+                exit(0);
+                break;
+        }
+    }
+}
+
+void ecran_titre(void)
+{
+    SDL_Surface *ecran, *imageDeFond_Depart, *imageDeFond, *Titre, *Titre2, *Texte, *Noir, *FondMenu_Depart, *FondMenu, *Petit_Titre_Depart, *Petit_Titre, *NouvellePartie, *Charger, *Quitter;
+    TTF_Font *police;
+    double a = 0.0, b = 1, X = TAILLE_FENETRE_X, Y = TAILLE_FENETRE_Y;
+    SDL_Init(SDL_INIT_VIDEO);
+    ecran = SDL_SetVideoMode(X, Y, 32, SDL_HWSURFACE);
+    imageDeFond_Depart = IMG_Load("Fond titre.png");
+    Titre = IMG_Load("Titre.png");
+    Noir = SDL_LoadBMP("Noir.bmp");
+    FondMenu_Depart = IMG_Load("FondMenu.png");
+    Petit_Titre_Depart = IMG_Load("Petit_Titre.png");
+    double longueurPetit_Titre_Depart = Petit_Titre_Depart->w;
+    Petit_Titre = rotozoomSurface(Petit_Titre_Depart, 0, (X/(1.3*longueurPetit_Titre_Depart)), 0);
+    NouvellePartie = IMG_Load("Nouvelle Partie.png");
+    Charger = IMG_Load("Charger.png");
+    Quitter = IMG_Load("Quitter.png");
+    SDL_Rect positionFond;
+    positionFond.y = 0;
+    int hauteurFond = imageDeFond_Depart->h;
+    imageDeFond = rotozoomSurface(imageDeFond_Depart, 0, Y/hauteurFond, 0);
+    FondMenu = rotozoomSurface(FondMenu_Depart, 0, Y/hauteurFond, 0);
+    double largeurFond2 = imageDeFond->w;
+    positionFond.x = (X-largeurFond2)/2;
+    SDL_BlitSurface(imageDeFond, NULL, ecran, &positionFond);
+    SDL_WM_SetCaption("Conquest Of Space", NULL);
+    SDL_Rect positionTitre, positionTexte, positionPetit_Titre, positionNouvellePartie, positionCharger, positionQuitter;
+    SDL_Event clic_touche;
+    SDL_Color couleur = {255, 255, 255};
+    double largeurFondMenu_Depart = imageDeFond->w;
+    positionFond.x = (X - largeurFondMenu_Depart)/2.0;
+    positionFond.y = 0;
+    while (a<(Y/hauteurFond)) {
+        positionFond.x = (X - largeurFondMenu_Depart)/2.0;
+        a = a+0.005;
+        Titre2 = rotozoomSurface(Titre, 0, a, 2);
+        double longueurTitre = Titre2->w;
+        double hauteurTitre = Titre2->h;
+        positionTitre.x = ((X/2.0) - (longueurTitre/2.0));
+        positionTitre.y = ((Y/2.0) - (hauteurTitre/2.0));
+        SDL_BlitSurface(imageDeFond, NULL, ecran, &positionFond);
+        SDL_BlitSurface(Titre2, NULL, ecran, &positionTitre);
+        SDL_Flip(ecran);
+        SDL_FreeSurface(Titre2);
+        SDL_FreeSurface(ecran);
+        input_handle();
+    }
+    Titre2 = rotozoomSurface(Titre, 0, (Y/hauteurFond), 2);
+    double longueurTitre = Titre2->w;
+    double hauteurTitre = Titre2->h;
+    positionTitre.x = ((X/2.0) - (longueurTitre/2.0));
+    positionTitre.y = ((Y/2.0) - (hauteurTitre/2.0));
+    positionFond.x = (X - largeurFondMenu_Depart)/2.0;
+    SDL_BlitSurface(imageDeFond, NULL, ecran, &positionFond);
+    SDL_BlitSurface(Titre2, NULL, ecran, &positionTitre);
+    TTF_Init();
+    police = TTF_OpenFont("space_age.ttf", 40);
+    Texte = TTF_RenderText_Blended(police, "Appuyez sur une touche", couleur);
+    double longueurTexte = Texte->w;
+    positionTexte.x = ((X/2.0) - (longueurTexte/2.0));
+    positionTexte.y = 9*(Y)/10;
+    SDL_BlitSurface(Texte, NULL, ecran, &positionTexte);
+    SDL_Flip(ecran);
+    
+    SDL_WaitEvent(&clic_touche);
+    
+    switch (clic_touche.type) {
+        case SDL_KEYDOWN:
+            while (b<256) {
+                positionFond.x = (X - largeurFondMenu_Depart)/2.0;
+                a = a+0.005;
+                Titre2 = rotozoomSurface(Titre, 0, a, 2);
+                double longueurTitre = Titre2->w;
+                double hauteurTitre = Titre2->h;
+                positionTitre.x = ((X/2.0) - (longueurTitre/2.0));
+                positionTitre.y = ((Y/2.0) - (hauteurTitre/2.0));
+                SDL_BlitSurface(imageDeFond, NULL, ecran, &positionFond);
+                SDL_BlitSurface(Titre2, NULL, ecran, &positionTitre);
+                SDL_SetAlpha(Noir, SDL_SRCALPHA, b);
+                SDL_BlitSurface(Noir, NULL, ecran, &positionFond);
+                b = b+5;
+                SDL_Flip(ecran);
+                SDL_FreeSurface(Titre2);
+                SDL_FreeSurface(ecran);
+                input_handle();
+            }
+            while (b>=0) {
+                double longueurPetit_Titre = Petit_Titre->w;
+                double longueurBouton = NouvellePartie->w;
+                double hauteurBouton = NouvellePartie->h;
+                SDL_SetAlpha(Noir, SDL_SRCALPHA, b);
+                SDL_BlitSurface(Noir, NULL, ecran, &positionFond);
+                b = b-5;
+                SDL_Flip(ecran);
+                SDL_FreeSurface(ecran);
+                positionFond.x = (X - largeurFondMenu_Depart)/2.0;
+                SDL_BlitSurface(FondMenu, NULL, ecran, &positionFond);
+                positionPetit_Titre.x = ((X/2.0) - (longueurPetit_Titre/2.0));
+                positionPetit_Titre.y = 100;
+                positionNouvellePartie.x = ((X/2.0) - (longueurBouton/2.0));
+                positionNouvellePartie.y = ((Y/2.0) - (hauteurBouton/2.0));
+                positionCharger.x = positionNouvellePartie.x;
+                positionCharger.y = positionNouvellePartie.y + 75;
+                positionQuitter.x = positionCharger.x;
+                positionQuitter.y = positionCharger.y + 75;
+                SDL_BlitSurface(Petit_Titre, NULL, ecran, &positionPetit_Titre);
+                SDL_BlitSurface(NouvellePartie, NULL, ecran, &positionNouvellePartie);
+                SDL_BlitSurface(Charger, NULL, ecran, &positionCharger);
+                SDL_BlitSurface(Quitter, NULL, ecran, &positionQuitter);
+                input_handle();
+            }
+            SDL_Flip(ecran);
+            break;
+        case SDL_QUIT:
+            exit(0);
+    }
+    pause();
 }
 
 void affichage_ecran_acceuil(Terrain_combat *un_terrain_combat)
