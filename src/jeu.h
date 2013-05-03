@@ -23,6 +23,7 @@
  {
      int tour_en_cours;
 	 int joueur_en_cours;
+	int joueur_en_cours_combat;
 	 int nb_joueur;
 	 Joueur *tab_joueur;
 
@@ -44,7 +45,14 @@ void afficher_ressource_joueur(Jeu *un_jeu);
 void afficher_info(Jeu *un_jeu);
 void validation_creation_unite_planete(Jeu *un_jeu, Terrain_espace *un_terrain_espace, int indice_joueur_en_cours, int x, int y);
 void ajouter_flotte_jeu(Jeu *un_jeu,Terrain_espace *un_terrain_espace, Flotte *une_flotte, int indice_joueur, int x, int y);
+int get_joueur_en_cours_combat(Jeu * jeu);
+/**/
+Joueur * get_ieme_joueur_jeu(Jeu * un_jeu,int i);
 
 bool test_unite_selectionnee(Jeu *un_jeu);
 bool deplacement_unite_flotte(Jeu *un_jeu, Joueur *un_joueur, Terrain_espace *un_terrain_espace, Flotte *une_flotte, int x, int y);
+void selectionner_case_combat(Jeu *jeu,Terrain_combat *un_terrain_combat,const int x, const int y);
+void placer_unite_flotte_en_haut(Terrain_combat * un_terrain_combat, Flotte * flotte);
+void placer_unite_flotte_en_bas(Terrain_combat * un_terrain_combat, Flotte * flotte);
+void passer_tour_combat(Jeu * jeu, Terrain_combat * un_terrain_combat);
 #endif

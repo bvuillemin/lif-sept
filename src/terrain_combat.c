@@ -230,11 +230,12 @@ void attaquer(Terrain_combat * un_terrain_combat,Unite * une_unite,const int x,c
 	
 	Case_terrain_combat * une_case;
 	une_case = get_case_terrain_combat(un_terrain_combat,x,y);
-	victime = get_unite(une_case);
-	pa_un = get_pt_attaque(une_unite);
-	pv_vi = get_pt_vie(victime);
+	
 	if(get_presence_unite(une_case)&&(get_pt_action(une_unite)>0))
 	{
+		victime = get_unite(une_case);
+		pa_un = get_pt_attaque(une_unite);
+		pv_vi = get_pt_vie(victime);
 		set_pt_vie(victime ,pv_vi - pa_un);
 	}
 	else {printf("n'a pas réussi à attaquer");}

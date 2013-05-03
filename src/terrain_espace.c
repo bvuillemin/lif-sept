@@ -195,7 +195,7 @@ bool deplacement_flotte(Joueur *un_joueur, Terrain_espace *un_terrain_espace, Fl
 		{
 		    if(fusion_flotte(un_joueur, un_terrain_espace, une_flotte, x, y))
 		    {
-		        //free(une_flotte);
+		        /*free(une_flotte);*/
 		        return true;
 		    }
 		}
@@ -237,8 +237,8 @@ bool fusion_flotte(Joueur *un_joueur, Terrain_espace *un_terrain_espace, Flotte 
             case_arrivee->flotte = &un_joueur->tab_flotte[flotte_arrivee->indice_tableau_joueur];
         }
         retirer_flotte_joueur(un_joueur, une_flotte->indice_tableau_joueur);
-        //liberer_flotte(une_flotte);
-        //free(une_flotte);
+        /*liberer_flotte(une_flotte);*/
+        /*free(une_flotte);*/
 
         distance = calcul_distance(x_depart, y_depart, x, y);
         if(pt_mvt_arrivee > (pt_mvt_depart - distance))
