@@ -6,11 +6,16 @@
 #include "joueur.h"
 #include "flotte.h"
 
+int get_joueur_en_cours_combat(Jeu * jeu)
+{
+	return jeu->joueur_en_cours_combat;
+}
 void initialise_jeu(Jeu *un_jeu)
 {
     int i;
 	un_jeu->tour_en_cours = 0;
 	un_jeu->joueur_en_cours = 0;
+	un_jeu->joueur_en_cours_combat =0;
 	un_jeu->nb_joueur = 0;
 	un_jeu->selection_flotte = NULL;
 	un_jeu->selection_planete = NULL;
@@ -190,7 +195,7 @@ bool deplacement_unite_flotte(Jeu *un_jeu, Joueur *un_joueur, Terrain_espace *un
 		{
 			if(fusion_flotte(un_joueur, un_terrain_espace, une_flotte, x, y))
 			{
-				//free(une_flotte);
+				/*free(une_flotte);*/
 				return true;
 			}
 		}
@@ -213,3 +218,84 @@ bool deplacement_unite_flotte(Jeu *un_jeu, Joueur *un_joueur, Terrain_espace *un
     return false;
 }
 
+void placer_unite_flotte_en_haut(Terrain_combat * un_terrain_combat, Flotte * flotte)
+{
+        int i,m,n;
+        Unite * une_unite;
+        for(i=0;i<(flotte->taille_flotte);i++)
+        {
+                une_unite=get_unite_i_flotte(flotte,i);
+                m=get_x_unite(une_unite);
+                n=get_y_unite(une_unite);
+                while(case_libre(un_terrain_combat, m,n))
+                {
+                        set_y_unite(une_unite,n+1);
+                        m=get_x_unite(une_unite);
+                        n=get_y_unite(une_unite);
+                }
+                        ajoute_unite_terrain(un_terrain_combat, une_unite,m,n);
+        }
+        
+}
+Joueur * get_ieme_joueur_jeu(Jeu * un_jeu,int i)
+{
+        return un_jeu->tab_joueur + i;
+}
+void placer_unite_flotte_en_bas(Terrain_combat * un_terrain_combat, Flotte * flotte)
+{
+        int i,m,n;
+        Unite * une_unite;
+        for(i=0;i<(flotte->taille_flotte);i++)
+        {
+                une_unite=get_unite_i_flotte(flotte,i);
+                m=(un_terrain_combat->taille_combat_x)-1;
+                n=(un_terrain_combat->taille_combat_y)-1;
+                set_x_unite(une_unite,m);
+                set_y_unite(une_unite,n);
+                while(case_libre(un_terrain_combat, m,n))
+                {
+                        set_y_unite(une_unite,n-1);
+                        m=get_x_unite(une_unite);
+                        n=get_y_unite(une_unite);
+                }
+                        ajoute_unite_terrain(un_terrain_combat, une_unite,m,n);
+        }
+        
+}
+void selectionner_case_combat(Jeu *jeu,Terrain_combat *un_terrain_combat,const int x, const int y)
+{
+        Case_terrain_combat *une_case;
+        Unite * unite;
+        une_case = get_case_terrain_combat(un_terrain_combat, x,y);
+        unite = get_unite(une_case);
+        if(get_selection_unite(une_case))
+        {       set_une_case_selectionnee(un_terrain_combat,0);
+                set_selection(un_terrain_combat,NULL);
+                set_selection_unite(une_case, 0);
+        }else if(get_presence_unite(une_case) && !get_une_case_selectionnee(un_terrain_combat) && (get_indice_joueur_unite(unite)== jeu-> joueur_en_cours)){
+                set_selection_unite(une_case, 1);set_selection(un_terrain_combat,une_case);
+                set_une_case_selectionnee(un_terrain_combat,1);}
+}
+
+void passer_tour_combat(Jeu * jeu, Terrain_combat * un_terrain_combat)
+{
+        Joueur * joueur;
+        Flotte * flotte;
+        if(jeu->joueur_en_cours == 0)
+        {
+                joueur=get_ieme_joueur_jeu(jeu, 0);
+                flotte = get_ieme_flotte_joueur(joueur,0);
+                reinitialiser_deplacement_unite_flotte(flotte);
+                reinitialiser_pt_action_unite_flotte(flotte);
+                
+                jeu->joueur_en_cours = 1;
+        }
+        else if (jeu->joueur_en_cours == 1)
+        {
+                joueur=get_ieme_joueur_jeu(jeu, 1);
+                flotte = get_ieme_flotte_joueur(joueur,0);
+                reinitialiser_deplacement_unite_flotte(flotte);
+                reinitialiser_pt_action_unite_flotte(flotte);
+                jeu->joueur_en_cours = 0;
+        }else{printf("ERREUR ! \n");}
+}

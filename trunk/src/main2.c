@@ -34,7 +34,7 @@ int main()
 	/*int i;
 	char c;
 	bool p;*/
-	
+	ecran_titre();
 	jeu = creer_jeu();
 	afficher_info(jeu);
 	joueur1=creer_joueur("allie");
@@ -112,7 +112,7 @@ afficher_flotte(flotte2);
 		}while((c!='q') &&(c!='o'));
 		printf("ok!\n");
 	}*/
-	affichage_ecran_acceuil(un_match);
+	
 	affichage_ecran_combat(jeu,un_match);
 	return 0;
 
