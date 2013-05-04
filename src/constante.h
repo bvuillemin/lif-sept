@@ -20,7 +20,7 @@
 #define TAILLE_MINIMAP_X 200
 #define TAILLE_MINIMAP_Y 140
 
-#define DEPLACEMENT_AFFICHAGE 4
+#define DEPLACEMENT_AFFICHAGE 2
 
 /*l'ecran du combat (ou/et du l'espace)*/
 #define TAILLE_ECRAN_COMBAT_X 640
