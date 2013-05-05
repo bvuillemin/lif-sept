@@ -237,8 +237,9 @@ void attaquer(Terrain_combat * un_terrain_combat,Unite * une_unite,const int x,c
 		pa_un = get_pt_attaque(une_unite);
 		pv_vi = get_pt_vie(victime);
 		set_pt_vie(victime ,pv_vi - pa_un);
+		printf("a réussi à attaquer\n");
 	}
-	else {printf("n'a pas réussi à attaquer");}
+	else {printf("n'a pas réussi à attaquer\n");}
 }
 
 bool peut_attaquer_hor_vert(Terrain_combat * un_terrain_combat, const Unite * unite,const int x,const int y)
@@ -254,9 +255,11 @@ bool peut_attaquer_hor_vert(Terrain_combat * un_terrain_combat, const Unite * un
 	printf("poss = (%d,%d);min (%d,%d) ; max (%d,%d) ; unite (%d,%d)\n",x,y,x_min,y_min,x_max, y_max,x_un,y_un);
     if((((y>=y_min) && (y<=y_max)&&(y!=y_un)&&(x==x_un))||((x>=x_min) && (x<=x_max)&&(x!=x_un)&&(y==y_un)))&& (pa > 0) && (get_presence_unite(get_case_terrain_combat(un_terrain_combat,x,y))))
     {
-        return true;
+        
+	printf(" horizontale et verticale possible \n");return true;
     }
-    else {return false;}
+    else {
+	printf("! horizontale et verticale impossible !\n");return false;}
 }
 bool peut_attaquer_diag(Terrain_combat * un_terrain_combat, Unite * unite,int x,int y)
 {
@@ -270,9 +273,10 @@ bool peut_attaquer_diag(Terrain_combat * un_terrain_combat, Unite * unite,int x,
 	printf("poss = (%d,%d);unite (%d,%d); portee %d; x_pos %d \n",x,y,x_un,y_un,portee,x_poss);
     if((x_poss==y_poss)&&(x_poss<= portee)&&(x_poss>0)&& (pa > 0)&& (get_presence_unite(get_case_terrain_combat(un_terrain_combat,x,y))))
     {
-        return true;
+        
+	printf("!diagonale possible! \n"); return true;
     }
-    else {return false;}
+    else {printf("!diagonale impossible! \n"); return false;}
 }
 
 /*void test_module_terrain_combat()

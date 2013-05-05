@@ -34,7 +34,7 @@ int main()
 	/*int i;
 	char c;
 	bool p;*/
-	ecran_titre();
+/*	ecran_titre();*/
 	jeu = creer_jeu();
 	afficher_info(jeu);
 	joueur1=creer_joueur("allie");
