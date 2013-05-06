@@ -48,6 +48,7 @@ int main(int argc, char *argv[])
 
 	Planete *terre;
 	Planete *jupiter;
+	Planete *venus;
 	Joueur *joueur;
 	Joueur *joueur2;
 	Jeu *jeu;
@@ -59,12 +60,14 @@ int main(int argc, char *argv[])
 	char nom_joueur2[]="Boulet";
 	char nom_terre[]="terre";
 	char nom_jupiter[]="jupiter";
+	char nom_venus[]="venus";
 
 	un_terrain_espace = creer_terrain_espace(20, 15);
     modification_terrain_espace(un_terrain_espace, 'E');
 
     ajouter_planete_terrain_espace(un_terrain_espace, 2, 1, nom_terre);
     ajouter_planete_terrain_espace(un_terrain_espace, 4, 3, nom_jupiter);
+	ajouter_planete_terrain_espace(un_terrain_espace, 0, 3, nom_venus);
     affiche_terrain_espace(un_terrain_espace);
 
     terre = get_planete_terrain_espace(un_terrain_espace, 2, 1);

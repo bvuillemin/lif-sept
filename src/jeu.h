@@ -38,6 +38,11 @@ Jeu *creer_jeu();
 void liberer_jeu(Jeu *un_jeu);
 void detruire_jeu(Jeu **un_jeu);
 
+Joueur* get_joueur_en_cours(Jeu *un_jeu);
+Flotte* get_flotte_en_cours(Jeu *un_jeu);
+int get_indice_joueur_en_cours(Jeu *un_jeu);
+Planete *get_planete_en_cours(Jeu *un_jeu);
+
 void ajouter_joueur(Jeu *un_jeu, Joueur *un_joueur);
 void joueur_suivant(Jeu *un_jeu, Terrain_espace *un_terrain_espace);
 void tour_suivant(Jeu *un_jeu, Terrain_espace *un_terrain_espace);
@@ -45,6 +50,8 @@ void afficher_ressource_joueur(Jeu *un_jeu);
 void afficher_info(Jeu *un_jeu);
 void validation_creation_unite_planete(Jeu *un_jeu, Terrain_espace *un_terrain_espace, int indice_joueur_en_cours, int x, int y);
 void ajouter_flotte_jeu(Jeu *un_jeu,Terrain_espace *un_terrain_espace, Flotte *une_flotte, int indice_joueur, int x, int y);
+void colonisation_planete_flotte(Terrain_espace *un_terrain_espace, Flotte *une_flotte, Jeu *un_jeu);
+
 int get_joueur_en_cours_combat(Jeu * jeu);
 /**/
 Joueur * get_ieme_joueur_jeu(Jeu * un_jeu,int i);

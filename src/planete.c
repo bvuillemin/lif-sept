@@ -10,7 +10,7 @@ void initialise_planete(Planete *une_planete,const char nom_planete[30])
     int i;
     une_planete->x = 0;
     une_planete->y = 0;
-	une_planete->indice_joueur = 0;
+	une_planete->indice_joueur = -1;
     strcpy(une_planete->nom_planete, nom_planete);
     une_planete->planete_colonisee = false;
     une_planete->planete_principale = false;
@@ -28,7 +28,7 @@ void initialise_planete(Planete *une_planete,const char nom_planete[30])
     }
 
     une_planete->batiment_en_cours = -1;
-    une_planete->batiment_nb_tour_restant = 0;
+    une_planete->batiment_nb_tour_restant = -1;
     une_planete->tab_fonction_validation[0] = validation_creer_batiment_quartier_general;
     une_planete->tab_fonction_validation[1] = validation_creer_batiment_metal;
 	une_planete->tab_fonction_validation[2] = validation_creer_batiment_argent;
@@ -44,7 +44,7 @@ void initialise_planete(Planete *une_planete,const char nom_planete[30])
 	une_planete->tab_fonction_creation[5] = creer_batiment_spatioport;
 
     une_planete->unite_en_cours =  -1;
-    une_planete->unite_nb_tour_restant = 0;
+    une_planete->unite_nb_tour_restant = -1;
 }
 
 Planete *creer_planete(char nom_planete[30])
@@ -232,7 +232,7 @@ void validation_batiment(Planete *une_planete)
 
 void creation_batiment(Planete *une_planete, int choix)
 {
-    if(une_planete->batiment_nb_tour_restant == 0)
+    if(une_planete->batiment_nb_tour_restant <= 0)
     {
         (une_planete->tab_fonction_creation[choix])(une_planete);
     }
