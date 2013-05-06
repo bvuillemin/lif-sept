@@ -6,6 +6,8 @@
 
 #include "planete.h"
 #include "flotte.h"
+//#include "terrain_espace.h"
+
 /*#include "terrain_espace.h"*/
 
 typedef struct

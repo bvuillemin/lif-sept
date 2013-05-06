@@ -4,7 +4,6 @@
 
 #include "planete.h"
 #include "joueur.h"
-#include "flotte.h"/*"terrain_espace.h"*/
 #include "constante.h"
 
 
@@ -279,7 +278,6 @@ void retirer_population(Joueur *un_joueur, int nb)
 }
 
 
-
 void colonisation_planete(Joueur *un_joueur, Planete *une_planete)
 {
     int i = un_joueur->nb_planete;
@@ -296,6 +294,7 @@ void colonisation_planete(Joueur *un_joueur, Planete *une_planete)
             (un_joueur->tab_planete)[i] = une_planete;
             un_joueur->nb_planete ++;
             une_planete->planete_colonisee = true;
+			une_planete->indice_joueur = un_joueur->numero_joueur;
             if(i==0)
             {
                 une_planete->planete_principale = true;
@@ -307,8 +306,6 @@ void colonisation_planete(Joueur *un_joueur, Planete *une_planete)
         }
     }
 }
-
-
 
 void creation_unite_planete(Joueur *un_joueur, Planete *une_planete, int choix)
 {

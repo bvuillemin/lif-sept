@@ -51,6 +51,26 @@ void liberer_jeu(Jeu *un_jeu)
     }
 }
 
+Joueur *get_joueur_en_cours(Jeu *un_jeu)
+{
+	return &un_jeu->tab_joueur[un_jeu->joueur_en_cours];
+}
+
+Flotte *get_flotte_en_cours(Jeu *un_jeu)
+{
+	return un_jeu->selection_flotte;
+}
+
+int get_indice_joueur_en_cours(Jeu *un_jeu)
+{
+	return un_jeu->joueur_en_cours;
+}
+
+Planete *get_planete_en_cours(Jeu *un_jeu)
+{
+	return un_jeu->selection_planete;
+}
+
 void detruire_jeu(Jeu **un_jeu)
 {
     liberer_jeu(*un_jeu);
@@ -108,16 +128,24 @@ void tour_suivant(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 		/*printf("Ressources du tour %d pour le joueur %d: \nMetal: %d \nArgent: %d \nCarburant: %d \nPopulation: %d\n\n", un_jeu->tour_en_cours, i, metal, argent, carburant, population);*/
 		reinitialiser_mouvement_flotte(&(un_jeu->tab_joueur[i].tab_flotte[0]));
 
-		un_jeu->tab_joueur[i].tab_planete[0]->batiment_nb_tour_restant --;
+		if(un_jeu->tab_joueur[i].tab_planete[0]->batiment_nb_tour_restant > 0)
+		{
+			un_jeu->tab_joueur[i].tab_planete[0]->batiment_nb_tour_restant --;
+		}
 		if(un_jeu->tab_joueur[i].tab_planete[0]->batiment_nb_tour_restant == 0) /*a completer pour gerer automatiquement chaque planete de chaque joueur*/
 		{
 		    validation_batiment(un_jeu->tab_joueur[i].tab_planete[0]);
+			un_jeu->tab_joueur[i].tab_planete[0]->batiment_nb_tour_restant = -1;
 		}
 
-		un_jeu->tab_joueur[i].tab_planete[0]->unite_nb_tour_restant --; /*de meme*/
+		if(un_jeu->tab_joueur[i].tab_planete[0]->unite_nb_tour_restant > 0)
+		{
+			un_jeu->tab_joueur[i].tab_planete[0]->unite_nb_tour_restant --; /*de meme*/
+		}
 		if(un_jeu->tab_joueur[i].tab_planete[0]->unite_nb_tour_restant == 0)
 		{
 		    validation_creation_unite_planete(un_jeu, un_terrain_espace, i, un_jeu->tab_joueur[i].tab_planete[0]->x, un_jeu->tab_joueur[i].tab_planete[0]->y);
+			un_jeu->tab_joueur[i].tab_planete[0]->unite_nb_tour_restant = -1;
 		}
 	}
 	un_jeu->tour_en_cours++;
@@ -171,6 +199,17 @@ bool test_unite_selectionnee(Jeu *un_jeu)
         }
     }
     return false;
+}
+
+void colonisation_planete_flotte(Terrain_espace *un_terrain_espace, Flotte *une_flotte, Jeu *un_jeu)
+{
+	Planete *une_planete;
+	Joueur *un_joueur;
+	
+	une_planete = get_planete_terrain_espace(un_terrain_espace, get_x_flotte(une_flotte), get_y_flotte(une_flotte));
+	un_joueur = &un_jeu->tab_joueur[get_indice_joueur_flotte(une_flotte)];
+
+	colonisation_planete(un_joueur, une_planete);
 }
 
 bool deplacement_unite_flotte(Jeu *un_jeu, Joueur *un_joueur, Terrain_espace *un_terrain_espace, Flotte *une_flotte, int x, int y)

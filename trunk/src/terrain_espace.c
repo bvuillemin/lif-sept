@@ -39,7 +39,11 @@ void modifie_type_case_terrain_espace(const Terrain_espace *terrain_espace, int 
 
 Planete* get_planete_terrain_espace(const Terrain_espace *terrain_espace, int x, int y)
 {
-    return terrain_espace->tab_terrain_espace[y*(terrain_espace->taille_espace_x)+x].planete;
+	if(terrain_espace->tab_terrain_espace[y*(terrain_espace->taille_espace_x)+x].type_case_terrain_espace == 'P')
+	{
+		return terrain_espace->tab_terrain_espace[y*(terrain_espace->taille_espace_x)+x].planete;
+	}
+	else {return NULL;}
 }
 
 void initilaliser_terrain_espace(Terrain_espace *terrain_jeu_espace, int taille_espace_x, int taille_espace_y)
