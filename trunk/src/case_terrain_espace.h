@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
-
+#include <string.h>
 #include "planete.h"
 #include "flotte.h"
 
@@ -52,6 +52,11 @@ void ajouter_flotte(Case_terrain_espace *une_case_terrain_espace, Flotte *une_fl
 void retirer_flotte(Case_terrain_espace *une_case_terrain_espace);
 
 void affiche_case_terrain_espace(const Case_terrain_espace *une_case_terrain_espace);
+
+void sauvegarde_case_terrain_espace(const Case_terrain_espace *une_case_terrain_espace, FILE*f);
+Case_terrain_espace* ouverture_case_terrain_espace(FILE*f);
+
+
 void test_module_case_terrain_espace();
 
 

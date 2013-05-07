@@ -48,7 +48,6 @@ int main(int argc, char *argv[])
 
 	Planete *terre;
 	Planete *jupiter;
-	Planete *venus;
 	Joueur *joueur;
 	Joueur *joueur2;
 	Jeu *jeu;
@@ -124,7 +123,9 @@ int main(int argc, char *argv[])
 	ajouter_flotte_jeu(jeu, un_terrain_espace, flotte, 0, 2, 3);
 	ajouter_flotte_jeu(jeu, un_terrain_espace, flotte2, 0, 5, 5);
 	ajouter_flotte_jeu(jeu, un_terrain_espace, flotte3, 1, 0, 4);
-
+    /*creer_fichier_sauvegarde("essai", un_terrain_espace);
+    detruire_terrain_espace(&un_terrain_espace);
+    un_terrain_espace = selection_ouverture("essai");*/
 	affichage_ecran(jeu, un_terrain_espace);
 
 	while(1)
@@ -179,7 +180,6 @@ int main(int argc, char *argv[])
 			colonisation_planete(&(jeu->tab_joueur[a]), jupiter);
         }
     }
-
 	detruire_terrain_espace(&un_terrain_espace);
 	detruire_jeu(&jeu);
 
