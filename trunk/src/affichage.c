@@ -9,8 +9,8 @@
 #include "SDL_rotozoom.h"
 #include "SDL_framerate.h"
 #else
-#include <SDL/SDL_rotozoom.h>
-#include <SDL/SDL_framerate.h>
+/*#include <SDL/SDL_rotozoom.h>
+#include <SDL/SDL_framerate.h>*/
 #include <SDL/SDL_image.h>
 #include <SDL/SDL_ttf.h>
 #endif
@@ -51,8 +51,26 @@ bool booleen_case_pointeur_souris(Terrain_espace *un_terrain_espace, int x, int 
 
 bool booleen_minimap_pointeur_souris(int x, int y)
 {
-	SDL_Rect position_minimap = {TAILLE_FENETRE_X - TAILLE_MINIMAP_X, TAILLE_FENETRE_Y - TAILLE_MINIMAP_Y, 0, 0};
+	SDL_Rect position_minimap = {TAILLE_FENETRE_X - TAILLE_MINIMAP_X, TAILLE_FENETRE_Y - TAILLE_MINIMAP_Y, TAILLE_MINIMAP_X, TAILLE_MINIMAP_Y};
 	return test_souris_rectangle (position_minimap, x, y);
+}
+
+void test_minimap_souris(Terrain_espace *un_terrain_espace, int x, int y)
+{
+    SDL_Rect position_minimap = {TAILLE_FENETRE_X - TAILLE_MINIMAP_X, TAILLE_FENETRE_Y - TAILLE_MINIMAP_Y, 0, 0};
+    int x_calcule, y_calcule;
+
+    x = x - position_minimap.x;
+    y = y - position_minimap.y;
+
+    x_calcule = x * ((float)TAILLE_FENETRE_X/TAILLE_MINIMAP_X);
+    y_calcule = y * ((float)TAILLE_FENETRE_Y/TAILLE_MINIMAP_Y);
+
+    if((x_calcule > 0) && (x_calcule <= (un_terrain_espace->taille_espace_x *100) - TAILLE_TERRAIN_ESPACE_X) && (y_calcule > 0) && (y_calcule < (un_terrain_espace->taille_espace_y * 100)- TAILLE_TERRAIN_ESPACE_Y))
+    {
+        un_terrain_espace->affichage_x = x_calcule;
+        un_terrain_espace->affichage_y = y_calcule;
+    }
 }
 
 Case_terrain_espace* case_pointeur_souris(Terrain_espace *un_terrain_espace, int x, int y) /*Fonction qui va renvoyer la case pointée par la souris, les coordonnées x et y sont en pixels*/
@@ -75,6 +93,18 @@ void reinitialiser_tableau_selection_unite(Jeu *un_jeu)
     }
 }
 
+void afficher_infobulle(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface **tab_surface, int x, int y)
+{
+    SDL_Surface *infobulle = NULL;
+    SDL_Rect position_infobulle = {x, y, 200, 100};
+
+    infobulle = SDL_CreateRGBSurface(SDL_HWSURFACE, 200, 100, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
+    SDL_FillRect(infobulle, NULL, SDL_MapRGB(ecran->format, 255, 255, 0));
+    SDL_BlitSurface(infobulle, NULL, ecran, &position_infobulle);
+    SDL_Flip(ecran);
+}
+
+/*fonctions d'affichage de la carte*/
 SDL_Surface* affichage_ressource(Jeu *un_jeu, SDL_Surface *surface_ressource)
 {
     SDL_Surface *nom_ressource;
@@ -86,7 +116,7 @@ SDL_Surface* affichage_ressource(Jeu *un_jeu, SDL_Surface *surface_ressource)
     char tour[50] = "";
 
     police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 18);
-    surface_ressource = IMG_Load("../graphiques/images/interface_ressources_g.png");
+    surface_ressource = IMG_Load("../graphiques/images/interface_ressource.png");
 
 	/*affichage des ressources*/
     sprintf(ressource, "%d", get_metal_joueur(&un_jeu->tab_joueur[un_jeu->joueur_en_cours]));
@@ -103,12 +133,12 @@ SDL_Surface* affichage_ressource(Jeu *un_jeu, SDL_Surface *surface_ressource)
 	nom_ressource = TTF_RenderText_Blended(police, ressource, couleur_blanche);
 	initialise_sdl_rect(&position, 75 + 300, 4, 0, 0);
 	SDL_BlitSurface(nom_ressource, NULL, surface_ressource, &position);
-	
+
 	sprintf(ressource, "%d", get_population_joueur(&un_jeu->tab_joueur[un_jeu->joueur_en_cours]));
 	nom_ressource = TTF_RenderText_Blended(police, ressource, couleur_blanche);
 	initialise_sdl_rect(&position, 75 + 450, 4, 0, 0);
 	SDL_BlitSurface(nom_ressource, NULL, surface_ressource, &position);
-	
+
 
     sprintf(tour, "Tour en cours: %d   Joueur en cours: %d", un_jeu->tour_en_cours, un_jeu->joueur_en_cours);
     nombre_tour = TTF_RenderText_Blended(police, tour, couleur_blanche);
@@ -528,8 +558,7 @@ SDL_Surface* affichage_minimap(Terrain_espace *un_terrain_espace)
 void initialiser_affichage(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface *carte, SDL_Surface **tab_surface)
 {
 	SDL_Surface *carte_flotte = NULL;
-	SDL_Surface *ressource_g = NULL;
-	SDL_Surface *ressource_d = NULL;
+	SDL_Surface *ressource= NULL;
 	SDL_Surface *deplacement_carte = NULL;
 	SDL_Surface *interface = NULL;
 	SDL_Surface *mini_carte = NULL;
@@ -537,20 +566,16 @@ void initialiser_affichage(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_S
 	SDL_Surface *panneau_unite = NULL;
 	SDL_Surface *minimap = NULL;
     SDL_Surface *bouton_passer_tour = NULL;
-
+    SDL_Surface *bordure = NULL;
 
 	SDL_Rect position = {0, 0, 0, 0};
-	SDL_Rect position_interface = {0, TAILLE_FENETRE_Y - 158};
-	SDL_Rect position_mini_carte = {TAILLE_FENETRE_X - 240, TAILLE_FENETRE_Y - 158};
+	SDL_Rect position_interface = {0, TAILLE_TERRAIN_ESPACE_Y + 30, 0, 0};
 	SDL_Rect position_affichage_carte = {0, 30, TAILLE_TERRAIN_ESPACE_X, TAILLE_TERRAIN_ESPACE_Y};
 	SDL_Rect position_affichage_info = {0,TAILLE_TERRAIN_ESPACE_Y + 25 , TAILLE_FENETRE_X, TAILLE_FENETRE_Y - TAILLE_TERRAIN_ESPACE_Y};
 	SDL_Rect affichage_carte = {0, 0, 0, 0};
 	SDL_Rect position_panneau_unite = {TAILLE_FENETRE_X - 300, 20, 300, TAILLE_TERRAIN_ESPACE_Y};
-	SDL_Rect bordure_g = {0, 50, 4, TAILLE_FENETRE_Y - 208};
-	SDL_Rect bordure_d = {TAILLE_FENETRE_X - 4, 50, 4, TAILLE_FENETRE_Y - 208};
-	SDL_Rect position_ressource_d = {TAILLE_FENETRE_X - 50, 0};
 	SDL_Rect position_minimap = {TAILLE_FENETRE_X - TAILLE_MINIMAP_X, TAILLE_FENETRE_Y - TAILLE_MINIMAP_Y, 0, 0};
-	SDL_Rect position_bouton_tour = {TAILLE_FENETRE_X -300, TAILLE_FENETRE_Y - 20, 0, 0};
+	SDL_Rect position_bouton_tour = {TAILLE_FENETRE_X -300, TAILLE_TERRAIN_ESPACE_Y - 20, 0, 0};
 
 	carte = creer_affichage_terrain(un_terrain_espace);
 
@@ -566,21 +591,12 @@ void initialiser_affichage(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_S
 	SDL_BlitSurface(carte_flotte, &affichage_carte, ecran, &position_affichage_carte);
 
 	/*affichage de la barre de ressources*/
-//	ressource_g = IMG_Load("../graphiques/images/interface_ressources_g.png");
-	ressource_g = affichage_ressource(un_jeu, ressource_g);
-	SDL_BlitSurface(ressource_g, NULL, ecran, &position);
-	ressource_d = IMG_Load("../graphiques/images/interface_ressources_d.png");
-	SDL_BlitSurface(ressource_d, NULL, ecran, &position_ressource_d);
+    ressource = affichage_ressource(un_jeu, ressource);
+	SDL_BlitSurface(ressource, NULL, ecran, &position);
 
 	/*affichage de l'interface*/
 	interface = IMG_Load("../graphiques/images/interface_bas.png");
 	SDL_BlitSurface(interface, NULL, ecran, &position_interface);
-	mini_carte = IMG_Load("../graphiques/images/interface_carte.png");
-	SDL_BlitSurface(mini_carte, NULL, ecran, &position_mini_carte);
-
-	/*affichage des bordures sur les côtés de la carte*/
-	SDL_FillRect(ecran, &bordure_g, SDL_MapRGB(ecran->format, 255, 255, 255));
-	SDL_FillRect(ecran, &bordure_d, SDL_MapRGB(ecran->format, 255, 255, 255));
 
 	panneau_unite = IMG_Load("../graphiques/images/interface_barrelaterale.png");
 	initialise_sdl_rect(&position_panneau_unite, TAILLE_FENETRE_X - 214, 35, 200, TAILLE_TERRAIN_ESPACE_Y-300);
@@ -591,13 +607,16 @@ void initialiser_affichage(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_S
 
 	/*affichage du bouton de tour suivant*/
 	bouton_passer_tour = IMG_Load("../graphiques/images/bouton_reset.png");
-    SDL_FillRect(bouton_passer_tour, NULL, SDL_MapRGB(ecran->format, 0, 200, 0));
     SDL_BlitSurface(bouton_passer_tour, NULL, ecran, &position_bouton_tour);
+
+    /*affichage du cadre*/
+    bordure = IMG_Load("../graphiques/images/bordure.png");
+    SDL_BlitSurface(bordure, NULL, ecran, &position_affichage_carte);
 
 	tab_surface[0] = carte;
 	tab_surface[1] = carte_flotte;
-	tab_surface[2] = ressource_g;
-	tab_surface[3] = ressource_d;
+	tab_surface[2] = ressource;
+	tab_surface[3] = bordure;
 	tab_surface[4] = deplacement_carte;
 	tab_surface[5] = interface;
 	tab_surface[6] = mini_carte;
@@ -609,37 +628,26 @@ void initialiser_affichage(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_S
 
 void maj_affichage_carte_terrain(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface **tab_surface, int interface_affichee)
 {
-     SDL_Rect position = {0, 0, 0, 0};
- /*   SDL_Rect position_interface = {0, TAILLE_FENETRE_Y - 158};*/
-/*    SDL_Rect position_mini_carte = {TAILLE_FENETRE_X - 240, TAILLE_FENETRE_Y - 158};*/
-/*      SDL_Rect position_affichage_info = {0,TAILLE_TERRAIN_ESPACE_Y + 25 , TAILLE_FENETRE_X, TAILLE_FENETRE_Y - TAILLE_TERRAIN_ESPACE_Y};*/
-        SDL_Rect bordure_g = {0, 50, 4, TAILLE_FENETRE_Y - 208};
-    SDL_Rect bordure_d = {TAILLE_FENETRE_X - 4, 50, 4, TAILLE_FENETRE_Y - 208};
-    SDL_Rect position_ressource_d = {TAILLE_FENETRE_X - 50, 0};
-        SDL_Rect position_minimap = {TAILLE_FENETRE_X - TAILLE_MINIMAP_X, TAILLE_FENETRE_Y - TAILLE_MINIMAP_Y, 0, 0};
+    SDL_Rect position = {0, 0, 0, 0};
+    SDL_Rect position_minimap = {TAILLE_FENETRE_X - TAILLE_MINIMAP_X, TAILLE_FENETRE_Y - TAILLE_MINIMAP_Y, 0, 0};
     SDL_Rect position_affichage_carte = {0, 30, TAILLE_TERRAIN_ESPACE_X, TAILLE_TERRAIN_ESPACE_Y};
-        SDL_Rect affichage_carte = {0, 0, 0, 0};
-        SDL_Rect position_bouton_tour = {TAILLE_FENETRE_X -300, TAILLE_FENETRE_Y - 20, 0, 0};
+    SDL_Rect affichage_carte = {0, 0, 0, 0};
+    SDL_Rect position_bouton_tour = {TAILLE_FENETRE_X -300, TAILLE_TERRAIN_ESPACE_Y - 20, 0, 0};
 
     /*Creation du terrain en entier, celui-ci est stocké en mémoire*/
-        /*carte_flotte = creer_affichage_flotte(un_terrain_espace);*/
-        initialise_sdl_rect(&affichage_carte, un_terrain_espace->affichage_x, un_terrain_espace->affichage_y, TAILLE_TERRAIN_ESPACE_X, TAILLE_TERRAIN_ESPACE_Y);
-        SDL_BlitSurface(tab_surface[0], &affichage_carte, ecran, &position_affichage_carte);
-        SDL_SetColorKey(tab_surface[1], SDL_SRCCOLORKEY, SDL_MapRGB(ecran->format, 0, 0, 0));
-        SDL_BlitSurface(tab_surface[1], &affichage_carte, ecran, &position_affichage_carte);
+    /*carte_flotte = creer_affichage_flotte(un_terrain_espace);*/
+    initialise_sdl_rect(&affichage_carte, un_terrain_espace->affichage_x, un_terrain_espace->affichage_y, TAILLE_TERRAIN_ESPACE_X, TAILLE_TERRAIN_ESPACE_Y);
+    SDL_BlitSurface(tab_surface[0], &affichage_carte, ecran, &position_affichage_carte);
+    SDL_SetColorKey(tab_surface[1], SDL_SRCCOLORKEY, SDL_MapRGB(ecran->format, 0, 0, 0));
+    SDL_BlitSurface(tab_surface[1], &affichage_carte, ecran, &position_affichage_carte);
 
-        /*affichage de la barre de ressources*/
-        SDL_BlitSurface(tab_surface[2], NULL, ecran, &position);
-    SDL_BlitSurface(tab_surface[3], NULL, ecran, &position_ressource_d);
+    /*affichage de la barre de ressources*/
+    SDL_BlitSurface(tab_surface[2], NULL, ecran, &position);
 
-    /*affichage de l'interface*/
-    /*SDL_BlitSurface(tab_surface[5], NULL, ecran, &position_interface);
-    SDL_BlitSurface(tab_surface[6], NULL, ecran, &position_mini_carte);
+    /*affichage de la bordure*/
+    SDL_BlitSurface(tab_surface[3], NULL, ecran, &position_affichage_carte);
 
-    affichage des bordures sur les côtés de la carte*/
-    SDL_FillRect(ecran, &bordure_g, SDL_MapRGB(ecran->format, 255, 255, 255));
-    SDL_FillRect(ecran, &bordure_d, SDL_MapRGB(ecran->format, 255, 255, 255));
-
+    /*affichage bouton passer tour*/
     SDL_BlitSurface(tab_surface[10], NULL, ecran, &position_bouton_tour);
 
         if(interface_affichee == 0)
@@ -655,128 +663,90 @@ void maj_affichage_carte_terrain(Jeu *un_jeu, Terrain_espace *un_terrain_espace,
 void maj_affichage_flotte(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface **tab_surface, int interface_affichee)
 {
     SDL_Rect position = {0, 0, 0, 0};
-    SDL_Rect position_interface = {0, TAILLE_FENETRE_Y - 158};
+    SDL_Rect position_interface = {0, TAILLE_TERRAIN_ESPACE_Y + 30, 0, 0};
     SDL_Rect position_mini_carte = {TAILLE_FENETRE_X - 240, TAILLE_FENETRE_Y - 158};
-        SDL_Rect position_affichage_info = {0,TAILLE_TERRAIN_ESPACE_Y + 25 , TAILLE_FENETRE_X, TAILLE_FENETRE_Y - TAILLE_TERRAIN_ESPACE_Y};
-        /*SDL_Rect position_panneau_unite = {TAILLE_FENETRE_X - 300, 20, 300, TAILLE_TERRAIN_ESPACE_Y};*/
-        SDL_Rect bordure_g = {0, 50, 4, TAILLE_FENETRE_Y - 208};
-    SDL_Rect bordure_d = {TAILLE_FENETRE_X - 4, 50, 4, TAILLE_FENETRE_Y - 208};
-    SDL_Rect position_ressource_d = {TAILLE_FENETRE_X - 50, 0};
-        /*SDL_Rect position_minimap = {TAILLE_FENETRE_X - TAILLE_MINIMAP_X, TAILLE_FENETRE_Y - TAILLE_MINIMAP_Y, 0, 0};*/
+    SDL_Rect position_affichage_info = {0,TAILLE_TERRAIN_ESPACE_Y + 25 , TAILLE_FENETRE_X, TAILLE_FENETRE_Y - TAILLE_TERRAIN_ESPACE_Y};
     SDL_Rect position_affichage_carte = {0, 30, TAILLE_TERRAIN_ESPACE_X, TAILLE_TERRAIN_ESPACE_Y};
-        SDL_Rect affichage_carte = {0, 0, 0, 0};
-        SDL_Rect position_bouton_tour = {TAILLE_FENETRE_X -300, TAILLE_FENETRE_Y - 20, 0, 0};
+    SDL_Rect affichage_carte = {0, 0, 0, 0};
+    SDL_Rect position_bouton_tour = {TAILLE_FENETRE_X -300, TAILLE_TERRAIN_ESPACE_Y - 20, 0, 0};
 
     /*Creation du terrain en entier, celui-ci est stocké en mémoire*/
-        tab_surface[1] = creer_affichage_flotte(un_terrain_espace);
-        initialise_sdl_rect(&affichage_carte, un_terrain_espace->affichage_x, un_terrain_espace->affichage_y, TAILLE_TERRAIN_ESPACE_X, TAILLE_TERRAIN_ESPACE_Y);
-        SDL_BlitSurface(tab_surface[0], &affichage_carte, ecran, &position_affichage_carte);
-        SDL_SetColorKey(tab_surface[1], SDL_SRCCOLORKEY, SDL_MapRGB(ecran->format, 0, 0, 0));
-        SDL_BlitSurface(tab_surface[1], &affichage_carte, ecran, &position_affichage_carte);
-
-        /*affichage de la barre de ressources*/
-        SDL_BlitSurface(tab_surface[2], NULL, ecran, &position);
-    SDL_BlitSurface(tab_surface[3], NULL, ecran, &position_ressource_d);
+    tab_surface[1] = creer_affichage_flotte(un_terrain_espace);
+    initialise_sdl_rect(&affichage_carte, un_terrain_espace->affichage_x, un_terrain_espace->affichage_y, TAILLE_TERRAIN_ESPACE_X, TAILLE_TERRAIN_ESPACE_Y);
+    SDL_BlitSurface(tab_surface[0], &affichage_carte, ecran, &position_affichage_carte);
+    SDL_SetColorKey(tab_surface[1], SDL_SRCCOLORKEY, SDL_MapRGB(ecran->format, 0, 0, 0));
+    SDL_BlitSurface(tab_surface[1], &affichage_carte, ecran, &position_affichage_carte);
 
     /*affichage de l'interface*/
     SDL_BlitSurface(tab_surface[5], NULL, ecran, &position_interface);
     SDL_BlitSurface(tab_surface[6], NULL, ecran, &position_mini_carte);
 
-    /*affichage des bordures sur les côtés de la carte*/
-    SDL_FillRect(ecran, &bordure_g, SDL_MapRGB(ecran->format, 255, 255, 255));
-    SDL_FillRect(ecran, &bordure_d, SDL_MapRGB(ecran->format, 255, 255, 255));
+    /*affichage de la barre de ressources*/
+    SDL_BlitSurface(tab_surface[2], NULL, ecran, &position);
 
+    /*affichage de la bordure*/
+    SDL_BlitSurface(tab_surface[3], NULL, ecran, &position_affichage_carte);
+
+    /*affichage bouton passer tour*/
     SDL_BlitSurface(tab_surface[10], NULL, ecran, &position_bouton_tour);
 
     if(interface_affichee == 3)
-        {
-            tab_surface[7] = affichage_flotte(un_jeu, un_terrain_espace,tab_surface[7]);
-		  SDL_BlitSurface(tab_surface[7], NULL, ecran, &position_affichage_info);
-        }
+    {
+        tab_surface[7] = affichage_flotte(un_jeu, un_terrain_espace,tab_surface[7]);
+      SDL_BlitSurface(tab_surface[7], NULL, ecran, &position_affichage_info);
+    }
 
     SDL_Flip(ecran);
 }
 
 void maj_affichage(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface *carte, int interface_affichee, Case_terrain_espace *une_case_terrain_espace, SDL_Surface **tab_surface)
  {
-/*       SDL_Surface *carte_flotte = NULL;
-         SDL_Surface *ressource_g = NULL;
-         SDL_Surface *ressource_d = NULL;
-         SDL_Surface *deplacement_carte = NULL;
-         SDL_Surface *interface = NULL;
-         SDL_Surface *mini_carte = NULL;
-         SDL_Surface *info = NULL;
-         SDL_Surface *panneau_unite = NULL;
-         SDL_Surface *minimap = NULL;
-*/
     SDL_Rect position = {0, 0, 0, 0};
-    SDL_Rect position_interface = {0, TAILLE_FENETRE_Y - 158};
+    SDL_Rect position_interface = {0, TAILLE_TERRAIN_ESPACE_Y + 30, 0, 0};
     SDL_Rect position_mini_carte = {TAILLE_FENETRE_X - 240, TAILLE_FENETRE_Y - 158};
-        /*SDL_Rect position_affichage_carte = {0, 30, TAILLE_TERRAIN_ESPACE_X, TAILLE_TERRAIN_ESPACE_Y};*/
-        SDL_Rect position_affichage_info = {0,TAILLE_TERRAIN_ESPACE_Y + 25 , TAILLE_FENETRE_X, TAILLE_FENETRE_Y - TAILLE_TERRAIN_ESPACE_Y};
-        /*SDL_Rect affichage_carte = {0, 0, 0, 0};*/
-        SDL_Rect position_panneau_unite = {TAILLE_FENETRE_X - 214, 35, 200, TAILLE_TERRAIN_ESPACE_Y-300};
-        SDL_Rect bordure_g = {0, 50, 4, TAILLE_FENETRE_Y - 208};
-    SDL_Rect bordure_d = {TAILLE_FENETRE_X - 4, 50, 4, TAILLE_FENETRE_Y - 208};
-    SDL_Rect position_ressource_d = {TAILLE_FENETRE_X - 50, 0};
-        SDL_Rect position_minimap = {TAILLE_FENETRE_X - TAILLE_MINIMAP_X, TAILLE_FENETRE_Y - TAILLE_MINIMAP_Y, 0, 0};
+    SDL_Rect position_affichage_info = {0,TAILLE_TERRAIN_ESPACE_Y + 25 , TAILLE_FENETRE_X, TAILLE_FENETRE_Y - TAILLE_TERRAIN_ESPACE_Y};
+    SDL_Rect position_panneau_unite = {TAILLE_FENETRE_X - 214, 35, 200, TAILLE_TERRAIN_ESPACE_Y-300};
+    SDL_Rect position_minimap = {TAILLE_FENETRE_X - TAILLE_MINIMAP_X, TAILLE_FENETRE_Y - TAILLE_MINIMAP_Y, 0, 0};
 
-        /*info = SDL_CreateRGBSurface(SDL_HWSURFACE, TAILLE_FENETRE_X, TAILLE_FENETRE_Y - TAILLE_TERRAIN_ESPACE_Y, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
-        SDL_FillRect(info, NULL, SDL_MapRGB(ecran->format, 0, 0, 0));
-    SDL_BlitSurface(info, NULL, ecran, &position_affichage_info);*/
-
-    /*Creation du terrain en entier, celui-ci est stocké en mémoire
-        carte_flotte = creer_affichage_flotte(un_terrain_espace);
-        initialise_sdl_rect(&affichage_carte, un_terrain_espace->affichage_x, un_terrain_espace->affichage_y, TAILLE_TERRAIN_ESPACE_X, TAILLE_TERRAIN_ESPACE_Y);
-        SDL_BlitSurface(carte, &affichage_carte, ecran, &position_affichage_carte);
-        SDL_SetColorKey(carte_flotte, SDL_SRCCOLORKEY, SDL_MapRGB(carte_flotte->format, 0, 0, 0));
-        SDL_BlitSurface(carte_flotte, &affichage_carte, ecran, &position_affichage_carte);*/
-
-    /*affichage de la barre de ressources*/
-        tab_surface[2] = affichage_ressource(un_jeu, tab_surface[2]);
-        SDL_BlitSurface(tab_surface[2], NULL, ecran, &position);
-    SDL_BlitSurface(tab_surface[3], NULL, ecran, &position_ressource_d);
-
-    /*affichage de l'interface*/
+   /*affichage de l'interface*/
     SDL_BlitSurface(tab_surface[5], NULL, ecran, &position_interface);
     SDL_BlitSurface(tab_surface[6], NULL, ecran, &position_mini_carte);
 
-    /*affichage des bordures sur les côtés de la carte*/
-    SDL_FillRect(ecran, &bordure_g, SDL_MapRGB(ecran->format, 255, 255, 255));
-    SDL_FillRect(ecran, &bordure_d, SDL_MapRGB(ecran->format, 255, 255, 255));
+    /*affichage de la barre de ressources*/
+    SDL_BlitSurface(tab_surface[2], NULL, ecran, &position);
 
         if(interface_affichee == 0)
         {
-                /*affichage de la minimap*/
-                tab_surface[9] = affichage_minimap(un_terrain_espace);
-                SDL_BlitSurface(tab_surface[9], NULL, ecran, &position_minimap);
+            /*affichage de la minimap*/
+            tab_surface[9] = affichage_minimap(un_terrain_espace);
+            SDL_BlitSurface(tab_surface[9], NULL, ecran, &position_minimap);
         }
         if(interface_affichee == 1)
         {
             tab_surface[7] = affichage_planete(une_case_terrain_espace, tab_surface[7]);
-        SDL_BlitSurface(tab_surface[7], NULL, ecran, &position_affichage_info);
+            SDL_BlitSurface(tab_surface[7], NULL, ecran, &position_affichage_info);
         }
         if(interface_affichee == 2)
         {
-                tab_surface[7] = affichage_planete_ennemie(une_case_terrain_espace, tab_surface[7]);
-                SDL_BlitSurface(tab_surface[7], NULL, ecran, &position_affichage_info);
+            tab_surface[7] = affichage_planete_ennemie(une_case_terrain_espace, tab_surface[7]);
+            SDL_BlitSurface(tab_surface[7], NULL, ecran, &position_affichage_info);
         }
         if(interface_affichee == 3)
         {
             tab_surface[7] = affichage_flotte(un_jeu, un_terrain_espace, tab_surface[7]);
-        SDL_BlitSurface(tab_surface[7], NULL, ecran, &position_affichage_info);
+            SDL_BlitSurface(tab_surface[7], NULL, ecran, &position_affichage_info);
         }
         if(interface_affichee == 4)
         {
-                tab_surface[7] = affichage_flotte_ennemie(un_jeu, tab_surface[7]);
-                SDL_BlitSurface(tab_surface[7], NULL, ecran, &position_affichage_info);
+            tab_surface[7] = affichage_flotte_ennemie(un_jeu, tab_surface[7]);
+            SDL_BlitSurface(tab_surface[7], NULL, ecran, &position_affichage_info);
         }
         if(interface_affichee == 5)
         {
             tab_surface[7] = affichage_planete(une_case_terrain_espace, tab_surface[7]);
             SDL_BlitSurface(tab_surface[7], NULL, ecran, &position_affichage_info);
             tab_surface[8] = affichage_creation_unite(une_case_terrain_espace, tab_surface[8]);
-        SDL_BlitSurface(tab_surface[8], NULL, ecran, &position_panneau_unite);
+            SDL_BlitSurface(tab_surface[8], NULL, ecran, &position_panneau_unite);
         }
 
     SDL_Flip(ecran);
@@ -786,6 +756,7 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 {
 	SDL_Surface *ecran = NULL;
 	SDL_Surface *carte = NULL;
+	SDL_Surface *icone = NULL;
 	SDL_Surface **tab_surface;
 	SDL_Rect position = {0, 0, 0, 0};
     SDL_Rect bouton_tour = {TAILLE_FENETRE_X - 30, 0, 300, 50};
@@ -796,6 +767,7 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 	int continuer = 1;
 	int x = 0, y = 0;
 	int i, j;
+	int tps_ancien = 10,tps_nouveau = 0, timer = 0, x_info = 0, y_info = 0;
 	int interface_affichee =0; /*1 pour une planete, 2 pour une planete ennemie, 3 pour une flotte, 4 pour une flotte ennemie, 5 pour la création d'unités sur une planète*/
 	Case_terrain_espace *une_case_terrain_espace;
 
@@ -810,8 +782,10 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 	TTF_Init();
 	SDL_EnableKeyRepeat(10, 10);
 
-	SDL_WM_SetIcon(IMG_Load("../graphics/images/icone.png"), NULL);
+    icone = SDL_LoadBMP("../graphics/images/logo.bmp");
+	SDL_WM_SetIcon(icone, NULL);
 	ecran = SDL_SetVideoMode(TAILLE_FENETRE_X, TAILLE_FENETRE_Y, NOMBRE_BITS_COULEUR, SDL_HWSURFACE | SDL_DOUBLEBUF); /*Chargement du fond*/
+
 	SDL_WM_SetCaption("Conquest of Space", NULL);
 	carte = creer_affichage_terrain(un_terrain_espace);
 
@@ -823,12 +797,25 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 
 	while (continuer) /*boucle d'événement principale*/
 	{
-		SDL_WaitEvent(&event);
+/*	    tps_nouveau = SDL_GetTicks();
+	    timer = tps_nouveau - tps_ancien;
+	    if(timer > 10)
+	    {
+	        x_info = event.motion.x;
+            y_info = event.motion.y;
+	        afficher_infobulle(un_jeu, un_terrain_espace, ecran, tab_surface, x_info, y_info);
+	    }
+*/
+		SDL_PollEvent(&event);
 		switch(event.type)
 		{
 		case SDL_QUIT:
 			continuer = 0;
 			break;
+        case SDL_MOUSEMOTION:
+            timer = 0;
+            tps_ancien = SDL_GetTicks();
+            break;
 		case SDL_MOUSEBUTTONUP:
             if (event.button.button == SDL_BUTTON_LEFT)
 			{
@@ -875,7 +862,8 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 				}
 				if(booleen_minimap_pointeur_souris(x, y))
 				{
-
+                    test_minimap_souris(un_terrain_espace, x, y);
+                    maj_affichage_carte_terrain(un_jeu, un_terrain_espace, ecran, tab_surface, interface_affichee);
 				}
 				if (test_souris_rectangle(bouton_tour, x, y)) /*pour passer au joueur suivant*/
 				{
@@ -976,6 +964,10 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
                             maj_affichage_flotte(un_jeu, un_terrain_espace, ecran, tab_surface, interface_affichee);
                         }
                     }
+                    if((un_jeu->selection_flotte->indice_joueur != un_jeu->joueur_en_cours) && (un_jeu->selection_flotte->pt_mouvement_espace_flotte >= 0))
+                    {
+                        /*mettre fonction attaque prenant en param le terrain, le jeu, les 2 flottes*/
+                    }
                 }
             }
             break;
@@ -1012,6 +1004,7 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 	}
 	SDL_FreeSurface(ecran);
 	SDL_FreeSurface(carte);
+	SDL_FreeSurface(icone);
 	TTF_Quit();
 	SDL_Quit();
 }
@@ -1177,7 +1170,7 @@ void input_handle(void)
         }
     }
 }
-
+/*
 void ecran_titre(void)
 {
     SDL_Surface *ecran, *imageDeFond_Depart, *imageDeFond, *Titre, *Titre2, *Texte, *Noir, *FondMenu_Depart, *FondMenu, *Petit_Titre_Depart, *Petit_Titre, *NouvellePartie, *Charger, *Quitter;
@@ -1305,7 +1298,7 @@ void ecran_titre(void)
     }
     pause();
 }
-
+*/
 
 void attaque_ecran(Terrain_combat * un_terrain_combat, SDL_Rect pos)
 {
@@ -1368,8 +1361,8 @@ void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat)
 	interface = SDL_CreateRGBSurface(SDL_HWSURFACE, TAILLE_FENETRE_X, TAILLE_FENETRE_Y/3, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
 	SDL_FillRect(interface, NULL, couleur);
 	carte = affiche_ecran_terrain_combat(un_terrain_combat);
-	
-	attaquer= IMG_Load("../graphiques/images/bouton.png");	
+
+	attaquer= IMG_Load("../graphiques/images/bouton.png");
 	passer= IMG_Load("../graphiques/images/bouton.png");
 	SDL_BlitSurface(carte, NULL, ecran, &position_affichage_carte);
 	SDL_BlitSurface(interface, NULL, ecran, &pos_interface);
