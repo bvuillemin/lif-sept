@@ -134,7 +134,7 @@ void modification_terrain_combat(const Terrain_combat *terrain_combat, const cha
 
 bool deplacement_unite(Terrain_combat *un_terrain_combat, Unite *une_unite,const int x,const int y)
 {
-    if((unite_peut_se_deplacer(une_unite, x, y))&& (!get_presence_unite(get_case_terrain_combat(un_terrain_combat,x,y))) &&(x<un_terrain_combat->taille_combat_x) && (y<un_terrain_combat->taille_combat_y)&&(x>=0)&&(y>=0)&&(get_pt_action(une_unite)>0))
+    if((unite_peut_se_deplacer(une_unite, x, y))&& (!get_presence_unite(get_case_terrain_combat(un_terrain_combat,x,y))) &&(x<un_terrain_combat->taille_combat_x) && (y<un_terrain_combat->taille_combat_y)&&(x>=0)&&(y>=0))
     {
         int distance;
         int x_depart, y_depart;
@@ -150,7 +150,6 @@ bool deplacement_unite(Terrain_combat *un_terrain_combat, Unite *une_unite,const
         retirer_unite(case_depart);
         distance = calcul_distance_unite(x_depart, y_depart, x, y);
         enlever_pt_mouvement_combat_unite(une_unite, distance);
-	enlever_pt_action_unite(une_unite, 1);
         return true;
     }
     else { printf("\nimpossible de déplacer l'unité\n");return false;}
@@ -223,23 +222,24 @@ void un_tour_combat(Terrain_combat * un_terrain_combat, Flotte * flotte)
 	
 }
 
-void attaquer(Terrain_combat * un_terrain_combat,Unite * une_unite,const int x,const int y)
+bool attaquer(Terrain_combat * un_terrain_combat,Unite * une_unite,const int x,const int y)
 {	
 	Unite * victime;
 	int pa_un, pv_vi;
-	
+	bool p;
 	Case_terrain_combat * une_case;
 	une_case = get_case_terrain_combat(un_terrain_combat,x,y);
-	
-	if(get_presence_unite(une_case)&&(get_pt_action(une_unite)>0))
+	p=0;
+	if(get_presence_unite(une_case))
 	{
 		victime = get_unite(une_case);
 		pa_un = get_pt_attaque(une_unite);
 		pv_vi = get_pt_vie(victime);
 		set_pt_vie(victime ,pv_vi - pa_un);
 		printf("a réussi à attaquer\n");
+		p=1;return p;	
 	}
-	else {printf("n'a pas réussi à attaquer\n");}
+	else {printf("n'a pas réussi à attaquer\n");return p;}
 }
 
 bool peut_attaquer_hor_vert(Terrain_combat * un_terrain_combat, const Unite * unite,const int x,const int y)

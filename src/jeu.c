@@ -325,7 +325,7 @@ void passer_tour_combat(Jeu * jeu, Terrain_combat * un_terrain_combat)
                 joueur=get_ieme_joueur_jeu(jeu, 0);
                 flotte = get_ieme_flotte_joueur(joueur,0);
                 reinitialiser_deplacement_unite_flotte(flotte);
-                reinitialiser_pt_action_unite_flotte(flotte);
+                reinitialiser_pt_action_joueur(joueur);
                 
                 jeu->joueur_en_cours = 1;
         }
@@ -334,7 +334,30 @@ void passer_tour_combat(Jeu * jeu, Terrain_combat * un_terrain_combat)
                 joueur=get_ieme_joueur_jeu(jeu, 1);
                 flotte = get_ieme_flotte_joueur(joueur,0);
                 reinitialiser_deplacement_unite_flotte(flotte);
-                reinitialiser_pt_action_unite_flotte(flotte);
+                reinitialiser_pt_action_joueur(joueur);
                 jeu->joueur_en_cours = 0;
         }else{printf("ERREUR ! \n");}
 }
+
+
+void enlever_pt_action_ieme_joueur(Jeu * jeu, const int i, const int nb)
+{
+	Joueur * joueur;
+	joueur= get_ieme_joueur_jeu(jeu,i);
+	enlever_pt_action_joueur(joueur, nb);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

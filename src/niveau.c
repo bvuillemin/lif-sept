@@ -1,6 +1,5 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include "unite.h"
 #include "niveau.h"
 
 void initilalise_niveau(Niveau *niveau, int niv, int exp)

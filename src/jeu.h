@@ -62,4 +62,5 @@ void selectionner_case_combat(Jeu *jeu,Terrain_combat *un_terrain_combat,const i
 void placer_unite_flotte_en_haut(Terrain_combat * un_terrain_combat, Flotte * flotte);
 void placer_unite_flotte_en_bas(Terrain_combat * un_terrain_combat, Flotte * flotte);
 void passer_tour_combat(Jeu * jeu, Terrain_combat * un_terrain_combat);
+void enlever_pt_action_ieme_joueur(Jeu * jeu,const int i, const int nb);
 #endif

@@ -51,8 +51,8 @@ SDL_Rect coordonnee_clic(SDL_Rect position);
 SDL_Rect coordonnee_case_du_clic(SDL_Rect position);
 void affiche_deplacement_unite(Terrain_combat *un_terrain_combat,SDL_Rect position);
 void selection(Jeu * jeu,Terrain_combat *un_terrain_combat,SDL_Rect position);
-void affiche_info_unite(Terrain_combat *un_terrain_combat,char * infos);
-void attaque_ecran(Terrain_combat * un_terrain_combat, SDL_Rect pos);
+void affiche_info_unite(Jeu* jeu,Terrain_combat *un_terrain_combat,char * infos);
+bool attaque_ecran(Terrain_combat * un_terrain_combat, SDL_Rect pos);
 
 /*
 SDL_Surface * surface = NULL;
