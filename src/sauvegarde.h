@@ -6,15 +6,11 @@
 #include <stdbool.h>
 #include <string.h>
 #include "terrain_espace.h"
-
+#include "jeu.h"
 typedef struct
 {
-    int nb_terrain_espace;
     Terrain_espace* terrain_espace;
-    int nb_planete;
-    Planete* tab_planete;
-    int nb_flotte;
-    Flotte* tab_flotte;
+    Jeu* jeu;
 }Sauvegarde;
 
 void initialise_sauvegarde(Sauvegarde *une_sauvegarde);
@@ -25,6 +21,6 @@ void ajouter_planete_sauvegarde(Sauvegarde *une_sauvegarde, Planete *une_planete
 void ajouter_flotte_sauvegarde(Sauvegarde *une_sauvegarde, Flotte *une_flotte);
 
 void detruire_sauvegarde(const char nom[30]);
-Terrain_espace* selection_ouverture(const char nom[30]);
+Sauvegarde* selection_ouverture(const char nom[30]);
 
 #endif
