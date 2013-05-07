@@ -6,7 +6,7 @@
 
 #include "planete.h"
 #include "flotte.h"
-//#include "terrain_espace.h"
+/*#include "terrain_espace.h"*/
 
 /*#include "terrain_espace.h"*/
 
@@ -28,7 +28,9 @@ typedef struct
 	int nb_flotte;
 	int nb_flotte_possible;
     Flotte* tab_flotte;
-
+	
+	int pt_action_joueur;
+	int pt_action_joueur_total;
     char nom_joueur[20];
 
 }Joueur;
@@ -36,6 +38,8 @@ typedef struct
 void set_nom_joueur(Joueur *un_joueur, char nom[20]);
 void set_couleur(Joueur *un_joueur, int i);
 int get_couleur(const Joueur *un_joueur);
+void set_pt_action_joueur(Joueur *un_joueur, int i);
+int get_pt_action_joueur(const Joueur *un_joueur);
 void set_metal_joueur(Joueur *un_joueur, int nb);
 int get_metal_joueur(const Joueur *un_joueur);
 void set_argent_joueur(Joueur *un_joueur, int nb);
@@ -76,6 +80,7 @@ void ajouter_unite_ieme_flotte_joueur(Joueur *un_joueur, Unite * unite, int i);/
 
 void colonisation_planete(Joueur *un_joueur, Planete *une_planete);
 void creation_unite_planete(Joueur *un_joueur, Planete *une_planete, int choix);
-
+void enlever_pt_action_joueur(Joueur *un_joueur, const int point);
+void reinitialiser_pt_action_joueur(Joueur *joueur);
 
 #endif

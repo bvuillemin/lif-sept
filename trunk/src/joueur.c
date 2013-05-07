@@ -25,6 +25,19 @@ int get_couleur(const Joueur *un_joueur)
     return un_joueur->couleur_joueur;
 }
 
+void set_pt_action_joueur(Joueur *un_joueur, int i)
+{
+    un_joueur->pt_action_joueur = i;
+}
+
+int get_pt_action_joueur(const Joueur *un_joueur)
+{
+    return un_joueur->pt_action_joueur;
+}
+int get_pt_action_joueur_total(const Joueur *un_joueur)
+{
+    return un_joueur->pt_action_joueur_total;
+}
 void set_numero_joueur(Joueur *un_joueur, int i)
 {
         un_joueur->numero_joueur = i;
@@ -197,6 +210,8 @@ void initialise_joueur(Joueur *un_joueur, char nom[20])
 	un_joueur->nb_flotte = 0;
 	un_joueur->nb_flotte_possible = 10;
 	un_joueur->tab_flotte = (Flotte *)malloc(sizeof(Flotte) * 10);
+	un_joueur->pt_action_joueur = 3;
+	un_joueur->pt_action_joueur_total = 3;
 
 }
 
@@ -250,7 +265,8 @@ void retirer_metal(Joueur *un_joueur, int nb)
 }
 
 void ajouter_argent(Joueur *un_joueur, int nb)
-{
+{void set_couleur(Joueur *un_joueur, int i);
+
     un_joueur->argent = un_joueur->argent + nb;
 }
 
@@ -321,4 +337,15 @@ void creation_unite_planete(Joueur *un_joueur, Planete *une_planete, int choix)
 
 }
 
+void enlever_pt_action_joueur(Joueur *un_joueur, const int point)
+{
+	int temp = get_pt_action_joueur(un_joueur);
+    temp = temp - point;
+    set_pt_action_joueur(un_joueur, temp);
+}
+
+void reinitialiser_pt_action_joueur(Joueur *un_joueur)
+{
+	un_joueur->pt_action_joueur=un_joueur->pt_action_joueur_total;
+}
 

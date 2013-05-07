@@ -3,7 +3,6 @@
 #include <stdbool.h>
 #include <math.h>
 #include "unite.h"
-#include "niveau.h"
 
 void initialise_unite(Unite *unite_jeu, const int pt_vie,const int pt_attaque,const int pt_action,const int pt_deplacement,const int portee,const int pt_mouvement)
 {

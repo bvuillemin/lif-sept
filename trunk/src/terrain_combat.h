@@ -64,7 +64,7 @@ bool case_libre(const Terrain_combat * un_terrain_combat,const int x,const int y
 void un_tour_combat(Terrain_combat * un_terrain_combat, Flotte * flotte);
 bool peut_attaquer_diag(Terrain_combat * un_terrain_combat, Unite * unite,const int x,const int y);
 bool peut_attaquer_hor_vert(Terrain_combat * un_terrain_combat, const Unite * unite,const int x,const int y);
-void attaquer(Terrain_combat * un_terrain_combat,Unite * une_unite,const int x,const int y);
+bool attaquer(Terrain_combat * un_terrain_combat,Unite * une_unite,const int x,const int y);
 /*void test_module_terrain_combat();*/
 
 
