@@ -80,6 +80,10 @@ void enlever_pt_mouvement_combat_unite(Unite *une_unite, const int distance);
 void enlever_pt_action_unite(Unite *une_unite, const int point);
 void reinitialiser_mouvement_combat_unite(Unite *une_unite);
 void reinitialiser_pt_action(Unite *une_unite);
+
+void sauvegarde_unite(const Unite *une_unite, FILE* f);
+Unite* ouverture_unite(FILE *f);
+
 void test_module_unite();
 
 #endif

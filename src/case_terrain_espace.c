@@ -138,3 +138,45 @@ void test_module_case_terrain_espace()
 	}
 }
 
+void sauvegarde_case_terrain_espace(const Case_terrain_espace *une_case_terrain_espace, FILE*f)
+{
+    fprintf(f, "%d\n", une_case_terrain_espace->x_espace);
+    fprintf(f, "%d\n", une_case_terrain_espace->y_espace);
+    fprintf(f, "%s\n", &une_case_terrain_espace->type_case_terrain_espace);
+    fprintf(f, "%d\n", une_case_terrain_espace->presence_flotte);
+    if (une_case_terrain_espace->planete != NULL) {
+        sauvegarde_planete(une_case_terrain_espace->planete, f);
+    }
+    if (une_case_terrain_espace->presence_flotte == true) {
+        sauvegarde_flotte(une_case_terrain_espace->flotte, f);
+    }
+    fprintf(f, "FinCase\n");
+}
+
+Case_terrain_espace* ouverture_case_terrain_espace(FILE*f)
+{
+    Case_terrain_espace *case_terrain_espace_ouverte=(Case_terrain_espace *)malloc(sizeof(Case_terrain_espace));
+    char chaine[50];
+    int b;
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    case_terrain_espace_ouverte->x_espace = b;
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    case_terrain_espace_ouverte->y_espace = b;
+    fgets(chaine, 50, f);
+    case_terrain_espace_ouverte->type_case_terrain_espace = chaine[0];
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    case_terrain_espace_ouverte->presence_flotte = b;
+    fgets(chaine, 50, f);
+    if (strcmp(chaine, "Planete\n")==0)
+    {
+        case_terrain_espace_ouverte->planete = ouverture_planete(f);
+        fgets(chaine, 50, f);
+    }
+    if (strcmp(chaine, "Flotte\n")==0)
+    {
+        case_terrain_espace_ouverte->flotte = ouverture_flotte(f);
+        fgets(chaine, 50, f);
+    }
+    affiche_case_terrain_espace(case_terrain_espace_ouverte);
+    return case_terrain_espace_ouverte;
+}

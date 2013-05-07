@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
-
+#include <string.h>
 #include "terrain_espace.h"
 
 typedef struct
@@ -19,19 +19,12 @@ typedef struct
 
 void initialise_sauvegarde(Sauvegarde *une_sauvegarde);
 Sauvegarde *creer_sauvegarde();
+void creer_fichier_sauvegarde(const char nom[30], Terrain_espace *un_terrain_espace);
 void ajouter_terrain_espace_sauvegarde(Sauvegarde *une_sauvegarde, Terrain_espace *un_terrain_espace);
 void ajouter_planete_sauvegarde(Sauvegarde *une_sauvegarde, Planete *une_planete);
 void ajouter_flotte_sauvegarde(Sauvegarde *une_sauvegarde, Flotte *une_flotte);
 
 void detruire_sauvegarde(const char nom[30]);
-void sauvegarde_terrain(const Terrain_espace *un_terrain_espace, const char nom[30]);
-void sauvegarde_planete(const Planete *une_planete, const char nom[30]);
-void sauvegarde_flotte(const Flotte *une_flotte, const char nom[30]);
-void sauvegarde_unite(const Unite *une_unite, FILE* f);
-Terrain_espace* ouverture_terrain(FILE *f);
-Planete* ouverture_planete(FILE *f);
-Flotte* ouverture_flotte(FILE *f);
-Unite* ouverture_unite(FILE *f);
-Sauvegarde* selection_ouverture(const char nom[30]);
+Terrain_espace* selection_ouverture(const char nom[30]);
 
 #endif

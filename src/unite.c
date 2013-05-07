@@ -193,6 +193,61 @@ void reinitialiser_pt_action(Unite *une_unite)
 	une_unite->pt_action = une_unite->pt_action_total;
 }
 
+void sauvegarde_unite(const Unite *une_unite, FILE* f)
+{
+    fprintf(f, "%d\n", une_unite->indice_joueur);
+    fprintf(f, "%d\n", une_unite->x_unite);
+    fprintf(f, "%d\n", une_unite->y_unite);
+    fprintf(f, "%d\n", une_unite->portee);
+    fprintf(f, "%d\n", une_unite->portee_total);
+    fprintf(f, "%d\n", une_unite->pt_vie);
+    fprintf(f, "%d\n", une_unite->pt_vie_total);
+    fprintf(f, "%d\n", une_unite->pt_attaque);
+    fprintf(f, "%d\n", une_unite->pt_attaque_total);
+    fprintf(f, "%d\n", une_unite->pt_action);
+    fprintf(f, "%d\n", une_unite->pt_action_total);
+    fprintf(f, "%d\n", une_unite->pt_deplacement);
+    fprintf(f, "%d\n", une_unite->pt_deplacement_total);
+    fprintf(f, "%d\n", une_unite->pt_mouvement_unite);
+    sauvegarde_niveau(&une_unite->niveau_unite, f);
+}
+
+Unite* ouverture_unite(FILE *f)
+{
+    Unite *unite_ouverte = (Unite *)malloc(sizeof(Unite));
+    char chaine[50];
+    int b;
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    unite_ouverte->indice_joueur = b;
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    unite_ouverte->x_unite = b;
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    unite_ouverte->y_unite = b;
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    unite_ouverte->portee = b;
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    unite_ouverte->portee_total = b;
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    unite_ouverte->pt_vie = b;
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    unite_ouverte->pt_vie_total = b;
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    unite_ouverte->pt_attaque = b;
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    unite_ouverte->pt_attaque_total = b;
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    unite_ouverte->pt_action= b;
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    unite_ouverte->pt_action_total = b;
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    unite_ouverte->pt_deplacement = b;
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    unite_ouverte->pt_deplacement_total = b;
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    unite_ouverte->pt_mouvement_unite = b;
+    unite_ouverte->niveau_unite = *ouverture_niveau(f);
+    return unite_ouverte;
+}
 /*void test_module_unite()
 {
     Unite *guerriers;

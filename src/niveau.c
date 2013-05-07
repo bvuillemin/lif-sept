@@ -49,3 +49,21 @@ void detruit_niveau(Niveau **niveau)
 	*niveau=NULL;
 }
 
+void sauvegarde_niveau(const Niveau *un_niveau, FILE* f)
+{
+    fprintf(f, "%d\n", un_niveau->niveau_unite);
+    fprintf(f, "%d\n", un_niveau->experience);
+}
+
+Niveau* ouverture_niveau(FILE *f)
+{
+    Niveau *niveau_ouvert=(Niveau *)malloc(sizeof(Niveau));
+    char chaine[50];
+    int b;
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    niveau_ouvert->niveau_unite = b;
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    niveau_ouvert->experience = b;
+    return niveau_ouvert;
+}
+

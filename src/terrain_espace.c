@@ -254,7 +254,40 @@ bool fusion_flotte(Joueur *un_joueur, Terrain_espace *un_terrain_espace, Flotte 
     return false;
 }
 
+void sauvegarde_terrain_espace(const Terrain_espace *un_terrain_espace, FILE*f)
+{
+    int i,j;
+    fprintf(f, "Terrain_Espace\n");
+    fprintf(f, "%d\n", un_terrain_espace->taille_espace_x);
+    fprintf(f, "%d\n", un_terrain_espace->taille_espace_y);
+    for(i=0;i<un_terrain_espace->taille_espace_x;i++)
+    {
+        for(j=0;j<un_terrain_espace->taille_espace_y;j++)
+        {
+            sauvegarde_case_terrain_espace(&un_terrain_espace->tab_terrain_espace[i*(un_terrain_espace->taille_espace_y)+j], f);
+        }
+    }
+    fprintf(f, "FinTerrain_Espace\n");
+}
 
+Terrain_espace* ouverture_terrain(FILE *f)
+{
+    Terrain_espace *terrain_ouvert;
+    char chaine[50];
+    int b, c, i, j;
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    sscanf(fgets(chaine, 50, f), "%d", &c);
+    terrain_ouvert = creer_terrain_espace(b, c);
+    for(i=0;i<terrain_ouvert->taille_espace_x;i++)
+    {
+        for(j=0;j<terrain_ouvert->taille_espace_y;j++)
+        {
+            terrain_ouvert->tab_terrain_espace[i*(terrain_ouvert->taille_espace_y)+j] = *ouverture_case_terrain_espace(f);
+        }
+        printf("\n");
+    }
+    return terrain_ouvert;
+}
 
 /*void test_module_terrain_espace()
 {

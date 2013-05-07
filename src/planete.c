@@ -254,3 +254,71 @@ void test_module_planete()
 	}
     detruire_planete(&terre);
 }
+
+void sauvegarde_planete(const Planete *une_planete, FILE*f)
+{
+    int i;
+    fprintf(f, "Planete\n");
+    fprintf(f, "%s\n", une_planete->nom_planete);
+    fprintf(f, "%d\n", une_planete->x);
+    fprintf(f, "%d\n", une_planete->y);
+    fprintf(f, "%d\n", une_planete->indice_joueur);
+    for(i=0; i<10; i++)
+    {
+        fprintf(f, "%d\n", une_planete->batiment[i]);
+    }
+    fprintf(f, "%d\n", une_planete->batiment_en_cours);
+    fprintf(f, "%d\n", une_planete->batiment_nb_tour_restant);
+    fprintf(f, "%d\n", une_planete->taille_utilisee);
+    fprintf(f, "%d\n", une_planete->taille_planete);
+    fprintf(f, "%d\n", une_planete->habitabilite);
+    fprintf(f, "%d\n", une_planete->planete_principale);
+    fprintf(f, "%d\n", une_planete->planete_colonisee);
+    fprintf(f, "%d\n", une_planete->metal);
+    fprintf(f, "%d\n", une_planete->argent);
+    fprintf(f, "%d\n", une_planete->carburant);
+    fprintf(f, "%d\n", une_planete->population);
+}
+
+Planete* ouverture_planete(FILE *f)
+{
+    Planete *planete_ouverte;
+    char chaine[50];
+    int b, i;
+    fgets(chaine, 50, f);
+    planete_ouverte = creer_planete(chaine);
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    planete_ouverte->x = b;
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    planete_ouverte->y = b;
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    planete_ouverte->indice_joueur = b;
+    for(i=0; i<10; i++)
+    {
+        sscanf(fgets(chaine, 50, f), "%d", &b);
+        planete_ouverte->batiment[i] = b;
+    }
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    planete_ouverte->batiment_en_cours = b;
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    planete_ouverte->batiment_nb_tour_restant = b;
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    planete_ouverte->taille_utilisee = b;
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    planete_ouverte->taille_planete = b;
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    planete_ouverte->habitabilite = b;
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    planete_ouverte->planete_principale = b;
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    planete_ouverte->planete_colonisee = b;
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    planete_ouverte->metal = b;
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    planete_ouverte->argent = b;
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    planete_ouverte->carburant = b;
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    planete_ouverte->population = b;
+    return planete_ouverte;
+}

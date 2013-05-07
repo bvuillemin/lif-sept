@@ -40,4 +40,7 @@ void augmenter_experience(Niveau *niveau);
 void libere_niveau(Niveau *niveau);
 void detruit_niveau(Niveau **niveau);
 
+void sauvegarde_niveau(const Niveau *un_niveau, FILE* f);
+Niveau* ouverture_niveau(FILE *f);
+
 #endif

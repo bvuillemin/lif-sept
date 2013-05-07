@@ -232,6 +232,49 @@ void reinitialiser_pt_action_unite_flotte(Flotte *une_flotte)
 	}
 }
 
+void sauvegarde_flotte(const Flotte *une_flotte, FILE*f)
+{
+    int i;
+    fprintf(f, "Flotte\n");
+    fprintf(f, "%d\n", une_flotte->x_flotte);
+    fprintf(f, "%d\n", une_flotte->y_flotte);
+    fprintf(f, "%d\n", une_flotte->indice_joueur);
+    fprintf(f, "%d\n", une_flotte->indice_tableau_joueur);
+    fprintf(f, "%d\n", une_flotte->taille_maximum_flotte);
+    fprintf(f, "%d\n", une_flotte->taille_flotte);
+    fprintf(f, "%d\n", une_flotte->pt_mouvement_espace_flotte);
+    for(i=0; i<une_flotte->taille_flotte; i++)
+    {
+        sauvegarde_unite(&une_flotte->tab_unite[i], f);
+    }
+}
+
+Flotte* ouverture_flotte(FILE *f)
+{
+    Flotte* flotte_ouverte;
+    char chaine[50];
+    int b, i;
+    flotte_ouverte = creer_flotte();
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    flotte_ouverte->x_flotte = b;
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    flotte_ouverte->y_flotte = b;
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    flotte_ouverte->indice_joueur = b;
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    flotte_ouverte->indice_tableau_joueur = b;
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    flotte_ouverte->taille_maximum_flotte = b;
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    flotte_ouverte->taille_flotte = b;
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    flotte_ouverte->pt_mouvement_espace_flotte = b;
+    for(i=0; i<flotte_ouverte->taille_flotte; i++)
+    {
+        flotte_ouverte->tab_unite[i] = *ouverture_unite(f);
+    }
+    return flotte_ouverte;
+}
 
 /*void test_module_flotte()
 {
