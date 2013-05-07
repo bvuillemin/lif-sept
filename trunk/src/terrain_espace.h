@@ -56,7 +56,7 @@ bool deplacement_flotte(Joueur *un_joueur, Terrain_espace *un_terrain_espace, Fl
 bool fusion_flotte(Joueur *un_joueur, Terrain_espace *un_terrain_espace, Flotte *une_flotte, int x, int y);
 
 void sauvegarde_terrain_espace(const Terrain_espace *un_terrain_espace, FILE*f);
-Terrain_espace* ouverture_terrain(FILE *f);
+Terrain_espace* ouverture_terrain_espace(FILE *f);
 
 /*void test_module_terrain_espace();*/
 

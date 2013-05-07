@@ -270,7 +270,7 @@ void sauvegarde_terrain_espace(const Terrain_espace *un_terrain_espace, FILE*f)
     fprintf(f, "FinTerrain_Espace\n");
 }
 
-Terrain_espace* ouverture_terrain(FILE *f)
+Terrain_espace* ouverture_terrain_espace(FILE *f)
 {
     Terrain_espace *terrain_ouvert;
     char chaine[50];
