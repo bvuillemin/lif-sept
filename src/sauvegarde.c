@@ -2,12 +2,12 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-#include "terrain_espace.h"
 #include "planete.h"
 #include "flotte.h"
 #include "unite.h"
 #include "niveau.h"
 #include "sauvegarde.h"
+#include "terrain_espace.h"
 
 void initialise_sauvegarde(Sauvegarde *une_sauvegarde)
 {
@@ -88,7 +88,7 @@ Terrain_espace* selection_ouverture(const char nom[30])
     if (strcmp(chaine, "Terrain_Espace\n")==0)
     {
         //Terrain_espace* un_terrain_espace;
-        une_sauvegarde = ouverture_terrain(f);
+        une_sauvegarde = ouverture_terrain_espace(f);
         //fgets(chaine, 50, f);
         
         //ajouter_terrain_espace_sauvegarde(une_sauvegarde, un_terrain_espace);
