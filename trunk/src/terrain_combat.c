@@ -222,11 +222,11 @@ void un_tour_combat(Terrain_combat * un_terrain_combat, Flotte * flotte)
 	
 }
 
-bool attaquer(Terrain_combat * un_terrain_combat,Unite * une_unite,const int x,const int y)
+int attaquer(Terrain_combat * un_terrain_combat,Unite * une_unite,const int x,const int y)
 {	
 	Unite * victime;
 	int pa_un, pv_vi;
-	bool p;
+	int p;
 	Case_terrain_combat * une_case;
 	une_case = get_case_terrain_combat(un_terrain_combat,x,y);
 	p=0;
@@ -237,7 +237,8 @@ bool attaquer(Terrain_combat * un_terrain_combat,Unite * une_unite,const int x,c
 		pv_vi = get_pt_vie(victime);
 		set_pt_vie(victime ,pv_vi - pa_un);
 		printf("a réussi à attaquer\n");
-		p=1;return p;	
+		if (get_pt_vie(victime)<=0){p=-2;return p;}
+		else{p=1;return p;}
 	}
 	else {printf("n'a pas réussi à attaquer\n");return p;}
 }
@@ -278,7 +279,17 @@ bool peut_attaquer_diag(Terrain_combat * un_terrain_combat, Unite * unite,int x,
     }
     else {printf("!diagonale impossible! \n"); return false;}
 }
-
+void supprimer_unite_flotte(Terrain_combat * un_terrain_combat,Flotte * flotte ,Unite* unite)
+{
+	int i,x,y;
+	Case_terrain_combat * une_case;
+	i=get_indice_unite_dans_flotte(unite);
+	x=get_x_unite(unite);
+	y=get_y_unite(unite);
+	une_case = get_case_terrain_combat(un_terrain_combat,x,y);
+	retirer_unite(une_case);
+	retirer_unite_flotte(flotte,i);
+}
 /*void test_module_terrain_combat()
 {
     Terrain_combat *terrain_combat;
