@@ -60,6 +60,20 @@ void detruire_unite(Unite **unite_jeu)
     *unite_jeu = NULL;
 }
 
+void set_indice_unite_dans_flotte(Unite *unite,const int i)
+{
+    unite->indice_dans_flotte = i;
+}
+
+int get_indice_unite_dans_flotte(const Unite *unite)
+{
+    return unite->indice_dans_flotte;
+}
+
+void set_pt_vie(Unite *unite_jeu, const int x)
+{
+    unite_jeu->pt_vie = x;
+}
 void set_indice_joueur_unite(Unite *unite,const int i)
 {
     unite->indice_joueur = i;
@@ -68,11 +82,6 @@ void set_indice_joueur_unite(Unite *unite,const int i)
 int get_indice_joueur_unite(const Unite *unite)
 {
     return unite->indice_joueur;
-}
-
-void set_pt_vie(Unite *unite_jeu, const int x)
-{
-    unite_jeu->pt_vie = x;
 }
 
 void set_portee(Unite *unite_jeu, const int x)

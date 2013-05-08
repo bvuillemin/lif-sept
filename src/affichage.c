@@ -1310,19 +1310,34 @@ void ecran_titre(void)
 }
 */
 
-bool attaque_ecran(Jeu * jeu,Terrain_combat * un_terrain_combat, SDL_Rect pos)
+bool attaque_ecran(Jeu * jeu,Terrain_combat * un_terrain_combat, SDL_Rect pos,Flotte* flotte1,Flotte * flotte2)
 {
-	bool p;
+	int p;
+	int i;
 	Case_terrain_combat * une_case;
+	Unite * unite;
 	une_case = get_selection(un_terrain_combat);
 	pos=coordonnee_case_du_clic(pos);
 	p=0;
 	if(((peut_attaquer_hor_vert(un_terrain_combat, get_unite(une_case),pos.x,pos.y))||(peut_attaquer_diag(un_terrain_combat, get_unite(une_case),pos.x,pos.y)))&&get_pt_action_joueur(get_ieme_joueur_jeu(jeu,get_joueur_en_cours_combat(jeu)))>0){
 	p=attaquer(un_terrain_combat,get_unite(une_case),pos.x,pos.y);}
+	if((p==0)||(p==1)){
 	return p;
+	}else if(p==-2)
+	{
+		une_case = get_case_terrain_combat(un_terrain_combat,pos.x,pos.y);
+		unite=get_unite(une_case);
+		i=get_indice_joueur_unite(unite);
+		if(i==0)
+		{
+			supprimer_unite_flotte(un_terrain_combat,flotte1,unite);
+		}else if(i==1){supprimer_unite_flotte(un_terrain_combat,flotte2,unite);}
+		return 0;
+	}
+	return 0;
 }
 
-void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat)
+void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat,Flotte* flotte1,Flotte * flotte2)
 {
 	SDL_Rect pos_clic,pos_texte,pos_texte2,pos_interface, position_affichage_carte,position_passer,pos_attaquer,pos_interface_carte;
 	SDL_Surface *ecran = NULL;
@@ -1339,13 +1354,14 @@ void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat)
 	SDL_Event evenement;
 
 	Uint32 couleur;
+	
 	continuer=1;attend_attaque=1;
 	initialise_sdl_rect(&pos_interface_carte,0,0,TAILLE_FENETRE_X,400);
 	initialise_sdl_rect(&pos_interface,X_INTERFACE,Y_INTERFACE,0,0);
 	initialise_sdl_rect(&position_affichage_carte,X_CARTE,Y_CARTE,0,0);
 	initialise_sdl_rect(&pos_attaquer,X_BOUTON_ATTAQUER,Y_BOUTON_ATTAQUER,TAILLE_X_BOUTON_ATTAQUER,TAILLE_Y_BOUTON_ATTAQUER);
 	initialise_sdl_rect(&position_passer,X_BOUTON_PASSER,X_BOUTON_PASSER,TAILLE_X_BOUTON_ATTAQUER,TAILLE_Y_BOUTON_ATTAQUER);
-
+test=1;
 	attaque_reussi=0;
 	 if (SDL_Init(SDL_INIT_VIDEO) == -1) /*Démarrage de la SDL. Si erreur :*/
     {
@@ -1368,7 +1384,6 @@ void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat)
 	couleur = SDL_MapRGB(ecran->format,150,0,0);
 	SDL_FillRect(ecran, NULL, couleur);
 	SDL_Flip(ecran);
-
 
 	couleur = NOIR;
 	interface = IMG_Load("../graphiques/images/interface_bas.png");
@@ -1423,10 +1438,9 @@ void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat)
 				else if(test_souris_rectangle(pos_attaquer,pos_clic.x,pos_clic.y))
 				{
 					if(get_une_case_selectionnee(un_terrain_combat)){
-						printf("Preparation attaque!\n");
 						sprintf(infos2,"Preparation de l'attaque");
 						texte2 = TTF_RenderText_Solid(police,infos2,couleur_police);
-						test=SDL_BlitSurface(texte2, NULL, ecran, &pos_texte2);
+						test=SDL_BlitSurface(texte2, NULL, ecran, &pos_texte2);SDL_Flip(ecran);
 						printf("BOOL : %d \n",test);
 						while(attend_attaque){
 							SDL_WaitEvent(&evenement);
@@ -1436,7 +1450,7 @@ void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat)
 								printf("attaquons?\n");
 								pos_clic.x=evenement.button.x + position_affichage_carte.x;
 								pos_clic.y=evenement.button.y + position_affichage_carte.y;
-								attaque_reussi=attaque_ecran(jeu,un_terrain_combat,pos_clic);
+								attaque_reussi=attaque_ecran(jeu,un_terrain_combat,pos_clic,flotte1, flotte2);
 								if(attaque_reussi){
 									sprintf(infos2,"Attaquons !");
 									texte2 = TTF_RenderText_Solid(police,infos2,couleur_police);
@@ -1489,23 +1503,30 @@ void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat)
   	      	    	case SDLK_a:
 						printf("appuie sur a\n");
 						if(get_une_case_selectionnee(un_terrain_combat)){
-							printf("préparation attaque\n");
-							while(attend_attaque){
-								SDL_WaitEvent(&evenement);
-								switch (evenement.type)
-								{
-									case SDL_MOUSEBUTTONUP: /* Clic de la souris */
-									printf("attaquons?\n");
-									pos_clic.x=evenement.button.x + position_affichage_carte.x;
-									pos_clic.y=evenement.button.y + position_affichage_carte.y;
-									attaque_ecran(jeu,un_terrain_combat,pos_clic);
-									printf("attaquons!\n");
-									attend_attaque=0;
-									if(get_pt_action_joueur(get_ieme_joueur_jeu(jeu,get_joueur_en_cours_combat(jeu)))<=0){
-		passer_tour_combat(jeu,un_terrain_combat);}
-									break;
+						sprintf(infos2,"Preparation de l'attaque");
+						texte2 = TTF_RenderText_Solid(police,infos2,couleur_police);
+						test=SDL_BlitSurface(texte2, NULL, ecran, &pos_texte2);
+						printf("BOOL : %d \n",test);
+						while(attend_attaque){
+							SDL_WaitEvent(&evenement);
+							switch (evenement.type)
+							{
+								case SDL_MOUSEBUTTONUP: /* Clic de la souris */
+								printf("attaquons?\n");
+								pos_clic.x=evenement.button.x + position_affichage_carte.x;
+								pos_clic.y=evenement.button.y + position_affichage_carte.y;
+								attaque_reussi=attaque_ecran(jeu,un_terrain_combat,pos_clic,flotte1, flotte2);
+								if(attaque_reussi){
+									sprintf(infos2,"Attaquons !");
+									texte2 = TTF_RenderText_Solid(police,infos2,couleur_police);
+									SDL_BlitSurface(texte2, NULL, ecran, &pos_texte2);
 								}
+								attend_attaque=0;
+								if(get_pt_action_joueur(get_ieme_joueur_jeu(jeu,get_joueur_en_cours_combat(jeu)))<=0){
+		passer_tour_combat(jeu,un_terrain_combat);}
+								break;
 							}
+						}
 							printf("fin du while \n");attend_attaque=1;
 						}
              	    break;
@@ -1536,4 +1557,15 @@ void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat)
     SDL_Quit();
 }
 
+void lancer_combat_ecran(Jeu *jeu,Terrain_combat * un_combat, Flotte* flotte1,Flotte * flotte2)
+{
+	un_combat=creer_terrain_combat(10,5);
+	modification_terrain_combat(un_combat,'E');
+	placer_unite_flotte_en_haut(un_combat,flotte1);
+	placer_unite_flotte_en_bas(un_combat,flotte2);
+	affichage_ecran_combat(jeu ,un_combat,flotte1,flotte2);
 
+
+
+
+}

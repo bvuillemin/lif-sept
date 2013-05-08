@@ -80,18 +80,6 @@ afficher_flotte(flotte2);
 	ajouter_unite_flotte(flotte2, unite6);
 	afficher_flotte(flotte2);
 
-	un_match=creer_terrain_combat(10,5);
-	modification_terrain_combat(un_match,'E');
-	affiche_terrain_combat(un_match);
-
-	placer_unite_flotte_en_haut(un_match,flotte1);
-	afficher_flotte(flotte1);
-	affiche_terrain_combat(un_match);
-	
-
-	placer_unite_flotte_en_bas(un_match,flotte2);
-	afficher_flotte(flotte2);
-	affiche_terrain_combat(un_match);
 
 	/*i=0;
 	
@@ -113,7 +101,7 @@ afficher_flotte(flotte2);
 		printf("ok!\n");
 	}*/
 	
-	affichage_ecran_combat(jeu,un_match);
+	lancer_combat_ecran(jeu,un_match,flotte1,flotte2);
 	return 0;
 
 }

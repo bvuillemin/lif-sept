@@ -46,14 +46,14 @@ void affichage_ecran_acceuil(Terrain_combat *un_terrain_combat);
 
 /*pour le combat :*/
 SDL_Surface* affichage_ecran_terrain_combat(const Terrain_combat *un_terrain_combat);
-void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat);
+void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat, Flotte* flotte1,Flotte * flotte2);
 SDL_Rect coordonnee_clic(SDL_Rect position);
 SDL_Rect coordonnee_case_du_clic(SDL_Rect position);
 void affiche_deplacement_unite(Terrain_combat *un_terrain_combat,SDL_Rect position);
 void selection(Jeu * jeu,Terrain_combat *un_terrain_combat,SDL_Rect position);
 void affiche_info_unite(Jeu* jeu,Terrain_combat *un_terrain_combat,char * infos);
-bool attaque_ecran(Terrain_combat * un_terrain_combat, SDL_Rect pos);
-
+bool attaque_ecran(Terrain_combat * un_terrain_combat, SDL_Rect pos,Flotte* flotte1,Flotte * flotte2);
+void lancer_combat_ecran(Jeu * jeu,Terrain_combat * un_combat, Flotte* flotte1,Flotte * flotte2);
 /*
 SDL_Surface * surface = NULL;
 SDL_Rect position;
