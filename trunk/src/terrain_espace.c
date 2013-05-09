@@ -260,14 +260,13 @@ void sauvegarde_terrain_espace(const Terrain_espace *un_terrain_espace, FILE*f)
     fprintf(f, "Terrain_Espace\n");
     fprintf(f, "%d\n", un_terrain_espace->taille_espace_x);
     fprintf(f, "%d\n", un_terrain_espace->taille_espace_y);
-    for(i=0;i<un_terrain_espace->taille_espace_x;i++)
+    for(j=0;j<un_terrain_espace->taille_espace_y;j++)
     {
-        for(j=0;j<un_terrain_espace->taille_espace_y;j++)
+        for(i=0;i<un_terrain_espace->taille_espace_x;i++)
         {
             sauvegarde_case_terrain_espace(&un_terrain_espace->tab_terrain_espace[i*(un_terrain_espace->taille_espace_y)+j], f);
         }
     }
-    fprintf(f, "FinTerrain_Espace\n");
 }
 
 Terrain_espace* ouverture_terrain_espace(FILE *f)
@@ -278,14 +277,14 @@ Terrain_espace* ouverture_terrain_espace(FILE *f)
     sscanf(fgets(chaine, 50, f), "%d", &b);
     sscanf(fgets(chaine, 50, f), "%d", &c);
     terrain_ouvert = creer_terrain_espace(b, c);
-    for(i=0;i<terrain_ouvert->taille_espace_x;i++)
+    for(j=0;j<terrain_ouvert->taille_espace_y;j++)
     {
-        for(j=0;j<terrain_ouvert->taille_espace_y;j++)
+        for(i=0;i<terrain_ouvert->taille_espace_x;i++)
         {
             terrain_ouvert->tab_terrain_espace[i*(terrain_ouvert->taille_espace_y)+j] = *ouverture_case_terrain_espace(f);
         }
-        printf("\n");
     }
+    affiche_terrain_espace(terrain_ouvert);
     return terrain_ouvert;
 }
 
