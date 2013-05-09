@@ -8,7 +8,7 @@
 #include "terrain_combat.h"
 #include "joueur.h"
 #include "constante.h"
-
+#include "flotte.h"
 /**
  * \file      Module terrain
  * \author
@@ -63,4 +63,6 @@ void placer_unite_flotte_en_haut(Terrain_combat * un_terrain_combat, Flotte * fl
 void placer_unite_flotte_en_bas(Terrain_combat * un_terrain_combat, Flotte * flotte);
 void passer_tour_combat(Jeu * jeu, Terrain_combat * un_terrain_combat);
 void enlever_pt_action_ieme_joueur(Jeu * jeu,const int i, const int nb);
+void sauvegarde_jeu(const Jeu *un_jeu, FILE*f);
+Jeu* ouverture_jeu(FILE *f);
 #endif

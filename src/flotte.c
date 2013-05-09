@@ -4,7 +4,6 @@
 #include "flotte.h"
 #include "case_terrain_espace.h"
 #include "terrain_espace.h"
-#include "unite.h"
 #include "sauvegarde.h"
 void initialiser_flotte(Flotte *flotte)
 {

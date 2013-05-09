@@ -14,7 +14,7 @@ typedef struct
 {
     int numero_joueur;
 
-    enum {bleu, rouge} couleur_joueur;
+    enum {bleu = 0, rouge} couleur_joueur;
 
     int metal;
     int argent;
@@ -82,5 +82,8 @@ void colonisation_planete(Joueur *un_joueur, Planete *une_planete);
 void creation_unite_planete(Joueur *un_joueur, Planete *une_planete, int choix);
 void enlever_pt_action_joueur(Joueur *un_joueur, const int point);
 void reinitialiser_pt_action_joueur(Joueur *joueur);
+
+void sauvegarde_joueur(const Joueur *un_joueur, FILE*f);
+Joueur* ouverture_joueur(FILE *f);
 
 #endif

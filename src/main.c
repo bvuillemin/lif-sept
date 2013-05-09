@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
 	Joueur *joueur;
 	Joueur *joueur2;
 	Jeu *jeu;
-
+    Sauvegarde *une_sauvegarde;
     int x = 0;
 	int y = 0;
 
@@ -75,7 +75,7 @@ int main(int argc, char *argv[])
 	joueur = creer_joueur(nom_joueur);
 	joueur2 = creer_joueur(nom_joueur2);
 	jeu = creer_jeu();
-
+    set_couleur(joueur2, 1);
 	ajouter_joueur(jeu, joueur);
 	ajouter_joueur(jeu, joueur2);
 
@@ -123,9 +123,12 @@ int main(int argc, char *argv[])
 	ajouter_flotte_jeu(jeu, un_terrain_espace, flotte, 0, 2, 3);
 	ajouter_flotte_jeu(jeu, un_terrain_espace, flotte2, 0, 5, 5);
 	ajouter_flotte_jeu(jeu, un_terrain_espace, flotte3, 1, 0, 4);
-    /*creer_fichier_sauvegarde("essai", un_terrain_espace);
+    creer_fichier_sauvegarde("essai", un_terrain_espace, jeu);
     detruire_terrain_espace(&un_terrain_espace);
-    un_terrain_espace = selection_ouverture("essai");*/
+    detruire_jeu(&jeu);
+    une_sauvegarde = selection_ouverture("essai");
+    jeu = une_sauvegarde->jeu;
+    un_terrain_espace = une_sauvegarde->terrain_espace;
 	affichage_ecran(jeu, un_terrain_espace);
 
 	while(1)

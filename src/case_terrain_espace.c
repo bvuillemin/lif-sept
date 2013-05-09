@@ -3,8 +3,6 @@
 #include <stdbool.h>
 
 #include "case_terrain_espace.h"
-#include "planete.h"
-#include "flotte.h"
 
 void initialiser_case_espace(Case_terrain_espace *une_case_terrain_espace)
 {
@@ -177,6 +175,5 @@ Case_terrain_espace* ouverture_case_terrain_espace(FILE*f)
         case_terrain_espace_ouverte->flotte = ouverture_flotte(f);
         fgets(chaine, 50, f);
     }
-    affiche_case_terrain_espace(case_terrain_espace_ouverte);
     return case_terrain_espace_ouverte;
 }

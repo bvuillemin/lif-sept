@@ -6,7 +6,6 @@
 #include "joueur.h"
 #include "constante.h"
 
-
 void set_nom_joueur(Joueur *un_joueur, char nom[20])
 {
     strcpy(un_joueur->nom_joueur, nom);
@@ -349,3 +348,74 @@ void reinitialiser_pt_action_joueur(Joueur *un_joueur)
 	un_joueur->pt_action_joueur=un_joueur->pt_action_joueur_total;
 }
 
+void sauvegarde_joueur(const Joueur *un_joueur, FILE*f)
+{
+    int i;
+    /*fprintf(f, "%s\n", un_joueur->nom_joueur);
+     A mettre quand le nom d'un joueur aura été implémenté*/
+    fprintf(f, "Marcel\n");
+    fprintf(f, "%d\n", un_joueur->numero_joueur);
+    fprintf(f, "%d\n", (int)un_joueur->couleur_joueur);
+    fprintf(f, "%d\n", un_joueur->metal);
+    fprintf(f, "%d\n", un_joueur->argent);
+    fprintf(f, "%d\n", un_joueur->carburant);
+    fprintf(f, "%d\n", un_joueur->population);
+    fprintf(f, "%d\n", un_joueur->nb_planete);
+    fprintf(f, "%d\n", un_joueur->nb_planete_possible);
+    for(i=0;i<un_joueur->nb_planete;i++)
+    {
+        sauvegarde_planete(un_joueur->tab_planete[i], f);
+    }
+    fprintf(f, "%d\n", un_joueur->nb_flotte);
+    fprintf(f, "%d\n", un_joueur->nb_flotte_possible);
+    for(i=0;i<un_joueur->nb_flotte;i++)
+    {
+        sauvegarde_flotte(&un_joueur->tab_flotte[i], f);
+    }
+    fprintf(f, "%d\n", un_joueur->pt_action_joueur);
+    fprintf(f, "%d\n", un_joueur->pt_action_joueur_total);
+}
+
+Joueur* ouverture_joueur(FILE *f)
+{
+    Joueur *joueur_ouvert;
+    char chaine[50];
+    int b, i;
+    fgets(chaine, 50, f);
+    joueur_ouvert = creer_joueur(chaine);
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    joueur_ouvert->numero_joueur = b;
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    joueur_ouvert->couleur_joueur = b;
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    joueur_ouvert->metal = b;
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    joueur_ouvert->argent = b;
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    joueur_ouvert->carburant = b;
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    joueur_ouvert->population = b;
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    joueur_ouvert->nb_planete = b;
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    joueur_ouvert->nb_planete_possible = b;
+    for(i=0;i<joueur_ouvert->nb_planete;i++)
+    {
+        fgets(chaine, 50, f);
+        joueur_ouvert->tab_planete[i] = ouverture_planete(f);
+    }
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    joueur_ouvert->nb_flotte = b;
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    joueur_ouvert->nb_flotte_possible = b;
+    for(i=0;i<joueur_ouvert->nb_flotte;i++)
+    {
+        fgets(chaine, 50, f);
+        joueur_ouvert->tab_flotte[i] = *ouverture_flotte(f);
+    }
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    joueur_ouvert->pt_action_joueur = b;
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    joueur_ouvert->pt_action_joueur_total = b;
+    return joueur_ouvert;
+}

@@ -4,7 +4,6 @@
 
 #include "jeu.h"
 #include "joueur.h"
-#include "flotte.h"
 
 int get_joueur_en_cours_combat(Jeu * jeu)
 {
@@ -347,17 +346,74 @@ void enlever_pt_action_ieme_joueur(Jeu * jeu, const int i, const int nb)
 	enlever_pt_action_joueur(joueur, nb);
 }
 
+void sauvegarde_jeu(const Jeu *un_jeu, FILE*f)
+{
+    afficher_ressource_joueur(un_jeu);
+    int i;
+    fprintf(f, "Jeu\n");
+    fprintf(f, "%d\n", un_jeu->tour_en_cours);
+    fprintf(f, "%d\n", un_jeu->joueur_en_cours);
+    fprintf(f, "%d\n", un_jeu->joueur_en_cours_combat);
+    fprintf(f, "%d\n", un_jeu->nb_joueur);
+    for(i=0;i<un_jeu->nb_joueur;i++)
+    {
+        sauvegarde_joueur(&un_jeu->tab_joueur[i], f);
+    }
+    if(un_jeu->selection_flotte != NULL)
+    {
+        fprintf(f, "Flotte_Jeu\n");
+        sauvegarde_flotte(un_jeu->selection_flotte, f);
+    }
+    else{
+        fprintf(f, "AUCUNE_SELECTION\n");
+    }
+    if(un_jeu->selection_planete != NULL)
+    {
+        fprintf(f, "Planete_Jeu\n");
+        sauvegarde_planete(un_jeu->selection_planete, f);
+    }
+    else{
+        fprintf(f, "AUCUNE_SELECTION\n");
+    }
+    for(i=0;i<10;i++)
+    {
+        fprintf(f, "%d\n", un_jeu->tab_unite_selectionnee[i]);
+    }
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+Jeu* ouverture_jeu(FILE *f)
+{
+    Jeu *jeu_ouvert;
+    char chaine[50];
+    int b, i;
+    jeu_ouvert = creer_jeu();
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    jeu_ouvert->tour_en_cours = b;
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    jeu_ouvert->joueur_en_cours = b;
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    jeu_ouvert->joueur_en_cours_combat = b;
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    jeu_ouvert->nb_joueur = b;
+    for(i=0;i<jeu_ouvert->nb_joueur;i++)
+    {
+        jeu_ouvert->tab_joueur[i] = *ouverture_joueur(f);
+    }
+    fgets(chaine, 50, f);
+    if(strcmp(chaine, "AUCUNE_SELECTION\n")!=0)
+    {
+        ouverture_flotte(f);
+    }
+    fgets(chaine, 50, f);
+    if(strcmp(chaine, "AUCUNE_SELECTION\n")!=0)
+    {
+        ouverture_planete(f);
+    }
+    for(i=0;i<10;i++)
+    {
+        sscanf(fgets(chaine, 50, f), "%d", &b);
+        jeu_ouvert->tab_unite_selectionnee[i] = b;
+    }
+    afficher_ressource_joueur(jeu_ouvert);
+    return jeu_ouvert;
+}

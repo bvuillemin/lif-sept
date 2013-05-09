@@ -1,13 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
-
-#include "planete.h"
-#include "flotte.h"
-#include "unite.h"
-#include "niveau.h"
 #include "sauvegarde.h"
-#include "terrain_espace.h"
 
 void initialise_sauvegarde(Sauvegarde *une_sauvegarde)
 {
@@ -20,7 +14,7 @@ Sauvegarde *creer_sauvegarde()
     initialise_sauvegarde(une_sauvegarde);
     return une_sauvegarde;
 }
-void creer_fichier_sauvegarde(const char nom[30], Terrain_espace *un_terrain_espace)
+void creer_fichier_sauvegarde(const char nom[30], Terrain_espace *un_terrain_espace, Jeu *un_jeu)
 {
     FILE *f;
     f = fopen(nom, "w");
@@ -29,6 +23,7 @@ void creer_fichier_sauvegarde(const char nom[30], Terrain_espace *un_terrain_esp
         printf("Erreur lors de l'ouverture de %s\n", nom);
     }
     sauvegarde_terrain_espace(un_terrain_espace, f);
+    sauvegarde_jeu(un_jeu, f);
     fclose(f);
 }
 void detruire_sauvegarde(const char nom[30])
@@ -62,6 +57,11 @@ Sauvegarde* selection_ouverture(const char nom[30])
         if (strcmp(chaine, "Terrain_Espace\n")==0)
         {
             une_sauvegarde->terrain_espace = ouverture_terrain_espace(f);
+        }
+        fgets(chaine, 50, f);
+        if (strcmp(chaine, "Jeu\n")==0)
+        {
+            une_sauvegarde->jeu = ouverture_jeu(f);
         }
     }
     fclose(f);
