@@ -9,6 +9,8 @@
 #include "joueur.h"
 #include "constante.h"
 #include "flotte.h"
+#include "animation.h"
+
 /**
  * \file      Module terrain
  * \author
@@ -21,16 +23,16 @@
 
  typedef struct
  {
-     int tour_en_cours;
-	 int joueur_en_cours;
+    int tour_en_cours;
+	int joueur_en_cours;
 	int joueur_en_cours_combat;
-	 int nb_joueur;
-	 Joueur *tab_joueur;
+	int nb_joueur;
+	Joueur *tab_joueur;
 
-	 Flotte *selection_flotte;
-	 Planete *selection_planete;
-	 bool tab_unite_selectionnee[10];
-
+	Flotte *selection_flotte;
+	Planete *selection_planete;
+	bool tab_unite_selectionnee[10];
+	Animation *animation_en_cours;
  }Jeu;
 
 void initialise_jeu(Jeu *un_jeu);
@@ -51,6 +53,9 @@ void afficher_info(Jeu *un_jeu);
 void validation_creation_unite_planete(Jeu *un_jeu, Terrain_espace *un_terrain_espace, int indice_joueur_en_cours, int x, int y);
 void ajouter_flotte_jeu(Jeu *un_jeu,Terrain_espace *un_terrain_espace, Flotte *une_flotte, int indice_joueur, int x, int y);
 void colonisation_planete_flotte(Terrain_espace *un_terrain_espace, Flotte *une_flotte, Jeu *un_jeu);
+
+void lancer_animation(Jeu *un_jeu, Animation *une_animation, int temps, SDL_Surface *ecran, int x, int y);
+void maj_animation(Jeu *un_jeu, Animation *une_animation, int temps, SDL_Surface *ecran, int x, int y);
 
 int get_joueur_en_cours_combat(Jeu * jeu);
 /**/
