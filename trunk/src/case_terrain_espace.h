@@ -24,6 +24,7 @@ typedef struct
     int x_espace,y_espace;
     char type_case_terrain_espace;/* E pour l'espace, P pour une planète, N si non initialisé*/
     bool presence_flotte;
+	/*bool est_visible;*/
 	Planete *planete;/*lien sur une planète si la case est de type planète, sinon NULL*/
 	Flotte *flotte;
 }Case_terrain_espace;

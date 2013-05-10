@@ -135,6 +135,7 @@ void tour_suivant(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 		{
 		    validation_batiment(un_jeu->tab_joueur[i].tab_planete[0]);
 			un_jeu->tab_joueur[i].tab_planete[0]->batiment_nb_tour_restant = -1;
+			un_jeu->tab_joueur[i].tab_planete[0]->batiment_en_cours = -1;
 		}
 
 		if(un_jeu->tab_joueur[i].tab_planete[0]->unite_nb_tour_restant > 0)
@@ -145,6 +146,7 @@ void tour_suivant(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 		{
 		    validation_creation_unite_planete(un_jeu, un_terrain_espace, i, un_jeu->tab_joueur[i].tab_planete[0]->x, un_jeu->tab_joueur[i].tab_planete[0]->y);
 			un_jeu->tab_joueur[i].tab_planete[0]->unite_nb_tour_restant = -1;
+			un_jeu->tab_joueur[i].tab_planete[0]->unite_en_cours = -1;
 		}
 	}
 	un_jeu->tour_en_cours++;
@@ -153,6 +155,60 @@ void tour_suivant(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 void afficher_info(Jeu *un_jeu)
 {
 	printf("Joueur en cours %d, tour en cours %d \n", un_jeu->joueur_en_cours, un_jeu->tour_en_cours);
+}
+
+bool condition_creation_unite(Jeu *un_jeu, Planete *une_planete, int choix)
+{
+	Joueur *un_joueur;
+	int metal, argent, carburant, population;
+	un_joueur = get_joueur_en_cours(un_jeu);
+
+	metal = get_metal_joueur(un_joueur);
+	argent = get_argent_joueur(un_joueur);
+	carburant = get_carburant_joueur(un_joueur);
+	population = get_population_joueur(un_joueur);
+
+	if(une_planete->batiment[5] > 0)
+	{
+		if(choix == 1)
+		{
+			if((NB_METAL_UNITE_1 >= metal) && (NB_ARGENT_UNITE_1 >= argent) && (NB_CARBURANT_UNITE_1 >= carburant)  && (NB_POPULATION_UNITE_1 >= population))
+			{
+				return true;
+			}
+			else return false;
+		}
+		if(choix == 2)
+		{
+			if((NB_METAL_UNITE_2 >= metal) && (NB_ARGENT_UNITE_2 >= argent) && (NB_CARBURANT_UNITE_2 >= carburant)  && (NB_POPULATION_UNITE_2 >= population))
+			{
+				return true;
+			}
+			else return false;
+		}
+		if(choix == 3)
+		{
+			if((NB_METAL_UNITE_3 >= metal) && (NB_ARGENT_UNITE_3 >= argent) && (NB_CARBURANT_UNITE_3 >= carburant)  && (NB_POPULATION_UNITE_3 >= population))
+			{
+				return true;
+			}
+			else return false;
+		}
+	}
+	else return false;
+}
+
+bool condition_creation_batiment(Jeu *un_jeu, Planete *une_planete, int choix)
+{
+	if((choix == 0) && (une_planete->taille_utilisee < une_planete->taille_planete))
+	{
+		return true;
+	}
+	if ((une_planete->taille_utilisee < une_planete->taille_planete) && (une_planete->batiment[0]))
+	{
+		return true;
+	}
+	else return false;
 }
 
 void validation_creation_unite_planete(Jeu *un_jeu, Terrain_espace *un_terrain_espace, int indice_joueur_en_cours, int x, int y)
@@ -165,10 +221,18 @@ void validation_creation_unite_planete(Jeu *un_jeu, Terrain_espace *un_terrain_e
         if(une_planete->unite_en_cours == 1)
         {
             une_unite = creer_unite(PT_VIE_UNITE_1, PT_ATTAQUE_UNITE_1, PT_ACTION_UNITE_1, PT_DEPLACEMENT_UNITE_1, 10, PT_MOUVEMENT_UNITE_1);
-            une_flotte = creer_flotte();
-            ajouter_unite_flotte(une_flotte, une_unite);
-            ajouter_flotte_jeu(un_jeu, un_terrain_espace, une_flotte, indice_joueur_en_cours, x, y);
         }
+		if(une_planete->unite_en_cours == 2)
+		{
+			une_unite = creer_unite(PT_VIE_UNITE_2, PT_ATTAQUE_UNITE_2, PT_ACTION_UNITE_2, PT_DEPLACEMENT_UNITE_2, 10, PT_MOUVEMENT_UNITE_2);
+		}
+		if(une_planete->unite_en_cours == 3)
+		{
+			une_unite = creer_unite(PT_VIE_UNITE_3, PT_ATTAQUE_UNITE_3, PT_ACTION_UNITE_3, PT_DEPLACEMENT_UNITE_3, 10, PT_MOUVEMENT_UNITE_3);
+		}
+		une_flotte = creer_flotte();
+		ajouter_unite_flotte(une_flotte, une_unite);
+		ajouter_flotte_jeu(un_jeu, un_terrain_espace, une_flotte, indice_joueur_en_cours, x, y);
     }
 }
 
@@ -348,8 +412,9 @@ void enlever_pt_action_ieme_joueur(Jeu * jeu, const int i, const int nb)
 
 void sauvegarde_jeu(const Jeu *un_jeu, FILE*f)
 {
+	int i;
+
     afficher_ressource_joueur(un_jeu);
-    int i;
     fprintf(f, "Jeu\n");
     fprintf(f, "%d\n", un_jeu->tour_en_cours);
     fprintf(f, "%d\n", un_jeu->joueur_en_cours);

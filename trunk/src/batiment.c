@@ -82,7 +82,7 @@ void creer_batiment_population(Planete *une_planete)
 
 void validation_creer_batiment_spatioport(Planete *une_planete)
 {
-	if((une_planete->batiment_nb_tour_restant == 0) && (une_planete->batiment_en_cours == 4))
+	if((une_planete->batiment_nb_tour_restant == 0) && (une_planete->batiment_en_cours == 5))
 	{
 		une_planete->batiment[5]++;
 		une_planete->taille_utilisee++;
