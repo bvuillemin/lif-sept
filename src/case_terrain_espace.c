@@ -9,7 +9,8 @@ void initialiser_case_espace(Case_terrain_espace *une_case_terrain_espace)
     une_case_terrain_espace->x_espace=0;
     une_case_terrain_espace->y_espace=0;
     une_case_terrain_espace->type_case_terrain_espace='N';
-    une_case_terrain_espace->presence_flotte=0;
+    une_case_terrain_espace->presence_flotte= false;
+	/*une_case_terrain_espace->est_visible = false;*/
 	une_case_terrain_espace->planete = NULL;
 	une_case_terrain_espace->flotte = NULL;
 }
@@ -82,6 +83,8 @@ void liberer_case_terrain_espace(Case_terrain_espace *une_case_terrain_espace)
     }
     une_case_terrain_espace->x_espace=0;
     une_case_terrain_espace->y_espace=0;
+	une_case_terrain_espace->presence_flotte= false;
+	/*une_case_terrain_espace->est_visible = false;*/
     une_case_terrain_espace->type_case_terrain_espace='N';
 }
 

@@ -331,7 +331,28 @@ void creation_unite_planete(Joueur *un_joueur, Planete *une_planete, int choix)
           une_planete->unite_nb_tour_restant = NB_TOUR_UNITE_1;
           une_planete->unite_en_cours = 1;
           un_joueur->metal -= NB_METAL_UNITE_1;
+		  un_joueur->argent -= NB_ARGENT_UNITE_1;
+		  un_joueur->carburant -= NB_CARBURANT_UNITE_1;
+		  un_joueur->population -= NB_POPULATION_UNITE_1;
         }
+		if(choix == 2)
+		{
+			une_planete->unite_nb_tour_restant = NB_TOUR_UNITE_2;
+			une_planete->unite_en_cours = 2;
+			un_joueur->metal -= NB_METAL_UNITE_2;
+			un_joueur->argent -= NB_ARGENT_UNITE_2;
+			un_joueur->carburant -= NB_CARBURANT_UNITE_2;
+			un_joueur->population -= NB_POPULATION_UNITE_2;
+		}
+		if(choix == 3)
+		{
+			une_planete->unite_nb_tour_restant = NB_TOUR_UNITE_3;
+			une_planete->unite_en_cours = 3;
+			un_joueur->metal -= NB_METAL_UNITE_3;
+			un_joueur->argent -= NB_ARGENT_UNITE_3;
+			un_joueur->carburant -= NB_CARBURANT_UNITE_3;
+			un_joueur->population -= NB_POPULATION_UNITE_3;
+		}
     }
 
 }
