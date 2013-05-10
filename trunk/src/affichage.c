@@ -2,7 +2,8 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
-#include <SDL/SDL.h>
+#include <math.h>
+
 #ifdef __APPLE__
 #include "SDL_image.h"
 #include "SDL_ttf.h"
@@ -11,15 +12,18 @@
 #else
 /*#include <SDL/SDL_rotozoom.h>
 #include <SDL/SDL_framerate.h>*/
+#include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 #include <SDL/SDL_ttf.h>
+#include <FMOD/fmod.h>
 #endif
 
 #include "jeu.h"
 #include "constante.h"
 #include "terrain_espace.h"
 #include "terrain_combat.h"
-#include <math.h>
+#include "son.h"
+#include "animation.h"
 
 bool test_souris_rectangle (SDL_Rect taille_surface, int x, int y) /*Va tester si le clic souris c'est fait dans un rectangle, utile pour les menus*/
 {
@@ -883,6 +887,15 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 	int tps_ancien = 10,tps_nouveau = 0, timer = 0, x_info = 0, y_info = 0;
 	int interface_affichee =0; /*1 pour une planete, 2 pour une planete ennemie, 3 pour une flotte, 4 pour une flotte ennemie, 5 pour la création d'unités sur une planète*/
 	Case_terrain_espace *une_case_terrain_espace;
+	char nom_fichier_saut_ftl[] = "../graphiques/images/test.png";
+	FMOD_SYSTEM *system = NULL;
+	FMOD_SOUND *musique = NULL;
+	Animation *saut_ftl = NULL;
+
+	saut_ftl = creer_animation(5, 100, 100, 1000, nom_fichier_saut_ftl);
+
+	/*initialiser le son*/
+	initialiser_systeme_son(system, musique);
 
 	tab_surface = (SDL_Surface **)malloc(sizeof(SDL_Surface *) * 12);
 	for(j=0;j<12;j++)
@@ -906,11 +919,18 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
     maj_affichage(un_jeu, un_terrain_espace, ecran, carte, interface_affichee, NULL, tab_surface);
 
 	initialiser_affichage(un_jeu, un_terrain_espace, ecran, carte, tab_surface);
+	lancer_animation(un_jeu, saut_ftl, timer, ecran, 50, 50);
+
 	SDL_Flip(ecran);
 
 	while (continuer) /*boucle d'événement principale*/
 	{
-		SDL_WaitEvent(&event);
+		SDL_PollEvent(&event);
+		timer = SDL_GetTicks();
+		if(un_jeu->animation_en_cours != NULL)
+		{
+			maj_animation(un_jeu, un_jeu->animation_en_cours, timer, ecran, 50, 50);
+		}
 		/*if(timer >= 200)
 		{
 			maj_affichage(un_jeu, un_terrain_espace, ecran, carte, interface_affichee, NULL, tab_surface);
@@ -924,11 +944,11 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 		case SDL_QUIT:
 			continuer = 0;
 			break;
-        case SDL_MOUSEMOTION:
+       /* case SDL_MOUSEMOTION:
 			x_info = event.motion.x;
 			y_info = event.motion.y;
 			timer = 0;
-            break;
+            break;*/
 		case SDL_MOUSEBUTTONUP:
             if (event.button.button == SDL_BUTTON_LEFT)
 			{
@@ -977,6 +997,7 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 						interface_affichee = 0;
 						joueur_suivant(un_jeu, un_terrain_espace);
 						maj_affichage(un_jeu, un_terrain_espace, ecran, carte, interface_affichee, NULL, tab_surface);
+						maj_affichage_carte_terrain(un_jeu, un_terrain_espace, ecran, tab_surface, interface_affichee);
 					}
 				}
 				if(interface_affichee == 0)
@@ -1133,6 +1154,9 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 	SDL_FreeSurface(ecran);
 	SDL_FreeSurface(carte);
 	SDL_FreeSurface(icone);
+
+	fermer_systeme_son(system, musique);
+
 	TTF_Quit();
 	SDL_Quit();
 }

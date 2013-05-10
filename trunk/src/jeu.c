@@ -18,6 +18,7 @@ void initialise_jeu(Jeu *un_jeu)
 	un_jeu->nb_joueur = 0;
 	un_jeu->selection_flotte = NULL;
 	un_jeu->selection_planete = NULL;
+	un_jeu->animation_en_cours = NULL;
     un_jeu->tab_joueur =(Joueur *)malloc(sizeof(Joueur) * 10);
     for(i=0;i<10;i++)
     {
@@ -172,7 +173,7 @@ bool condition_creation_unite(Jeu *un_jeu, Planete *une_planete, int choix)
 	{
 		if(choix == 1)
 		{
-			if((NB_METAL_UNITE_1 >= metal) && (NB_ARGENT_UNITE_1 >= argent) && (NB_CARBURANT_UNITE_1 >= carburant)  && (NB_POPULATION_UNITE_1 >= population))
+			if((NB_METAL_UNITE_1 <= metal) && (NB_ARGENT_UNITE_1 <= argent) && (NB_CARBURANT_UNITE_1 <= carburant)  && (NB_POPULATION_UNITE_1 <= population))
 			{
 				return true;
 			}
@@ -180,7 +181,7 @@ bool condition_creation_unite(Jeu *un_jeu, Planete *une_planete, int choix)
 		}
 		if(choix == 2)
 		{
-			if((NB_METAL_UNITE_2 >= metal) && (NB_ARGENT_UNITE_2 >= argent) && (NB_CARBURANT_UNITE_2 >= carburant)  && (NB_POPULATION_UNITE_2 >= population))
+			if((NB_METAL_UNITE_2 <= metal) && (NB_ARGENT_UNITE_2 <= argent) && (NB_CARBURANT_UNITE_2 <= carburant)  && (NB_POPULATION_UNITE_2 <= population))
 			{
 				return true;
 			}
@@ -188,7 +189,7 @@ bool condition_creation_unite(Jeu *un_jeu, Planete *une_planete, int choix)
 		}
 		if(choix == 3)
 		{
-			if((NB_METAL_UNITE_3 >= metal) && (NB_ARGENT_UNITE_3 >= argent) && (NB_CARBURANT_UNITE_3 >= carburant)  && (NB_POPULATION_UNITE_3 >= population))
+			if((NB_METAL_UNITE_3 <= metal) && (NB_ARGENT_UNITE_3 <= argent) && (NB_CARBURANT_UNITE_3 <= carburant)  && (NB_POPULATION_UNITE_3 <= population))
 			{
 				return true;
 			}
@@ -200,11 +201,11 @@ bool condition_creation_unite(Jeu *un_jeu, Planete *une_planete, int choix)
 
 bool condition_creation_batiment(Jeu *un_jeu, Planete *une_planete, int choix)
 {
-	if((choix == 0) && (une_planete->taille_utilisee < une_planete->taille_planete))
+	if((choix == 0) && (une_planete->taille_utilisee <= une_planete->taille_planete))
 	{
 		return true;
 	}
-	if ((une_planete->taille_utilisee < une_planete->taille_planete) && (une_planete->batiment[0]))
+	if ((une_planete->taille_utilisee <= une_planete->taille_planete) && (une_planete->batiment[0]))
 	{
 		return true;
 	}
@@ -274,6 +275,49 @@ void colonisation_planete_flotte(Terrain_espace *un_terrain_espace, Flotte *une_
 
 	colonisation_planete(un_joueur, une_planete);
 }
+
+void lancer_animation(Jeu *un_jeu, Animation *une_animation, int temps, SDL_Surface *ecran, int x, int y)
+{
+	SDL_Surface *frame;
+	SDL_Rect position_frame;
+	SDL_Rect position_ecran;
+
+	initialise_sdl_rect(&position_frame, une_animation->taille_frame_x * une_animation->frame_en_cours, une_animation->taille_frame_y * une_animation->frame_en_cours, une_animation->taille_frame_x, une_animation->taille_frame_y);
+	initialise_sdl_rect(&position_ecran, x, y, 0, 0);
+	frame = IMG_Load(une_animation->nom);
+	SDL_BlitSurface(frame, &position_frame, ecran, &position_ecran);
+
+	une_animation->tps_debut_anim = temps;
+	une_animation->frame_en_cours ++;
+	un_jeu->animation_en_cours = une_animation;
+	SDL_FreeSurface(frame);
+}
+
+void maj_animation(Jeu *un_jeu, Animation *une_animation, int temps, SDL_Surface *ecran, int x, int y)
+{
+	SDL_Surface *frame;
+	SDL_Rect position_frame;
+	SDL_Rect position_ecran;
+
+	if(une_animation->frame_en_cours > une_animation->nb_frame)
+	{
+		une_animation->frame_en_cours = 0;
+		une_animation->tps_debut_anim = temps;
+		un_jeu->animation_en_cours = NULL;
+	}
+	if((temps - une_animation->tps_debut_anim) >= (une_animation->nb_ms * une_animation->frame_en_cours))
+	{
+		initialise_sdl_rect(&position_frame, une_animation->taille_frame_x * une_animation->frame_en_cours, 0, une_animation->taille_frame_x, une_animation->taille_frame_y);
+		initialise_sdl_rect(&position_ecran, x, y, 0, 0);
+		frame = IMG_Load(une_animation->nom);
+		SDL_BlitSurface(frame, &position_frame, ecran, &position_ecran);
+		une_animation->frame_en_cours ++;
+		SDL_FreeSurface(frame);
+		SDL_Flip(ecran);
+	}
+
+}
+
 
 bool deplacement_unite_flotte(Jeu *un_jeu, Joueur *un_joueur, Terrain_espace *un_terrain_espace, Flotte *une_flotte, int x, int y)
 {
