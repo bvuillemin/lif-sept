@@ -45,6 +45,8 @@
 #define TAILLE_MINIMAP_X 200
 #define TAILLE_MINIMAP_Y 140
 
+#define TAILLE_BARRE_RESSOURCE 30
+
 #define DEPLACEMENT_AFFICHAGE 2
 
 /*l'ecran du combat (ou/et du l'espace)*/
