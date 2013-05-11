@@ -1247,7 +1247,7 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 
 
 /************************************************************************/
-/* Fonctions liés au combat                                             */
+/* Fonctions liées au combat                                             */
 /************************************************************************/
 
 SDL_Surface * affiche_ecran_terrain_combat(const Terrain_combat *terrain_combat)
