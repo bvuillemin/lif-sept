@@ -16,11 +16,15 @@ typedef struct
 
 	int tps_debut_anim;
 	int frame_en_cours;
+	int x; /*coordonées où blitter la frame*/
+	int y;
 
 }Animation;
 
 
-void initialiser_animation(Animation *une_animation, int nb_frame, int taille_frame_x, int taille_frame_y, int nb_ms, char nom);
-Animation *creer_animation(int nb_frame, int taille_frame_x, int taille_frame_y, int nb_ms, char nom);
+void initialiser_animation(Animation *une_animation, int nb_frame, int taille_frame_x, int taille_frame_y, int nb_ms, char nom[255]);
+Animation *creer_animation(int nb_frame, int taille_frame_x, int taille_frame_y, int nb_ms, char nom[255]);
+void liberer_animation(Animation *une_animation);
+void detruire_animation(Animation **une_animation);
 
 #endif // ANIMATION_H_

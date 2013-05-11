@@ -61,6 +61,7 @@ int main(int argc, char *argv[])
 	char nom_jupiter[]="jupiter";
 	char nom_venus[]="venus";
 
+	srand (time (NULL)); 
 	un_terrain_espace = creer_terrain_espace(20, 15);
     modification_terrain_espace(un_terrain_espace, 'E');
 

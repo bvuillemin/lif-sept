@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include "jeu.h"
+#include "affichage.h"
 #include "joueur.h"
 
 int get_joueur_en_cours_combat(Jeu * jeu)
@@ -290,32 +291,60 @@ void lancer_animation(Jeu *un_jeu, Animation *une_animation, int temps, SDL_Surf
 	une_animation->tps_debut_anim = temps;
 	une_animation->frame_en_cours ++;
 	un_jeu->animation_en_cours = une_animation;
+	une_animation->x = x;
+	une_animation->y = y;
+
 	SDL_FreeSurface(frame);
 }
 
-void maj_animation(Jeu *un_jeu, Animation *une_animation, int temps, SDL_Surface *ecran, int x, int y)
+void lancer_animation_bloquante(Jeu *un_jeu, Terrain_espace *un_terrain_espace, Animation *une_animation, SDL_Surface *ecran, int x, int y, SDL_Surface **tab_surface, int interface_affichee)
+{
+	SDL_Surface *frame;
+	SDL_Rect position_frame;
+	SDL_Rect position_ecran;
+	int i;
+
+	initialise_sdl_rect(&position_ecran, x, y, 0, 0);
+	frame = IMG_Load(une_animation->nom);
+	for(i=0;i<une_animation->nb_frame;i++)
+	{
+		initialise_sdl_rect(&position_frame, une_animation->taille_frame_x * une_animation->frame_en_cours, une_animation->taille_frame_y * une_animation->frame_en_cours, une_animation->taille_frame_x, une_animation->taille_frame_y);
+		SDL_BlitSurface(frame, &position_frame, ecran, &position_ecran);
+		une_animation->frame_en_cours ++;
+		SDL_Flip(ecran);
+		SDL_Delay(une_animation->nb_ms);
+	}
+	SDL_Delay(100);
+	une_animation->frame_en_cours = 0;
+	une_animation->x = 0;
+	une_animation->y = 0;
+	maj_affichage_carte_terrain(un_jeu, un_terrain_espace, ecran, tab_surface, interface_affichee);
+	SDL_FreeSurface(frame);
+}
+
+void maj_animation(Jeu *un_jeu, Terrain_espace *un_terrain_espace, Animation *une_animation, int temps, SDL_Surface *ecran, SDL_Surface **tab_surface, int interface_affichee)
 {
 	SDL_Surface *frame;
 	SDL_Rect position_frame;
 	SDL_Rect position_ecran;
 
+	if((temps - une_animation->tps_debut_anim) >= (une_animation->nb_ms * une_animation->frame_en_cours))
+	{
+		une_animation->frame_en_cours ++;
+	}
+	initialise_sdl_rect(&position_frame, une_animation->taille_frame_x * une_animation->frame_en_cours, 0, une_animation->taille_frame_x, une_animation->taille_frame_y);
+	initialise_sdl_rect(&position_ecran, une_animation->x, une_animation->y, 0, 0);
+	frame = IMG_Load(une_animation->nom);
+	SDL_BlitSurface(frame, &position_frame, ecran, &position_ecran);
+	SDL_FreeSurface(frame);
+	SDL_Flip(ecran);
 	if(une_animation->frame_en_cours > une_animation->nb_frame)
 	{
 		une_animation->frame_en_cours = 0;
 		une_animation->tps_debut_anim = temps;
 		un_jeu->animation_en_cours = NULL;
+		maj_affichage_carte_terrain(un_jeu, un_terrain_espace, ecran, tab_surface, interface_affichee);
 	}
-	if((temps - une_animation->tps_debut_anim) >= (une_animation->nb_ms * une_animation->frame_en_cours))
-	{
-		initialise_sdl_rect(&position_frame, une_animation->taille_frame_x * une_animation->frame_en_cours, 0, une_animation->taille_frame_x, une_animation->taille_frame_y);
-		initialise_sdl_rect(&position_ecran, x, y, 0, 0);
-		frame = IMG_Load(une_animation->nom);
-		SDL_BlitSurface(frame, &position_frame, ecran, &position_ecran);
-		une_animation->frame_en_cours ++;
-		SDL_FreeSurface(frame);
-		SDL_Flip(ecran);
-	}
-
 }
 
 
