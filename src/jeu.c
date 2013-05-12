@@ -277,6 +277,89 @@ void colonisation_planete_flotte(Terrain_espace *un_terrain_espace, Flotte *une_
 	colonisation_planete(un_joueur, une_planete);
 }
 
+bool deplacement_flotte(Joueur *un_joueur, Terrain_espace *un_terrain_espace, Flotte *une_flotte, int x, int y)
+{
+	if(peut_se_deplacer(une_flotte, x, y))
+	{
+		int distance;
+		int x_depart, y_depart;
+		Case_terrain_espace *case_depart;
+		Case_terrain_espace *case_arrivee;
+		x_depart = get_x_flotte(une_flotte);
+		y_depart = get_y_flotte(une_flotte);
+		case_depart = get_case_terrain_espace(un_terrain_espace, x_depart, y_depart);
+		case_arrivee = get_case_terrain_espace(un_terrain_espace, x, y);
+		if((x_depart == x) && (y_depart == y))
+		{
+			return false;
+		}
+		if(case_arrivee->presence_flotte == false)
+		{
+			ajouter_flotte(case_arrivee, une_flotte);
+			retirer_flotte(case_depart);
+			distance = calcul_distance(x_depart, y_depart, x, y);
+			enlever_pt_mouvement_espace_flotte(une_flotte, distance);
+			return true;
+		}
+		if(case_arrivee->presence_flotte == true)
+		{
+			if(fusion_flotte(un_joueur, un_terrain_espace, une_flotte, x, y))
+			{
+				/*free(une_flotte);*/
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+bool fusion_flotte(Joueur *un_joueur, Terrain_espace *un_terrain_espace, Flotte *une_flotte, int x, int y)
+{
+	int i;
+	int nb_unite = une_flotte->taille_flotte;
+	int distance;
+	int pt_mvt_arrivee;
+	int pt_mvt_depart = get_pt_mouvement_espace_flotte(une_flotte);
+	int x_depart = get_x_flotte(une_flotte);
+	int y_depart = get_y_flotte(une_flotte);
+	Case_terrain_espace *case_depart;
+	Case_terrain_espace *case_arrivee;
+	Flotte *flotte_arrivee;
+
+	case_depart = get_case_terrain_espace(un_terrain_espace, x_depart, y_depart);
+	case_arrivee = get_case_terrain_espace(un_terrain_espace, x, y);
+	flotte_arrivee = get_flotte(case_arrivee);
+	pt_mvt_arrivee = get_pt_mouvement_espace_flotte(flotte_arrivee);
+
+	if((flotte_arrivee->taille_flotte + une_flotte->taille_flotte <= flotte_arrivee->taille_maximum_flotte) && (une_flotte->indice_joueur == flotte_arrivee->indice_joueur))
+	{
+		for(i=0;i<nb_unite;i++)
+		{
+			transferer_unite_flotte(flotte_arrivee, &une_flotte->tab_unite[i]);
+		}
+		retirer_flotte(case_depart);
+		if(une_flotte->indice_tableau_joueur < flotte_arrivee->indice_tableau_joueur)
+		{
+			case_arrivee->flotte = &un_joueur->tab_flotte[flotte_arrivee->indice_tableau_joueur - 1];
+		}
+		else
+		{
+			case_arrivee->flotte = &un_joueur->tab_flotte[flotte_arrivee->indice_tableau_joueur];
+		}
+		retirer_flotte_joueur(un_joueur, une_flotte->indice_tableau_joueur);
+		/*liberer_flotte(une_flotte);*/
+		/*free(une_flotte);*/
+
+		distance = calcul_distance(x_depart, y_depart, x, y);
+		if(pt_mvt_arrivee > (pt_mvt_depart - distance))
+		{
+			enlever_pt_mouvement_espace_flotte(flotte_arrivee, distance);
+		}
+		return true;
+	}
+	return false;
+}
+
 void lancer_animation(Jeu *un_jeu, Animation *une_animation, int temps, SDL_Surface *ecran, int x, int y)
 {
 	SDL_Surface *frame;
