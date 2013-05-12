@@ -21,6 +21,7 @@ void initialise_planete(Planete *une_planete,const char nom_planete[30])
     une_planete->argent = 0;
     une_planete->carburant = 0;
     une_planete->population = 0;
+	une_planete->vision = 1;
 
     for(i=0;i<10;i++)
     {

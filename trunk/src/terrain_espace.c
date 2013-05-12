@@ -97,6 +97,11 @@ void detruire_terrain_espace(Terrain_espace **terrain_jeu_espace)
     *terrain_jeu_espace = NULL;
 }
 
+int indice_tableau(Terrain_espace* un_terrain_espace, int x, int y)
+{
+	return y*(un_terrain_espace->taille_espace_x)+x;
+}
+
 void affiche_terrain_espace(const Terrain_espace *terrain_espace)
 {
     int i, j;

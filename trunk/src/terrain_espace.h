@@ -34,6 +34,8 @@ Terrain_espace *creer_terrain_espace(int taille_x, int taille_y);
 void liberer_terrain_espace(Terrain_espace *terrain_jeu_espace);
 void detruire_terrain_espace(Terrain_espace **terrain_jeu_espace);
 
+int indice_tableau(Terrain_espace* un_terrain_espace, int x, int y);
+
 void set_taille_espace_x(Terrain_espace *terrain_jeu_espace, int x);
 int get_taille_espace_x(const Terrain_espace *terrain_jeu_espace);
 void set_taille_espace_y(Terrain_espace *terrain_jeu_espace, int y);
