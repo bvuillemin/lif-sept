@@ -6,10 +6,11 @@
 #include "affichage.h"
 #include "joueur.h"
 
-int get_joueur_en_cours_combat(Jeu * jeu)
-{
-	return jeu->joueur_en_cours_combat;
-}
+
+/************************************************************************/
+/* Initialisation, création et destruction                              */
+/************************************************************************/
+
 void initialise_jeu(Jeu *un_jeu)
 {
     int i;
@@ -52,32 +53,47 @@ void liberer_jeu(Jeu *un_jeu)
     }
 }
 
+void detruire_jeu(Jeu **un_jeu)
+{
+	liberer_jeu(*un_jeu);
+	free(*un_jeu);
+	*un_jeu = NULL;
+}
+
+
+/************************************************************************/
+/* Fonctions set et get                                                 */
+/************************************************************************/
+
+int get_joueur_en_cours_combat(Jeu * jeu)
+{
+	return jeu->joueur_en_cours_combat;
+}
 Joueur *get_joueur_en_cours(Jeu *un_jeu)
 {
 	return &un_jeu->tab_joueur[un_jeu->joueur_en_cours];
 }
-
 Flotte *get_flotte_en_cours(Jeu *un_jeu)
 {
 	return un_jeu->selection_flotte;
 }
-
 int get_indice_joueur_en_cours(Jeu *un_jeu)
 {
 	return un_jeu->joueur_en_cours;
 }
-
 Planete *get_planete_en_cours(Jeu *un_jeu)
 {
 	return un_jeu->selection_planete;
 }
-
-void detruire_jeu(Jeu **un_jeu)
+Joueur * get_ieme_joueur_jeu(Jeu * un_jeu,int i)
 {
-    liberer_jeu(*un_jeu);
-    free(*un_jeu);
-    *un_jeu = NULL;
+	return un_jeu->tab_joueur + i;
 }
+
+
+/************************************************************************/
+/* Fonctions liées au jeu                                               */
+/************************************************************************/
 
 void ajouter_joueur(Jeu *un_jeu, Joueur *un_joueur)
 {
@@ -159,6 +175,67 @@ void afficher_info(Jeu *un_jeu)
 	printf("Joueur en cours %d, tour en cours %d \n", un_jeu->joueur_en_cours, un_jeu->tour_en_cours);
 }
 
+void ajouter_flotte_jeu(Jeu *un_jeu,Terrain_espace *un_terrain_espace, Flotte *une_flotte, int indice_joueur, int x, int y)
+{
+	ajouter_flotte_joueur(&un_jeu->tab_joueur[indice_joueur], une_flotte);
+	ajouter_flotte(get_case_terrain_espace(un_terrain_espace, x, y), &un_jeu->tab_joueur[indice_joueur].tab_flotte[un_jeu->tab_joueur[indice_joueur].nb_flotte - 1]);
+}
+
+void afficher_ressource_joueur(Jeu *un_jeu)
+{
+	int i;
+	for(i=0;i<un_jeu->nb_joueur;i++)
+	{
+		printf("Ressources du joueur %d: \nMetal: %d \nArgent: %d \nCarburant: %d \nPopulation: %d\n\n", i, un_jeu->tab_joueur[i].metal, un_jeu->tab_joueur[i].argent, un_jeu->tab_joueur[i].carburant, un_jeu->tab_joueur[i].population);
+	}
+}
+
+void creer_vision_joueur(Jeu* un_jeu, Terrain_espace* un_terrain, int indice_joueur)
+{
+	Vision_terrain *une_vision;
+	Joueur *un_joueur;
+
+	une_vision = creer_vision_terrain(un_terrain, indice_joueur);
+
+	parcourir_terrain(une_vision, indice_joueur);
+	un_joueur = get_ieme_joueur_jeu(un_jeu, indice_joueur);
+	un_joueur->vision_terrain = une_vision;
+}
+
+void creer_vision_jeu(Jeu *un_jeu, Terrain_espace* un_terrain_espace)
+{
+	int i;
+	for(i=0;i<un_jeu->nb_joueur;i++)
+	{
+		creer_vision_joueur(un_jeu, un_terrain_espace, i);
+	}
+}
+
+void maj_vision_joueur(Jeu* un_jeu, Terrain_espace* un_terrain, int indice_joueur)
+{
+	Vision_terrain *une_vision;
+	Joueur *un_joueur;
+
+	un_joueur = get_ieme_joueur_jeu(un_jeu, indice_joueur);
+	une_vision = un_joueur->vision_terrain;
+	parcourir_terrain(une_vision, indice_joueur);
+	un_joueur = get_ieme_joueur_jeu(un_jeu, indice_joueur);
+	un_joueur->vision_terrain = une_vision;
+}
+
+void maj_vision_jeu(Jeu *un_jeu, Terrain_espace* un_terrain_espace)
+{
+	int i;
+	for(i=0;i<un_jeu->nb_joueur;i++)
+	{
+		maj_vision_joueur(un_jeu, un_terrain_espace, i);
+	}
+}
+
+/************************************************************************/
+/* Fonctions liées à la création d'objets du jeu                        */
+/************************************************************************/
+
 bool condition_creation_unite(Jeu *un_jeu, Planete *une_planete, int choix)
 {
 	Joueur *un_joueur;
@@ -238,20 +315,10 @@ void validation_creation_unite_planete(Jeu *un_jeu, Terrain_espace *un_terrain_e
     }
 }
 
-void afficher_ressource_joueur(Jeu *un_jeu)
-{
-	int i;
-	for(i=0;i<un_jeu->nb_joueur;i++)
-	{
-		printf("Ressources du joueur %d: \nMetal: %d \nArgent: %d \nCarburant: %d \nPopulation: %d\n\n", i, un_jeu->tab_joueur[i].metal, un_jeu->tab_joueur[i].argent, un_jeu->tab_joueur[i].carburant, un_jeu->tab_joueur[i].population);
-	}
-}
 
-void ajouter_flotte_jeu(Jeu *un_jeu,Terrain_espace *un_terrain_espace, Flotte *une_flotte, int indice_joueur, int x, int y)
-{
-    ajouter_flotte_joueur(&un_jeu->tab_joueur[indice_joueur], une_flotte);
-    ajouter_flotte(get_case_terrain_espace(un_terrain_espace, x, y), &un_jeu->tab_joueur[indice_joueur].tab_flotte[un_jeu->tab_joueur[indice_joueur].nb_flotte - 1]);
-}
+/************************************************************************/
+/* Fonctions liées aux flottes                                          */
+/************************************************************************/
 
 bool test_unite_selectionnee(Jeu *un_jeu)
 {
@@ -360,6 +427,56 @@ bool fusion_flotte(Joueur *un_joueur, Terrain_espace *un_terrain_espace, Flotte 
 	return false;
 }
 
+bool deplacement_unite_flotte(Jeu *un_jeu, Joueur *un_joueur, Terrain_espace *un_terrain_espace, Flotte *une_flotte, int x, int y)
+{
+	if(peut_se_deplacer(une_flotte, x, y))
+	{
+		int distance, i;
+		int x_depart, y_depart;
+		Case_terrain_espace *case_arrivee;
+		Flotte *une_nouvelle_flotte;
+		x_depart = get_x_flotte(une_flotte);
+		y_depart = get_y_flotte(une_flotte);
+		une_nouvelle_flotte = creer_flotte();
+		case_arrivee = get_case_terrain_espace(un_terrain_espace, x, y);
+
+
+		if((x_depart == x) && (y_depart == y))
+		{
+			return false;
+		}
+		if(case_arrivee->presence_flotte == true)
+		{
+			if(fusion_flotte(un_joueur, un_terrain_espace, une_flotte, x, y))
+			{
+				/*free(une_flotte);*/
+				return true;
+			}
+		}
+		if(case_arrivee->presence_flotte == false)
+		{
+			for(i=0;i<10;i++)
+			{
+				if(un_jeu->tab_unite_selectionnee[i] == true)
+				{
+					ajouter_unite_flotte(une_nouvelle_flotte, &une_flotte->tab_unite[i]);
+					retirer_unite_flotte(une_flotte, i);
+				}
+			}
+			ajouter_flotte_jeu(un_jeu, un_terrain_espace,une_nouvelle_flotte, un_jeu->joueur_en_cours, x, y);
+			distance = calcul_distance(x_depart, y_depart, x, y);
+			enlever_pt_mouvement_espace_flotte(une_nouvelle_flotte, distance);
+			return true;
+		}
+	}
+	return false;
+}
+
+
+/************************************************************************/
+/* Fonctions liées aux animations                                       */
+/************************************************************************/
+
 void lancer_animation(Jeu *un_jeu, Animation *une_animation, int temps, SDL_Surface *ecran, int x, int y)
 {
 	SDL_Surface *frame;
@@ -431,51 +548,9 @@ void maj_animation(Jeu *un_jeu, Terrain_espace *un_terrain_espace, Animation *un
 }
 
 
-bool deplacement_unite_flotte(Jeu *un_jeu, Joueur *un_joueur, Terrain_espace *un_terrain_espace, Flotte *une_flotte, int x, int y)
-{
-    if(peut_se_deplacer(une_flotte, x, y))
-    {
-        int distance, i;
-        int x_depart, y_depart;
-        Case_terrain_espace *case_arrivee;
-		Flotte *une_nouvelle_flotte;
-        x_depart = get_x_flotte(une_flotte);
-        y_depart = get_y_flotte(une_flotte);
-		une_nouvelle_flotte = creer_flotte();
-        case_arrivee = get_case_terrain_espace(un_terrain_espace, x, y);
-        
-
-        if((x_depart == x) && (y_depart == y))
-        {
-            return false;
-        }
-		if(case_arrivee->presence_flotte == true)
-		{
-			if(fusion_flotte(un_joueur, un_terrain_espace, une_flotte, x, y))
-			{
-				/*free(une_flotte);*/
-				return true;
-			}
-		}
-		if(case_arrivee->presence_flotte == false)
-		{
-		    for(i=0;i<10;i++)
-		    {
-		        if(un_jeu->tab_unite_selectionnee[i] == true)
-		        {
-		            ajouter_unite_flotte(une_nouvelle_flotte, &une_flotte->tab_unite[i]);
-		            retirer_unite_flotte(une_flotte, i);
-		        }
-		    }
-            ajouter_flotte_jeu(un_jeu, un_terrain_espace,une_nouvelle_flotte, un_jeu->joueur_en_cours, x, y);
-			distance = calcul_distance(x_depart, y_depart, x, y);
-			enlever_pt_mouvement_espace_flotte(une_nouvelle_flotte, distance);
-			return true;
-		}
-    }
-    return false;
-}
-
+/************************************************************************/
+/* Fonctions liées au combat                                            */
+/************************************************************************/
 void placer_unite_flotte_en_haut(Terrain_combat * un_terrain_combat, Flotte * flotte)
 {
         int i,m,n;
@@ -494,10 +569,6 @@ void placer_unite_flotte_en_haut(Terrain_combat * un_terrain_combat, Flotte * fl
                         ajoute_unite_terrain(un_terrain_combat, une_unite,m,n);
         }
         
-}
-Joueur * get_ieme_joueur_jeu(Jeu * un_jeu,int i)
-{
-        return un_jeu->tab_joueur + i;
 }
 void placer_unite_flotte_en_bas(Terrain_combat * un_terrain_combat, Flotte * flotte)
 {
@@ -558,7 +629,6 @@ void passer_tour_combat(Jeu * jeu, Terrain_combat * un_terrain_combat)
         }else{printf("ERREUR ! \n");}
 }
 
-
 void enlever_pt_action_ieme_joueur(Jeu * jeu, const int i, const int nb)
 {
 	Joueur * joueur;
@@ -566,6 +636,10 @@ void enlever_pt_action_ieme_joueur(Jeu * jeu, const int i, const int nb)
 	enlever_pt_action_joueur(joueur, nb);
 }
 
+
+/************************************************************************/
+/* Fonctions de suvegarde et chargement                                 */
+/************************************************************************/
 void sauvegarde_jeu(const Jeu *un_jeu, FILE*f)
 {
 	int i;

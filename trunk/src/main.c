@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
 	char nom_jupiter[]="jupiter";
 	char nom_venus[]="venus";
 
-	srand (time (NULL)); 
+	srand(time(NULL)); 
 	un_terrain_espace = creer_terrain_espace(20, 15);
     modification_terrain_espace(un_terrain_espace, 'E');
 
@@ -73,11 +73,10 @@ int main(int argc, char *argv[])
     terre = get_planete_terrain_espace(un_terrain_espace, 2, 1);
     jupiter = get_planete_terrain_espace(un_terrain_espace, 4, 3);
 
-	joueur = creer_joueur(nom_joueur);
-	joueur2 = creer_joueur(nom_joueur2);
+	joueur = creer_joueur(nom_joueur, 0);
+	joueur2 = creer_joueur(nom_joueur2, 1);
 	jeu = creer_jeu();
-    set_couleur(joueur2, 1);
-	ajouter_joueur(jeu, joueur);
+    ajouter_joueur(jeu, joueur);
 	ajouter_joueur(jeu, joueur2);
 
     flotte = creer_flotte();
@@ -91,13 +90,13 @@ int main(int argc, char *argv[])
 	flotte3 = creer_flotte();
 	unite5 = creer_unite(5, 5, 5, 5, 5, 10);
 	unite6 = creer_unite(6, 6, 6, 6, 6, 10);
-
+	
 	ajouter_planete_joueur(&jeu->tab_joueur[0], terre);
 	afficher_planete(jeu->tab_joueur[0].tab_planete[0]);
 
 	ajouter_planete_joueur(&jeu->tab_joueur[1], jupiter);
 	afficher_planete(jeu->tab_joueur[1].tab_planete[0]);
-
+	
     modification_production_planete(jeu->tab_joueur[0].tab_planete[0], 100, 50, 10, 100);
 	modification_production_planete(jeu->tab_joueur[1].tab_planete[0], 200, 50, 75, 0);
 
@@ -109,21 +108,14 @@ int main(int argc, char *argv[])
 
 	ajouter_unite_flotte(flotte3, unite5);
 	ajouter_unite_flotte(flotte3, unite6);
-/*
-    ajouter_flotte_joueur(&jeu->tab_joueur[0], flotte);
-	ajouter_flotte_joueur(&jeu->tab_joueur[0], flotte2);
-
-    printf("Affiche flotte 1\n");
-    afficher_flotte(&jeu->tab_joueur[0].tab_flotte[0]);
-    printf("Affiche flotte 2\n");
-    afficher_flotte(&jeu->tab_joueur[0].tab_flotte[1]);
-
-    ajouter_flotte(get_case_terrain_espace(un_terrain_espace, 2, 3), &jeu->tab_joueur[0].tab_flotte[0]);
-	ajouter_flotte(get_case_terrain_espace(un_terrain_espace, 5, 5), &jeu->tab_joueur[0].tab_flotte[1]);
-*/
+	
 	ajouter_flotte_jeu(jeu, un_terrain_espace, flotte, 0, 2, 3);
 	ajouter_flotte_jeu(jeu, un_terrain_espace, flotte2, 0, 5, 5);
 	ajouter_flotte_jeu(jeu, un_terrain_espace, flotte3, 1, 0, 4);
+
+	//creer_vision_jeu(jeu, un_terrain_espace);
+	creer_vision_joueur(jeu, un_terrain_espace, 0);
+
    /* creer_fichier_sauvegarde("essai", un_terrain_espace, jeu);
     detruire_terrain_espace(&un_terrain_espace);
     detruire_jeu(&jeu);
