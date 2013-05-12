@@ -6,15 +6,20 @@
 
 #include "planete.h"
 #include "flotte.h"
-/*#include "terrain_espace.h"*/
+//#include "vision.h"
 
-/*#include "terrain_espace.h"*/
+
+typedef enum
+{
+	BLEU,
+	ROUGE
+}Couleur_joueur;
 
 typedef struct
 {
     int numero_joueur;
-
-    enum {bleu = 0, rouge} couleur_joueur;
+	//Vision_terrain vision_terrain;
+    Couleur_joueur couleur_joueur;
 
     int metal;
     int argent;

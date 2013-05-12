@@ -57,6 +57,8 @@ void colonisation_planete_flotte(Terrain_espace *un_terrain_espace, Flotte *une_
 void lancer_animation(Jeu *un_jeu, Animation *une_animation, int temps, SDL_Surface *ecran, int x, int y);
 void maj_animation(Jeu *un_jeu,Terrain_espace *un_terrain_espace, Animation *une_animation, int temps, SDL_Surface *ecran, SDL_Surface **tab_surface, int interface_affichee);
 void lancer_animation_bloquante(Jeu *un_jeu, Terrain_espace *un_terrain_espace, Animation *une_animation, SDL_Surface *ecran, int x, int y, SDL_Surface **tab_surface, int interface_affichee);
+bool deplacement_flotte(Joueur *un_joueur, Terrain_espace *un_terrain_espace, Flotte *une_flotte, int x, int y);
+bool fusion_flotte(Joueur *un_joueur, Terrain_espace *un_terrain_espace, Flotte *une_flotte, int x, int y);
 
 int get_joueur_en_cours_combat(Jeu * jeu);
 /**/
