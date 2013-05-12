@@ -6,11 +6,12 @@
 
 #include "planete.h"
 #include "flotte.h"
-//#include "vision.h"
+#include "vision.h"
 
 
 typedef enum
 {
+	DEFAUT,
 	BLEU,
 	ROUGE
 }Couleur_joueur;
@@ -18,7 +19,7 @@ typedef enum
 typedef struct
 {
     int numero_joueur;
-	//Vision_terrain vision_terrain;
+	Vision_terrain* vision_terrain;
     Couleur_joueur couleur_joueur;
 
     int metal;
@@ -37,12 +38,17 @@ typedef struct
 	int pt_action_joueur;
 	int pt_action_joueur_total;
     char nom_joueur[20];
-
 }Joueur;
 
+
+void initialise_joueur(Joueur *un_joueur,char nom[30], int indice_joueur);
+Joueur *creer_joueur(char nom[30], int indice_joueur);
+void liberer_joueur(Joueur *un_joueur);
+void detruire_joueur(Joueur **un_joueur);
+
 void set_nom_joueur(Joueur *un_joueur, char nom[20]);
-void set_couleur(Joueur *un_joueur, int i);
-int get_couleur(const Joueur *un_joueur);
+void set_couleur(Joueur *un_joueur, Couleur_joueur couleur_joueur);
+Couleur_joueur get_couleur(const Joueur *un_joueur);
 void set_pt_action_joueur(Joueur *un_joueur, int i);
 int get_pt_action_joueur(const Joueur *un_joueur);
 void set_metal_joueur(Joueur *un_joueur, int nb);
@@ -55,15 +61,11 @@ void set_population_joueur(Joueur *un_joueur, int nb);
 int get_population_joueur(const Joueur *un_joueur);
 /*void set_nb_planete(Joueur *un_joueur, int nb);*/
 int get_nb_planete(Joueur *un_joueur);
-
 int get_nb_flotte_joueur(Joueur *un_joueur);
-void set_numero_joueur(Joueur *un_joueur, int i);/**/
-int get_numero_joueur(const Joueur *un_joueur);/**/
+void set_numero_joueur(Joueur *un_joueur, int i);
+int get_numero_joueur(const Joueur *un_joueur);
+Flotte* get_ieme_flotte_joueur(const Joueur *un_joueur,int i);
 
-void initialise_joueur(Joueur *un_joueur,char nom[30]);
-Joueur *creer_joueur(char nom[30]);
-void liberer_joueur(Joueur *un_joueur);
-void detruire_joueur(Joueur **un_joueur);
 
 void ajouter_metal(Joueur *un_joueur, int nb);
 void retirer_metal(Joueur *un_joueur, int nb);
@@ -73,20 +75,16 @@ void ajouter_carburant(Joueur *un_joueur, int nb);
 void retirer_carburant(Joueur *un_joueur, int nb);
 void ajouter_population(Joueur *un_joueur, int nb);
 void retirer_population(Joueur *un_joueur, int nb);
-
 void recuperer_ressource_planete(Joueur *un_joueur, int *metal, int *argent, int *carburant, int *population);
-
 void ajouter_planete_joueur(Joueur *un_joueur, Planete *une_planete);
 void ajouter_flotte_joueur(Joueur *un_joueur, Flotte *une_flotte);
 void retirer_flotte_joueur(Joueur *un_joueur, int indice_flotte);
-
-Flotte * get_ieme_flotte_joueur(const Joueur *un_joueur,int i);/**/
-void ajouter_unite_ieme_flotte_joueur(Joueur *un_joueur, Unite * unite, int i);/**/
-
+void ajouter_unite_ieme_flotte_joueur(Joueur *un_joueur, Unite * unite, int i);
 void colonisation_planete(Joueur *un_joueur, Planete *une_planete);
 void creation_unite_planete(Joueur *un_joueur, Planete *une_planete, int choix);
 void enlever_pt_action_joueur(Joueur *un_joueur, const int point);
 void reinitialiser_pt_action_joueur(Joueur *joueur);
+
 
 void sauvegarde_joueur(const Joueur *un_joueur, FILE*f);
 Joueur* ouverture_joueur(FILE *f);

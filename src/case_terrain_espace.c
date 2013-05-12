@@ -4,6 +4,11 @@
 
 #include "case_terrain_espace.h"
 
+
+/************************************************************************/
+/* Initialisation, création et destruction                              */
+/************************************************************************/
+
 void initialiser_case_espace(Case_terrain_espace *une_case_terrain_espace)
 {
     une_case_terrain_espace->x_espace=0;
@@ -19,54 +24,6 @@ Case_terrain_espace *creer_case_espace()
     Case_terrain_espace *une_case_terrain_espace=(Case_terrain_espace *)malloc(sizeof(Case_terrain_espace));
     initialiser_case_espace(une_case_terrain_espace);
     return une_case_terrain_espace;
-}
-
-void set_x_espace(Case_terrain_espace *une_case_terrain_espace, int x)
-{
-    une_case_terrain_espace->x_espace = x;
-}
-
-int get_x_espace(const Case_terrain_espace *une_case_terrain_espace)
-{
-    return une_case_terrain_espace->x_espace;
-}
-
-void set_y_espace(Case_terrain_espace *une_case_terrain_espace, int y)
-{
-    une_case_terrain_espace->y_espace = y;
-}
-
-int get_y_espace(const Case_terrain_espace *une_case_terrain_espace)
-{
-    return une_case_terrain_espace->y_espace;
-}
-
-void set_type_case_terrain_espace(Case_terrain_espace *une_case_terrain_espace, char type)
-{
-	une_case_terrain_espace->type_case_terrain_espace = type;
-}
-
-char get_type_case_terrain_espace(Case_terrain_espace *une_case_terrain_espace)
-{
-	return une_case_terrain_espace->type_case_terrain_espace;
-}
-
-Planete * get_planete(Case_terrain_espace *une_case_terrain_espace)
-{
-	return une_case_terrain_espace->planete;
-}
-
-Flotte * get_flotte(Case_terrain_espace *une_case_terrain_espace)
-{
-	return une_case_terrain_espace->flotte;
-}
-
-void definir_case_terrain_espace(Case_terrain_espace *une_case_terrain_espace, char c)
-{
-    if((c == 'E')||(c == 'F')||(c == 'P'))
-    {
-        c = get_type_case_terrain_espace(une_case_terrain_espace);
-    }
 }
 
 void liberer_case_terrain_espace(Case_terrain_espace *une_case_terrain_espace)
@@ -92,6 +49,57 @@ void detruire_case_terrain_espace(Case_terrain_espace *une_case_terrain_espace)
     liberer_case_terrain_espace(une_case_terrain_espace);
     free(une_case_terrain_espace);
     une_case_terrain_espace = NULL;
+}
+
+
+/************************************************************************/
+/* Fonctions set et get                                                 */
+/************************************************************************/
+
+void set_x_espace(Case_terrain_espace *une_case_terrain_espace, int x)
+{
+    une_case_terrain_espace->x_espace = x;
+}
+int get_x_espace(const Case_terrain_espace *une_case_terrain_espace)
+{
+    return une_case_terrain_espace->x_espace;
+}
+void set_y_espace(Case_terrain_espace *une_case_terrain_espace, int y)
+{
+    une_case_terrain_espace->y_espace = y;
+}
+int get_y_espace(const Case_terrain_espace *une_case_terrain_espace)
+{
+    return une_case_terrain_espace->y_espace;
+}
+void set_type_case_terrain_espace(Case_terrain_espace *une_case_terrain_espace, char type)
+{
+	une_case_terrain_espace->type_case_terrain_espace = type;
+}
+char get_type_case_terrain_espace(Case_terrain_espace *une_case_terrain_espace)
+{
+	return une_case_terrain_espace->type_case_terrain_espace;
+}
+Planete * get_planete(Case_terrain_espace *une_case_terrain_espace)
+{
+	return une_case_terrain_espace->planete;
+}
+Flotte * get_flotte(Case_terrain_espace *une_case_terrain_espace)
+{
+	return une_case_terrain_espace->flotte;
+}
+
+
+/************************************************************************/
+/* Fonctions                                                            */
+/************************************************************************/
+
+void definir_case_terrain_espace(Case_terrain_espace *une_case_terrain_espace, char c)
+{
+    if((c == 'E')||(c == 'F')||(c == 'P'))
+    {
+        c = get_type_case_terrain_espace(une_case_terrain_espace);
+    }
 }
 
 void affiche_case_terrain_espace(const Case_terrain_espace *une_case_terrain_espace)
@@ -137,6 +145,10 @@ void test_module_case_terrain_espace()
 		printf ("Echec\n");
 	}
 }
+
+/************************************************************************/
+/* Fonctions sauvegarde et chargement                                   */
+/************************************************************************/
 
 void sauvegarde_case_terrain_espace(const Case_terrain_espace *une_case_terrain_espace, FILE*f)
 {
