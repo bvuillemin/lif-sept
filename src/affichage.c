@@ -31,7 +31,7 @@
 
 bool test_souris_rectangle (SDL_Rect taille_surface, int x, int y) /*Va tester si x et y sont dans le rectangle, utile pour les menus*/
 {
-	if((x > taille_surface.x) && (x< taille_surface.x + taille_surface.w) && (y > taille_surface.y) && (y< taille_surface.y + taille_surface.h))
+	if((x >= taille_surface.x) && (x<= taille_surface.x + taille_surface.w) && (y >= taille_surface.y) && (y<= taille_surface.y + taille_surface.h))
 	{
 		return true;
 	}
@@ -59,7 +59,7 @@ bool booleen_case_pointeur_souris(Terrain_espace *un_terrain_espace, int x, int 
 
 bool booleen_coordonnees_case(Terrain_espace *un_terrain_espace, int x_case, int y_case, int *x, int *y)/*fonction qui va récuperer les coordonnées sur l'écran d'une case et les mettre dans x et y, ou renvoyer false si elle n'est pas affichee*/
 {
-	SDL_Rect affichage_map = {un_terrain_espace->affichage_x, un_terrain_espace->affichage_y, un_terrain_espace->affichage_x + TAILLE_TERRAIN_ESPACE_X, un_terrain_espace->affichage_y + TAILLE_TERRAIN_ESPACE_Y};
+	SDL_Rect affichage_map = {un_terrain_espace->affichage_x - 1, un_terrain_espace->affichage_y - 1, un_terrain_espace->affichage_x + TAILLE_TERRAIN_ESPACE_X, un_terrain_espace->affichage_y + TAILLE_TERRAIN_ESPACE_Y};
 	if(test_souris_rectangle(affichage_map, x_case * 100, y_case *100))
 	{
 		*x = (x_case * 100) - affichage_map.x;
@@ -606,8 +606,10 @@ SDL_Surface* affichage_minimap(Terrain_espace *un_terrain_espace)
 
 SDL_Surface* creer_affichage_vision(Jeu *un_jeu, Joueur* un_joueur)
 {
-	SDL_Surface *visible = NULL;
-	SDL_Surface *visibilite = NULL;
+	SDL_Surface *affichee = NULL;
+	SDL_Surface *jamais_visitee = NULL;
+	SDL_Surface *visitee = NULL;
+	SDL_Surface *fond = NULL;
 	SDL_Rect position_affichage;
 	int i, j;
 	Terrain_espace* un_terrain_espace;
@@ -616,28 +618,47 @@ SDL_Surface* creer_affichage_vision(Jeu *un_jeu, Joueur* un_joueur)
 
 	une_vision = un_joueur->vision_terrain;
 	un_terrain_espace = un_joueur->vision_terrain->terrain_espace;
-	visibilite = SDL_CreateRGBSurface(SDL_HWSURFACE, un_terrain_espace->taille_espace_x * 100, un_terrain_espace->taille_espace_y * 100, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
-	SDL_FillRect(visibilite, NULL, SDL_MapRGB(visibilite->format, 0, 0, 0));
 
-	visible = SDL_CreateRGBSurface(SDL_HWSURFACE, 100, 100, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
-	SDL_FillRect(visible, NULL, SDL_MapRGB(visibilite->format, 255, 255, 255));
+	fond = SDL_CreateRGBSurface(SDL_HWSURFACE,un_terrain_espace->taille_espace_x * 100, un_terrain_espace->taille_espace_y * 100, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
+	SDL_FillRect(fond, NULL, SDL_MapRGB(fond->format, 255, 0, 0));
+	SDL_SetColorKey(fond, SDL_SRCCOLORKEY, SDL_MapRGB(fond->format, 255, 0, 0));
+
+	jamais_visitee = SDL_CreateRGBSurface(SDL_HWSURFACE, 100, 100, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
+	SDL_FillRect(jamais_visitee, NULL, SDL_MapRGB(fond->format, 0, 0, 0));
+
+	affichee = SDL_CreateRGBSurface(SDL_HWSURFACE, 100, 100, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
+	SDL_FillRect(affichee, NULL, SDL_MapRGB(fond->format, 255, 255, 255));
+
+	visitee = SDL_CreateRGBSurface(SDL_HWSURFACE, 100, 100, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
+	SDL_FillRect(visitee, NULL, SDL_MapRGB(fond->format, 0, 0, 255));
+	SDL_SetAlpha(visitee, SDL_SRCALPHA, 255);
 
 	for(i=0;i< un_terrain_espace->taille_espace_x;i++)
 	{
 		for(j=0;j< un_terrain_espace->taille_espace_y;j++)
 		{
 			une_case = get_vision_case(une_vision, j, i);
+			initialise_sdl_rect(&position_affichage, j * 100, i * 100, 100, 100);
 			if(une_case->champ_vision == AFFICHEE)
 			{
-				initialise_sdl_rect(&position_affichage, j * 100, i * 100, 100, 100);
-				SDL_BlitSurface(visible, NULL, visibilite, &position_affichage);
+				SDL_BlitSurface(affichee, NULL, fond, &position_affichage);
+			}
+			if(une_case->champ_vision == VISITEE)
+			{
+				SDL_BlitSurface(visitee, NULL, fond, &position_affichage);
+			}
+			if(une_case->champ_vision == JAMAIS_VISITEE)
+			{
+				SDL_BlitSurface(jamais_visitee, NULL, fond, &position_affichage);
 			}
 		}
 	}
-	SDL_SetColorKey(visibilite, SDL_SRCCOLORKEY, SDL_MapRGB(visibilite->format, 255, 255, 255));
-	SDL_FreeSurface(visible);
+	SDL_SetColorKey(fond, SDL_SRCCOLORKEY, SDL_MapRGB(fond->format, 255, 255, 255));
+	SDL_FreeSurface(visitee);
+	SDL_FreeSurface(jamais_visitee);
+	SDL_FreeSurface(affichee);
 
-	return visibilite;
+	return fond;
 }
 
 void maj_affichage_vision(Jeu *un_jeu, Joueur* un_joueur, SDL_Surface *ecran, SDL_Surface **tab_surface)
