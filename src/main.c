@@ -19,7 +19,7 @@
 
 int main(int argc, char *argv[])
 {
-    /*ecran_titre();*/
+//    ecran_titre();
     Flotte *flotte;
     Unite *unite1;
     Unite *unite2;
@@ -113,10 +113,10 @@ int main(int argc, char *argv[])
 	ajouter_flotte_jeu(jeu, un_terrain_espace, flotte2, 0, 5, 5);
 	ajouter_flotte_jeu(jeu, un_terrain_espace, flotte3, 1, 0, 4);
 
-	//creer_vision_jeu(jeu, un_terrain_espace);
+	creer_vision_jeu(jeu, un_terrain_espace);
 	creer_vision_joueur(jeu, un_terrain_espace, 0);
 
-   /* creer_fichier_sauvegarde("essai", un_terrain_espace, jeu);
+    /*creer_fichier_sauvegarde("essai", un_terrain_espace, jeu);
     detruire_terrain_espace(&un_terrain_espace);
     detruire_jeu(&jeu);
     une_sauvegarde = selection_ouverture("essai");

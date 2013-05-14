@@ -366,10 +366,9 @@ void reinitialiser_pt_action_joueur(Joueur *un_joueur)
 void sauvegarde_joueur(const Joueur *un_joueur, FILE*f)
 {
     int i;
-    /*fprintf(f, "%s\n", un_joueur->nom_joueur);
-     A mettre quand le nom d'un joueur aura été implémenté*/
-    fprintf(f, "Marcel\n");
+    fprintf(f, "%s\n", un_joueur->nom_joueur);
     fprintf(f, "%d\n", un_joueur->numero_joueur);
+    fprintf(f, "%d\n", un_joueur->ia);
     fprintf(f, "%d\n", (int)un_joueur->couleur_joueur);
     fprintf(f, "%d\n", un_joueur->metal);
     fprintf(f, "%d\n", un_joueur->argent);
@@ -394,12 +393,11 @@ Joueur* ouverture_joueur(FILE *f)
 {
     Joueur *joueur_ouvert;
     char chaine[50];
-	bool ia = false;
-    int b, i, indice_joueur = 0; /*Pierre: j'ai rajouté indice_joueur pour eviter de tout commenter mais c'est à modififer*/
+    int b, c, i;
     fgets(chaine, 50, f);
-    joueur_ouvert = creer_joueur(chaine, indice_joueur, ia);
     sscanf(fgets(chaine, 50, f), "%d", &b);
-    joueur_ouvert->numero_joueur = b;
+    sscanf(fgets(chaine, 50, f), "%d", &c);
+    joueur_ouvert = creer_joueur(chaine, b, c);
     sscanf(fgets(chaine, 50, f), "%d", &b);
     joueur_ouvert->couleur_joueur = b;
     sscanf(fgets(chaine, 50, f), "%d", &b);

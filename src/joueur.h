@@ -11,7 +11,7 @@
 
 typedef enum
 {
-	DEFAUT,
+	DEFAUT = 1,
 	BLEU,
 	ROUGE
 }Couleur_joueur;

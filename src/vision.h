@@ -5,7 +5,7 @@
 
 typedef enum
 {
-	AFFICHEE,
+	AFFICHEE = 1,
 	VISITEE,
 	JAMAIS_VISITEE
 }Champ_vision;
@@ -22,13 +22,14 @@ typedef struct
 {
 	int indice_joueur;
 	Terrain_espace* terrain_espace;
-	Vision_case* vision_case;
+	Vision_case* vision_case;/*tableau de vision_case*/
 }Vision_terrain;
 
 
 void initialiser_vision_terrain(Vision_terrain *une_vision_terrain, Terrain_espace *un_terrain, int indice_joueur);
 Vision_terrain* creer_vision_terrain(Terrain_espace *un_terrain, int indice_joueur);
 void initialiser_vision_case(Vision_case* une_vision_case, int indice_joueur);
+Vision_case* creer_vision_case(int indice_joueur);
 void liberer_vision_case(Vision_case* une_vision_case);
 void liberer_vision_terrain(Vision_terrain* une_vision_terrain);
 void detruire_vision_terrain(Vision_terrain** une_vision_terrain);

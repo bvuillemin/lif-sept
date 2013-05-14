@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "sauvegarde.h"
-
 void initialise_sauvegarde(Sauvegarde *une_sauvegarde)
 {
     une_sauvegarde->terrain_espace = (Terrain_espace *)malloc(sizeof(Terrain_espace));
@@ -63,6 +62,7 @@ Sauvegarde* selection_ouverture(const char nom[30])
         {
             une_sauvegarde->jeu = ouverture_jeu(f);
         }
+        creer_vision_joueur(une_sauvegarde->jeu, une_sauvegarde->terrain_espace, 0);
     }
     fclose(f);
     return une_sauvegarde;

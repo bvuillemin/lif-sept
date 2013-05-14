@@ -648,8 +648,6 @@ void enlever_pt_action_ieme_joueur(Jeu * jeu, const int i, const int nb)
 void sauvegarde_jeu(const Jeu *un_jeu, FILE*f)
 {
 	int i;
-
-    afficher_ressource_joueur(un_jeu);
     fprintf(f, "Jeu\n");
     fprintf(f, "%d\n", un_jeu->tour_en_cours);
     fprintf(f, "%d\n", un_jeu->joueur_en_cours);
