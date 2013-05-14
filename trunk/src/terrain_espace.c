@@ -104,16 +104,27 @@ void affiche_terrain_espace(const Terrain_espace *terrain_espace)
 {
     int i, j;
     Case_terrain_espace *une_case;
-    for(j=0;j<terrain_espace->taille_espace_y;j++)
+    for(j=0;j <= terrain_espace->taille_espace_y;j++)
     {
-        for(i=0;i<terrain_espace->taille_espace_x;i++)
+        for(i=0;i<=terrain_espace->taille_espace_x;i++)
         {
-            une_case = get_case_terrain_espace(terrain_espace, i, j);
-            if(une_case->presence_flotte == true)
-            {
-                printf("|F|");
-            }
-            else{printf("|%c|", une_case->type_case_terrain_espace);}
+			if((i == 0) && (j != 0))
+			{
+				printf("|%d|", j%10);
+			}
+			if(j == 0)
+			{
+				printf("|%d|", i%10);
+			}
+			if((i!=0) && (j!=0))
+			{
+				une_case = get_case_terrain_espace(terrain_espace, i - 1, j - 1);
+				if(une_case->presence_flotte == true)
+				{
+					printf("|F|");
+				}
+				else{printf("|%c|", une_case->type_case_terrain_espace);}
+			}
         }
         printf("\n");
     }

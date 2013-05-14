@@ -170,7 +170,11 @@ void tour_suivant(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 				un_jeu->tab_joueur[i].tab_planete[0]->unite_en_cours = -1;
 			}
 		}
-		else appeler_ia(un_terrain_espace, un_jeu->tab_joueur);
+		else
+		{
+			reinitialiser_mouvement_flotte(&(un_jeu->tab_joueur[0].tab_flotte[0]));
+			appeler_ia(un_terrain_espace, un_jeu->tab_joueur);
+		}
 	}
 	un_jeu->tour_en_cours++;
 }
@@ -237,6 +241,48 @@ void maj_vision_jeu(Jeu *un_jeu, Terrain_espace* un_terrain_espace)
 	}
 }
 
+void affichage_vision_jeu(Jeu *un_jeu, Terrain_espace* un_terrain_espace)
+{
+	int i, j, k;
+	Vision_case* une_case;
+	for(i=0;i<un_jeu->nb_joueur;i++)
+	{
+		printf("Affichage terrain joueur %d\n", i);
+		for (j=0;j<=un_terrain_espace->taille_espace_y;j++)
+		{
+			for(k=0;k<=un_terrain_espace->taille_espace_x;k++)
+			{
+				if(k == 0)
+				{
+					printf("|%d|", j%10);
+				}
+				if((j == 0) && (k != 0))
+				{
+					printf("|%d|", k%10);
+				}
+				if((j!=0) && (k!=0))
+				{
+					une_case = get_vision_case(un_jeu->tab_joueur[i].vision_terrain, k - 1, j - 1);
+					if(une_case->champ_vision == AFFICHEE)
+					{
+						printf("|A|");
+					}
+					if(une_case->champ_vision == VISITEE)
+					{
+						printf("|V|");
+					}
+					if(une_case->champ_vision == JAMAIS_VISITEE)
+					{
+						printf("|N|");
+					}
+				}
+			}
+			printf("\n");
+		}
+		printf("\n");
+	}
+}
+
 /************************************************************************/
 /* Fonctions liées à la création d'objets du jeu                        */
 /************************************************************************/
@@ -279,7 +325,7 @@ bool condition_creation_unite(Jeu *un_jeu, Planete *une_planete, int choix)
 			else return false;
 		}
 	}
-	else return false;
+	return false;
 }
 
 bool condition_creation_batiment(Jeu *un_jeu, Planete *une_planete, int choix)
