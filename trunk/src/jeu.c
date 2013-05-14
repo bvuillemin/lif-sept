@@ -5,6 +5,7 @@
 #include "jeu.h"
 #include "affichage.h"
 #include "joueur.h"
+#include "ia.h"
 
 
 /************************************************************************/
@@ -136,36 +137,40 @@ void tour_suivant(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 		carburant = 0;
 		population = 0;
 
-		recuperer_ressource_planete(&un_jeu->tab_joueur[i], &metal, &argent, &carburant, &population);
+		if(un_jeu->tab_joueur[0].ia == false)
+		{
+			recuperer_ressource_planete(&un_jeu->tab_joueur[i], &metal, &argent, &carburant, &population);
 
-		un_jeu->tab_joueur[i].metal += metal;
-		un_jeu->tab_joueur[i].argent += argent;
-		un_jeu->tab_joueur[i].carburant += carburant;
-		un_jeu->tab_joueur[i].population += population;
-		/*printf("Ressources du tour %d pour le joueur %d: \nMetal: %d \nArgent: %d \nCarburant: %d \nPopulation: %d\n\n", un_jeu->tour_en_cours, i, metal, argent, carburant, population);*/
-		reinitialiser_mouvement_flotte(&(un_jeu->tab_joueur[i].tab_flotte[0]));
+			un_jeu->tab_joueur[i].metal += metal;
+			un_jeu->tab_joueur[i].argent += argent;
+			un_jeu->tab_joueur[i].carburant += carburant;
+			un_jeu->tab_joueur[i].population += population;
+			/*printf("Ressources du tour %d pour le joueur %d: \nMetal: %d \nArgent: %d \nCarburant: %d \nPopulation: %d\n\n", un_jeu->tour_en_cours, i, metal, argent, carburant, population);*/
+			reinitialiser_mouvement_flotte(&(un_jeu->tab_joueur[i].tab_flotte[0]));
 
-		if(un_jeu->tab_joueur[i].tab_planete[0]->batiment_nb_tour_restant > 0)
-		{
-			un_jeu->tab_joueur[i].tab_planete[0]->batiment_nb_tour_restant --;
-		}
-		if(un_jeu->tab_joueur[i].tab_planete[0]->batiment_nb_tour_restant == 0) /*a completer pour gerer automatiquement chaque planete de chaque joueur*/
-		{
-		    validation_batiment(un_jeu->tab_joueur[i].tab_planete[0]);
-			un_jeu->tab_joueur[i].tab_planete[0]->batiment_nb_tour_restant = -1;
-			un_jeu->tab_joueur[i].tab_planete[0]->batiment_en_cours = -1;
-		}
+			if(un_jeu->tab_joueur[i].tab_planete[0]->batiment_nb_tour_restant > 0)
+			{
+				un_jeu->tab_joueur[i].tab_planete[0]->batiment_nb_tour_restant --;
+			}
+			if(un_jeu->tab_joueur[i].tab_planete[0]->batiment_nb_tour_restant == 0) /*a completer pour gerer automatiquement chaque planete de chaque joueur*/
+			{
+				validation_batiment(un_jeu->tab_joueur[i].tab_planete[0]);
+				un_jeu->tab_joueur[i].tab_planete[0]->batiment_nb_tour_restant = -1;
+				un_jeu->tab_joueur[i].tab_planete[0]->batiment_en_cours = -1;
+			}
 
-		if(un_jeu->tab_joueur[i].tab_planete[0]->unite_nb_tour_restant > 0)
-		{
-			un_jeu->tab_joueur[i].tab_planete[0]->unite_nb_tour_restant --; /*de meme*/
+			if(un_jeu->tab_joueur[i].tab_planete[0]->unite_nb_tour_restant > 0)
+			{
+				un_jeu->tab_joueur[i].tab_planete[0]->unite_nb_tour_restant --; /*de meme*/
+			}
+			if(un_jeu->tab_joueur[i].tab_planete[0]->unite_nb_tour_restant == 0)
+			{
+				validation_creation_unite_planete(un_jeu, un_terrain_espace, i, un_jeu->tab_joueur[i].tab_planete[0]->x, un_jeu->tab_joueur[i].tab_planete[0]->y);
+				un_jeu->tab_joueur[i].tab_planete[0]->unite_nb_tour_restant = -1;
+				un_jeu->tab_joueur[i].tab_planete[0]->unite_en_cours = -1;
+			}
 		}
-		if(un_jeu->tab_joueur[i].tab_planete[0]->unite_nb_tour_restant == 0)
-		{
-		    validation_creation_unite_planete(un_jeu, un_terrain_espace, i, un_jeu->tab_joueur[i].tab_planete[0]->x, un_jeu->tab_joueur[i].tab_planete[0]->y);
-			un_jeu->tab_joueur[i].tab_planete[0]->unite_nb_tour_restant = -1;
-			un_jeu->tab_joueur[i].tab_planete[0]->unite_en_cours = -1;
-		}
+		else appeler_ia(un_terrain_espace, un_jeu->tab_joueur);
 	}
 	un_jeu->tour_en_cours++;
 }
