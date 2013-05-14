@@ -3,7 +3,11 @@
 #include <string.h>
 #include <stdbool.h>
 #include <SDL/SDL.h>
+#ifdef __APPLE__
+#include "SDL_image.h"
+#else
 #include <SDL/SDL_image.h>
+#endif
 
 #include "animation.h"
 
