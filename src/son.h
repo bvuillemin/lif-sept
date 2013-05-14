@@ -2,7 +2,11 @@
 #define _SON_H_
 
 
+#ifdef __APPLE__
+#include "fmod.h"
+#else
 #include <FMOD/fmod.h>
+#endif
 #include "son.h"
 
 

@@ -9,6 +9,7 @@
 #include "SDL_ttf.h"
 #include "SDL_rotozoom.h"
 #include "SDL_framerate.h"
+#include "fmod.h"
 #else
 /*#include <SDL/SDL_rotozoom.h>
 #include <SDL/SDL_framerate.h>*/
