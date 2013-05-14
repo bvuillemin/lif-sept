@@ -58,11 +58,8 @@ Niveau* ouverture_niveau(FILE *f)
 {
     Niveau *niveau_ouvert=(Niveau *)malloc(sizeof(Niveau));
     char chaine[50];
-    int b;
-    sscanf(fgets(chaine, 50, f), "%d", &b);
-    niveau_ouvert->niveau_unite = b;
-    sscanf(fgets(chaine, 50, f), "%d", &b);
-    niveau_ouvert->experience = b;
+    sscanf(fgets(chaine, 50, f), "%d", &niveau_ouvert->niveau_unite);
+    sscanf(fgets(chaine, 50, f), "%d", &niveau_ouvert->experience);
     return niveau_ouvert;
 }
 

@@ -685,14 +685,10 @@ Jeu* ouverture_jeu(FILE *f)
     char chaine[50];
     int b, i;
     jeu_ouvert = creer_jeu();
-    sscanf(fgets(chaine, 50, f), "%d", &b);
-    jeu_ouvert->tour_en_cours = b;
-    sscanf(fgets(chaine, 50, f), "%d", &b);
-    jeu_ouvert->joueur_en_cours = b;
-    sscanf(fgets(chaine, 50, f), "%d", &b);
-    jeu_ouvert->joueur_en_cours_combat = b;
-    sscanf(fgets(chaine, 50, f), "%d", &b);
-    jeu_ouvert->nb_joueur = b;
+    sscanf(fgets(chaine, 50, f), "%d", &jeu_ouvert->tour_en_cours);
+    sscanf(fgets(chaine, 50, f), "%d", &jeu_ouvert->joueur_en_cours);
+    sscanf(fgets(chaine, 50, f), "%d", &jeu_ouvert->joueur_en_cours_combat);
+    sscanf(fgets(chaine, 50, f), "%d", &jeu_ouvert->nb_joueur);
     for(i=0;i<jeu_ouvert->nb_joueur;i++)
     {
         jeu_ouvert->tab_joueur[i] = *ouverture_joueur(f);
