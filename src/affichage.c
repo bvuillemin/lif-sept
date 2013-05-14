@@ -11,8 +11,8 @@
 #include "SDL_framerate.h"
 #include "fmod.h"
 #else
-/*#include <SDL/SDL_rotozoom.h>
-#include <SDL/SDL_framerate.h>*/
+#include <SDL/SDL_rotozoom.h>
+#include <SDL/SDL_framerate.h>
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 #include <SDL/SDL_ttf.h>
@@ -1501,113 +1501,104 @@ void input_handle(void)
         }
     }
 }
-/*
+
 void ecran_titre(void)
 {
-    SDL_Surface *ecran, *imageDeFond_Depart, *imageDeFond, *Titre, *Titre2, *Texte, *Noir, *FondMenu_Depart, *FondMenu, *Petit_Titre_Depart, *Petit_Titre, *NouvellePartie, *Charger, *Quitter;
+    /* Initialisation des variables */
+    SDL_Surface *ecran, *imageDeFond, *Titre, *Titre_Anime, *Texte, *Noir, *FondMenu, *Petit_Titre, *NouvellePartie, *Charger, *Quitter;
     TTF_Font *police;
-	double longueurPetit_Titre_Depart;
     double a = 0.0, b = 1, X = TAILLE_FENETRE_X, Y = TAILLE_FENETRE_Y;
 	double longueurTitre;
 	double hauteurTitre;
-	double largeurFondMenu_Depart;
-	double largeurFond2;
-	double longueurTexte;
-	int hauteurFond;
-	SDL_Rect positionFond;
+    double longueurTexte;
 	SDL_Rect positionTitre, positionTexte, positionPetit_Titre, positionNouvellePartie, positionCharger, positionQuitter;
     SDL_Event clic_touche;
 	SDL_Color couleur= {255, 255, 255};
     SDL_Init(SDL_INIT_VIDEO);
     ecran = SDL_SetVideoMode(X, Y, 32, SDL_HWSURFACE);
-    imageDeFond_Depart = IMG_Load("../graphiques/images/Fond_titre.png");
+    
+    /* Chargement des images */
+    imageDeFond = IMG_Load("../graphiques/images/Fond_titre.png");
     Titre = IMG_Load("../graphiques/images/Titre.png");
     Noir = SDL_LoadBMP("../graphiques/images/Noir.bmp");
-    FondMenu_Depart = IMG_Load("../graphiques/images/FondMenu.png");
-    Petit_Titre_Depart = IMG_Load("../graphiques/images/Petit_Titre.png");
-    longueurPetit_Titre_Depart = Petit_Titre_Depart->w;
-    Petit_Titre = rotozoomSurface(Petit_Titre_Depart, 0, (X/(1.3*longueurPetit_Titre_Depart)), 0);
+    FondMenu = IMG_Load("../graphiques/images/FondMenu.png");
+    Petit_Titre = IMG_Load("../graphiques/images/Petit_Titre.png");
     NouvellePartie = IMG_Load("../graphiques/images/Nouvelle_Partie.png");
     Charger = IMG_Load("../graphiques/images/Charger.png");
     Quitter = IMG_Load("../graphiques/images/Quitter.png");
 
-    positionFond.y = 0;
-    hauteurFond = imageDeFond_Depart->h;
-    imageDeFond = rotozoomSurface(imageDeFond_Depart, 0, Y/hauteurFond, 0);
-    FondMenu = rotozoomSurface(FondMenu_Depart, 0, Y/hauteurFond, 0);
-    largeurFond2 = imageDeFond->w;
-    positionFond.x = (X-largeurFond2)/2;
-    SDL_BlitSurface(imageDeFond, NULL, ecran, &positionFond);
+    /*Chargement du fond */
+    SDL_BlitSurface(imageDeFond, NULL, ecran, NULL);
     SDL_WM_SetCaption("Conquest Of Space", NULL);
 
-    largeurFondMenu_Depart = imageDeFond->w;
-    positionFond.x = (X - largeurFondMenu_Depart)/2.0;
-    positionFond.y = 0;
-    while (a<(Y/hauteurFond)) {
-        positionFond.x = (X - largeurFondMenu_Depart)/2.0;
+    /*Boucle pour le zoom du titre */
+    while (a<1) {
         a = a+0.005;
-        Titre2 = rotozoomSurface(Titre, 0, a, 2);
-        longueurTitre = Titre2->w;
-        hauteurTitre = Titre2->h;
+        Titre_Anime = rotozoomSurface(Titre, 0, a, 2);
+        longueurTitre = Titre_Anime->w;
+        hauteurTitre = Titre_Anime->h;
         positionTitre.x = ((X/2.0) - (longueurTitre/2.0));
         positionTitre.y = ((Y/2.0) - (hauteurTitre/2.0));
-        SDL_BlitSurface(imageDeFond, NULL, ecran, &positionFond);
-        SDL_BlitSurface(Titre2, NULL, ecran, &positionTitre);
+        SDL_BlitSurface(imageDeFond, NULL, ecran, NULL);
+        SDL_BlitSurface(Titre_Anime, NULL, ecran, &positionTitre);
         SDL_Flip(ecran);
-        SDL_FreeSurface(Titre2);
+        SDL_FreeSurface(Titre_Anime);
         SDL_FreeSurface(ecran);
         input_handle();
     }
-    Titre2 = rotozoomSurface(Titre, 0, (Y/hauteurFond), 2);
-    longueurTitre = Titre2->w;
-    hauteurTitre = Titre2->h;
+    
+    /*Titre fixe et attente d'un clic */
+    Titre_Anime = Titre;
+    longueurTitre = Titre_Anime->w;
+    hauteurTitre = Titre_Anime->h;
     positionTitre.x = ((X/2.0) - (longueurTitre/2.0));
     positionTitre.y = ((Y/2.0) - (hauteurTitre/2.0));
-    positionFond.x = (X - largeurFondMenu_Depart)/2.0;
-    SDL_BlitSurface(imageDeFond, NULL, ecran, &positionFond);
-    SDL_BlitSurface(Titre2, NULL, ecran, &positionTitre);
+    SDL_BlitSurface(imageDeFond, NULL, ecran, NULL);
+    SDL_BlitSurface(Titre_Anime, NULL, ecran, &positionTitre);
     TTF_Init();
     police = TTF_OpenFont("../graphiques/fonts/space_age.ttf", 40);
-    Texte = TTF_RenderText_Blended(police, "Appuyez sur une touche", couleur);
+    Texte = TTF_RenderText_Blended(police, "Cliquez pour continuer", couleur);
     longueurTexte = Texte->w;
     positionTexte.x = ((X/2.0) - (longueurTexte/2.0));
     positionTexte.y = 9*(Y)/10;
     SDL_BlitSurface(Texte, NULL, ecran, &positionTexte);
     SDL_Flip(ecran);
-
     SDL_WaitEvent(&clic_touche);
 
+    /*Chargement du menu au clic */
     switch (clic_touche.type) {
-        case SDL_KEYDOWN:
+        case SDL_MOUSEBUTTONDOWN:
+            
+            /* Disparition du titre */
             while (b<256) {
-                positionFond.x = (X - largeurFondMenu_Depart)/2.0;
                 a = a+0.005;
-                Titre2 = rotozoomSurface(Titre, 0, a, 2);
-                longueurTitre = Titre2->w;
-                hauteurTitre = Titre2->h;
+                Titre_Anime = rotozoomSurface(Titre, 0, a, 2);
+                longueurTitre = Titre_Anime->w;
+                hauteurTitre = Titre_Anime->h;
                 positionTitre.x = ((X/2.0) - (longueurTitre/2.0));
                 positionTitre.y = ((Y/2.0) - (hauteurTitre/2.0));
-                SDL_BlitSurface(imageDeFond, NULL, ecran, &positionFond);
-                SDL_BlitSurface(Titre2, NULL, ecran, &positionTitre);
+                SDL_BlitSurface(imageDeFond, NULL, ecran, NULL);
+                SDL_BlitSurface(Titre_Anime, NULL, ecran, &positionTitre);
                 SDL_SetAlpha(Noir, SDL_SRCALPHA, b);
-                SDL_BlitSurface(Noir, NULL, ecran, &positionFond);
+                SDL_BlitSurface(Noir, NULL, ecran, NULL);
                 b = b+5;
                 SDL_Flip(ecran);
-                SDL_FreeSurface(Titre2);
+                SDL_FreeSurface(Titre_Anime);
                 SDL_FreeSurface(ecran);
                 input_handle();
             }
+            
+            /* Animation à l'affichage du menu */
             while (b>=0) {
                 double longueurPetit_Titre = Petit_Titre->w;
                 double longueurBouton = NouvellePartie->w;
                 double hauteurBouton = NouvellePartie->h;
                 SDL_SetAlpha(Noir, SDL_SRCALPHA, b);
-                SDL_BlitSurface(Noir, NULL, ecran, &positionFond);
+                SDL_BlitSurface(Noir, NULL, ecran, NULL);
                 b = b-5;
                 SDL_Flip(ecran);
                 SDL_FreeSurface(ecran);
-                positionFond.x = (X - largeurFondMenu_Depart)/2.0;
-                SDL_BlitSurface(FondMenu, NULL, ecran, &positionFond);
+                SDL_BlitSurface(FondMenu, NULL, ecran, NULL);
                 positionPetit_Titre.x = ((X/2.0) - (longueurPetit_Titre/2.0));
                 positionPetit_Titre.y = 100;
                 positionNouvellePartie.x = ((X/2.0) - (longueurBouton/2.0));
@@ -1629,7 +1620,7 @@ void ecran_titre(void)
     }
     pause();
 }
-*/
+
 
 
 bool attaque_ecran(Jeu * jeu,Terrain_combat * un_terrain_combat, SDL_Rect pos,Flotte* flotte1,Flotte * flotte2)
