@@ -56,6 +56,7 @@ void creer_vision_joueur(Jeu* un_jeu, Terrain_espace* un_terrain, int indice_jou
 void creer_vision_jeu(Jeu *un_jeu, Terrain_espace* un_terrain_espace);
 void maj_vision_joueur(Jeu* un_jeu, Terrain_espace* un_terrain, int indice_joueur);
 void maj_vision_jeu(Jeu *un_jeu, Terrain_espace* un_terrain_espace);
+void affichage_vision_jeu(Jeu *un_jeu, Terrain_espace* un_terrain_espace);
 
 void validation_creation_unite_planete(Jeu *un_jeu, Terrain_espace *un_terrain_espace, int indice_joueur_en_cours, int x, int y);
 void ajouter_flotte_jeu(Jeu *un_jeu,Terrain_espace *un_terrain_espace, Flotte *une_flotte, int indice_joueur, int x, int y);
