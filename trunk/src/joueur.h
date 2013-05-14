@@ -19,6 +19,8 @@ typedef enum
 typedef struct
 {
     int numero_joueur;
+	bool ia;
+
 	Vision_terrain* vision_terrain;
     Couleur_joueur couleur_joueur;
 
@@ -41,8 +43,8 @@ typedef struct
 }Joueur;
 
 
-void initialise_joueur(Joueur *un_joueur,char nom[30], int indice_joueur);
-Joueur *creer_joueur(char nom[30], int indice_joueur);
+void initialise_joueur(Joueur *un_joueur,char nom[30], int indice_joueur, bool ia);
+Joueur *creer_joueur(char nom[30], int indice_joueur, bool ia);
 void liberer_joueur(Joueur *un_joueur);
 void detruire_joueur(Joueur **un_joueur);
 
