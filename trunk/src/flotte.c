@@ -244,6 +244,7 @@ void sauvegarde_flotte(const Flotte *une_flotte, FILE*f)
     fprintf(f, "%d\n", une_flotte->taille_maximum_flotte);
     fprintf(f, "%d\n", une_flotte->taille_flotte);
     fprintf(f, "%d\n", une_flotte->pt_mouvement_espace_flotte);
+    fprintf(f, "%d\n", une_flotte->vision);
     for(i=0; i<une_flotte->taille_flotte; i++)
     {
         sauvegarde_unite(&une_flotte->tab_unite[i], f);
@@ -270,6 +271,8 @@ Flotte* ouverture_flotte(FILE *f)
     flotte_ouverte->taille_flotte = b;
     sscanf(fgets(chaine, 50, f), "%d", &b);
     flotte_ouverte->pt_mouvement_espace_flotte = b;
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    flotte_ouverte->vision = b;
     for(i=0; i<flotte_ouverte->taille_flotte; i++)
     {
         flotte_ouverte->tab_unite[i] = *ouverture_unite(f);

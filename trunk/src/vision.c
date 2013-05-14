@@ -40,6 +40,13 @@ void initialiser_vision_case(Vision_case* une_vision_case, int indice_joueur)
 	une_vision_case->champ_vision = JAMAIS_VISITEE;
 }
 
+Vision_case* creer_vision_case(int indice_joueur)
+{
+    Vision_case* une_vision_case = (Vision_case*)malloc(sizeof(Vision_case));
+    initialiser_vision_case(une_vision_case, indice_joueur);
+    return une_vision_case;
+}
+
 void liberer_vision_case(Vision_case* une_vision_case)
 {
 	une_vision_case->indice_joueur = -1;
