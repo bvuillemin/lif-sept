@@ -10,9 +10,10 @@
 /* Initialisation, création et destruction                              */
 /************************************************************************/
 
-void initialise_joueur(Joueur *un_joueur, char nom[20], int indice_joueur)
+void initialise_joueur(Joueur *un_joueur, char nom[20], int indice_joueur, bool ia)
 {
     un_joueur->numero_joueur = -1;
+	un_joueur->ia = ia;
 	un_joueur->couleur_joueur = DEFAUT;
 	strcpy(un_joueur->nom_joueur, nom);
 	un_joueur->metal = 0;
@@ -30,10 +31,10 @@ void initialise_joueur(Joueur *un_joueur, char nom[20], int indice_joueur)
 	un_joueur->vision_terrain = NULL; /*mis à NULL, c'est le jeu qui va se charger de créer la vision pour chaque joueur*/
 }
 
-Joueur *creer_joueur(char nom[30], int indice_joueur)
+Joueur *creer_joueur(char nom[30], int indice_joueur, bool ia)
 {
     Joueur *un_joueur=(Joueur *)malloc(sizeof(Joueur));
-    initialise_joueur(un_joueur, nom, indice_joueur);
+    initialise_joueur(un_joueur, nom, indice_joueur, ia);
     return un_joueur;
 }
 
@@ -393,9 +394,10 @@ Joueur* ouverture_joueur(FILE *f)
 {
     Joueur *joueur_ouvert;
     char chaine[50];
+	bool ia = false;
     int b, i, indice_joueur = 0; /*Pierre: j'ai rajouté indice_joueur pour eviter de tout commenter mais c'est à modififer*/
     fgets(chaine, 50, f);
-    joueur_ouvert = creer_joueur(chaine, indice_joueur);
+    joueur_ouvert = creer_joueur(chaine, indice_joueur, ia);
     sscanf(fgets(chaine, 50, f), "%d", &b);
     joueur_ouvert->numero_joueur = b;
     sscanf(fgets(chaine, 50, f), "%d", &b);
