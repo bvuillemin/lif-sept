@@ -167,13 +167,11 @@ void sauvegarde_case_terrain_espace(const Case_terrain_espace *une_case_terrain_
 
 Case_terrain_espace* ouverture_case_terrain_espace(FILE*f)
 {
-    Case_terrain_espace *case_terrain_espace_ouverte=(Case_terrain_espace *)malloc(sizeof(Case_terrain_espace));
+    Case_terrain_espace *case_terrain_espace_ouverte=creer_case_espace();
     char chaine[50];
     int b;
-    sscanf(fgets(chaine, 50, f), "%d", &b);
-    case_terrain_espace_ouverte->x_espace = b;
-    sscanf(fgets(chaine, 50, f), "%d", &b);
-    case_terrain_espace_ouverte->y_espace = b;
+    sscanf(fgets(chaine, 50, f), "%d", &case_terrain_espace_ouverte->x_espace);
+    sscanf(fgets(chaine, 50, f), "%d", &case_terrain_espace_ouverte->y_espace);
     fgets(chaine, 50, f);
     case_terrain_espace_ouverte->type_case_terrain_espace = chaine[0];
     sscanf(fgets(chaine, 50, f), "%d", &b);

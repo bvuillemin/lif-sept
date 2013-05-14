@@ -398,37 +398,26 @@ Joueur* ouverture_joueur(FILE *f)
     sscanf(fgets(chaine, 50, f), "%d", &b);
     sscanf(fgets(chaine, 50, f), "%d", &c);
     joueur_ouvert = creer_joueur(chaine, b, c);
-    sscanf(fgets(chaine, 50, f), "%d", &b);
-    joueur_ouvert->couleur_joueur = b;
-    sscanf(fgets(chaine, 50, f), "%d", &b);
-    joueur_ouvert->metal = b;
-    sscanf(fgets(chaine, 50, f), "%d", &b);
-    joueur_ouvert->argent = b;
-    sscanf(fgets(chaine, 50, f), "%d", &b);
-    joueur_ouvert->carburant = b;
-    sscanf(fgets(chaine, 50, f), "%d", &b);
-    joueur_ouvert->population = b;
-    sscanf(fgets(chaine, 50, f), "%d", &b);
-    joueur_ouvert->nb_planete = b;
-    sscanf(fgets(chaine, 50, f), "%d", &b);
-    joueur_ouvert->nb_planete_possible = b;
+    sscanf(fgets(chaine, 50, f), "%d", &joueur_ouvert->couleur_joueur);
+    sscanf(fgets(chaine, 50, f), "%d", &joueur_ouvert->metal);
+    sscanf(fgets(chaine, 50, f), "%d", &joueur_ouvert->argent);
+    sscanf(fgets(chaine, 50, f), "%d", &joueur_ouvert->carburant);
+    sscanf(fgets(chaine, 50, f), "%d", &joueur_ouvert->population);
+    sscanf(fgets(chaine, 50, f), "%d", &joueur_ouvert->nb_planete);
+    sscanf(fgets(chaine, 50, f), "%d", &joueur_ouvert->nb_planete_possible);
     for(i=0;i<joueur_ouvert->nb_planete;i++)
     {
         fgets(chaine, 50, f);
         joueur_ouvert->tab_planete[i] = ouverture_planete(f);
     }
-    sscanf(fgets(chaine, 50, f), "%d", &b);
-    joueur_ouvert->nb_flotte = b;
-    sscanf(fgets(chaine, 50, f), "%d", &b);
-    joueur_ouvert->nb_flotte_possible = b;
+    sscanf(fgets(chaine, 50, f), "%d", &joueur_ouvert->nb_flotte);
+    sscanf(fgets(chaine, 50, f), "%d", &joueur_ouvert->nb_flotte_possible);
     for(i=0;i<joueur_ouvert->nb_flotte;i++)
     {
         fgets(chaine, 50, f);
         joueur_ouvert->tab_flotte[i] = *ouverture_flotte(f);
     }
-    sscanf(fgets(chaine, 50, f), "%d", &b);
-    joueur_ouvert->pt_action_joueur = b;
-    sscanf(fgets(chaine, 50, f), "%d", &b);
-    joueur_ouvert->pt_action_joueur_total = b;
+    sscanf(fgets(chaine, 50, f), "%d", &joueur_ouvert->pt_action_joueur);
+    sscanf(fgets(chaine, 50, f), "%d", &joueur_ouvert->pt_action_joueur_total);
     return joueur_ouvert;
 }
