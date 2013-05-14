@@ -508,17 +508,17 @@ void lancer_animation_bloquante(Jeu *un_jeu, Terrain_espace *un_terrain_espace, 
 	frame = IMG_Load(une_animation->nom);
 	for(i=0;i<une_animation->nb_frame;i++)
 	{
-		initialise_sdl_rect(&position_frame, une_animation->taille_frame_x * une_animation->frame_en_cours, une_animation->taille_frame_y * une_animation->frame_en_cours, une_animation->taille_frame_x, une_animation->taille_frame_y);
+		initialise_sdl_rect(&position_frame, une_animation->taille_frame_x * une_animation->frame_en_cours, 0, une_animation->taille_frame_x, une_animation->taille_frame_y);
 		SDL_BlitSurface(frame, &position_frame, ecran, &position_ecran);
 		une_animation->frame_en_cours ++;
 		SDL_Flip(ecran);
 		SDL_Delay(une_animation->nb_ms);
+		maj_affichage_carte_terrain(un_jeu, un_terrain_espace, ecran, tab_surface, interface_affichee);
 	}
 	SDL_Delay(100);
 	une_animation->frame_en_cours = 0;
 	une_animation->x = 0;
 	une_animation->y = 0;
-	maj_affichage_carte_terrain(un_jeu, un_terrain_espace, ecran, tab_surface, interface_affichee);
 	SDL_FreeSurface(frame);
 }
 

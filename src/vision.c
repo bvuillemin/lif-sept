@@ -142,7 +142,7 @@ void definir_vision(Vision_terrain* une_vision)
 				{
 					for(k = (j-rayon);k <= (j+rayon);k++)
 					{
-						if((k>=0) && (k<un_terrain->taille_espace_y) && (l>=0) && (l<un_terrain->taille_espace_x))
+						if((k>=0) && (k<un_terrain->taille_espace_x) && (l>=0) && (l<un_terrain->taille_espace_y))
 						{
 							une_vision_case2 = get_vision_case(une_vision, k, l);
 							une_vision_case2->champ_vision = AFFICHEE;

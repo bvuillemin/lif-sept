@@ -11,8 +11,8 @@
 #include "SDL_framerate.h"
 #include "fmod.h"
 #else
-#include <SDL/SDL_rotozoom.h>
-#include <SDL/SDL_framerate.h>
+/*#include <SDL/SDL_rotozoom.h>
+#include <SDL/SDL_framerate.h>*/
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 #include <SDL/SDL_ttf.h>
@@ -633,9 +633,9 @@ SDL_Surface* creer_affichage_vision(Jeu *un_jeu, Joueur* un_joueur)
 	SDL_FillRect(visitee, NULL, SDL_MapRGB(fond->format, 0, 255, 0));
 	SDL_SetAlpha(visitee, SDL_SRCALPHA, 128);
 	
-	for(i=0;i< un_terrain_espace->taille_espace_x;i++)
+	for(i=0;i< un_terrain_espace->taille_espace_y;i++)
 	{
-		for(j=0;j< un_terrain_espace->taille_espace_y;j++)
+		for(j=0;j< un_terrain_espace->taille_espace_x;j++)
 		{
 			une_case = get_vision_case(une_vision, j, i);
 			initialise_sdl_rect(&position_affichage, j * 100, i * 100, 100, 100);
@@ -692,13 +692,13 @@ void maj_affichage_vision(Jeu *un_jeu, Joueur* un_joueur, SDL_Surface *ecran, SD
 	SDL_SetColorKey(affichee, SDL_SRCCOLORKEY, SDL_MapRGB(tab_surface[11]->format, 255, 255, 255));
 
 	visitee = SDL_CreateRGBSurface(SDL_HWSURFACE, 100, 100, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
-	SDL_FillRect(visitee, NULL, SDL_MapRGB(tab_surface[11]->format, 0, 255, 0));
+	SDL_FillRect(visitee, NULL, SDL_MapRGB(tab_surface[11]->format, 0, 0, 0));
 	//SDL_SetColorKey(visitee, SDL_SRCCOLORKEY, SDL_MapRGB(tab_surface[11]->format, 0, 255, 0));
-	SDL_SetAlpha(visitee, SDL_SRCALPHA, 0);
+	SDL_SetAlpha(visitee, SDL_SRCALPHA, 100);
 
-	for(i=0;i< un_terrain_espace->taille_espace_x;i++)
+	for(i=0;i< un_terrain_espace->taille_espace_y;i++)
 	{
-		for(j=0;j< un_terrain_espace->taille_espace_y;j++)
+		for(j=0;j< un_terrain_espace->taille_espace_x;j++)
 		{
 			une_case = get_vision_case(une_vision, j, i);
 			initialise_sdl_rect(&position_affichage, j * 100, i * 100, 100, 100);
@@ -708,6 +708,7 @@ void maj_affichage_vision(Jeu *un_jeu, Joueur* un_joueur, SDL_Surface *ecran, SD
 			}
 			if(une_case->champ_vision == VISITEE)
 			{
+				SDL_BlitSurface(tab_surface[0], &position_affichage, tab_surface[11], &position_affichage);
 				SDL_BlitSurface(visitee, NULL, tab_surface[11], &position_affichage);
 			}
 			if(une_case->champ_vision == JAMAIS_VISITEE)
@@ -720,7 +721,6 @@ void maj_affichage_vision(Jeu *un_jeu, Joueur* un_joueur, SDL_Surface *ecran, SD
 	SDL_FreeSurface(visitee);
 	SDL_FreeSurface(jamais_visitee);
 	SDL_FreeSurface(affichee);
-
 }
 
 void initialiser_affichage(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface *carte, SDL_Surface **tab_surface)
@@ -1002,7 +1002,7 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 	int interface_affichee =0; /*1 pour une planete, 2 pour une planete ennemie, 3 pour une flotte, 4 pour une flotte ennemie, 5 pour la création d'unités sur une planète*/
 	Case_terrain_espace *une_case_terrain_espace;
 	Animation *saut_ftl = NULL;
-	char nom_fichier_saut_ftl[] = "../graphiques/images/test.png";
+	char nom_fichier_saut_ftl[] = "../graphiques/images/effet téléportation.png";
 
 	/*varirables pour le son*/
 	FMOD_SYSTEM *system = NULL;
@@ -1029,7 +1029,7 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 	initialiser_tableau_chanson(tab_chanson);
 	
 	/*on lance les musiques du jeu et on initialise les sons*/
-	lire_musique(system, musique, tab_chanson);
+	//lire_musique(system, musique, tab_chanson);
 	FMOD_System_CreateSound(system, "../audio/son/FTL_Saut.mp3", FMOD_CREATESAMPLE, 0, &son_saut_debut);
 	FMOD_System_CreateSound(system, "../audio/son/FTL_Exit.mp3", FMOD_CREATESAMPLE, 0, &son_saut_fin);
 	
@@ -1052,7 +1052,7 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 	carte = creer_affichage_terrain(un_terrain_espace);
 	initialiser_affichage(un_jeu, un_terrain_espace, ecran, carte, tab_surface);
 
-	saut_ftl = creer_animation(5, 100, 100, 250, nom_fichier_saut_ftl);
+	saut_ftl = creer_animation(5, 100, 100, 50, nom_fichier_saut_ftl);
 
 
 	/************************************************************************/
@@ -1063,7 +1063,7 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 	{
 		/*mise à jour de valeurs "globales"*/
 		SDL_PollEvent(&event);
-		maj_musique(system, musique, tab_chanson);
+		//maj_musique(system, musique, tab_chanson);
 		timer = SDL_GetTicks();
 		if(un_jeu->animation_en_cours != NULL)
 		{
