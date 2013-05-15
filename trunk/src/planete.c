@@ -5,6 +5,11 @@
 #include "planete.h"
 #include "batiment.h"
 
+
+/************************************************************************/
+/* Initialisation, création et destruction                              */
+/************************************************************************/
+
 void initialise_planete(Planete *une_planete,const char nom_planete[30])
 {
     int i;
@@ -14,14 +19,13 @@ void initialise_planete(Planete *une_planete,const char nom_planete[30])
     strcpy(une_planete->nom_planete, nom_planete);
     une_planete->planete_colonisee = false;
     une_planete->planete_principale = false;
-	une_planete->habitabilite = 0;
-    une_planete->taille_planete = 20; /* a modifier*/
+	une_planete->taille_planete = 20; /* a modifier*/
     une_planete->taille_utilisee = 0;
     une_planete->metal = 0;
     une_planete->argent = 0;
     une_planete->carburant = 0;
     une_planete->population = 0;
-	une_planete->vision = 1;
+	une_planete->portee_vision = 1;
 
     for(i=0;i<10;i++)
     {
@@ -63,13 +67,13 @@ void libere_planete(Planete *une_planete)
     /*free(une_planete->nom_planete);*/
     une_planete->planete_colonisee = 0;
     une_planete->planete_principale = 0;
-	une_planete->habitabilite = 0;
-    une_planete->taille_planete = 0;
+	une_planete->taille_planete = 0;
     une_planete->taille_utilisee = 0;
     une_planete->metal = 0;
     une_planete->argent = 0;
     une_planete->carburant = 0;
     une_planete->population = 0;
+	une_planete->portee_vision = 0;
 }
 
 void detruire_planete(Planete **une_planete)
@@ -78,6 +82,11 @@ void detruire_planete(Planete **une_planete)
     free(*une_planete);
     *une_planete = NULL;
 }
+
+
+/************************************************************************/
+/* Fonctions set et get                                                 */
+/************************************************************************/
 
 void set_nom_planete(Planete *une_planete,const char nom[30])
 {
@@ -95,12 +104,12 @@ void set_position_planete(Planete *une_planete,const int x,const int y)
     une_planete->y = y;
 }
 
-int get_position_x_planete(const Planete *une_planete)
+int get_x_planete(const Planete *une_planete)
 {
     return une_planete->x;
 }
 
-int get_position_y_planete(const Planete *une_planete)
+int get_y_planete(const Planete *une_planete)
 {
     return une_planete->y;
 }
@@ -123,16 +132,6 @@ void set_taille_planete(Planete *une_planete,const int taille_planete)
 int get_taille_planete(const Planete *une_planete)
 {
     return une_planete->taille_planete;
-}
-
-void set_habitabilite(Planete *une_planete,const int nb)
-{
-	une_planete->habitabilite=nb;
-}
-
-int get_habitabilite(const Planete *une_planete)
-{
-	return une_planete->habitabilite;
 }
 
 void set_planete_principale(Planete *une_planete,const bool booleen)
@@ -195,6 +194,21 @@ int get_population(const Planete *une_planete)
     return une_planete->population;
 }
 
+void set_portee_planete(Planete* une_planete, int portee)
+{
+	une_planete->portee_vision = portee;
+}
+
+int get_portee_vision(const Planete* une_planete)
+{
+	return une_planete->portee_vision;
+}
+
+
+/************************************************************************/
+/* Fonctions diverses                                                   */
+/************************************************************************/
+
 void modification_production_planete(Planete *une_planete,const int metal,const int argent,const int carburant,const int population)
 {
 	une_planete->metal = metal;
@@ -256,6 +270,11 @@ void test_module_planete()
     detruire_planete(&terre);
 }
 
+
+/************************************************************************/
+/* Fonctions sauvegarde et chargement                                   */
+/************************************************************************/
+
 void sauvegarde_planete(const Planete *une_planete, FILE*f)
 {
     int i;
@@ -274,8 +293,8 @@ void sauvegarde_planete(const Planete *une_planete, FILE*f)
     fprintf(f, "%d\n", une_planete->unite_nb_tour_restant);
     fprintf(f, "%d\n", une_planete->taille_utilisee);
     fprintf(f, "%d\n", une_planete->taille_planete);
-    fprintf(f, "%d\n", une_planete->habitabilite);
-    fprintf(f, "%d\n", une_planete->vision);
+    //fprintf(f, "%d\n", une_planete->habitabilite);
+    fprintf(f, "%d\n", une_planete->portee_vision);
     fprintf(f, "%d\n", une_planete->planete_principale);
     fprintf(f, "%d\n", une_planete->planete_colonisee);
     fprintf(f, "%d\n", une_planete->metal);
@@ -304,8 +323,8 @@ Planete* ouverture_planete(FILE *f)
     sscanf(fgets(chaine, 50, f), "%d", &planete_ouverte->unite_nb_tour_restant);
     sscanf(fgets(chaine, 50, f), "%d", &planete_ouverte->taille_utilisee);
     sscanf(fgets(chaine, 50, f), "%d", &planete_ouverte->taille_planete);
-    sscanf(fgets(chaine, 50, f), "%d", &planete_ouverte->habitabilite);
-    sscanf(fgets(chaine, 50, f), "%d", &planete_ouverte->vision);
+    //sscanf(fgets(chaine, 50, f), "%d", &planete_ouverte->habitabilite);
+    sscanf(fgets(chaine, 50, f), "%d", &planete_ouverte->portee_vision);
     sscanf(fgets(chaine, 50, f), "%d", &b);
     planete_ouverte->planete_principale = b;
     sscanf(fgets(chaine, 50, f), "%d", &b);

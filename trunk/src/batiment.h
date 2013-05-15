@@ -11,7 +11,7 @@
 #define NB_TOUR_BATIMENT_ARGENT 1
 #define NB_TOUR_BATIMENT_CARBURANT 1
 #define NB_TOUR_BATIMENT_POPULATION 1
-#define NB_TOUR_BATIMENT_SPATIOPORT 1
+#define NB_TOUR_BATIMENT_SPATIOPORT 2
 
 void validation_creer_batiment_quartier_general(Planete *une_planete);
 void creer_batiment_quartier_general(Planete *une_planete);

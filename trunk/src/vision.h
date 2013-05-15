@@ -35,6 +35,8 @@ void liberer_vision_terrain(Vision_terrain* une_vision_terrain);
 void detruire_vision_terrain(Vision_terrain** une_vision_terrain);
 
 Vision_case* get_vision_case(Vision_terrain* une_vision, int x, int y);
+int get_centre_vision(Vision_case* une_case);
+Champ_vision get_champ_vision(Vision_case* une_case);
 
 void parcourir_terrain(Vision_terrain* une_vision, int indice_joueur);
 void definir_vision(Vision_terrain* une_vision);

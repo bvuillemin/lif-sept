@@ -88,6 +88,10 @@ Flotte * get_flotte(Case_terrain_espace *une_case_terrain_espace)
 {
 	return une_case_terrain_espace->flotte;
 }
+bool get_presence_flotte(Case_terrain_espace* une_case)
+{
+	return une_case->presence_flotte;
+}
 
 
 /************************************************************************/

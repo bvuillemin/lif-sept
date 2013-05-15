@@ -7,6 +7,8 @@
 
 void appeler_ia(Terrain_espace* un_terrain_espace, Joueur *un_joueur)
 {
+	detecter_menace_planete(un_joueur, un_terrain_espace, get_ieme_planete_joueur(un_joueur, 0));
+	detecter_menace_flotte(un_joueur, un_terrain_espace, get_ieme_flotte_joueur(un_joueur, 0));
 	choisir_case_deplacement_ia(un_joueur, un_terrain_espace, un_joueur->tab_flotte);
 }
 
@@ -172,4 +174,138 @@ void choisir_case_deplacement_ia(Joueur *un_joueur, Terrain_espace *un_terrain_e
 			parcourir_terrain(un_joueur->vision_terrain, 0);
 		}
 	}
+}
+
+NIVEAU_MENACE detecter_menace_planete(Joueur* un_joueur, Terrain_espace* un_terrain_espace, Planete* une_planete)
+{
+	int i, j;
+	int x,y;
+	int portee;
+	Case_terrain_espace* une_case;
+	int nb_unite_ennemie = 0;
+	int nb_unite_alliee = 0;
+	float ratio = 0;
+
+	printf("Fonction de detection des menaces sur les planetes\n");
+	x = get_x_planete(une_planete);
+	y = get_y_planete(une_planete);
+	portee = get_portee_vision(une_planete);
+
+	for(i= x - portee;i<= x + portee;i++)
+	{
+		for(j= y - portee;j<= y +portee;j++)
+		{
+			une_case = get_case_terrain_espace(un_terrain_espace, i, j);
+			if(get_presence_flotte(une_case))
+			{
+				if(get_indice_joueur_flotte(get_flotte(une_case)) == get_numero_joueur(un_joueur))
+				{
+					nb_unite_alliee += get_taille_flotte(get_flotte(une_case));
+				}
+				else
+				{
+					nb_unite_ennemie += get_taille_flotte(get_flotte(une_case));
+				}
+			}
+		}
+	}
+	printf("Nombre d'unites alliees-ennemies: %d-%d\n", nb_unite_alliee, nb_unite_ennemie);
+
+	/*un ratio va être fait entre le nombre d'unités pour indiquer un niveau de dangerosité*/
+	if(nb_unite_alliee != 0) /*on vérifie qu'il n'y a pas de division par 0*/
+	{
+		ratio = (float)nb_unite_ennemie / nb_unite_alliee;
+		printf("le ratio est: %d\n", ratio);
+	}
+	if((nb_unite_alliee == 0) && (nb_unite_ennemie != 0))
+	{
+		printf("AU COMBAT!!\n\n");
+		return TOTALE;
+	}
+	
+	/*On décide de quoi renvoyer*/
+	if(ratio == 0)
+	{
+		printf("Tout va bien\n\n");
+		return NON;
+	}
+	if(ratio < 0.75)
+	{
+		printf("Alerte\n\n");
+		return FAIBLE;
+	}
+	if(ratio < 1.5)
+	{
+		printf("Alerte rouge\n\n");
+		return IMPORTANTE;
+	}
+	printf("AU COMBAT!!\n\n");
+	return TOTALE;
+}
+
+NIVEAU_MENACE detecter_menace_flotte(Joueur* un_joueur, Terrain_espace* un_terrain_espace,Flotte* une_flotte)
+{
+	int i, j;
+	int x,y;
+	int portee;
+	Case_terrain_espace* une_case;
+	int nb_unite_ennemie = 0;
+	int nb_unite_alliee = 0;
+	float ratio = 0;
+
+	printf("Fonction de detection des menaces sur les flottes\n");
+	x = get_x_flotte(une_flotte);
+	y = get_y_flotte(une_flotte);
+	portee = get_portee_vision_flotte(une_flotte);
+
+	for(i= x - portee;i<= x + portee;i++)
+	{
+		for(j= y - portee;j<= y +portee;j++)
+		{
+			une_case = get_case_terrain_espace(un_terrain_espace, i, j);
+			if(get_presence_flotte(une_case))
+			{
+				if(get_indice_joueur_flotte(get_flotte(une_case)) == get_numero_joueur(un_joueur))
+				{
+					nb_unite_alliee += get_taille_flotte(get_flotte(une_case));
+				}
+				else
+				{
+					nb_unite_ennemie += get_taille_flotte(get_flotte(une_case));
+				}
+			}
+		}
+	}
+	printf("Nombre d'unites alliees-ennemies: %d-%d\n", nb_unite_alliee, nb_unite_ennemie);
+
+	/*un ratio va être fait entre le nombre d'unités pour indiquer un niveau de dangerosité*/
+	if(nb_unite_alliee != 0) /*on vérifie qu'il n'y a pas de division par 0*/
+	{
+		ratio = (float)nb_unite_ennemie / nb_unite_alliee;
+		printf("le ratio est: %d\n", ratio);
+	}
+	if((nb_unite_alliee == 0) && (nb_unite_ennemie != 0))
+	{
+		printf("AU COMBAT!!\n\n");
+		return TOTALE;
+	}
+
+	/*On décide de quoi renvoyer*/
+	if(ratio == 0)
+	{
+		printf("Tout va bien\n\n");
+		return NON;
+	}
+	if(ratio < 0.75)
+	{
+		printf("Alerte\n\n");
+		return FAIBLE;
+	}
+	if(ratio < 1.5)
+	{
+		printf("Alerte rouge\n\n");
+		return IMPORTANTE;
+	}
+	printf("AU COMBAT!!\n\n");
+	return TOTALE;
 }
