@@ -67,6 +67,8 @@ int get_nb_flotte_joueur(Joueur *un_joueur);
 void set_numero_joueur(Joueur *un_joueur, int i);
 int get_numero_joueur(const Joueur *un_joueur);
 Flotte* get_ieme_flotte_joueur(const Joueur *un_joueur,int i);
+Vision_terrain* get_vision_terrain(const Joueur* un_joueur);
+Planete* get_ieme_planete_joueur(const Joueur* un_joueur, int i);
 
 
 void ajouter_metal(Joueur *un_joueur, int nb);

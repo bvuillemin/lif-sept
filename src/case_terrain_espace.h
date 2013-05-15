@@ -43,6 +43,7 @@ void set_type_case_terrain_espace(Case_terrain_espace *une_case_terrain_espace, 
 char get_type_case_terrain_espace(Case_terrain_espace *une_case_terrain_espace);
 Planete * get_planete(Case_terrain_espace *une_case_terrain_espace);
 Flotte * get_flotte(Case_terrain_espace *une_case_terrain_espace);
+bool get_presence_flotte(Case_terrain_espace* une_case);
 
 void definir_case_terrain_espace(Case_terrain_espace *une_case_terrain_espace, char c);
 void ajouter_planete(Case_terrain_espace *une_case_terrain_espace, Planete *une_planete);

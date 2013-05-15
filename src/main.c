@@ -111,7 +111,7 @@ int main(int argc, char *argv[])
 	ajouter_unite_flotte(flotte3, unite5);
 	ajouter_unite_flotte(flotte3, unite6);*/
 	
-	ajouter_flotte_jeu(jeu, un_terrain_espace, flotte, 0, 2, 3);
+	ajouter_flotte_jeu(jeu, un_terrain_espace, flotte, 0, 2, 2);
 	/*ajouter_flotte_jeu(jeu, un_terrain_espace, flotte2, 0, 5, 5);
 	ajouter_flotte_jeu(jeu, un_terrain_espace, flotte3, 1, 0, 4);*/
 

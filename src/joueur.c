@@ -157,6 +157,15 @@ Flotte* get_ieme_flotte_joueur(const Joueur *un_joueur,int i)
 {
 	return &un_joueur->tab_flotte[i];
 }
+Vision_terrain* get_vision_terrain(const Joueur* un_joueur)
+{
+	return un_joueur->vision_terrain;
+}
+Planete* get_ieme_planete_joueur(const Joueur* un_joueur, int i)
+{
+	return un_joueur->tab_planete[i];
+}
+
 
 /************************************************************************/
 /* Fonctions                                                            */

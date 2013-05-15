@@ -77,7 +77,14 @@ Vision_case* get_vision_case(Vision_terrain* une_vision, int x, int y)
 {
 	return &(une_vision->vision_case[y*(une_vision->terrain_espace->taille_espace_x)+x]);
 }
-
+int get_centre_vision(Vision_case* une_case)
+{
+	return une_case->centre_vision;
+}
+Champ_vision get_champ_vision(Vision_case* une_case)
+{
+	return une_case->champ_vision;
+}
 
 /************************************************************************/
 /* Fonctions qui vont définir la vision du terrain                      */
@@ -111,7 +118,7 @@ void parcourir_terrain(Vision_terrain* une_vision, int indice_joueur)
 			{
 				if(une_case->flotte->indice_joueur == indice_joueur)
 				{
-					une_vision_case->centre_vision = une_case->flotte->vision;
+					une_vision_case->centre_vision = une_case->flotte->portee_vision;
 					une_vision_case->champ_vision = AFFICHEE;
 				}
 			}
@@ -119,7 +126,7 @@ void parcourir_terrain(Vision_terrain* une_vision, int indice_joueur)
 			{
 				if(une_case->planete->indice_joueur == indice_joueur)
 				{
-					une_vision_case->centre_vision = une_case->planete->vision;
+					une_vision_case->centre_vision = une_case->planete->portee_vision;
 					une_vision_case->champ_vision = AFFICHEE;
 				}
 			}
