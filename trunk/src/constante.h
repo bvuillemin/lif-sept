@@ -47,6 +47,7 @@
 
 #define TAILLE_BARRE_RESSOURCE 30
 
+#define TEMPS_INFOBULLE 200
 #define DEPLACEMENT_AFFICHAGE 5
 
 /*l'ecran du combat (ou/et du l'espace)*/

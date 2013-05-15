@@ -26,6 +26,18 @@
  *
  * \details
  */
+
+
+typedef enum
+{
+	RIEN,
+	PLANETE,
+	PLANETE_ENNEMIE,
+	FLOTTE,
+	FLOTTE_ENNEMIE,
+	PANNEAU_UNITE,
+}INTERFACE_AFFICHEE;
+
 bool test_souris_rectangle (SDL_Rect taille_surface, int x, int y);
 void initialise_sdl_rect(SDL_Rect *un_rectangle, int x, int y, int w, int h);
 bool booleen_case_pointeur_souris(Terrain_espace *un_terrain_espace, int x, int y);
@@ -51,16 +63,16 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace);
 SDL_Surface* creer_affichage_terrain(Terrain_espace *un_terrain_espace);
 SDL_Surface* affichage_terrain(Terrain_espace *un_terrain_espace, SDL_Surface *carte);
 SDL_Surface* affichage_ressource(Jeu *un_jeu, SDL_Surface *surface_ressource);
-void maj_affichage_flotte(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface **tab_surface, int interface_affichee);
-void maj_affichage(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface *carte, int interface_affichee, Case_terrain_espace *une_case_terrain_espace, SDL_Surface **tab_surface);
-void maj_affichage_carte_terrain(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface **tab_surface, int interface_affichee);
+void maj_affichage_flotte(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface **tab_surface, INTERFACE_AFFICHEE interface_affichee);
+void maj_affichage(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface *carte, INTERFACE_AFFICHEE interface_affichee, Case_terrain_espace *une_case_terrain_espace, SDL_Surface **tab_surface);
+void maj_affichage_carte_terrain(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface **tab_surface, INTERFACE_AFFICHEE interface_affichee);
 void maj_affichage_vision(Jeu *un_jeu, Joueur* un_joueur, SDL_Surface *ecran, SDL_Surface **tab_surface);
 void initialiser_affichage(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface *carte, SDL_Surface **tab_surface);
-void maj_carte_terrain(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface **tab_surface, int interface_affichee);
-void maj_affichage_carte_terrain(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface **tab_surface, int interface_affichee);
-void maj_affichage_flotte(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface **tab_surface, int interface_affichee);
+void maj_carte_terrain(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface **tab_surface, INTERFACE_AFFICHEE interface_affichee);
+void maj_affichage_carte_terrain(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface **tab_surface, INTERFACE_AFFICHEE interface_affichee);
+void maj_affichage_flotte(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface **tab_surface, INTERFACE_AFFICHEE interface_affichee);
 void maj_affichage_ressource(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface **tab_surface);
-void maj_affichage(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface *carte, int interface_affichee, Case_terrain_espace *une_case_terrain_espace, SDL_Surface **tab_surface);
+void maj_affichage(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface *carte, INTERFACE_AFFICHEE interface_affichee, Case_terrain_espace *une_case_terrain_espace, SDL_Surface **tab_surface);
 
 
 void pause();
