@@ -125,7 +125,7 @@ int main(int argc, char *argv[])
     jeu = une_sauvegarde->jeu;
     un_terrain_espace = une_sauvegarde->terrain_espace;*/
 
-	/*affichage_ecran(jeu, un_terrain_espace);*/
+	affichage_ecran(jeu, un_terrain_espace);
 
 	while(1)
     {
