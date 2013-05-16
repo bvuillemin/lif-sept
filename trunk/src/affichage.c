@@ -118,7 +118,7 @@ void reinitialiser_tableau_selection_unite(Jeu *un_jeu)
 
 
 /************************************************************************/
-/* Fonctions d'affichage des éléments de la carte                       */
+/* Fonctions d'affichage des infobulles                                 */
 /************************************************************************/
 
 void afficher_infobulle_batiment(SDL_Surface* fond, int i)
@@ -396,6 +396,328 @@ void afficher_infobulle_batiment(SDL_Surface* fond, int i)
 	}
 }
 
+void afficher_infobulle_unite(Jeu* un_jeu, SDL_Surface* fond,int i)
+{
+	SDL_Surface* une_ligne;
+	Unite *une_unite;
+	SDL_Rect position;
+	TTF_Font *police = NULL;
+	SDL_Color couleur_blanche = {255, 255, 255};
+	char ligne[200] = "";
+	int j = 3;
+
+	une_unite = get_unite_i_flotte(get_flotte_en_cours(un_jeu), i);
+
+	police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 15);
+	sprintf(ligne, "Type unite");
+	une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
+	initialise_sdl_rect(&position, 4, j, 0, 0);
+	SDL_BlitSurface(une_ligne, NULL, fond, &position);
+	j += 18;
+	TTF_CloseFont(police);
+
+	police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
+	sprintf(ligne, "Point de vie: %d", get_pt_vie(une_unite));
+	une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
+	initialise_sdl_rect(&position, 4, j, 0, 0);
+	j += 13;
+	SDL_BlitSurface(une_ligne, NULL, fond, &position);
+
+	police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
+	sprintf(ligne, "Attaque: %d", get_pt_attaque(une_unite));
+	une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
+	initialise_sdl_rect(&position, 4, j, 0, 0);
+	j += 13;
+	SDL_BlitSurface(une_ligne, NULL, fond, &position);
+
+	police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
+	sprintf(ligne, "Action: %d", get_pt_action(une_unite));
+	une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
+	initialise_sdl_rect(&position, 4, j, 0, 0);
+	j += 13;
+	SDL_BlitSurface(une_ligne, NULL, fond, &position);
+
+	police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
+	sprintf(ligne, "Point de mouvement: %d", get_pt_mouvement_unite(une_unite));
+	une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
+	initialise_sdl_rect(&position, 4, j, 0, 0);
+	j += 13;
+	SDL_BlitSurface(une_ligne, NULL, fond, &position);
+
+}
+
+void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
+{
+	SDL_Surface* une_ligne;
+	SDL_Rect position;
+	TTF_Font *police = NULL;
+	SDL_Color couleur_blanche = {255, 255, 255};
+	char ligne[200] = "";
+	int j = 3;
+
+	if(i==0)
+	{
+		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 15);
+		sprintf(ligne, "Type unite");
+		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
+		initialise_sdl_rect(&position, 4, j, 0, 0);
+		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		j += 18;
+		TTF_CloseFont(police);
+
+		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
+		sprintf(ligne, "Point de vie: %d", PT_VIE_UNITE_1);
+		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
+		initialise_sdl_rect(&position, 4, j, 0, 0);
+		j += 13;
+		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+
+		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
+		sprintf(ligne, "Attaque: %d", PT_ATTAQUE_UNITE_1);
+		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
+		initialise_sdl_rect(&position, 4, j, 0, 0);
+		j += 13;
+		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+
+		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
+		sprintf(ligne, "Action: %d", PT_ACTION_UNITE_1);
+		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
+		initialise_sdl_rect(&position, 4, j, 0, 0);
+		j += 13;
+		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+
+		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
+		sprintf(ligne, "Point de mouvement: %d", PT_MOUVEMENT_UNITE_1);
+		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
+		initialise_sdl_rect(&position, 4, j, 0, 0);
+		j += 13;
+		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+
+		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
+		sprintf(ligne, "Point de mouvement-combat: %d", PT_DEPLACEMENT_UNITE_1);
+		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
+		initialise_sdl_rect(&position, 4, j, 0, 0);
+		j += 13;
+		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+
+		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
+		sprintf(ligne, "-----------");
+		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
+		initialise_sdl_rect(&position, 4, j, 0, 0);
+		j += 13;
+		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+
+		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
+		sprintf(ligne, "Metal: %d", NB_METAL_UNITE_1);
+		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
+		initialise_sdl_rect(&position, 4, j, 0, 0);
+		j += 13;
+		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+
+		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
+		sprintf(ligne, "Argent: %d", NB_ARGENT_UNITE_1);
+		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
+		initialise_sdl_rect(&position, 4, j, 0, 0);
+		j += 13;
+		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+
+		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
+		sprintf(ligne, "Carburant: %d", NB_CARBURANT_UNITE_1);
+		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
+		initialise_sdl_rect(&position, 4, j, 0, 0);
+		j += 13;
+		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+
+		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
+		sprintf(ligne, "Population: %d", NB_POPULATION_UNITE_1);
+		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
+		initialise_sdl_rect(&position, 4, j, 0, 0);
+		j += 13;
+		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+
+		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
+		sprintf(ligne, "Temps de construction: %d", NB_TOUR_UNITE_1);
+		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
+		initialise_sdl_rect(&position, 4, j, 0, 0);
+		j += 13;
+		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+	}
+	if(i==1)
+	{
+		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 15);
+		sprintf(ligne, "Type unite");
+		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
+		initialise_sdl_rect(&position, 4, j, 0, 0);
+		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		j += 18;
+		TTF_CloseFont(police);
+
+		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
+		sprintf(ligne, "Point de vie: %d", PT_VIE_UNITE_2);
+		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
+		initialise_sdl_rect(&position, 4, j, 0, 0);
+		j += 13;
+		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+
+		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
+		sprintf(ligne, "Attaque: %d", PT_ATTAQUE_UNITE_2);
+		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
+		initialise_sdl_rect(&position, 4, j, 0, 0);
+		j += 13;
+		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+
+		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
+		sprintf(ligne, "Action: %d", PT_ACTION_UNITE_2);
+		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
+		initialise_sdl_rect(&position, 4, j, 0, 0);
+		j += 13;
+		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+
+		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
+		sprintf(ligne, "Point de mouvement: %d", PT_MOUVEMENT_UNITE_2);
+		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
+		initialise_sdl_rect(&position, 4, j, 0, 0);
+		j += 13;
+		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+
+		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
+		sprintf(ligne, "Point de mouvement-combat: %d", PT_DEPLACEMENT_UNITE_2);
+		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
+		initialise_sdl_rect(&position, 4, j, 0, 0);
+		j += 13;
+		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+
+		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
+		sprintf(ligne, "-----------");
+		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
+		initialise_sdl_rect(&position, 4, j, 0, 0);
+		j += 13;
+		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+
+		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
+		sprintf(ligne, "Metal: %d", NB_METAL_UNITE_2);
+		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
+		initialise_sdl_rect(&position, 4, j, 0, 0);
+		j += 13;
+		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+
+		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
+		sprintf(ligne, "Argent: %d", NB_ARGENT_UNITE_2);
+		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
+		initialise_sdl_rect(&position, 4, j, 0, 0);
+		j += 13;
+		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+
+		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
+		sprintf(ligne, "Carburant: %d", NB_CARBURANT_UNITE_2);
+		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
+		initialise_sdl_rect(&position, 4, j, 0, 0);
+		j += 13;
+		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+
+		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
+		sprintf(ligne, "Population: %d", NB_POPULATION_UNITE_2);
+		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
+		initialise_sdl_rect(&position, 4, j, 0, 0);
+		j += 13;
+		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+
+		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
+		sprintf(ligne, "Temps de construction: %d", NB_TOUR_UNITE_2);
+		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
+		initialise_sdl_rect(&position, 4, j, 0, 0);
+		j += 13;
+		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+	}
+	if(i==2)
+	{
+		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 15);
+		sprintf(ligne, "Type unite");
+		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
+		initialise_sdl_rect(&position, 4, j, 0, 0);
+		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		j += 18;
+		TTF_CloseFont(police);
+
+		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
+		sprintf(ligne, "Point de vie: %d", PT_VIE_UNITE_3);
+		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
+		initialise_sdl_rect(&position, 4, j, 0, 0);
+		j += 13;
+		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+
+		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
+		sprintf(ligne, "Attaque: %d", PT_ATTAQUE_UNITE_3);
+		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
+		initialise_sdl_rect(&position, 4, j, 0, 0);
+		j += 13;
+		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+
+		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
+		sprintf(ligne, "Action: %d", PT_ACTION_UNITE_3);
+		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
+		initialise_sdl_rect(&position, 4, j, 0, 0);
+		j += 13;
+		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+
+		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
+		sprintf(ligne, "Point de mouvement: %d", PT_MOUVEMENT_UNITE_3);
+		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
+		initialise_sdl_rect(&position, 4, j, 0, 0);
+		j += 13;
+		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+
+		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
+		sprintf(ligne, "Point de mouvement-combat: %d", PT_DEPLACEMENT_UNITE_3);
+		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
+		initialise_sdl_rect(&position, 4, j, 0, 0);
+		j += 13;
+		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+
+		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
+		sprintf(ligne, "-----------");
+		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
+		initialise_sdl_rect(&position, 4, j, 0, 0);
+		j += 13;
+		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+
+		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
+		sprintf(ligne, "Metal: %d", NB_METAL_UNITE_3);
+		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
+		initialise_sdl_rect(&position, 4, j, 0, 0);
+		j += 13;
+		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+
+		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
+		sprintf(ligne, "Argent: %d", NB_ARGENT_UNITE_3);
+		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
+		initialise_sdl_rect(&position, 4, j, 0, 0);
+		j += 13;
+		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+
+		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
+		sprintf(ligne, "Carburant: %d", NB_CARBURANT_UNITE_3);
+		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
+		initialise_sdl_rect(&position, 4, j, 0, 0);
+		j += 13;
+		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+
+		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
+		sprintf(ligne, "Population: %d", NB_POPULATION_UNITE_3);
+		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
+		initialise_sdl_rect(&position, 4, j, 0, 0);
+		j += 13;
+		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+
+		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
+		sprintf(ligne, "Temps de construction: %d", NB_TOUR_UNITE_3);
+		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
+		initialise_sdl_rect(&position, 4, j, 0, 0);
+		j += 13;
+		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+	}
+}
+
 void afficher_infobulle(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface **tab_surface, INTERFACE_AFFICHEE interface_affichee, int x, int y)
 {
 	SDL_Surface* fond = NULL;
@@ -405,53 +727,95 @@ void afficher_infobulle(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surf
 	int taille_infobulle_x = 200, taille_infobulle_y = 100;
 	int i;
 
-
 	/*les infobulles vont dépendre de l'interface affichée et de la position de la souris*/
-	if(interface_affichee == RIEN)
+	if((interface_affichee == PLANETE) || (interface_affichee == FLOTTE) || (interface_affichee == PANNEAU_UNITE))
 	{
+		/*pour initialiser la taille de l'infobulle*/
+		if(interface_affichee == PLANETE)
+		{
+			
+		}
+		if(interface_affichee == FLOTTE)
+		{
+			
+		}
+		if(interface_affichee == PANNEAU_UNITE)
+		{
+			taille_infobulle_x = 220;
+			taille_infobulle_y = 180;
+		}
 
-	}
-	if(interface_affichee == PLANETE)
-	{
+		/*initialisation de la position de l'infobulle*/
+		if (((x + taille_infobulle_x) >= TAILLE_FENETRE_X) && ((y + taille_infobulle_y) >= TAILLE_FENETRE_Y))
+		{
+			initialise_sdl_rect(&position_infobulle, x - taille_infobulle_x, y- taille_infobulle_y, taille_infobulle_x, taille_infobulle_y);
+		}
+		if (((x + taille_infobulle_x) >= TAILLE_FENETRE_X) && ((y + taille_infobulle_y) < TAILLE_FENETRE_Y))
+		{
+			initialise_sdl_rect(&position_infobulle, x - taille_infobulle_x, y, taille_infobulle_x, taille_infobulle_y);
+		}
+		if (((x + taille_infobulle_x) < TAILLE_FENETRE_X) && ((y + taille_infobulle_y) >= TAILLE_FENETRE_Y))
+		{
+			initialise_sdl_rect(&position_infobulle, x, y - taille_infobulle_y, taille_infobulle_x, taille_infobulle_y);
+		}
+		if(((x + taille_infobulle_x) < TAILLE_FENETRE_X) && ((y + taille_infobulle_y) < TAILLE_FENETRE_Y))
+		{
+			initialise_sdl_rect(&position_infobulle, x, y, taille_infobulle_x, taille_infobulle_y);
+		}
+
+		/*test de la position du pointeur dsouris et affichage des informations adéquates*/
 		tab_surface[12] = SDL_CreateRGBSurface(SDL_HWSURFACE, taille_infobulle_x, taille_infobulle_y, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
 		SDL_FillRect(tab_surface[12], NULL, SDL_MapRGB(ecran->format, 255, 255, 255));
 		fond = SDL_CreateRGBSurface(SDL_HWSURFACE, taille_infobulle_x - 4, taille_infobulle_y - 4, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
 		SDL_FillRect(fond, NULL, SDL_MapRGB(ecran->format, 128, 128, 128));
 		SDL_BlitSurface(fond, NULL, tab_surface[12], &position_fond);
-		for(i=0;i<6;i++)
+		if(interface_affichee == PLANETE || interface_affichee == PANNEAU_UNITE)
 		{
-			initialise_sdl_rect(&test, 10+ 120*i, TAILLE_TERRAIN_ESPACE_Y + 55, 100, 100);
-			if(test_souris_rectangle(test, x, y))
+			for(i=0;i<6;i++)
 			{
-				afficher_infobulle_batiment(tab_surface[12], i);
+				initialise_sdl_rect(&test, 10+ 120*i, TAILLE_TERRAIN_ESPACE_Y + 55, 100, 100);
+				if(test_souris_rectangle(test, x, y))
+				{
+					afficher_infobulle_batiment(tab_surface[12], i);
+					SDL_BlitSurface(tab_surface[12], NULL, ecran, &position_infobulle);
+					SDL_Flip(ecran);
+				}
+			}
+		}
+		if(interface_affichee == FLOTTE)
+		{
+			for(i=0;i<5;i++)
+			{
+				initialise_sdl_rect(&test, 10+ 120*i, TAILLE_TERRAIN_ESPACE_Y + 55, 100, 100);
+				if(test_souris_rectangle(test, x, y))
+				{
+					afficher_infobulle_unite(un_jeu, tab_surface[12], i);
+					SDL_BlitSurface(tab_surface[12], NULL, ecran, &position_infobulle);
+					SDL_Flip(ecran);
+				}
+			}
+		}
+		if(interface_affichee == PANNEAU_UNITE)
+		{
+			for(i=0;i<3;i++)
+			{
+				initialise_sdl_rect(&test, TAILLE_TERRAIN_ESPACE_X - 190, 40 + 120*i, 100, 100);
+				if(test_souris_rectangle(test, x, y))
+				{
+					afficher_infobulle_creation_unite(tab_surface[12], i);
+					SDL_BlitSurface(tab_surface[12], NULL, ecran, &position_infobulle);
+					SDL_Flip(ecran);
+				}
 			}
 		}
 	}
-
-
-	/*initialisation de la position de l'infobulle*/
-	if (((x + taille_infobulle_x) >= TAILLE_FENETRE_X) && ((y + taille_infobulle_y) >= TAILLE_FENETRE_Y))
-	{
-		initialise_sdl_rect(&position_infobulle, x - taille_infobulle_x, y- taille_infobulle_y, taille_infobulle_x, taille_infobulle_y);
-	}
-	if (((x + taille_infobulle_x) >= TAILLE_FENETRE_X) && ((y + taille_infobulle_y) < TAILLE_FENETRE_Y))
-	{
-		initialise_sdl_rect(&position_infobulle, x - taille_infobulle_x, y, taille_infobulle_x, taille_infobulle_y);
-	}
-	if (((x + taille_infobulle_x) < TAILLE_FENETRE_X) && ((y + taille_infobulle_y) >= TAILLE_FENETRE_Y))
-	{
-		initialise_sdl_rect(&position_infobulle, x, y - taille_infobulle_y, taille_infobulle_x, taille_infobulle_y);
-	}
-	if(((x + taille_infobulle_x) < TAILLE_FENETRE_X) && ((y + taille_infobulle_y) < TAILLE_FENETRE_Y))
-	{
-		initialise_sdl_rect(&position_infobulle, x, y, taille_infobulle_x, taille_infobulle_y);
-	}
-
-    SDL_BlitSurface(tab_surface[12], NULL, ecran, &position_infobulle);
-    SDL_Flip(ecran);
-
 	SDL_FreeSurface(fond);
 }
+
+
+/************************************************************************/
+/* Fonctions d'affichage des éléments de la carte                       */
+/************************************************************************/
 
 SDL_Surface* affichage_ressource(Jeu *un_jeu, SDL_Surface *surface_ressource)
 {
@@ -1174,8 +1538,11 @@ void maj_affichage_carte_terrain(Jeu *un_jeu, Terrain_espace *un_terrain_espace,
     SDL_Rect position = {0, 0, 0, 0};
     SDL_Rect position_minimap = {TAILLE_FENETRE_X - TAILLE_MINIMAP_X, TAILLE_FENETRE_Y - TAILLE_MINIMAP_Y, 0, 0};
     SDL_Rect position_affichage_carte = {0, 30, TAILLE_TERRAIN_ESPACE_X, TAILLE_TERRAIN_ESPACE_Y};
+	SDL_Rect position_affichage_info = {0,TAILLE_TERRAIN_ESPACE_Y + 25 , TAILLE_FENETRE_X, TAILLE_FENETRE_Y - TAILLE_TERRAIN_ESPACE_Y};
+	SDL_Rect position_panneau_unite = {TAILLE_FENETRE_X - 214, 35, 200, TAILLE_TERRAIN_ESPACE_Y-300};
     SDL_Rect affichage_carte = {un_terrain_espace->affichage_x, un_terrain_espace->affichage_y, TAILLE_TERRAIN_ESPACE_X, TAILLE_TERRAIN_ESPACE_Y};
     SDL_Rect position_bouton_tour = {TAILLE_FENETRE_X -207, TAILLE_TERRAIN_ESPACE_Y - 8, 0, 0};
+	Case_terrain_espace* une_case_terrain_espace;
 
     /*Réaffichage des différentes parties de la carte*/
     SDL_BlitSurface(tab_surface[0], &affichage_carte, ecran, &position_affichage_carte);
@@ -1197,6 +1564,14 @@ void maj_affichage_carte_terrain(Jeu *un_jeu, Terrain_espace *un_terrain_espace,
             tab_surface[9] = affichage_minimap(un_terrain_espace);
             SDL_BlitSurface(tab_surface[9], NULL, ecran, &position_minimap);
     }
+	if(interface_affichee == PANNEAU_UNITE)
+	{
+		une_case_terrain_espace	= get_case_terrain_espace(un_terrain_espace, get_x_planete(get_planete_en_cours(un_jeu)), get_y_planete(get_planete_en_cours(un_jeu)));
+		tab_surface[7] = affichage_planete(une_case_terrain_espace, tab_surface[7]);
+		SDL_BlitSurface(tab_surface[7], NULL, ecran, &position_affichage_info);
+		tab_surface[8] = affichage_creation_unite(une_case_terrain_espace, tab_surface[8]);
+		SDL_BlitSurface(tab_surface[8], NULL, ecran, &position_panneau_unite);
+	}
 
     SDL_Flip(ecran);
 }
@@ -1302,6 +1677,11 @@ void maj_affichage(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *
 
     SDL_Flip(ecran);
  }
+
+
+/************************************************************************/
+/* Boucle principale                                                    */
+/************************************************************************/
 
 void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 {

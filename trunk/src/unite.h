@@ -16,6 +16,13 @@
  * \details
  */
 
+typedef enum
+{
+	Chasseur,
+	Destroyer,
+	Destructeur
+}TYPE_VAISSEAU;
+
 typedef struct
 {
 	int indice_joueur;
