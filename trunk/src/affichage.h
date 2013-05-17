@@ -46,7 +46,7 @@ bool booleen_coordonnees_case(Terrain_espace *un_terrain_espace, int x_case, int
 bool booleen_minimap_pointeur_souris(int x, int y);
 void test_minimap_souris(Terrain_espace *un_terrain_espace, int x, int y);
 void reinitialiser_tableau_selection_unite(Jeu *un_jeu);
-void afficher_infobulle(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface **tab_surface, int x, int y);
+void afficher_infobulle(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface **tab_surface, INTERFACE_AFFICHEE interface_affichee, int x, int y);
 
 SDL_Surface* affichage_ressource(Jeu *un_jeu, SDL_Surface *surface_ressource);
 SDL_Surface* affichage_creation_unite(Case_terrain_espace *une_case_terrain_espace, SDL_Surface *panneau_unite);
@@ -87,8 +87,8 @@ SDL_Rect coordonnee_clic(SDL_Rect position);
 SDL_Rect coordonnee_case_du_clic(SDL_Rect position);
 void affiche_deplacement_unite(Terrain_combat *un_terrain_combat,SDL_Rect position);
 void selection(Jeu * jeu,Terrain_combat *un_terrain_combat,SDL_Rect position);
-void affiche_info_unite(Jeu* jeu,Terrain_combat *un_terrain_combat,char * infos);
-bool attaque_ecran(Terrain_combat * un_terrain_combat, SDL_Rect pos,Flotte* flotte1,Flotte * flotte2);
+void affiche_info_unite(Terrain_combat *un_terrain_combat,char * infos);
+bool attaque_ecran(Jeu * jeu,Terrain_combat * un_terrain_combat, SDL_Rect pos,Flotte* flotte1,Flotte * flotte2);
 void lancer_combat_ecran(Jeu * jeu,Terrain_combat * un_combat, Flotte* flotte1,Flotte * flotte2);
 /*
 SDL_Surface * surface = NULL;
