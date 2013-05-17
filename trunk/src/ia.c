@@ -5,9 +5,6 @@
 #include "ia.h"
 #include "vision.h"
 
-
-
-
 bool detecter_case_non_visitee_plus_proche(Joueur *un_joueur, Terrain_espace *un_terrain_espace, Flotte* une_flotte, int* x, int *y)
 {
 	int i, j;
@@ -242,6 +239,7 @@ NIVEAU_MENACE detecter_menace_flotte(Joueur* un_joueur, Terrain_espace* un_terra
 {
 	int i, j;
 	int x,y;
+	int x1,y1, x2,y2;
 	int portee;
 	Case_terrain_espace* une_case;
 	int nb_unite_ennemie = 0;
@@ -253,9 +251,30 @@ NIVEAU_MENACE detecter_menace_flotte(Joueur* un_joueur, Terrain_espace* un_terra
 	y = get_y_flotte(une_flotte);
 	portee = get_portee_vision_flotte(une_flotte);
 
-	for(i= x - portee;i<= x + portee;i++)
+	x1 = x - portee;
+	y1 = y - portee;
+	x2 = x + portee;
+	y2 = y + portee;
+	if(x1 < 0)
 	{
-		for(j= y - portee;j<= y +portee;j++)
+		x1 =0;
+	}
+	if(y1 < 0)
+	{
+		y1 =0;
+	}
+	if(x2 >= get_taille_espace_x(un_terrain_espace))
+	{
+		x2 = get_taille_espace_x(un_terrain_espace);
+	}
+	if(y2 >= get_taille_espace_y(un_terrain_espace))
+	{
+		y2 = get_taille_espace_y(un_terrain_espace);
+	}
+
+	for(i= x1;i<= x2;i++)
+	{
+		for(j= y1;j<= y2;j++)
 		{
 			une_case = get_case_terrain_espace(un_terrain_espace, i, j);
 			if(get_presence_flotte(une_case))
@@ -305,11 +324,87 @@ NIVEAU_MENACE detecter_menace_flotte(Joueur* un_joueur, Terrain_espace* un_terra
 	return TOTALE;
 }
 
+/*renvoie 0 si rien, 1 pour metal, 2 pour argent, 3 pour carburant et 4 pour population*/
+int ressource_manquante(Joueur* un_joueur)
+{
+	int metal = 0, argent = 0, carburant = 0, population = 0;
+	int min = 0, max = 0, min_ressource, max_ressource;
+	float ratio;
+	recuperer_ressource_planete(un_joueur, &metal, &argent, &carburant, &population);
+
+	/*recherche min et max*/
+	min_ressource = metal;
+	min = 1;
+	if(argent < min_ressource)
+	{
+		min_ressource = argent;
+		min = 2;
+	}
+	if(carburant < min_ressource)
+	{
+		min_ressource = carburant;
+		min = 3;
+	}
+	if(population < min_ressource)
+	{
+		min_ressource = population;
+		min = 4;
+	}
+
+	max_ressource = metal;
+	max = 1;
+	if(argent > max_ressource)
+	{
+		max_ressource = argent;
+		max = 2;
+	}
+	if(carburant > max_ressource)
+	{
+		max_ressource = carburant;
+		max = 3;
+	}
+	if(population > max_ressource)
+	{
+		max_ressource = population;
+		max = 4;
+	}
+	printf("Min: %d avec %d, Max: %d avec %d \n\n", min, min_ressource, max, max_ressource);
+
+	/*Calcul d'un ration pour permettre d'évaluer si il y a un réel manque*/
+	ratio = (float) min_ressource / max_ressource;
+	if(ratio < 0.5)
+	{
+		return min;
+	}
+	return 0;
+}
+
 void choisir_construction_batiment(Joueur* un_joueur, Planete* une_planete)
 {
+	int min_ressource;
+	if(construction_batiment_possible(une_planete))
+	{
+		if(get_ieme_batiment(une_planete, 0) == 0)
+		{
+			if(condition_creation_batiment (une_planete, 0))
+			{
+				creation_batiment(une_planete, 0);
+				printf("Creation batiment 0\n");
+			}
+		}
+		min_ressource = ressource_manquante(un_joueur);
+		if(min_ressource != 0) /*rajouter flag exploration*/
+		{
+			if(min_ressource == 1)
+			{
+
+			}
+
+		}
 
 
 
+	}
 }
 
 
@@ -325,6 +420,7 @@ void appeler_ia(Terrain_espace* un_terrain_espace, Joueur *un_joueur)
 		detecter_menace_planete(un_joueur, un_terrain_espace, get_ieme_planete_joueur(un_joueur, 0));
 		detecter_menace_flotte(un_joueur, un_terrain_espace, get_ieme_flotte_joueur(un_joueur, 0));
 		choisir_case_deplacement_ia(un_joueur, un_terrain_espace, un_joueur->tab_flotte);
+		choisir_construction_batiment(un_joueur, get_ieme_planete_joueur(un_joueur, 0));
 	}
 }
 

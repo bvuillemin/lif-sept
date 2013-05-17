@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <math.h>
+#include <assert.h>
 
 #include "case_terrain_espace.h"
 #include "terrain_espace.h"
@@ -78,7 +79,8 @@ int get_taille_espace_y(const Terrain_espace *terrain_jeu_espace)
 
 Case_terrain_espace* get_case_terrain_espace(const Terrain_espace *terrain_espace, const int x, const int y)
 {
-    return &(terrain_espace->tab_terrain_espace[y*(terrain_espace->taille_espace_x)+x]);
+	assert((x>=0)||(y>=0)||(x<terrain_espace->taille_espace_x)||(y<terrain_espace->taille_espace_y));
+	return &(terrain_espace->tab_terrain_espace[y*(terrain_espace->taille_espace_x)+x]);
 }
 
 Planete* get_planete_terrain_espace(const Terrain_espace *terrain_espace, int x, int y)

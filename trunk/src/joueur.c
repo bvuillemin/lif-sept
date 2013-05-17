@@ -262,6 +262,15 @@ void recuperer_ressource_planete(Joueur *un_joueur, int *metal, int *argent, int
 	}
 }
 
+void recuperer_ressource_joueur(Joueur *un_joueur, int *metal, int *argent, int *carburant, int *population)
+{
+	int i;
+	*metal = *metal + un_joueur->metal;
+	*argent = *argent + un_joueur->argent;
+	*carburant = *carburant + un_joueur->carburant;
+	*population = *population + un_joueur->population;
+}
+
 void ajouter_metal(Joueur *un_joueur, int nb)
 {
     un_joueur->metal = un_joueur->metal + nb;

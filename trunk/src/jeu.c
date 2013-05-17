@@ -124,56 +124,43 @@ void joueur_suivant(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 
 void tour_suivant(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 {
-	int metal = 0;
-	int argent = 0;
-	int carburant = 0;
-	int population = 0;
+	int metal = 0, argent = 0, carburant = 0, population = 0;
 	int i;
 
 	for(i=0;i<un_jeu->nb_joueur;i++)
 	{
-		metal = 0;
-		argent = 0;
-		carburant = 0;
-		population = 0;
-
-		if(un_jeu->tab_joueur[0].ia == false)
+		if(get_ia_joueur(get_ieme_joueur_jeu(un_jeu, i)))
 		{
-			recuperer_ressource_planete(&un_jeu->tab_joueur[i], &metal, &argent, &carburant, &population);
-
-			un_jeu->tab_joueur[i].metal += metal;
-			un_jeu->tab_joueur[i].argent += argent;
-			un_jeu->tab_joueur[i].carburant += carburant;
-			un_jeu->tab_joueur[i].population += population;
-			/*printf("Ressources du tour %d pour le joueur %d: \nMetal: %d \nArgent: %d \nCarburant: %d \nPopulation: %d\n\n", un_jeu->tour_en_cours, i, metal, argent, carburant, population);*/
-			reinitialiser_mouvement_flotte(&(un_jeu->tab_joueur[i].tab_flotte[0]));
-
-			if(un_jeu->tab_joueur[i].tab_planete[0]->batiment_nb_tour_restant > 0)
-			{
-				un_jeu->tab_joueur[i].tab_planete[0]->batiment_nb_tour_restant --;
-			}
-			if(un_jeu->tab_joueur[i].tab_planete[0]->batiment_nb_tour_restant == 0) /*a completer pour gerer automatiquement chaque planete de chaque joueur*/
-			{
-				validation_batiment(un_jeu->tab_joueur[i].tab_planete[0]);
-				un_jeu->tab_joueur[i].tab_planete[0]->batiment_nb_tour_restant = -1;
-				un_jeu->tab_joueur[i].tab_planete[0]->batiment_en_cours = -1;
-			}
-
-			if(un_jeu->tab_joueur[i].tab_planete[0]->unite_nb_tour_restant > 0)
-			{
-				un_jeu->tab_joueur[i].tab_planete[0]->unite_nb_tour_restant --; /*de meme*/
-			}
-			if(un_jeu->tab_joueur[i].tab_planete[0]->unite_nb_tour_restant == 0)
-			{
-				validation_creation_unite_planete(un_jeu, un_terrain_espace, i, un_jeu->tab_joueur[i].tab_planete[0]->x, un_jeu->tab_joueur[i].tab_planete[0]->y);
-				un_jeu->tab_joueur[i].tab_planete[0]->unite_nb_tour_restant = -1;
-				un_jeu->tab_joueur[i].tab_planete[0]->unite_en_cours = -1;
-			}
-		}
-		else
-		{
-			reinitialiser_mouvement_flotte(&(un_jeu->tab_joueur[0].tab_flotte[0]));
 			appeler_ia(un_terrain_espace, un_jeu->tab_joueur);
+		}
+		recuperer_ressource_planete(get_ieme_joueur_jeu(un_jeu, i), &metal, &argent, &carburant, &population);
+		un_jeu->tab_joueur[i].metal += metal;
+		un_jeu->tab_joueur[i].argent += argent;
+		un_jeu->tab_joueur[i].carburant += carburant;
+		un_jeu->tab_joueur[i].population += population;
+		printf("Ressources du tour %d pour le joueur %d: \nMetal: %d \nArgent: %d \nCarburant: %d \nPopulation: %d\n\n", un_jeu->tour_en_cours, i, metal, argent, carburant, population);
+		reinitialiser_mouvement_flotte(&(un_jeu->tab_joueur[i].tab_flotte[0]));
+
+		if(un_jeu->tab_joueur[i].tab_planete[0]->batiment_nb_tour_restant > 0)
+		{
+			un_jeu->tab_joueur[i].tab_planete[0]->batiment_nb_tour_restant --;
+		}
+		if(un_jeu->tab_joueur[i].tab_planete[0]->batiment_nb_tour_restant == 0) /*a completer pour gerer automatiquement chaque planete de chaque joueur*/
+		{
+			validation_batiment(un_jeu->tab_joueur[i].tab_planete[0]);
+			un_jeu->tab_joueur[i].tab_planete[0]->batiment_nb_tour_restant = -1;
+			un_jeu->tab_joueur[i].tab_planete[0]->batiment_en_cours = -1;
+		}
+
+		if(un_jeu->tab_joueur[i].tab_planete[0]->unite_nb_tour_restant > 0)
+		{
+			un_jeu->tab_joueur[i].tab_planete[0]->unite_nb_tour_restant --; /*de meme*/
+		}
+		if(un_jeu->tab_joueur[i].tab_planete[0]->unite_nb_tour_restant == 0)
+		{
+			validation_creation_unite_planete(un_jeu, un_terrain_espace, i, un_jeu->tab_joueur[i].tab_planete[0]->x, un_jeu->tab_joueur[i].tab_planete[0]->y);
+			un_jeu->tab_joueur[i].tab_planete[0]->unite_nb_tour_restant = -1;
+			un_jeu->tab_joueur[i].tab_planete[0]->unite_en_cours = -1;
 		}
 	}
 	un_jeu->tour_en_cours++;
@@ -328,7 +315,7 @@ bool condition_creation_unite(Jeu *un_jeu, Planete *une_planete, int choix)
 	return false;
 }
 
-bool condition_creation_batiment(Jeu *un_jeu, Planete *une_planete, int choix)
+bool condition_creation_batiment(Planete *une_planete, int choix)
 {
 	if((choix == 0) && (une_planete->taille_utilisee <= une_planete->taille_planete))
 	{
@@ -366,6 +353,14 @@ void validation_creation_unite_planete(Jeu *un_jeu, Terrain_espace *un_terrain_e
     }
 }
 
+bool construction_batiment_possible(Planete* une_planete)
+{
+	if((une_planete->batiment_nb_tour_restant <= 0) && (une_planete->taille_utilisee <= une_planete->taille_planete))
+	{
+		return true;
+	}
+	return false;
+}
 
 /************************************************************************/
 /* Fonctions liées aux flottes                                          */

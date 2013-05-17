@@ -75,7 +75,7 @@ int main(int argc, char *argv[])
     terre = get_planete_terrain_espace(un_terrain_espace, 2, 1);
     /*jupiter = get_planete_terrain_espace(un_terrain_espace, 4, 3);*/
 	
-	joueur = creer_joueur(nom_joueur, 0, false);
+	joueur = creer_joueur(nom_joueur, 0, true);
 	/*joueur2 = creer_joueur(nom_joueur2, 1, true);*/
 	jeu = creer_jeu();
     ajouter_joueur(jeu, joueur);
@@ -125,7 +125,7 @@ int main(int argc, char *argv[])
     jeu = une_sauvegarde->jeu;
     un_terrain_espace = une_sauvegarde->terrain_espace;*/
 
-	affichage_ecran(jeu, un_terrain_espace);
+	/*affichage_ecran(jeu, un_terrain_espace);*/
 
 	while(1)
     {
@@ -152,7 +152,7 @@ int main(int argc, char *argv[])
         if(strcmp(menu, info_planete) == 0)
         {
             afficher_planete(terre);
-            afficher_planete(jupiter);
+            /*afficher_planete(jupiter);*/
         }
 		if(strcmp(menu, info_flotte) == 0)
         {
