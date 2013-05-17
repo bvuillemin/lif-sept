@@ -1809,8 +1809,7 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 		case SDL_MOUSEBUTTONUP:
             if (event.button.button == SDL_BUTTON_LEFT)
 			{
-				/*pour mémoire: interface_affichee = 1 pour une planete, 2 pour une planete ennemie, 3 pour une flotte, 4 pour une flotte ennemie, 5 pour la création d'unités sur une planète*/
-                x = event.button.x;
+				x = event.button.x;
                 y = event.button.y;
                 if(booleen_case_pointeur_souris(un_terrain_espace, x, y)) /*test des clics ayant lieu sur le terrain*/
                 {
@@ -1858,8 +1857,9 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 					{
 						interface_affichee = RIEN;
 						joueur_suivant(un_jeu, un_terrain_espace);
-						maj_affichage(un_jeu, un_terrain_espace, ecran, carte, interface_affichee, NULL, tab_surface);
 						maj_affichage_carte_terrain(un_jeu, un_terrain_espace, ecran, tab_surface, interface_affichee);
+						maj_affichage(un_jeu, un_terrain_espace, ecran, carte, interface_affichee, NULL, tab_surface);
+						maj_affichage_flotte(un_jeu, un_terrain_espace, ecran, tab_surface, interface_affichee);
 					}
 				}
 
@@ -1884,7 +1884,7 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
                         if(test_souris_rectangle(test, x, y))
                         {
                             une_case_terrain_espace = get_case_terrain_espace(un_terrain_espace, un_jeu->selection_planete->x, un_jeu->selection_planete->y);
-                            if(condition_creation_batiment (un_jeu, un_jeu->selection_planete, i))
+                            if(condition_creation_batiment (un_jeu->selection_planete, i))
 							{
 								creation_batiment(un_jeu->selection_planete, i);
 								maj_affichage(un_jeu, un_terrain_espace, ecran, carte, interface_affichee, une_case_terrain_espace, tab_surface);
