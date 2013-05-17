@@ -5,12 +5,7 @@
 #include "ia.h"
 #include "vision.h"
 
-void appeler_ia(Terrain_espace* un_terrain_espace, Joueur *un_joueur)
-{
-	detecter_menace_planete(un_joueur, un_terrain_espace, get_ieme_planete_joueur(un_joueur, 0));
-	detecter_menace_flotte(un_joueur, un_terrain_espace, get_ieme_flotte_joueur(un_joueur, 0));
-	choisir_case_deplacement_ia(un_joueur, un_terrain_espace, un_joueur->tab_flotte);
-}
+
 
 
 bool detecter_case_non_visitee_plus_proche(Joueur *un_joueur, Terrain_espace *un_terrain_espace, Flotte* une_flotte, int* x, int *y)
@@ -309,3 +304,27 @@ NIVEAU_MENACE detecter_menace_flotte(Joueur* un_joueur, Terrain_espace* un_terra
 	printf("AU COMBAT!!\n\n");
 	return TOTALE;
 }
+
+void choisir_construction_batiment(Joueur* un_joueur, Planete* une_planete)
+{
+
+
+
+}
+
+
+
+/************************************************************************/
+/* Appel de l'IA                                                        */
+/************************************************************************/
+
+void appeler_ia(Terrain_espace* un_terrain_espace, Joueur *un_joueur)
+{
+	if(get_ia_joueur(un_joueur))
+	{
+		detecter_menace_planete(un_joueur, un_terrain_espace, get_ieme_planete_joueur(un_joueur, 0));
+		detecter_menace_flotte(un_joueur, un_terrain_espace, get_ieme_flotte_joueur(un_joueur, 0));
+		choisir_case_deplacement_ia(un_joueur, un_terrain_espace, un_joueur->tab_flotte);
+	}
+}
+

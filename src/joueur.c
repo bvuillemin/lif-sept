@@ -165,6 +165,10 @@ Planete* get_ieme_planete_joueur(const Joueur* un_joueur, int i)
 {
 	return un_joueur->tab_planete[i];
 }
+bool get_ia_joueur(Joueur* un_joueur)
+{
+	return un_joueur->ia;
+}
 
 
 /************************************************************************/
