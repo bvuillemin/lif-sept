@@ -204,6 +204,10 @@ int get_portee_vision(const Planete* une_planete)
 	return une_planete->portee_vision;
 }
 
+int get_ieme_batiment(const Planete* une_planete, int i)
+{
+	return une_planete->batiment[i];
+}
 
 /************************************************************************/
 /* Fonctions diverses                                                   */
