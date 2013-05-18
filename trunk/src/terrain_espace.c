@@ -79,12 +79,13 @@ int get_taille_espace_y(const Terrain_espace *terrain_jeu_espace)
 
 Case_terrain_espace* get_case_terrain_espace(const Terrain_espace *terrain_espace, const int x, const int y)
 {
-	assert((x>=0)||(y>=0)||(x<terrain_espace->taille_espace_x)||(y<terrain_espace->taille_espace_y));
+	assert((x>=0)&&(y>=0)&&(x<terrain_espace->taille_espace_x)&&(y<terrain_espace->taille_espace_y));
 	return &(terrain_espace->tab_terrain_espace[y*(terrain_espace->taille_espace_x)+x]);
 }
 
 Planete* get_planete_terrain_espace(const Terrain_espace *terrain_espace, int x, int y)
 {
+	assert((x>=0)&&(y>=0)&&(x<terrain_espace->taille_espace_x)&&(y<terrain_espace->taille_espace_y));
 	if(terrain_espace->tab_terrain_espace[y*(terrain_espace->taille_espace_x)+x].type_case_terrain_espace == 'P')
 	{
 		return terrain_espace->tab_terrain_espace[y*(terrain_espace->taille_espace_x)+x].planete;

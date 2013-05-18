@@ -19,15 +19,15 @@
 
 int main(int argc, char *argv[])
 {
-    ecran_titre();
+    //ecran_titre();
     Flotte *flotte;
     Unite *unite1;
     Unite *unite2;
 
-	/*Flotte *flotte2;
+	Flotte *flotte2;
     Unite *unite3;
     Unite *unite4;
-
+	/*
 	Flotte *flotte3;
 	Unite *unite5;
 	Unite *unite6;*/
@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
 	char nom_jupiter[]="jupiter";
 	char nom_venus[]="venus";
 
-	srand(time(NULL)); 
+	srand(time(NULL));
 	un_terrain_espace = creer_terrain_espace(20, 15);
     modification_terrain_espace(un_terrain_espace, 'E');
 
@@ -74,8 +74,8 @@ int main(int argc, char *argv[])
 
     terre = get_planete_terrain_espace(un_terrain_espace, 2, 1);
     /*jupiter = get_planete_terrain_espace(un_terrain_espace, 4, 3);*/
-	
-	joueur = creer_joueur(nom_joueur, 0, true);
+
+	joueur = creer_joueur(nom_joueur, 0, false);
 	/*joueur2 = creer_joueur(nom_joueur2, 1, true);*/
 	jeu = creer_jeu();
     ajouter_joueur(jeu, joueur);
@@ -85,35 +85,35 @@ int main(int argc, char *argv[])
     unite1 = creer_unite(1, 1, 1, 1, 1, 10);
     unite2 = creer_unite(2, 2, 2, 2, 2, 10);
 
-	/*flotte2 = creer_flotte();
+	flotte2 = creer_flotte();
     unite3 = creer_unite(3, 3, 3, 3, 3, 10);
     unite4 = creer_unite(4, 4, 4, 4, 4, 10);
 
-	flotte3 = creer_flotte();
+	/*flotte3 = creer_flotte();
 	unite5 = creer_unite(5, 5, 5, 5, 5, 10);
 	unite6 = creer_unite(6, 6, 6, 6, 6, 10);*/
-	
+
 	ajouter_planete_joueur(&jeu->tab_joueur[0], terre);
 	afficher_planete(jeu->tab_joueur[0].tab_planete[0]);
 
 	/*ajouter_planete_joueur(&jeu->tab_joueur[1], jupiter);
 	afficher_planete(jeu->tab_joueur[1].tab_planete[0]);*/
-	
+
     modification_production_planete(jeu->tab_joueur[0].tab_planete[0], 100, 50, 10, 100);
 	/*modification_production_planete(jeu->tab_joueur[1].tab_planete[0], 200, 50, 75, 0);*/
 
     ajouter_unite_flotte(flotte, unite1);
     ajouter_unite_flotte(flotte, unite2);
 
-	/*ajouter_unite_flotte(flotte2, unite3);
+	ajouter_unite_flotte(flotte2, unite3);
     ajouter_unite_flotte(flotte2, unite4);
-
+	/*
 	ajouter_unite_flotte(flotte3, unite5);
 	ajouter_unite_flotte(flotte3, unite6);*/
-	
+
 	ajouter_flotte_jeu(jeu, un_terrain_espace, flotte, 0, 2, 2);
-	/*ajouter_flotte_jeu(jeu, un_terrain_espace, flotte2, 0, 5, 5);
-	ajouter_flotte_jeu(jeu, un_terrain_espace, flotte3, 1, 0, 4);*/
+	ajouter_flotte_jeu(jeu, un_terrain_espace, flotte2, 0, 5, 5);
+	/*ajouter_flotte_jeu(jeu, un_terrain_espace, flotte3, 1, 0, 4);*/
 
 	creer_vision_jeu(jeu, un_terrain_espace);
 	//creer_vision_joueur(jeu, un_terrain_espace, 0);
@@ -136,7 +136,7 @@ int main(int argc, char *argv[])
 			printf("Coordonnées où bouger la flotte:\n");
 			scanf("%d", &x);
 			scanf("%d", &y);
-			if(deplacement_flotte(&jeu->tab_joueur[a], un_terrain_espace, &(jeu->tab_joueur[a].tab_flotte[0]), x, y) == false)
+			if(deplacement_flotte(&jeu->tab_joueur[a], un_terrain_espace, get_ieme_flotte_joueur(&jeu->tab_joueur[a], 0), x, y) == false)
 			{
 				printf("Déplacement impossible\n");
 			}
@@ -150,8 +150,8 @@ int main(int argc, char *argv[])
 		if(strcmp(menu, info_flotte) == 0)
         {
 			printf("Affiche flotte du joueur %d\n", a);
-			afficher_flotte(&(jeu->tab_joueur[a].tab_flotte[0]));
-			afficher_flotte(&(jeu->tab_joueur[a].tab_flotte[1]));
+			afficher_flotte(get_ieme_flotte_joueur(&jeu->tab_joueur[a], 0));
+			afficher_flotte(get_ieme_flotte_joueur(&jeu->tab_joueur[a], 1));
         }
 		if(strcmp(menu, ressource) == 0)
         {

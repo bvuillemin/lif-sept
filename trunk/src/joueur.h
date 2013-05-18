@@ -5,7 +5,7 @@
 #include <stdio.h>
 
 #include "planete.h"
-#include "flotte.h"
+#include "TableauDynamique.h"
 #include "vision.h"
 
 
@@ -35,8 +35,8 @@ typedef struct
 
 	int nb_flotte;
 	int nb_flotte_possible;
-    Flotte* tab_flotte;
-	
+    TableauDynamique tab_flotte;
+
 	int pt_action_joueur;
 	int pt_action_joueur_total;
     char nom_joueur[20];
