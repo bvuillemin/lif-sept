@@ -157,8 +157,7 @@ int ajouter_unite_flotte(Flotte *flotte, Unite *unite)
 		{
 			flotte->pt_mouvement_espace_flotte = unite->pt_mouvement_unite;
 		}
-		/*liberer_unite(unite); free*/
-		/*free(unite);*/
+		//free(unite);
         return 1;
     }
     else

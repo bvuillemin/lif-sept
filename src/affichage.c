@@ -1907,7 +1907,7 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 				if(interface_affichee == FLOTTE)
 				{
 					/*test d'appui sur l'une des cases d'unité, pour les sélectionner séparemment de la flotte*/
-					for(i=0;i<5;i++)
+					for(i=0;i<get_flotte_en_cours(un_jeu)->taille_flotte;i++)
 					{
 						initialise_sdl_rect(&test, 10+ 120*i, TAILLE_TERRAIN_ESPACE_Y + 55, 100, 100);
 						if(test_souris_rectangle(test, x, y) && (SDL_GetModState() & KMOD_LCTRL)) /*la deuxième condition indique l'état courant de la touche LCTRL*/
@@ -1972,6 +1972,7 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
                         if(test_unite_selectionnee(un_jeu))
                         {
                             deplacement_unite_flotte(un_jeu, &un_jeu->tab_joueur[un_jeu->joueur_en_cours], un_terrain_espace, un_jeu->selection_flotte, x/100, y/100);
+
 							maj_affichage_flotte(un_jeu, un_terrain_espace, ecran, tab_surface, interface_affichee);
                         }
 						else
@@ -2231,6 +2232,7 @@ void menu_chargement_sauvegarde(void)
     Sauvegarde *une_sauvegarde;
     int b = 255;
     char chaine[50];
+	double longueurTexte, longueurTexte2;
     
     /*Initialisation de l'écran et des images */
     SDL_Init(SDL_INIT_VIDEO);
@@ -2242,14 +2244,14 @@ void menu_chargement_sauvegarde(void)
     TTF_Init();
     police = TTF_OpenFont("../graphiques/fonts/space_age.ttf", 60);
     Texte = TTF_RenderText_Blended(police, "Charger une partie", couleur);
-    const double longueurTexte = Texte->w;
+    longueurTexte = Texte->w;
     positionTexte.x = ((TAILLE_FENETRE_X/2.0) - (longueurTexte/2.0));
     positionTexte.y = 1*(TAILLE_FENETRE_Y)/10;
     
     /*Chargement du texte*/
     police = TTF_OpenFont("../graphiques/fonts/space_age.ttf", 40);
     Texte2 = TTF_RenderText_Blended(police, "Tapez le nom de la sauvegarde", couleur);
-    const double longueurTexte2 = Texte2->w;
+    longueurTexte2 = Texte2->w;
     positionTexte2.x = ((TAILLE_FENETRE_X/2.0) - (longueurTexte2/2.0));
     positionTexte2.y = 4*(TAILLE_FENETRE_Y)/10;
     
@@ -2289,6 +2291,7 @@ void menu_creation_sauvegarde(Terrain_espace *un_terrain_espace, Jeu *un_jeu)
     SDL_Rect positionTexte, positionTexte2;
     int b = 255;
     char chaine[50];
+	double longueurTexte, longueurTexte2;
     
     /*Initialisation de l'écran et des images */
     SDL_Init(SDL_INIT_VIDEO);
@@ -2300,14 +2303,14 @@ void menu_creation_sauvegarde(Terrain_espace *un_terrain_espace, Jeu *un_jeu)
     TTF_Init();
     police = TTF_OpenFont("../graphiques/fonts/space_age.ttf", 60);
     Texte = TTF_RenderText_Blended(police, "Sauvegarder une partie", couleur);
-    const double longueurTexte = Texte->w;
+    longueurTexte = Texte->w;
     positionTexte.x = ((TAILLE_FENETRE_X/2.0) - (longueurTexte/2.0));
     positionTexte.y = 1*(TAILLE_FENETRE_Y)/10;
     
     /*Chargement du texte*/
     police = TTF_OpenFont("../graphiques/fonts/space_age.ttf", 40);
     Texte2 = TTF_RenderText_Blended(police, "Tapez le nom de la sauvegarde", couleur);
-    const double longueurTexte2 = Texte2->w;
+    longueurTexte2 = Texte2->w;
     positionTexte2.x = ((TAILLE_FENETRE_X/2.0) - (longueurTexte2/2.0));
     positionTexte2.y = 4*(TAILLE_FENETRE_Y)/10;
     
@@ -2338,7 +2341,7 @@ void menu_pause(Terrain_espace *un_terrain_espace, Jeu *un_jeu)
     SDL_Rect positionTexte, positionSauvegarder, positionQuitter;
     SDL_Event evenement;
     int continuer = 1, xm = 0, ym = 0, i;
-    double longueurTexte;
+    double longueurTexte, longueurBouton, hauteurBouton;
     
     /* Chargement des images */
     ecran = SDL_SetVideoMode(TAILLE_FENETRE_X, TAILLE_FENETRE_Y, 32, SDL_HWSURFACE);
@@ -2355,8 +2358,8 @@ void menu_pause(Terrain_espace *un_terrain_espace, Jeu *un_jeu)
     positionTexte.x = ((TAILLE_FENETRE_X/2.0) - (longueurTexte/2.0));
     positionTexte.y = 9*(TAILLE_FENETRE_Y)/10;
     SDL_BlitSurface(Texte, NULL, ecran, &positionTexte);
-    double longueurBouton = Sauvegarder->w;
-    double hauteurBouton = Sauvegarder->h;
+    longueurBouton = Sauvegarder->w;
+    hauteurBouton = Sauvegarder->h;
     positionSauvegarder.x = ((TAILLE_FENETRE_X/2.0) - (longueurBouton/2.0));
     positionSauvegarder.y = ((TAILLE_FENETRE_Y/2.0) - (hauteurBouton/2.0));
     positionQuitter.x = positionSauvegarder.x;

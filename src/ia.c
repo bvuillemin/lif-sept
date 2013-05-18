@@ -419,7 +419,7 @@ void appeler_ia(Terrain_espace* un_terrain_espace, Joueur *un_joueur)
 	{
 		detecter_menace_planete(un_joueur, un_terrain_espace, get_ieme_planete_joueur(un_joueur, 0));
 		detecter_menace_flotte(un_joueur, un_terrain_espace, get_ieme_flotte_joueur(un_joueur, 0));
-		choisir_case_deplacement_ia(un_joueur, un_terrain_espace, un_joueur->tab_flotte);
+		choisir_case_deplacement_ia(un_joueur, un_terrain_espace, get_ieme_flotte_joueur(un_joueur, 0));
 		choisir_construction_batiment(un_joueur, get_ieme_planete_joueur(un_joueur, 0));
 	}
 }

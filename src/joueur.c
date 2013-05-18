@@ -25,7 +25,7 @@ void initialise_joueur(Joueur *un_joueur, char nom[20], int indice_joueur, bool 
 	un_joueur->tab_planete = (Planete **)malloc(sizeof(Planete *) * 10);
 	un_joueur->nb_flotte = 0;
 	un_joueur->nb_flotte_possible = 10;
-	un_joueur->tab_flotte = (Flotte *)malloc(sizeof(Flotte) * 10);
+	initialiserTabDyn(&un_joueur->tab_flotte);
 	un_joueur->pt_action_joueur = 3;
 	un_joueur->pt_action_joueur_total = 3;
 	un_joueur->vision_terrain = NULL; /*mis à NULL, c'est le jeu qui va se charger de créer la vision pour chaque joueur*/
@@ -41,12 +41,7 @@ Joueur *creer_joueur(char nom[30], int indice_joueur, bool ia)
 void liberer_joueur(Joueur *un_joueur)
 {
     int i;
-    for(i=0;i<un_joueur->nb_flotte;i++)
-    {
-        liberer_flotte(&(un_joueur->tab_flotte[i]));
-    }
-    
-	un_joueur->numero_joueur = -1;
+    un_joueur->numero_joueur = -1;
 	un_joueur->couleur_joueur = DEFAUT;
 	un_joueur->nom_joueur[0] = '\0';
 	un_joueur->metal = 0;
@@ -56,9 +51,9 @@ void liberer_joueur(Joueur *un_joueur)
 	un_joueur->nb_planete = 0;
 	un_joueur->nb_planete_possible = 0;
 	free(un_joueur->tab_planete); /*on ne libère pas les planètes, c'est le terrain ui va s'en charger*/
+	testamentTabDyn(&un_joueur->tab_flotte);
 	un_joueur->nb_flotte = 0;
 	un_joueur->nb_flotte_possible = 0;
-	free(un_joueur->tab_flotte);
 	un_joueur->pt_action_joueur = 0;
 	un_joueur->pt_action_joueur_total = 0;
 	liberer_vision_terrain(un_joueur->vision_terrain);
@@ -151,11 +146,11 @@ int get_nb_planete(Joueur *un_joueur)
 }
 int get_nb_flotte_joueur(Joueur *un_joueur)
 {
-	return un_joueur->nb_flotte;
+	return un_joueur->tab_flotte.taille_utilisee;
 }
 Flotte* get_ieme_flotte_joueur(const Joueur *un_joueur,int i)
 {
-	return &un_joueur->tab_flotte[i];
+	return valeurIemeElementTabDyn(&un_joueur->tab_flotte, i + 1); /*on met i+1 car le module tabdyn prend la position, on choisit de prendre les indices dans le tableau*/
 }
 Vision_terrain* get_vision_terrain(const Joueur* un_joueur)
 {
@@ -177,29 +172,6 @@ bool get_ia_joueur(Joueur* un_joueur)
 
 void ajouter_planete_joueur(Joueur *un_joueur, Planete *une_planete)
 {
-	/*int i;
-
-	if(un_joueur->nb_planete == un_joueur->nb_planete_possible)
-	{
-		Planete *temp;
-		temp = *(un_joueur->tab_planete);
-
-		*(un_joueur->tab_planete) =(Planete *)malloc(sizeof(Planete *) * (un_joueur->nb_planete_possible +10));
-		for(i=0;i<un_joueur->nb_planete_possible;i++)
-		{
-			*(un_joueur->tab_planete[i]) = temp[i];
-		}
-
-		free(temp);
-		un_joueur->nb_planete_possible = un_joueur->nb_planete_possible +10;
-	}
-
-	i = un_joueur->nb_planete;
-
-	temp[0] = une_planete;
-	un_joueur->tab_planete[i] = temp[0];
-	un_joueur->nb_planete ++;*/
-
     int i = un_joueur->nb_planete;
     if(i< un_joueur->nb_planete_possible)
     {
@@ -219,12 +191,18 @@ void ajouter_flotte_joueur(Joueur *un_joueur, Flotte *une_flotte)
 	int i ;
 	i= un_joueur->nb_flotte;
     une_flotte->indice_joueur = un_joueur->numero_joueur;
+    ajouterElementTabDyn(&un_joueur->tab_flotte, une_flotte);
+	une_flotte->indice_tableau_joueur = i;
+	un_joueur->nb_flotte ++;
+	free(une_flotte);
+
     if(i< un_joueur->nb_flotte_possible)
     {
-        une_flotte->indice_tableau_joueur = i;
+       /* une_flotte->indice_tableau_joueur = i;
         un_joueur->tab_flotte[i] = *une_flotte;
         un_joueur->nb_flotte ++;
-        /*free(une_flotte);*/
+        free(une_flotte);*/
+
     }
 }
 
@@ -233,11 +211,12 @@ void retirer_flotte_joueur(Joueur *un_joueur, int indice_flotte)
     int i;
     if(indice_flotte < un_joueur->nb_flotte - 1)
     {
-        for(i=indice_flotte;i<un_joueur->nb_flotte - 1;i++)
+        supprimerElementTabDyn(&un_joueur->tab_flotte, indice_flotte);
+        /*for(i=indice_flotte;i<un_joueur->nb_flotte - 1;i++)
         {
             un_joueur->tab_flotte[i] = un_joueur->tab_flotte[i+1];
             un_joueur->tab_flotte[i].indice_tableau_joueur = i;
-        }
+        }*/
        /* liberer_flotte(&un_joueur->tab_flotte[un_joueur->nb_flotte - 1]);*/
     }
 }
@@ -387,7 +366,7 @@ void reinitialiser_pt_action_joueur(Joueur *un_joueur)
 
 void sauvegarde_joueur(const Joueur *un_joueur, FILE*f)
 {
-    int i;
+   /* int i;
     fprintf(f, "%s\n", un_joueur->nom_joueur);
     fprintf(f, "%d\n", un_joueur->numero_joueur);
     fprintf(f, "%d\n", un_joueur->ia);
@@ -409,11 +388,11 @@ void sauvegarde_joueur(const Joueur *un_joueur, FILE*f)
         sauvegarde_flotte(&un_joueur->tab_flotte[i], f);
     }
     fprintf(f, "%d\n", un_joueur->pt_action_joueur);
-    fprintf(f, "%d\n", un_joueur->pt_action_joueur_total);
+    fprintf(f, "%d\n", un_joueur->pt_action_joueur_total);*/
 }
 Joueur* ouverture_joueur(FILE *f)
 {
-    Joueur *joueur_ouvert;
+    /*Joueur *joueur_ouvert;
     char chaine[50];
     int b, c, i;
     fgets(chaine, 50, f);
@@ -441,5 +420,6 @@ Joueur* ouverture_joueur(FILE *f)
     }
     sscanf(fgets(chaine, 50, f), "%d", &joueur_ouvert->pt_action_joueur);
     sscanf(fgets(chaine, 50, f), "%d", &joueur_ouvert->pt_action_joueur_total);
-    return joueur_ouvert;
+    return joueur_ouvert;*/
 }
+
