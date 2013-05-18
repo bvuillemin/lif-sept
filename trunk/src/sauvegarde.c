@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include <time.h>
 #include "sauvegarde.h"
 void initialise_sauvegarde(Sauvegarde *une_sauvegarde)
 {
@@ -13,6 +14,7 @@ Sauvegarde *creer_sauvegarde()
     initialise_sauvegarde(une_sauvegarde);
     return une_sauvegarde;
 }
+
 void creer_fichier_sauvegarde(const char nom[30], Terrain_espace *un_terrain_espace, Jeu *un_jeu)
 {
     FILE *f;
@@ -25,15 +27,12 @@ void creer_fichier_sauvegarde(const char nom[30], Terrain_espace *un_terrain_esp
     sauvegarde_jeu(un_jeu, f);
     fclose(f);
 }
+
+
 void detruire_sauvegarde(const char nom[30])
 {
-    FILE *f;
-    f = fopen(nom, "w");
-    if (f==NULL)
-    {
-        printf("Erreur lors de l'ouverture de %s\n", nom);
-    }
-    fclose(f);
+    int i;
+    i = remove(nom);
 }
 
 Sauvegarde* selection_ouverture(const char nom[30])
