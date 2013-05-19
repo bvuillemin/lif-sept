@@ -2237,7 +2237,7 @@ void menu_chargement_sauvegarde(void)
     /*Initialisation de l'écran et des images */
     SDL_Init(SDL_INIT_VIDEO);
     ecran = SDL_SetVideoMode(TAILLE_FENETRE_X, TAILLE_FENETRE_Y, 32, SDL_HWSURFACE);
-    imageDeFond = IMG_Load("../graphiques/images/Fond_titre.png");
+    imageDeFond = IMG_Load("../graphiques/images/Sauvegarde_Fond.png");
     Noir = SDL_LoadBMP("../graphiques/images/Noir.bmp");
     
     /*Chargement du titre*/
@@ -2253,7 +2253,7 @@ void menu_chargement_sauvegarde(void)
     Texte2 = TTF_RenderText_Blended(police, "Tapez le nom de la sauvegarde", couleur);
     longueurTexte2 = Texte2->w;
     positionTexte2.x = ((TAILLE_FENETRE_X/2.0) - (longueurTexte2/2.0));
-    positionTexte2.y = 4*(TAILLE_FENETRE_Y)/10;
+    positionTexte2.y = 2*(TAILLE_FENETRE_Y)/10;
     
     /*Animation de l'apparition du menu*/
     while (b>=0) {
@@ -2296,7 +2296,7 @@ void menu_creation_sauvegarde(Terrain_espace *un_terrain_espace, Jeu *un_jeu)
     /*Initialisation de l'écran et des images */
     SDL_Init(SDL_INIT_VIDEO);
     ecran = SDL_SetVideoMode(TAILLE_FENETRE_X, TAILLE_FENETRE_Y, 32, SDL_HWSURFACE);
-    imageDeFond = IMG_Load("../graphiques/images/Fond_titre.png");
+    imageDeFond = IMG_Load("../graphiques/images/Sauvegarde_Fond.png");
     Noir = SDL_LoadBMP("../graphiques/images/Noir.bmp");
     
     /*Chargement du titre*/
@@ -2312,7 +2312,7 @@ void menu_creation_sauvegarde(Terrain_espace *un_terrain_espace, Jeu *un_jeu)
     Texte2 = TTF_RenderText_Blended(police, "Tapez le nom de la sauvegarde", couleur);
     longueurTexte2 = Texte2->w;
     positionTexte2.x = ((TAILLE_FENETRE_X/2.0) - (longueurTexte2/2.0));
-    positionTexte2.y = 4*(TAILLE_FENETRE_Y)/10;
+    positionTexte2.y = 2*(TAILLE_FENETRE_Y)/10;
     
     /*Animation de l'apparition du menu*/
     while (b>=0) {
@@ -2380,11 +2380,11 @@ void menu_pause(Terrain_espace *un_terrain_espace, Jeu *un_jeu)
                 SDL_FreeSurface(ecran);
                 if(test_souris_rectangle(positionSauvegarder,xm,ym))
                 {
-                    Sauvegarder = IMG_Load("../graphiques/images/Nouvelle_Partie_Pressé.png");
+                    Sauvegarder = IMG_Load("../graphiques/images/Sauvegarder_Pressé.png");
                 }
                 if(!test_souris_rectangle(positionSauvegarder,xm,ym))
                 {
-                    Sauvegarder = IMG_Load("../graphiques/images/Nouvelle_Partie.png");
+                    Sauvegarder = IMG_Load("../graphiques/images/Sauvegarder.png");
                 }
                 if(test_souris_rectangle(positionQuitter,xm,ym))
                 {
@@ -2417,6 +2417,7 @@ void menu_pause(Terrain_espace *un_terrain_espace, Jeu *un_jeu)
                     SDL_FreeSurface(imageDeFond);
                     SDL_FreeSurface(Sauvegarder);
                     SDL_FreeSurface(Quitter);
+                    menu_creation_sauvegarde(un_terrain_espace, un_jeu);
 				}
                 
                 /* Quitter le jeu */

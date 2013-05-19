@@ -366,7 +366,7 @@ void reinitialiser_pt_action_joueur(Joueur *un_joueur)
 
 void sauvegarde_joueur(const Joueur *un_joueur, FILE*f)
 {
-   /* int i;
+    int i;
     fprintf(f, "%s\n", un_joueur->nom_joueur);
     fprintf(f, "%d\n", un_joueur->numero_joueur);
     fprintf(f, "%d\n", un_joueur->ia);
@@ -385,14 +385,14 @@ void sauvegarde_joueur(const Joueur *un_joueur, FILE*f)
     fprintf(f, "%d\n", un_joueur->nb_flotte_possible);
     for(i=0;i<un_joueur->nb_flotte;i++)
     {
-        sauvegarde_flotte(&un_joueur->tab_flotte[i], f);
+        sauvegarde_flotte(valeurIemeElementTabDyn(&un_joueur->tab_flotte, i), f);
     }
     fprintf(f, "%d\n", un_joueur->pt_action_joueur);
-    fprintf(f, "%d\n", un_joueur->pt_action_joueur_total);*/
+    fprintf(f, "%d\n", un_joueur->pt_action_joueur_total);
 }
 Joueur* ouverture_joueur(FILE *f)
 {
-    /*Joueur *joueur_ouvert;
+    Joueur *joueur_ouvert;
     char chaine[50];
     int b, c, i;
     fgets(chaine, 50, f);
@@ -416,10 +416,10 @@ Joueur* ouverture_joueur(FILE *f)
     for(i=0;i<joueur_ouvert->nb_flotte;i++)
     {
         fgets(chaine, 50, f);
-        joueur_ouvert->tab_flotte[i] = *ouverture_flotte(f);
+        ajouterElementTabDyn(&joueur_ouvert->tab_flotte, ouverture_flotte(f));
     }
     sscanf(fgets(chaine, 50, f), "%d", &joueur_ouvert->pt_action_joueur);
     sscanf(fgets(chaine, 50, f), "%d", &joueur_ouvert->pt_action_joueur_total);
-    return joueur_ouvert;*/
+    return joueur_ouvert;
 }
 

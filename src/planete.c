@@ -297,7 +297,6 @@ void sauvegarde_planete(const Planete *une_planete, FILE*f)
     fprintf(f, "%d\n", une_planete->unite_nb_tour_restant);
     fprintf(f, "%d\n", une_planete->taille_utilisee);
     fprintf(f, "%d\n", une_planete->taille_planete);
-    //fprintf(f, "%d\n", une_planete->habitabilite);
     fprintf(f, "%d\n", une_planete->portee_vision);
     fprintf(f, "%d\n", une_planete->planete_principale);
     fprintf(f, "%d\n", une_planete->planete_colonisee);
@@ -327,7 +326,6 @@ Planete* ouverture_planete(FILE *f)
     sscanf(fgets(chaine, 50, f), "%d", &planete_ouverte->unite_nb_tour_restant);
     sscanf(fgets(chaine, 50, f), "%d", &planete_ouverte->taille_utilisee);
     sscanf(fgets(chaine, 50, f), "%d", &planete_ouverte->taille_planete);
-    //sscanf(fgets(chaine, 50, f), "%d", &planete_ouverte->habitabilite);
     sscanf(fgets(chaine, 50, f), "%d", &planete_ouverte->portee_vision);
     sscanf(fgets(chaine, 50, f), "%d", &b);
     planete_ouverte->planete_principale = b;
