@@ -2234,6 +2234,9 @@ void menu_chargement_sauvegarde(void)
     char chaine[50];
 	double longueurTexte, longueurTexte2;
     
+    
+    /*CHARGEMENT*/
+    
     /*Initialisation de l'écran et des images */
     SDL_Init(SDL_INIT_VIDEO);
     ecran = SDL_SetVideoMode(TAILLE_FENETRE_X, TAILLE_FENETRE_Y, 32, SDL_HWSURFACE);
@@ -2254,6 +2257,9 @@ void menu_chargement_sauvegarde(void)
     longueurTexte2 = Texte2->w;
     positionTexte2.x = ((TAILLE_FENETRE_X/2.0) - (longueurTexte2/2.0));
     positionTexte2.y = 2*(TAILLE_FENETRE_Y)/10;
+    
+    
+    /*AFFICHAGE*/
     
     /*Animation de l'apparition du menu*/
     while (b>=0) {
@@ -2293,6 +2299,9 @@ void menu_creation_sauvegarde(Terrain_espace *un_terrain_espace, Jeu *un_jeu)
     char chaine[50];
 	double longueurTexte, longueurTexte2;
     
+    
+    /*CHARGEMENT*/
+    
     /*Initialisation de l'écran et des images */
     SDL_Init(SDL_INIT_VIDEO);
     ecran = SDL_SetVideoMode(TAILLE_FENETRE_X, TAILLE_FENETRE_Y, 32, SDL_HWSURFACE);
@@ -2313,6 +2322,9 @@ void menu_creation_sauvegarde(Terrain_espace *un_terrain_espace, Jeu *un_jeu)
     longueurTexte2 = Texte2->w;
     positionTexte2.x = ((TAILLE_FENETRE_X/2.0) - (longueurTexte2/2.0));
     positionTexte2.y = 2*(TAILLE_FENETRE_Y)/10;
+    
+    
+    /*AFFICHAGE*/
     
     /*Animation de l'apparition du menu*/
     while (b>=0) {
@@ -2439,6 +2451,154 @@ void menu_pause(Terrain_espace *un_terrain_espace, Jeu *un_jeu)
     }
 }
 
+void nouvelle_partie(void)
+{
+    /*Initialisation des variables*/
+    SDL_Surface *ecran, *imageDeFond, *Texte, *Texte2, *Texte3, *Texte4, *Texte5, *Noir;
+    TTF_Font *police;
+    SDL_Color couleur= {255, 255, 255};
+    SDL_Rect positionTexte, positionTexte2, positionTexte3, positionTexte4, positionTexte5;
+    SDL_Event evenement;
+    Terrain_espace *un_terrain_espace;
+    Jeu *jeu;
+    Planete *terre;
+	Joueur *joueur;
+    Flotte *flotte;
+    Unite *unite1;
+    Unite *unite2;
+    
+	Flotte *flotte2;
+    Unite *unite3;
+    Unite *unite4;
+    int b = 255, i, continuer = 1;
+	double longueurTexte, longueurTexte2, longueurTexte3, longueurTexte4, longueurTexte5;
+    
+    
+    /*CHARGEMENT*/
+    
+    /* Initialisation de l'écran et des images */
+    SDL_Init(SDL_INIT_VIDEO);
+    ecran = SDL_SetVideoMode(TAILLE_FENETRE_X, TAILLE_FENETRE_Y, 32, SDL_HWSURFACE);
+    imageDeFond = IMG_Load("../graphiques/images/Fond_Nouvelle_Partie.png");
+    Noir = SDL_LoadBMP("../graphiques/images/Noir.bmp");
+    
+    /* Chargement du titre */
+    TTF_Init();
+    police = TTF_OpenFont("../graphiques/fonts/space_age.ttf", 60);
+    Texte = TTF_RenderText_Blended(police, "Conquest Of Space", couleur);
+    longueurTexte = Texte->w;
+    positionTexte.x = ((TAILLE_FENETRE_X/2.0) - (longueurTexte/2.0));
+    positionTexte.y = 1*(TAILLE_FENETRE_Y)/10;
+    
+    /* Chargement du texte */
+    police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 40);
+    Texte2 = TTF_RenderText_Blended(police, "Les Etats-Unis veulent a tout prix", couleur);
+    longueurTexte2 = Texte2->w;
+    positionTexte2.x = ((TAILLE_FENETRE_X/2.0) - (longueurTexte2/2.0));
+    positionTexte2.y = 4*(TAILLE_FENETRE_Y)/10;
+    
+    Texte3 = TTF_RenderText_Blended(police, "trouver le secret de la vie pour faire renaitre", couleur);
+    longueurTexte3 = Texte3->w;
+    positionTexte3.x = ((TAILLE_FENETRE_X/2.0) - (longueurTexte3/2.0));
+    positionTexte3.y = 5*(TAILLE_FENETRE_Y)/10;
+    
+    Texte4 = TTF_RenderText_Blended(police, "Billy Mays. BLABLABLABLA. Aidez-les !!", couleur);
+    longueurTexte4 = Texte4->w;
+    positionTexte4.x = ((TAILLE_FENETRE_X/2.0) - (longueurTexte4/2.0));
+    positionTexte4.y = 6*(TAILLE_FENETRE_Y)/10;
+    
+    /* Chargement du "Cliquez pour continuer" */
+    police = TTF_OpenFont("../graphiques/fonts/space_age.ttf", 40);
+    Texte5 = TTF_RenderText_Blended(police, "Cliquez pour continuer", couleur);
+    longueurTexte5 = Texte5->w;
+    positionTexte5.x = ((TAILLE_FENETRE_X/2.0) - (longueurTexte5/2.0));
+    positionTexte5.y = 9*(TAILLE_FENETRE_Y)/10;
+    
+    
+    /*AFFICHAGE*/
+    
+    /*Animation de l'apparition du menu*/
+    while (b>=0) {
+        SDL_SetAlpha(Noir, SDL_SRCALPHA, b);
+        SDL_BlitSurface(Noir, NULL, ecran, NULL);
+        b = b-50;
+        SDL_Flip(ecran);
+        SDL_FreeSurface(ecran);
+        SDL_BlitSurface(imageDeFond, NULL, ecran, NULL);
+        SDL_BlitSurface(Texte, NULL, ecran, &positionTexte);
+        SDL_BlitSurface(Texte2, NULL, ecran, &positionTexte2);
+        SDL_BlitSurface(Texte3, NULL, ecran, &positionTexte3);
+        SDL_BlitSurface(Texte4, NULL, ecran, &positionTexte4);
+        SDL_BlitSurface(Texte5, NULL, ecran, &positionTexte5);
+    }
+    
+    /*Initialisation du terrain et du jeu (A MODIFIER)*/
+    char nom_joueur[]="Pierre";
+	char nom_terre[]="terre";
+	char nom_jupiter[]="jupiter";
+	char nom_venus[]="venus";
+    
+	un_terrain_espace = creer_terrain_espace(20, 15);
+    modification_terrain_espace(un_terrain_espace, 'E');
+    
+    ajouter_planete_terrain_espace(un_terrain_espace, 2, 1, nom_terre);
+    ajouter_planete_terrain_espace(un_terrain_espace, 4, 3, nom_jupiter);
+	ajouter_planete_terrain_espace(un_terrain_espace, 0, 3, nom_venus);
+    affiche_terrain_espace(un_terrain_espace);
+    
+    terre = get_planete_terrain_espace(un_terrain_espace, 2, 1);
+    
+	joueur = creer_joueur(nom_joueur, 0, false);
+	jeu = creer_jeu();
+    ajouter_joueur(jeu, joueur);
+    
+    flotte = creer_flotte();
+    unite1 = creer_unite(1, 1, 1, 1, 1, 10);
+    unite2 = creer_unite(2, 2, 2, 2, 2, 10);
+    
+	flotte2 = creer_flotte();
+    unite3 = creer_unite(3, 3, 3, 3, 3, 10);
+    unite4 = creer_unite(4, 4, 4, 4, 4, 10);
+    
+	ajouter_planete_joueur(&jeu->tab_joueur[0], terre);
+	afficher_planete(jeu->tab_joueur[0].tab_planete[0]);
+    
+    modification_production_planete(jeu->tab_joueur[0].tab_planete[0], 100, 50, 10, 100);
+    
+    ajouter_unite_flotte(flotte, unite1);
+    ajouter_unite_flotte(flotte, unite2);
+    
+	ajouter_unite_flotte(flotte2, unite3);
+    ajouter_unite_flotte(flotte2, unite4);
+    
+	ajouter_flotte_jeu(jeu, un_terrain_espace, flotte, 0, 2, 2);
+	ajouter_flotte_jeu(jeu, un_terrain_espace, flotte2, 0, 5, 5);
+    
+	creer_vision_jeu(jeu, un_terrain_espace);
+    
+    /* Attente du clic */
+    while(continuer)
+	{
+		SDL_WaitEvent(&evenement);
+		switch(evenement.type)
+		{
+            case SDL_MOUSEBUTTONUP :
+                
+                /*Disparition du menu et affichage du jeu*/
+                for (i=0; i<10; i++)
+                {
+                    SDL_SetAlpha(Noir, SDL_SRCALPHA, 50);
+                    SDL_BlitSurface(Noir, NULL, ecran, NULL);
+                    SDL_Flip(ecran);
+                }
+                SDL_FreeSurface(ecran);
+                SDL_FreeSurface(Texte);
+                SDL_FreeSurface(imageDeFond);
+                affichage_ecran(jeu, un_terrain_espace);
+        }
+    }
+}
+
 void ecran_titre(void)
 {
     /* Initialisation des variables */
@@ -2450,6 +2610,9 @@ void ecran_titre(void)
 	SDL_Rect positionTitre, positionTexte, positionPetit_Titre, positionNouvellePartie, positionCharger, positionQuitter;
     SDL_Event clic_touche;
 	SDL_Color couleur= {255, 255, 255};
+    
+    
+    /*CHARGEMENT*/
     
     /* Chargement des images */
     SDL_Init(SDL_INIT_VIDEO);
@@ -2463,6 +2626,9 @@ void ecran_titre(void)
     Charger = IMG_Load("../graphiques/images/Charger.png");
     Quitter = IMG_Load("../graphiques/images/Quitter.png");
 
+    
+    /*AFFICHAGE*/
+    
     /* Affichage du titre de la fenêtre */
     SDL_WM_SetCaption("Conquest Of Space", NULL);
 
@@ -2610,9 +2776,9 @@ void ecran_titre(void)
                 if(test_souris_rectangle(positionNouvellePartie,clic_touche.button.x,clic_touche.button.y))
 				{
                     continuer = 0;
-                    for (i=0; i<30; i++)
+                    for (i=0; i<10; i++)
                     {
-                        SDL_SetAlpha(Noir, SDL_SRCALPHA, 20);
+                        SDL_SetAlpha(Noir, SDL_SRCALPHA, 50);
                         SDL_BlitSurface(Noir, NULL, ecran, NULL);
                         SDL_Flip(ecran);
                     }
@@ -2621,15 +2787,16 @@ void ecran_titre(void)
                     SDL_FreeSurface(NouvellePartie);
                     SDL_FreeSurface(Charger);
                     SDL_FreeSurface(Quitter);
+                    nouvelle_partie();
 				}
                 
                 /* Charger une partie */
 				if(test_souris_rectangle(positionCharger,clic_touche.button.x,clic_touche.button.y))
 				{
                     continuer = 0;
-                    for (i=0; i<30; i++)
+                    for (i=0; i<10; i++)
                     {
-                        SDL_SetAlpha(Noir, SDL_SRCALPHA, 20);
+                        SDL_SetAlpha(Noir, SDL_SRCALPHA, 50);
                         SDL_BlitSurface(Noir, NULL, ecran, NULL);
                         SDL_Flip(ecran);
                     }
@@ -2647,9 +2814,9 @@ void ecran_titre(void)
                 if(test_souris_rectangle(positionQuitter,clic_touche.button.x,clic_touche.button.y))
 				{
                     continuer = 0;
-                    for (i=0; i<30; i++)
+                    for (i=0; i<10; i++)
                     {
-                        SDL_SetAlpha(Noir, SDL_SRCALPHA, 20);
+                        SDL_SetAlpha(Noir, SDL_SRCALPHA, 50);
                         SDL_BlitSurface(Noir, NULL, ecran, NULL);
                         SDL_Flip(ecran);
                     }
@@ -2658,6 +2825,7 @@ void ecran_titre(void)
                     SDL_FreeSurface(NouvellePartie);
                     SDL_FreeSurface(Charger);
                     SDL_FreeSurface(Quitter);
+                    SDL_Quit();
                     exit(0);
 				}
         }
