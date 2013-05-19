@@ -51,7 +51,6 @@ Sauvegarde* selection_ouverture(const char nom[30])
     {
         fseek(f, -1, SEEK_CUR);
         fgets(chaine, 50, f);
-        printf("%s", chaine);
         if (strcmp(chaine, "Terrain_Espace\n")==0)
         {
             une_sauvegarde->terrain_espace = ouverture_terrain_espace(f);

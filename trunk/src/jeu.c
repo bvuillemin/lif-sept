@@ -772,6 +772,5 @@ Jeu* ouverture_jeu(FILE *f)
         sscanf(fgets(chaine, 50, f), "%d", &b);
         jeu_ouvert->tab_unite_selectionnee[i] = b;
     }
-    afficher_ressource_joueur(jeu_ouvert);
     return jeu_ouvert;
 }

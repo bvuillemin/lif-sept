@@ -77,6 +77,7 @@ void maj_affichage(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *
 
 void pause();
 void input_handle(void);
+void menu_pause(Terrain_espace *un_terrain_espace, Jeu *un_jeu);
 void ecran_titre(void);
 void affichage_ecran_acceuil(Terrain_combat *un_terrain_combat);
 

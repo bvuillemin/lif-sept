@@ -228,7 +228,6 @@ Terrain_espace* ouverture_terrain_espace(FILE *f)
             terrain_ouvert->tab_terrain_espace[i*(terrain_ouvert->taille_espace_y)+j] = *ouverture_case_terrain_espace(f);
         }
     }
-    affiche_terrain_espace(terrain_ouvert);
     return terrain_ouvert;
 }
 
