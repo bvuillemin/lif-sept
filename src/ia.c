@@ -265,11 +265,11 @@ NIVEAU_MENACE detecter_menace_flotte(Joueur* un_joueur, Terrain_espace* un_terra
 	}
 	if(x2 >= get_taille_espace_x(un_terrain_espace))
 	{
-		x2 = get_taille_espace_x(un_terrain_espace);
+		x2 = get_taille_espace_x(un_terrain_espace) -1;
 	}
 	if(y2 >= get_taille_espace_y(un_terrain_espace))
 	{
-		y2 = get_taille_espace_y(un_terrain_espace);
+		y2 = get_taille_espace_y(un_terrain_espace) -1;
 	}
 
 	for(i= x1;i<= x2;i++)
@@ -322,6 +322,38 @@ NIVEAU_MENACE detecter_menace_flotte(Joueur* un_joueur, Terrain_espace* un_terra
 	}
 	printf("AU COMBAT!!\n\n");
 	return TOTALE;
+}
+
+COMPORTEMENT_IA calcul_niveau_menace_globale(Joueur* un_joueur, Terrain_espace* un_terrain)
+{
+	int i;
+	int res = 0;
+	double ratio;
+	NIVEAU_MENACE menace;
+
+	for(i=0;i<get_nb_flotte_joueur(un_joueur);i++)
+	{
+		menace = detecter_menace_flotte(un_joueur, un_terrain, get_ieme_flotte_joueur(un_joueur, i));
+		if(menace == FAIBLE)
+			res += 1;
+		if(menace == IMPORTANTE)
+			res += 2;
+		if(menace == TOTALE)
+			res += 3;
+	}
+	for(i=0;i<get_nb_planete(un_joueur);i++)
+	{
+		menace = detecter_menace_planete(un_joueur, un_terrain, get_ieme_planete_joueur(un_joueur, i));
+		if(menace == FAIBLE)
+			res += 1;
+		if(menace == IMPORTANTE)
+			res += 2;
+		if(menace == TOTALE)
+			res += 3;
+	}
+	ratio = (double)res/(get_nb_planete(un_joueur) + get_nb_flotte_joueur(un_joueur));
+	printf("Ratio niveau global %d", ratio);
+	return EXPLORATION;
 }
 
 /*renvoie 0 si rien, 1 pour metal, 2 pour argent, 3 pour carburant et 4 pour population*/
@@ -382,6 +414,8 @@ int ressource_manquante(Joueur* un_joueur)
 void choisir_construction_batiment(Joueur* un_joueur, Planete* une_planete)
 {
 	int min_ressource;
+	int choix;
+
 	if(construction_batiment_possible(une_planete))
 	{
 		if(get_ieme_batiment(une_planete, 0) == 0)
@@ -392,18 +426,59 @@ void choisir_construction_batiment(Joueur* un_joueur, Planete* une_planete)
 				printf("Creation batiment 0\n");
 			}
 		}
+		if(get_ieme_batiment(une_planete, 5) == 0)
+		{
+			if(condition_creation_batiment (une_planete, 5))
+			{
+				creation_batiment(une_planete, 5);
+				printf("Creation batiment 5\n");
+			}
+		}
 		min_ressource = ressource_manquante(un_joueur);
 		if(min_ressource != 0) /*rajouter flag exploration*/
 		{
 			if(min_ressource == 1)
 			{
-
+				if(condition_creation_batiment (une_planete, 1))
+				{
+					creation_batiment(une_planete, 1);
+					printf("Creation batiment 1\n");
+				}
 			}
-
+			if(min_ressource == 2)
+			{
+				if(condition_creation_batiment (une_planete, 2))
+				{
+					creation_batiment(une_planete, 2);
+					printf("Creation batiment 2\n");
+				}
+			}
+			if(min_ressource == 3)
+			{
+				if(condition_creation_batiment (une_planete, 3))
+				{
+					creation_batiment(une_planete, 3);
+					printf("Creation batiment 3\n");
+				}
+			}
+			if(min_ressource == 4)
+			{
+				if(condition_creation_batiment (une_planete, 4))
+				{
+					creation_batiment(une_planete, 4);
+					printf("Creation batiment 4\n");
+				}
+			}
 		}
-
-
-
+		else
+		{
+			choix = (rand()%4) + 1;
+			if(condition_creation_batiment (une_planete, choix))
+			{
+				creation_batiment(une_planete, choix);
+				printf("Creation batiment %d\n", choix);
+			}
+		}
 	}
 }
 
@@ -417,6 +492,8 @@ void appeler_ia(Terrain_espace* un_terrain_espace, Joueur *un_joueur)
 {
 	if(get_ia_joueur(un_joueur))
 	{
+		COMPORTEMENT_IA comportement;
+		comportement = calcul_niveau_menace_globale(un_joueur, un_terrain_espace);
 		detecter_menace_planete(un_joueur, un_terrain_espace, get_ieme_planete_joueur(un_joueur, 0));
 		detecter_menace_flotte(un_joueur, un_terrain_espace, get_ieme_flotte_joueur(un_joueur, 0));
 		choisir_case_deplacement_ia(un_joueur, un_terrain_espace, get_ieme_flotte_joueur(un_joueur, 0));

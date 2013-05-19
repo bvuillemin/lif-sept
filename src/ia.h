@@ -6,7 +6,8 @@
 typedef enum
 {
 	EXPLORATION,
-	DEFENSE
+	DEFENSE,
+	ATTAQUE
 }COMPORTEMENT_IA;
 
 
