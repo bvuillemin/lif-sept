@@ -296,11 +296,9 @@ void affichage_vision_jeu(Jeu *un_jeu, Terrain_espace* un_terrain_espace)
 /* Fonctions liées à la création d'objets du jeu                        */
 /************************************************************************/
 
-bool condition_creation_unite(Jeu *un_jeu, Planete *une_planete, int choix)
+bool condition_creation_unite(Joueur* un_joueur, Planete *une_planete, int choix)
 {
-	Joueur *un_joueur;
 	int metal, argent, carburant, population;
-	un_joueur = get_joueur_en_cours(un_jeu);
 
 	metal = get_metal_joueur(un_joueur);
 	argent = get_argent_joueur(un_joueur);
@@ -378,6 +376,15 @@ void validation_creation_unite_planete(Jeu *un_jeu, Terrain_espace *un_terrain_e
 bool construction_batiment_possible(Planete* une_planete)
 {
 	if((une_planete->batiment_nb_tour_restant <= 0) && (une_planete->taille_utilisee <= une_planete->taille_planete))
+	{
+		return true;
+	}
+	return false;
+}
+
+bool construction_unite_possible(Planete* une_planete)
+{
+	if((get_planete_unite_nb_tour_restant(une_planete) <= 0) && (get_ieme_batiment(une_planete, 5)))
 	{
 		return true;
 	}
@@ -566,15 +573,19 @@ void lancer_animation(Jeu *un_jeu, Animation *une_animation, int temps, SDL_Surf
 	SDL_FreeSurface(frame);
 }
 
-void lancer_animation_bloquante(Jeu *un_jeu, Terrain_espace *un_terrain_espace, Animation *une_animation, SDL_Surface *ecran, int x, int y, SDL_Surface **tab_surface, int interface_affichee)
+void lancer_animation_bloquante(Jeu *un_jeu, Terrain_espace *un_terrain_espace, Animation *une_animation, SDL_Surface *ecran, int x, int y)
 {
 	SDL_Surface *frame;
+	SDL_Surface * tampon;
 	SDL_Rect position_frame;
 	SDL_Rect position_ecran;
+	SDL_Rect position_tampon = {0, 0, 0, 0};
 	int i;
 
-	initialise_sdl_rect(&position_ecran, x, y, 0, 0);
 	frame = IMG_Load(une_animation->nom);
+	initialise_sdl_rect(&position_ecran, x, y, frame->w, frame->h);
+	tampon = SDL_CreateRGBSurface(SDL_HWSURFACE, frame->w, frame->h, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
+	SDL_BlitSurface(ecran, &position_ecran, tampon, &position_tampon);
 	for(i=0;i<une_animation->nb_frame;i++)
 	{
 		initialise_sdl_rect(&position_frame, une_animation->taille_frame_x * une_animation->frame_en_cours, 0, une_animation->taille_frame_x, une_animation->taille_frame_y);
@@ -582,13 +593,13 @@ void lancer_animation_bloquante(Jeu *un_jeu, Terrain_espace *un_terrain_espace, 
 		une_animation->frame_en_cours ++;
 		SDL_Flip(ecran);
 		SDL_Delay(une_animation->nb_ms);
-		maj_affichage_carte_terrain(un_jeu, un_terrain_espace, ecran, tab_surface, interface_affichee);
+		SDL_BlitSurface(tampon, &position_tampon, ecran, &position_ecran);
 	}
-	SDL_Delay(100);
 	une_animation->frame_en_cours = 0;
 	une_animation->x = 0;
 	une_animation->y = 0;
 	SDL_FreeSurface(frame);
+	SDL_FreeSurface(tampon);
 }
 
 void maj_animation(Jeu *un_jeu, Terrain_espace *un_terrain_espace, Animation *une_animation, int temps, SDL_Surface *ecran, SDL_Surface **tab_surface, int interface_affichee)
