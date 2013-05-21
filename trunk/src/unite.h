@@ -25,13 +25,13 @@ typedef enum
 
 typedef struct
 {
+	TYPE_VAISSEAU type;
 	int indice_joueur;
 	int indice_dans_flotte;
 	int x_unite;
 	int y_unite;
 
 	int portee;
-	int portee_total;
 	int pt_vie;
 	int pt_vie_total;
 
@@ -48,12 +48,13 @@ typedef struct
 	/*compétence spéciale*/
 }Unite;
 
-void initialise_unite(Unite *unite_jeu,const int pt_vie,const int pt_attaque,const int pt_action,const int pt_deplacement,const int portee,const int pt_mouvement);
-Unite *creer_unite(const int pt_vie,const int pt_attaque,const int pt_action,const int pt_deplacement,const int portee,const int pt_mouvement);
+void initialise_unite(Unite *unite_jeu, TYPE_VAISSEAU type);
+Unite *creer_unite(TYPE_VAISSEAU type);
 
 void liberer_unite(Unite *unite_jeu);
 void detruire_unite(Unite **unite_jeu);
 
+TYPE_VAISSEAU get_type_vaisseau(Unite* une_unite);
 void set_portee(Unite *unite_jeu, const int x);
 int get_portee(const Unite *unite_jeu);
 

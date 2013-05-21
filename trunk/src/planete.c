@@ -209,6 +209,12 @@ int get_ieme_batiment(const Planete* une_planete, int i)
 	return une_planete->batiment[i];
 }
 
+int get_planete_unite_nb_tour_restant(const Planete* une_planete)
+{
+	return une_planete->unite_nb_tour_restant;
+}
+
+
 /************************************************************************/
 /* Fonctions diverses                                                   */
 /************************************************************************/

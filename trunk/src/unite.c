@@ -2,33 +2,80 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <math.h>
+
+#include "constante.h"
 #include "unite.h"
 
-void initialise_unite(Unite *unite_jeu, const int pt_vie,const int pt_attaque,const int pt_action,const int pt_deplacement,const int portee,const int pt_mouvement)
+
+/************************************************************************/
+/* Initialisation, création et destruction                              */
+/************************************************************************/
+
+void initialise_unite(Unite *unite_jeu, TYPE_VAISSEAU type)
 {
-	unite_jeu->x_unite=0;
-	unite_jeu->y_unite=0;
+	if(type == Chasseur)
+	{
+		unite_jeu->type = type;
+		unite_jeu->x_unite=0;
+		unite_jeu->y_unite=0;
 
-	unite_jeu->portee = portee;
-	unite_jeu->portee_total = portee;
-    unite_jeu->pt_vie=pt_vie;
-	unite_jeu->pt_vie_total = pt_vie;
+		unite_jeu->portee = PT_PORTEE_UNITE_1;
+		unite_jeu->pt_vie= PT_VIE_UNITE_1;
+		unite_jeu->pt_vie_total = PT_VIE_UNITE_1;
 
-    unite_jeu->pt_attaque=pt_attaque;
-	unite_jeu->pt_attaque_total = pt_attaque;
-    unite_jeu->pt_action=pt_action;
-	unite_jeu->pt_action_total=pt_action;
+		unite_jeu->pt_attaque= PT_ATTAQUE_UNITE_1;
+		unite_jeu->pt_attaque_total = PT_ATTAQUE_UNITE_1;
+		unite_jeu->pt_action= PT_ACTION_UNITE_1;
+		unite_jeu->pt_action_total= PT_ACTION_UNITE_1;
 
-    unite_jeu->pt_deplacement=pt_deplacement;
-	unite_jeu->pt_deplacement_total=pt_deplacement;
-    unite_jeu->pt_mouvement_unite=pt_mouvement;
-	/*initialise_niveau(unite_jeu->niveau_unite, 0, 0);*/
+		unite_jeu->pt_deplacement= PT_DEPLACEMENT_UNITE_1;
+		unite_jeu->pt_deplacement_total= PT_DEPLACEMENT_UNITE_1;
+		unite_jeu->pt_mouvement_unite= PT_MOUVEMENT_UNITE_1;
+	}
+	if(type == Destroyer)
+	{
+		unite_jeu->type = type;
+		unite_jeu->x_unite=0;
+		unite_jeu->y_unite=0;
+
+		unite_jeu->portee = PT_PORTEE_UNITE_2;
+		unite_jeu->pt_vie= PT_VIE_UNITE_2;
+		unite_jeu->pt_vie_total = PT_VIE_UNITE_2;
+
+		unite_jeu->pt_attaque= PT_ATTAQUE_UNITE_1;
+		unite_jeu->pt_attaque_total = PT_ATTAQUE_UNITE_2;
+		unite_jeu->pt_action= PT_ACTION_UNITE_2;
+		unite_jeu->pt_action_total= PT_ACTION_UNITE_2;
+
+		unite_jeu->pt_deplacement= PT_DEPLACEMENT_UNITE_2;
+		unite_jeu->pt_deplacement_total= PT_DEPLACEMENT_UNITE_2;
+		unite_jeu->pt_mouvement_unite= PT_MOUVEMENT_UNITE_2;
+	}
+	if(type == Destructeur)
+	{
+		unite_jeu->type = type;
+		unite_jeu->x_unite=0;
+		unite_jeu->y_unite=0;
+
+		unite_jeu->portee = PT_PORTEE_UNITE_3;
+		unite_jeu->pt_vie= PT_VIE_UNITE_3;
+		unite_jeu->pt_vie_total = PT_VIE_UNITE_3;
+
+		unite_jeu->pt_attaque= PT_ATTAQUE_UNITE_3;
+		unite_jeu->pt_attaque_total = PT_ATTAQUE_UNITE_3;
+		unite_jeu->pt_action= PT_ACTION_UNITE_3;
+		unite_jeu->pt_action_total= PT_ACTION_UNITE_3;
+
+		unite_jeu->pt_deplacement= PT_DEPLACEMENT_UNITE_3;
+		unite_jeu->pt_deplacement_total= PT_DEPLACEMENT_UNITE_3;
+		unite_jeu->pt_mouvement_unite= PT_MOUVEMENT_UNITE_3;
+	}
 }
 
-Unite *creer_unite(const int pt_vie,const int pt_attaque,const int pt_action,const int pt_deplacement,const int portee,const int pt_mouvement)
+Unite *creer_unite(TYPE_VAISSEAU type)
 {
     Unite *nouvelle_unite = (Unite *)malloc(sizeof(Unite));
-    initialise_unite(nouvelle_unite, pt_vie, pt_attaque, pt_action, pt_deplacement,portee, pt_mouvement);
+    initialise_unite(nouvelle_unite, type);
     return nouvelle_unite;
 }
 
@@ -38,7 +85,6 @@ void liberer_unite(Unite *unite_jeu)
 	unite_jeu->y_unite = 0;
 
 	unite_jeu->portee = 0;
-	unite_jeu->portee_total = 0;
 	unite_jeu->pt_vie= 0;
 	unite_jeu->pt_vie_total = 0;
 
@@ -50,7 +96,6 @@ void liberer_unite(Unite *unite_jeu)
 	unite_jeu->pt_deplacement = 0;
 	unite_jeu->pt_deplacement_total = 0;
 	unite_jeu->pt_mouvement_unite = 0;
-    /*libere_niveau(unite_jeu->niveau_unite);*/
 }
 
 void detruire_unite(Unite **unite_jeu)
@@ -60,16 +105,23 @@ void detruire_unite(Unite **unite_jeu)
     *unite_jeu = NULL;
 }
 
+
+/************************************************************************/
+/* Fonctions set et get                                                 */
+/************************************************************************/
+
+TYPE_VAISSEAU get_type_vaisseau(Unite* une_unite)
+{
+	return une_unite->type;
+}
 void set_indice_unite_dans_flotte(Unite *unite,const int i)
 {
     unite->indice_dans_flotte = i;
 }
-
 int get_indice_unite_dans_flotte(const Unite *unite)
 {
     return unite->indice_dans_flotte;
 }
-
 void set_pt_vie(Unite *unite_jeu, const int x)
 {
     unite_jeu->pt_vie = x;
@@ -78,37 +130,30 @@ void set_indice_joueur_unite(Unite *unite,const int i)
 {
     unite->indice_joueur = i;
 }
-
 int get_indice_joueur_unite(const Unite *unite)
 {
     return unite->indice_joueur;
 }
-
 void set_portee(Unite *unite_jeu, const int x)
 {
 	unite_jeu->portee = x;
 }
-
 int get_portee(const Unite *unite_jeu)
 {
 	return unite_jeu->portee;
 }
-
 int get_pt_vie(const Unite *unite_jeu)
 {
     return unite_jeu->pt_vie;
 }
-
 void set_x_unite(Unite *unite_jeu, const int x)
 {
 	unite_jeu->x_unite=x;
 }
-
 int get_x_unite(const Unite *unite_jeu)
 {
 	return unite_jeu->x_unite;
 }
-
 void set_y_unite(Unite *unite_jeu, const int y)
 {
 	unite_jeu->y_unite=y;
@@ -117,46 +162,43 @@ int get_y_unite(const Unite *unite_jeu)
 {
 	return unite_jeu->y_unite;
 }
-
 void set_pt_attaque(Unite *unite_jeu, const int x)
 {
     unite_jeu->pt_attaque = x;
 }
-
 int get_pt_attaque(const Unite *unite_jeu)
 {
     return unite_jeu->pt_attaque;
 }
-
 void set_pt_action(Unite *unite_jeu, const int x)
 {
     unite_jeu->pt_action = x;
 }
-
 int get_pt_action(const Unite *unite_jeu)
 {
     return unite_jeu->pt_action;
 }
-
 void set_pt_deplacement(Unite *unite_jeu, const int x)
 {
     unite_jeu->pt_deplacement = x;
 }
-
 int get_pt_deplacement(const Unite *unite_jeu)
 {
     return unite_jeu->pt_deplacement;
 }
-
 void set_pt_mouvement_unite(Unite *unite_jeu, const int x)
 {
     unite_jeu->pt_mouvement_unite = x;
 }
-
 int get_pt_mouvement_unite(const Unite *unite_jeu)
 {
     return unite_jeu->pt_mouvement_unite;
 }
+
+
+/************************************************************************/
+/* Fonctions diverses                                                   */
+/************************************************************************/
 
 bool unite_peut_se_deplacer(const Unite *une_unite, int x, int y)
 {
@@ -202,6 +244,11 @@ void reinitialiser_pt_action(Unite *une_unite)
 	une_unite->pt_action = une_unite->pt_action_total;
 }
 
+
+/************************************************************************/
+/* Fonctions sauvegarde et chargement                                   */
+/************************************************************************/
+
 void sauvegarde_unite(const Unite *une_unite, FILE* f)
 {
     fprintf(f, "%d\n", une_unite->indice_joueur);
@@ -209,7 +256,6 @@ void sauvegarde_unite(const Unite *une_unite, FILE* f)
     fprintf(f, "%d\n", une_unite->x_unite);
     fprintf(f, "%d\n", une_unite->y_unite);
     fprintf(f, "%d\n", une_unite->portee);
-    fprintf(f, "%d\n", une_unite->portee_total);
     fprintf(f, "%d\n", une_unite->pt_vie);
     fprintf(f, "%d\n", une_unite->pt_vie_total);
     fprintf(f, "%d\n", une_unite->pt_attaque);
@@ -231,7 +277,6 @@ Unite* ouverture_unite(FILE *f)
     sscanf(fgets(chaine, 50, f), "%d", &unite_ouverte->x_unite);
     sscanf(fgets(chaine, 50, f), "%d", &unite_ouverte->y_unite);
     sscanf(fgets(chaine, 50, f), "%d", &unite_ouverte->portee);
-    sscanf(fgets(chaine, 50, f), "%d", &unite_ouverte->portee_total);
     sscanf(fgets(chaine, 50, f), "%d", &unite_ouverte->pt_vie);
     sscanf(fgets(chaine, 50, f), "%d", &unite_ouverte->pt_vie_total);
     sscanf(fgets(chaine, 50, f), "%d", &unite_ouverte->pt_attaque);

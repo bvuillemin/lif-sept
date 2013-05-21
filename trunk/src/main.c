@@ -75,19 +75,19 @@ int main(int argc, char *argv[])
     terre = get_planete_terrain_espace(un_terrain_espace, 2, 1);
     /*jupiter = get_planete_terrain_espace(un_terrain_espace, 4, 3);*/
 
-	joueur = creer_joueur(nom_joueur, 0, true);
+	joueur = creer_joueur(nom_joueur, 0, false);
 	/*joueur2 = creer_joueur(nom_joueur2, 1, true);*/
 	jeu = creer_jeu();
     ajouter_joueur(jeu, joueur);
 	/*ajouter_joueur(jeu, joueur2);*/
 
     flotte = creer_flotte();
-    unite1 = creer_unite(1, 1, 1, 1, 1, 10);
-    unite2 = creer_unite(2, 2, 2, 2, 2, 10);
+    unite1 = creer_unite(Chasseur);
+    unite2 = creer_unite(Destroyer);
 
 	flotte2 = creer_flotte();
-    unite3 = creer_unite(3, 3, 3, 3, 3, 10);
-    unite4 = creer_unite(4, 4, 4, 4, 4, 10);
+    unite3 = creer_unite(Destructeur);
+    unite4 = creer_unite(Chasseur);
 
 	/*flotte3 = creer_flotte();
 	unite5 = creer_unite(5, 5, 5, 5, 5, 10);
@@ -107,6 +107,7 @@ int main(int argc, char *argv[])
 
 	ajouter_unite_flotte(flotte2, unite3);
     ajouter_unite_flotte(flotte2, unite4);
+
 	/*
 	ajouter_unite_flotte(flotte3, unite5);
 	ajouter_unite_flotte(flotte3, unite6);*/
@@ -118,7 +119,7 @@ int main(int argc, char *argv[])
 	creer_vision_jeu(jeu, un_terrain_espace);
 	//creer_vision_joueur(jeu, un_terrain_espace, 0);
 
-	//affichage_ecran(jeu, un_terrain_espace);
+	affichage_ecran(jeu, un_terrain_espace);
 
 	while(1)
     {

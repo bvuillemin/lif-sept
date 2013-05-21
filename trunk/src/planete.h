@@ -79,6 +79,7 @@ int get_population(const Planete *une_planete);
 void set_portee_planete(Planete* une_planete, int portee);
 int get_portee_vision(const Planete* une_planete);
 int get_ieme_batiment(const Planete* une_planete, int i);
+int get_planete_unite_nb_tour_restant(const Planete* une_planete);
 
 
 void modification_production_planete(Planete *une_planete,const int metal,const int argent,const int carburant,const int population);

@@ -46,6 +46,7 @@ int get_indice_joueur_en_cours(Jeu *un_jeu);
 Planete *get_planete_en_cours(Jeu *un_jeu);
 int get_joueur_en_cours_combat(Jeu * jeu);
 Joueur * get_ieme_joueur_jeu(Jeu * un_jeu,int i);
+bool construction_unite_possible(Planete* une_planete);
 
 void ajouter_joueur(Jeu *un_jeu, Joueur *un_joueur);
 void joueur_suivant(Jeu *un_jeu, Terrain_espace *un_terrain_espace);
@@ -59,7 +60,7 @@ void maj_vision_jeu(Jeu *un_jeu, Terrain_espace* un_terrain_espace);
 void affichage_vision_jeu(Jeu *un_jeu, Terrain_espace* un_terrain_espace);
 
 bool construction_batiment_possible(Planete* une_planete);
-bool condition_creation_unite(Jeu *un_jeu, Planete *une_planete, int choix);
+bool condition_creation_unite(Joueur* un_joueur, Planete *une_planete, int choix);
 bool condition_creation_batiment(Planete *une_planete, int choix);
 void validation_creation_unite_planete(Jeu *un_jeu, Terrain_espace *un_terrain_espace, int indice_joueur_en_cours, int x, int y);
 void ajouter_flotte_jeu(Jeu *un_jeu,Terrain_espace *un_terrain_espace, Flotte *une_flotte, int indice_joueur, int x, int y);
@@ -67,7 +68,7 @@ void colonisation_planete_flotte(Terrain_espace *un_terrain_espace, Flotte *une_
 
 void lancer_animation(Jeu *un_jeu, Animation *une_animation, int temps, SDL_Surface *ecran, int x, int y);
 void maj_animation(Jeu *un_jeu,Terrain_espace *un_terrain_espace, Animation *une_animation, int temps, SDL_Surface *ecran, SDL_Surface **tab_surface, int interface_affichee);
-void lancer_animation_bloquante(Jeu *un_jeu, Terrain_espace *un_terrain_espace, Animation *une_animation, SDL_Surface *ecran, int x, int y, SDL_Surface **tab_surface, int interface_affichee);
+void lancer_animation_bloquante(Jeu *un_jeu, Terrain_espace *un_terrain_espace, Animation *une_animation, SDL_Surface *ecran, int x, int y);
 
 bool deplacement_flotte(Joueur *un_joueur, Terrain_espace *un_terrain_espace, Flotte *une_flotte, int x, int y);
 bool fusion_flotte(Joueur *un_joueur, Terrain_espace *un_terrain_espace, Flotte *une_flotte, int x, int y);

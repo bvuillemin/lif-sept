@@ -411,6 +411,19 @@ int ressource_manquante(Joueur* un_joueur)
 	return 0;
 }
 
+/*Va renvoyer le numéro de l'unité maximum que l'on peut construire*/
+int construire_unite_avec_ressource_disponible(Joueur* un_joueur, Planete* une_planete, int metal, int argent, int carburant, int population)
+{
+	int i;
+	for(i=3;i>0;i--)
+	{
+		if(condition_creation_unite(un_joueur, une_planete, i))
+		{
+			return i;
+		}
+	}
+}
+
 void choisir_construction_batiment(Joueur* un_joueur, Planete* une_planete)
 {
 	int min_ressource;
@@ -478,6 +491,45 @@ void choisir_construction_batiment(Joueur* un_joueur, Planete* une_planete)
 				creation_batiment(une_planete, choix);
 				printf("Creation batiment %d\n", choix);
 			}
+		}
+	}
+}
+
+void choisir_construction_unite(Joueur* un_joueur, Terrain_espace* un_terrain_espace, Planete* une_planete, COMPORTEMENT_IA comportement)
+{
+	int metal = 0, argent = 0, carburant = 0, population = 0;
+	NIVEAU_MENACE menace = detecter_menace_planete(un_joueur, un_terrain_espace, une_planete);
+
+	if(construction_unite_possible(une_planete))
+	{
+		if(comportement == EXPLORATION)
+		{
+			/*rien*/
+		}
+		if(comportement == DEFENSE)
+		{
+			if((menace == TOTALE) && (get_planete_principale(une_planete)))
+			{
+				/*Attaque de la planète principale, on alloue toutes les ressources dispos*/
+				metal = get_metal_joueur(un_joueur);
+				argent = get_argent_joueur(un_joueur);
+				carburant = get_carburant_joueur(un_joueur);
+				population = get_population_joueur(un_joueur);
+				construire_unite_avec_ressource_disponible(un_joueur, une_planete, metal, argent, carburant, population);
+			}
+			if((menace == TOTALE) && (!get_planete_principale(une_planete)))
+			{
+				metal = get_metal_joueur(un_joueur) / (get_nb_planete(un_joueur) / 2);
+				argent = get_argent_joueur(un_joueur) / (get_nb_planete(un_joueur) / 2);
+				carburant = get_carburant_joueur(un_joueur) / (get_nb_planete(un_joueur) / 2);
+				population = get_population_joueur(un_joueur) / (get_nb_planete(un_joueur) / 2);
+				construire_unite_avec_ressource_disponible(un_joueur, une_planete, metal, argent, carburant, population);
+			}
+			if(menace == NON || menace == FAIBLE)
+			{
+				/*rien*/
+			}
+
 		}
 	}
 }
