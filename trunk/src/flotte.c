@@ -171,14 +171,14 @@ int transferer_unite_flotte(Flotte *flotte, Unite *unite)
 	int min = flotte->pt_mouvement_espace_flotte;
 	if(flotte->taille_flotte < flotte->taille_maximum_flotte)
     {
+		unite->indice_dans_flotte = flotte->taille_flotte;
         flotte->tab_unite[flotte->taille_flotte] = *unite;
         flotte->taille_flotte ++;
 		if((unite->pt_mouvement_unite < min)||(flotte->pt_mouvement_espace_flotte == 0))
 		{
 			flotte->pt_mouvement_espace_flotte = unite->pt_mouvement_unite;
 		}
-		liberer_unite(unite); /*free*/
-		/*free(unite);*/
+		liberer_unite(unite);
         return 1;
     }
     else
