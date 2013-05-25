@@ -867,7 +867,9 @@ SDL_Surface* affichage_ressource(Jeu *un_jeu, SDL_Surface *surface_ressource)
 
 SDL_Surface* affichage_creation_unite(Case_terrain_espace *une_case_terrain_espace, SDL_Surface *panneau_unite)
 {
-    SDL_Surface *unite;
+    SDL_Surface *unite1;
+	SDL_Surface *unite2;
+	SDL_Surface *unite3;
     SDL_Surface *surface_texte_unite;
     SDL_Rect position_unite;
     SDL_Rect position_texte_unite;
@@ -877,26 +879,33 @@ SDL_Surface* affichage_creation_unite(Case_terrain_espace *une_case_terrain_espa
     Planete *une_planete = get_planete(une_case_terrain_espace);
     int i;
 
+
+	unite1 = IMG_Load("../graphiques/images/unite1.png");
+	unite2 = IMG_Load("../graphiques/images/unite2.png");
+	unite3 = IMG_Load("../graphiques/images/unite3.png");
     police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 14);
-    unite = SDL_CreateRGBSurface(SDL_HWSURFACE, 100, 100, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
-    SDL_FillRect(unite, NULL, SDL_MapRGB(unite->format, 60, 60, 60));
-    SDL_SetColorKey(unite, SDL_SRCCOLORKEY, SDL_MapRGB(unite->format, 60, 60, 60));
 
     for(i=0;i<3;i++)
     {
-        if(((i + 1)== une_planete->unite_en_cours) && (une_planete->unite_nb_tour_restant != 0))
-        {
-            SDL_FillRect(unite, NULL, SDL_MapRGB(panneau_unite->format, 100, 0, 0));
-        }
-        else
-        {
-            SDL_FillRect(unite, NULL, SDL_MapRGB(panneau_unite->format, 0, 200, 0));
-        }
-        sprintf(texte_unite, "Unite %d", i + 1);
+		initialise_sdl_rect(&position_unite, 10, 20 + 120*i, 0, 0);
+		initialise_sdl_rect(&position_texte_unite, 15, 20 + 120 *i, 0, 0);
+		if(i==0)
+		{
+			sprintf(texte_unite, "Chasseur");
+			SDL_BlitSurface(unite1, NULL, panneau_unite, &position_unite);
+		}
+		if(i==1)
+		{
+			sprintf(texte_unite, "Destroyer");
+			SDL_BlitSurface(unite2, NULL, panneau_unite, &position_unite);
+		}
+		if(i==2)
+		{
+			sprintf(texte_unite, "Destructeur");
+			SDL_BlitSurface(unite3, NULL, panneau_unite, &position_unite);
+		}
+
         surface_texte_unite = TTF_RenderText_Blended(police, texte_unite, couleur_blanche);
-        initialise_sdl_rect(&position_unite, 10, 20 + 120*i, 0, 0);
-        SDL_BlitSurface(unite, NULL, panneau_unite, &position_unite);
-        initialise_sdl_rect(&position_texte_unite, 10, 20 + 120 *i, 0, 0);
         SDL_BlitSurface(surface_texte_unite, NULL, panneau_unite, &position_texte_unite);
         if(une_planete->unite_nb_tour_restant > 0)
         {
@@ -905,10 +914,17 @@ SDL_Surface* affichage_creation_unite(Case_terrain_espace *une_case_terrain_espa
             initialise_sdl_rect(&position_texte_unite, 10, 40 + 120 *i, 0, 0);
             SDL_BlitSurface(surface_texte_unite, NULL, panneau_unite, &position_texte_unite);
         }
+
+		/*if(((i + 1)== une_planete->unite_en_cours) && (une_planete->unite_nb_tour_restant != 0))
+		{
+			SDL_FillRect(unite, NULL, SDL_MapRGB(panneau_unite->format, 100, 0, 0));
+		}*/
     }
 
     TTF_CloseFont(police);
-    SDL_FreeSurface(unite);
+    SDL_FreeSurface(unite1);
+	SDL_FreeSurface(unite2);
+	SDL_FreeSurface(unite3);
     SDL_FreeSurface(surface_texte_unite);
 
     return panneau_unite;
@@ -1057,7 +1073,6 @@ SDL_Surface* affichage_flotte(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SD
     char texte_flotte[200] = "";
     Flotte *une_flotte = un_jeu->selection_flotte;
 	TYPE_VAISSEAU type;
-	Planete *une_planete = get_planete_terrain_espace(un_terrain_espace, une_flotte->x_flotte, une_flotte->y_flotte);
 
 	/*affichage des informations d'une flotte*/
     police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 14);
@@ -1120,7 +1135,7 @@ SDL_Surface* affichage_flotte(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SD
     }
 
 	/*affichage du bouton pour coloniser une planète*/
-	if((une_planete != NULL) && (!get_planete_colonisee(une_planete)))
+	if((get_type_case_terrain_espace(get_case_terrain_espace(un_terrain_espace, une_flotte->x_flotte, une_flotte->y_flotte)) == 'P') && (!get_planete_colonisee(get_planete_terrain_espace(un_terrain_espace, une_flotte->x_flotte, une_flotte->y_flotte))))
 	{
 		bouton_coloniser = SDL_CreateRGBSurface(SDL_HWSURFACE, 100, 100, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
 		SDL_FillRect(bouton_coloniser, NULL, SDL_MapRGB(info_flotte->format, 0, 0, 200));
@@ -2045,9 +2060,15 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
                     {
                         if(test_unite_selectionnee(un_jeu))
                         {
-                            deplacement_unite_flotte(un_jeu, &un_jeu->tab_joueur[un_jeu->joueur_en_cours], un_terrain_espace, un_jeu->selection_flotte, x/100, y/100);
-
+							booleen_coordonnees_case(un_terrain_espace, un_jeu->selection_flotte->x_flotte, un_jeu->selection_flotte->y_flotte, &x_bis, &y_bis);
+							lire_son(system, son_saut_debut);
+							lancer_animation_bloquante(un_jeu, un_terrain_espace, saut_ftl, ecran, x_bis, y_bis);
+							deplacement_unite_flotte(un_jeu, &un_jeu->tab_joueur[un_jeu->joueur_en_cours], un_terrain_espace, un_jeu->selection_flotte, x/100, y/100);
+							un_jeu->selection_flotte = get_flotte(get_case_terrain_espace(un_terrain_espace, x/100, y/100));
 							maj_affichage_flotte(un_jeu, un_terrain_espace, ecran, tab_surface, interface_affichee);
+							booleen_coordonnees_case(un_terrain_espace, un_jeu->selection_flotte->x_flotte, un_jeu->selection_flotte->y_flotte, &x_bis, &y_bis);
+							lire_son(system, son_saut_fin);
+							lancer_animation_bloquante(un_jeu, un_terrain_espace, saut_ftl, ecran, x_bis, y_bis);
                         }
 						else
                         {
@@ -2056,6 +2077,7 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 							lire_son(system, son_saut_debut);
 							lancer_animation_bloquante(un_jeu, un_terrain_espace, saut_ftl, ecran, x_bis, y_bis);
 							deplacement_flotte(&un_jeu->tab_joueur[un_jeu->joueur_en_cours], un_terrain_espace, un_jeu->selection_flotte, une_case_terrain_espace->x_espace, une_case_terrain_espace->y_espace);
+							un_jeu->selection_flotte = get_flotte(get_case_terrain_espace(un_terrain_espace, x/100, y/100));
 							maj_affichage_flotte(un_jeu, un_terrain_espace, ecran, tab_surface, interface_affichee);
 							booleen_coordonnees_case(un_terrain_espace, un_jeu->selection_flotte->x_flotte, un_jeu->selection_flotte->y_flotte, &x_bis, &y_bis);
 							lire_son(system, son_saut_fin);

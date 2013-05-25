@@ -431,14 +431,6 @@ void choisir_construction_batiment(Joueur* un_joueur, Planete* une_planete)
 
 	if(construction_batiment_possible(une_planete))
 	{
-		if(get_ieme_batiment(une_planete, 0) == 0)
-		{
-			if(condition_creation_batiment (une_planete, 0))
-			{
-				creation_batiment(une_planete, 0);
-				printf("Creation batiment 0\n");
-			}
-		}
 		if(get_ieme_batiment(une_planete, 5) == 0)
 		{
 			if(condition_creation_batiment (une_planete, 5))
@@ -552,4 +544,3 @@ void appeler_ia(Terrain_espace* un_terrain_espace, Joueur *un_joueur)
 		choisir_construction_batiment(un_joueur, get_ieme_planete_joueur(un_joueur, 0));
 	}
 }
-
