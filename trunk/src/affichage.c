@@ -2457,6 +2457,169 @@ void menu_creation_sauvegarde(Terrain_espace *un_terrain_espace, Jeu *un_jeu)
     creer_fichier_sauvegarde(chaine, un_terrain_espace, un_jeu);
 }
 
+void menu_aide(void)
+{
+    /* Initialisation des variables */
+    SDL_Surface *ecran, *imageDeFond_Gauche, *imageDeFond_Droit, *Noir, *Titre, *Deplacer, *Conquerir, *Construire, *Suivant, *Quitter;
+    SDL_Rect positionImage_droit, positionDeplacer, positionConquerir, positionConstruire, positionSuivant, positionQuitter;
+    SDL_Event evenement;
+    double longueurBouton, hauteurBouton;
+    int i, continuer = 1, aide = 0;
+    
+    /* Chargement des images */
+    ecran = SDL_SetVideoMode(TAILLE_FENETRE_X, TAILLE_FENETRE_Y, 32, SDL_HWSURFACE);
+    imageDeFond_Gauche = IMG_Load("../graphiques/images/Fond_Aide_Gauche.png");
+    imageDeFond_Droit = IMG_Load("../graphiques/images/Fond_Aide_Droit.png");
+    Noir = SDL_LoadBMP("../graphiques/images/Noir.bmp");
+    Titre = IMG_Load("../graphiques/images/Titre_Aide.png");
+    Deplacer = IMG_Load("../graphiques/images/Deplacer.png");
+    Conquerir = IMG_Load("../graphiques/images/Conquerir.png");
+    Construire = IMG_Load("../graphiques/images/Construire.png");
+    Suivant = IMG_Load("../graphiques/images/Suivant.png");
+    Quitter = IMG_Load("../graphiques/images/Quitter_menu.png");
+    
+    /* Affichage des images */
+    positionImage_droit.x = 300;
+    positionImage_droit.y = 0;
+    longueurBouton = Deplacer->w;
+    hauteurBouton = Deplacer->h;
+    positionDeplacer.x = 0;
+    positionDeplacer.y = 150;
+    positionConquerir.x = 0;
+    positionConquerir.y = 225;
+    positionConstruire.x = 0;
+    positionConstruire.y = 300;
+    positionSuivant.x = 1080;
+    positionSuivant.y = 668;
+    positionQuitter.x = 21;
+    positionQuitter.y = TAILLE_FENETRE_Y - hauteurBouton;
+    SDL_BlitSurface(imageDeFond_Gauche, NULL, ecran, NULL);
+    SDL_BlitSurface(imageDeFond_Droit, NULL, ecran, &positionImage_droit);
+    SDL_BlitSurface(Titre, NULL, ecran, NULL);
+    SDL_BlitSurface(Deplacer, NULL, ecran, &positionDeplacer);
+    SDL_BlitSurface(Conquerir, NULL, ecran, &positionConquerir);
+    SDL_BlitSurface(Construire, NULL, ecran, &positionConstruire);
+    SDL_BlitSurface(Quitter, NULL, ecran, &positionQuitter);
+    SDL_Flip(ecran);
+    
+    /* Animation des boutons du menu */
+    while(continuer)
+	{
+		SDL_WaitEvent(&evenement);
+		switch(evenement.type)
+		{
+                /*Chargement des menus lors d'un clic sur un bouton */
+			case SDL_MOUSEBUTTONUP:
+                
+                /* Se déplacer */
+                if(test_souris_rectangle(positionDeplacer,evenement.button.x,evenement.button.y))
+				{
+                    aide = 1;
+                    imageDeFond_Droit = IMG_Load("../graphiques/images/Deplacer1.png");
+                    Deplacer = IMG_Load("../graphiques/images/Deplacer_pressé.png");
+                    Conquerir = IMG_Load("../graphiques/images/Conquerir.png");
+                    Construire = IMG_Load("../graphiques/images/Construire.png");
+
+                    
+                    SDL_BlitSurface(imageDeFond_Gauche, NULL, ecran, NULL);
+                    SDL_BlitSurface(imageDeFond_Droit, NULL, ecran, &positionImage_droit);
+                    SDL_BlitSurface(Titre, NULL, ecran, NULL);
+                    SDL_BlitSurface(Deplacer, NULL, ecran, &positionDeplacer);
+                    SDL_BlitSurface(Conquerir, NULL, ecran, &positionConquerir);
+                    SDL_BlitSurface(Construire, NULL, ecran, &positionConstruire);
+                    SDL_BlitSurface(Suivant, NULL, ecran, &positionSuivant);
+                    SDL_BlitSurface(Quitter, NULL, ecran, &positionQuitter);
+                    SDL_Flip(ecran);
+				}
+                
+                /* Conquérir */
+                if(test_souris_rectangle(positionConquerir,evenement.button.x,evenement.button.y))
+				{
+                    aide = 2;
+                    imageDeFond_Droit = IMG_Load("../graphiques/images/Fond_titre.png");
+                    Deplacer = IMG_Load("../graphiques/images/Deplacer.png");
+                    Conquerir = IMG_Load("../graphiques/images/Conquerir_pressé.png");
+                    Construire = IMG_Load("../graphiques/images/Construire.png");
+                    
+                    SDL_BlitSurface(imageDeFond_Gauche, NULL, ecran, NULL);
+                    SDL_BlitSurface(imageDeFond_Droit, NULL, ecran, &positionImage_droit);
+                    SDL_BlitSurface(Titre, NULL, ecran, NULL);
+                    SDL_BlitSurface(Deplacer, NULL, ecran, &positionDeplacer);
+                    SDL_BlitSurface(Conquerir, NULL, ecran, &positionConquerir);
+                    SDL_BlitSurface(Construire, NULL, ecran, &positionConstruire);
+                    SDL_BlitSurface(Suivant, NULL, ecran, &positionSuivant);
+                    SDL_BlitSurface(Quitter, NULL, ecran, &positionQuitter);
+                    SDL_Flip(ecran);
+				}
+                
+                /* Construire */
+                if(test_souris_rectangle(positionConstruire,evenement.button.x,evenement.button.y))
+				{
+                    aide = 3;
+                    imageDeFond_Droit = IMG_Load("../graphiques/images/Fond_titre.png");
+                    Deplacer = IMG_Load("../graphiques/images/Deplacer.png");
+                    Conquerir = IMG_Load("../graphiques/images/Conquerir.png");
+                    Construire = IMG_Load("../graphiques/images/Construire_pressé.png");
+                    
+                    SDL_BlitSurface(imageDeFond_Gauche, NULL, ecran, NULL);
+                    SDL_BlitSurface(imageDeFond_Droit, NULL, ecran, &positionImage_droit);
+                    SDL_BlitSurface(Titre, NULL, ecran, NULL);
+                    SDL_BlitSurface(Deplacer, NULL, ecran, &positionDeplacer);
+                    SDL_BlitSurface(Conquerir, NULL, ecran, &positionConquerir);
+                    SDL_BlitSurface(Construire, NULL, ecran, &positionConstruire);
+                    SDL_BlitSurface(Suivant, NULL, ecran, &positionSuivant);
+                    SDL_BlitSurface(Quitter, NULL, ecran, &positionQuitter);
+                    SDL_Flip(ecran);
+				}
+                
+                /* Bouton suivant*/
+                if(test_souris_rectangle(positionSuivant,evenement.button.x,evenement.button.y))
+				{
+                    if(aide == 1)
+                    {
+                        aide = 0;
+                        imageDeFond_Droit = IMG_Load("../graphiques/images/Deplacer2.png");
+                        SDL_BlitSurface(imageDeFond_Droit, NULL, ecran, &positionImage_droit);
+                        SDL_Flip(ecran);
+                    }
+                    if(aide == 2)
+                    {
+                        aide = 0;
+                        imageDeFond_Droit = IMG_Load("../graphiques/images/Fond_titre.png");
+                        SDL_BlitSurface(imageDeFond_Droit, NULL, ecran, &positionImage_droit);
+                        SDL_Flip(ecran);
+                    }
+                    if(aide == 3)
+                    {
+                        aide = 0;
+                        imageDeFond_Droit = IMG_Load("../graphiques/images/Fond_titre.png");
+                        SDL_BlitSurface(imageDeFond_Droit, NULL, ecran, &positionImage_droit);
+                        SDL_Flip(ecran);
+                    }
+                }
+                
+                /* Quitter le menu */
+                if(test_souris_rectangle(positionQuitter,evenement.button.x,evenement.button.y))
+				{
+                    continuer = 0;
+                    for (i=0; i<30; i++)
+                    {
+                        SDL_SetAlpha(Noir, SDL_SRCALPHA, 20);
+                        SDL_BlitSurface(Noir, NULL, ecran, NULL);
+                        SDL_Flip(ecran);
+                    }
+                    SDL_FreeSurface(imageDeFond_Gauche);
+                    SDL_FreeSurface(imageDeFond_Droit);
+                    SDL_FreeSurface(Deplacer);
+                    SDL_FreeSurface(Conquerir);
+                    SDL_FreeSurface(Construire);
+                    SDL_FreeSurface(Suivant);
+                    SDL_FreeSurface(Quitter);
+				}
+        }
+    }
+}
+
 void menu_pause(Terrain_espace *un_terrain_espace, Jeu *un_jeu)
 {
     /* Initialisation des variables */
@@ -2668,12 +2831,12 @@ void nouvelle_partie(void)
     ajouter_joueur(jeu, joueur);
     
     flotte = creer_flotte();
-    unite1 = creer_unite(1, 1, 1, 1, 1, 10);
-    unite2 = creer_unite(2, 2, 2, 2, 2, 10);
+    unite1 = creer_unite(Chasseur);
+    unite2 = creer_unite(Destroyer);
     
 	flotte2 = creer_flotte();
-    unite3 = creer_unite(3, 3, 3, 3, 3, 10);
-    unite4 = creer_unite(4, 4, 4, 4, 4, 10);
+    unite3 = creer_unite(Destructeur);
+    unite4 = creer_unite(Chasseur);
     
 	ajouter_planete_joueur(&jeu->tab_joueur[0], terre);
 	afficher_planete(jeu->tab_joueur[0].tab_planete[0]);
@@ -2709,6 +2872,7 @@ void nouvelle_partie(void)
                 SDL_FreeSurface(ecran);
                 SDL_FreeSurface(Texte);
                 SDL_FreeSurface(imageDeFond);
+                menu_aide();
                 affichage_ecran(jeu, un_terrain_espace);
         }
     }
