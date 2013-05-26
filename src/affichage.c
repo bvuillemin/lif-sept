@@ -865,7 +865,7 @@ SDL_Surface* affichage_ressource(Jeu *un_jeu, SDL_Surface *surface_ressource)
     return surface_ressource;
 }
 
-SDL_Surface* affichage_creation_unite(Case_terrain_espace *une_case_terrain_espace, SDL_Surface *panneau_unite)
+SDL_Surface* affichage_creation_unite(Planete* une_planete, SDL_Surface *panneau_unite)
 {
     SDL_Surface *unite1;
 	SDL_Surface *unite2;
@@ -876,7 +876,6 @@ SDL_Surface* affichage_creation_unite(Case_terrain_espace *une_case_terrain_espa
     char texte_unite[100];
     TTF_Font *police = NULL;
     SDL_Color couleur_blanche = {255, 255, 255};
-    Planete *une_planete = get_planete(une_case_terrain_espace);
     int i;
 
 
@@ -930,7 +929,7 @@ SDL_Surface* affichage_creation_unite(Case_terrain_espace *une_case_terrain_espa
     return panneau_unite;
 }
 
-SDL_Surface* affichage_planete(Case_terrain_espace *une_case_terrain_espace, SDL_Surface *info_planete)
+SDL_Surface* affichage_planete(Planete* une_planete, SDL_Surface *info_planete)
 {
     SDL_Surface *planete = NULL;
     SDL_Surface *fond_planete = NULL;
@@ -945,7 +944,6 @@ SDL_Surface* affichage_planete(Case_terrain_espace *une_case_terrain_espace, SDL
     SDL_Color couleur_blanche = {255, 255, 255};
     char texte_planete[200] = "";
     char texte_batiment[100] = "";
-    Planete *une_planete = get_planete(une_case_terrain_espace);
     int i;
 
     police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 14);
@@ -1661,9 +1659,9 @@ void maj_affichage_carte_terrain(Jeu *un_jeu, Terrain_espace *un_terrain_espace,
 	if(interface_affichee == PANNEAU_UNITE)
 	{
 		une_case_terrain_espace	= get_case_terrain_espace(un_terrain_espace, get_x_planete(get_planete_en_cours(un_jeu)), get_y_planete(get_planete_en_cours(un_jeu)));
-		tab_surface[7] = affichage_planete(une_case_terrain_espace, tab_surface[7]);
+		tab_surface[7] = affichage_planete(get_planete_en_cours(un_jeu), tab_surface[7]);
 		SDL_BlitSurface(tab_surface[7], NULL, ecran, &position_affichage_info);
-		tab_surface[8] = affichage_creation_unite(une_case_terrain_espace, tab_surface[8]);
+		tab_surface[8] = affichage_creation_unite(get_planete_en_cours(un_jeu), tab_surface[8]);
 		SDL_BlitSurface(tab_surface[8], NULL, ecran, &position_panneau_unite);
 	}
 
@@ -1743,7 +1741,7 @@ void maj_affichage(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *
         }
         if(interface_affichee == PLANETE)
         {
-            tab_surface[7] = affichage_planete(une_case_terrain_espace, tab_surface[7]);
+            tab_surface[7] = affichage_planete(get_planete_en_cours(un_jeu), tab_surface[7]);
             SDL_BlitSurface(tab_surface[7], NULL, ecran, &position_affichage_info);
         }
         if(interface_affichee == PLANETE_ENNEMIE)
@@ -1763,9 +1761,9 @@ void maj_affichage(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *
         }
         if(interface_affichee == PANNEAU_UNITE)
         {
-            tab_surface[7] = affichage_planete(une_case_terrain_espace, tab_surface[7]);
+            tab_surface[7] = affichage_planete(get_planete_en_cours(un_jeu), tab_surface[7]);
             SDL_BlitSurface(tab_surface[7], NULL, ecran, &position_affichage_info);
-            tab_surface[8] = affichage_creation_unite(une_case_terrain_espace, tab_surface[8]);
+            tab_surface[8] = affichage_creation_unite(get_planete_en_cours(un_jeu), tab_surface[8]);
             SDL_BlitSurface(tab_surface[8], NULL, ecran, &position_panneau_unite);
         }
 
@@ -1839,7 +1837,7 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 	SDL_Init(SDL_INIT_VIDEO);
 	TTF_Init();
 	SDL_EnableKeyRepeat(10, 10); /*active la répétition des touches, principalement pour un déplacement de la map plus fluide*/
-	icone = SDL_LoadBMP("../graphics/images/icone.png");
+	icone = IMG_Load("../graphiques/images/icone.png");
 	SDL_WM_SetIcon(icone, NULL);
 	ecran = SDL_SetVideoMode(TAILLE_FENETRE_X, TAILLE_FENETRE_Y, NOMBRE_BITS_COULEUR, SDL_HWSURFACE | SDL_DOUBLEBUF);
 	SDL_WM_SetCaption("Conquest of Space", NULL);
@@ -1850,6 +1848,7 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 	initialiser_affichage(un_jeu, un_terrain_espace, ecran, carte, tab_surface);
 
 	saut_ftl = creer_animation(5, 100, 100, 50, nom_fichier_saut_ftl);
+	tps_ancien = SDL_GetTicks();
 
 
 	/************************************************************************/
@@ -1907,7 +1906,7 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 					/*si la case est une planète, on affiche l'interface correspondante*/
                     if(une_case_terrain_espace->type_case_terrain_espace == 'P') 
                     {
-                        un_jeu->selection_planete = une_case_terrain_espace->planete;
+                        un_jeu->selection_planete = get_planete(une_case_terrain_espace);
 						if(un_jeu->selection_planete->indice_joueur == get_indice_joueur_en_cours(un_jeu))
 						{
 							interface_affichee = PLANETE;
@@ -1935,12 +1934,25 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
                         reinitialiser_tableau_selection_unite(un_jeu);
                     }
 					/*si rien de cela, on va revenir à l'interface simple, sans informations*/
-                    if(test_souris_rectangle(position_affichage_carte, x, y) && (une_case_terrain_espace->type_case_terrain_espace != 'P') && (une_case_terrain_espace->presence_flotte == false) && !(test_souris_rectangle(position_panneau_unite, x, y)))
+                    if(test_souris_rectangle(position_affichage_carte, x, y) && (une_case_terrain_espace->type_case_terrain_espace != 'P') && (une_case_terrain_espace->presence_flotte == false))
                     {
-                        interface_affichee = RIEN;
-                        maj_affichage(un_jeu, un_terrain_espace, ecran, carte, interface_affichee, NULL, tab_surface);
-                        maj_affichage_carte_terrain(un_jeu, un_terrain_espace, ecran, tab_surface, interface_affichee);
-                        reinitialiser_tableau_selection_unite(un_jeu);
+						if(interface_affichee == PANNEAU_UNITE)
+						{
+							 if(!test_souris_rectangle(position_panneau_unite, x, y))
+							 {
+								 interface_affichee = RIEN;
+								 maj_affichage(un_jeu, un_terrain_espace, ecran, carte, interface_affichee, NULL, tab_surface);
+								 maj_affichage_carte_terrain(un_jeu, un_terrain_espace, ecran, tab_surface, interface_affichee);
+								 reinitialiser_tableau_selection_unite(un_jeu);
+							 }
+						}
+						if(interface_affichee != PANNEAU_UNITE)
+						{
+							interface_affichee = RIEN;
+							maj_affichage(un_jeu, un_terrain_espace, ecran, carte, interface_affichee, NULL, tab_surface);
+							maj_affichage_carte_terrain(un_jeu, un_terrain_espace, ecran, tab_surface, interface_affichee);
+							reinitialiser_tableau_selection_unite(un_jeu);
+						}
                     }
 					/*pour passer au joueur suivant*/
 					if (test_souris_rectangle(bouton_tour, x, y)) 
@@ -2064,7 +2076,9 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 							lire_son(system, son_saut_debut);
 							lancer_animation_bloquante(un_jeu, un_terrain_espace, saut_ftl, ecran, x_bis, y_bis);
 							deplacement_unite_flotte(un_jeu, &un_jeu->tab_joueur[un_jeu->joueur_en_cours], un_terrain_espace, un_jeu->selection_flotte, x/100, y/100);
-							un_jeu->selection_flotte = get_flotte(get_case_terrain_espace(un_terrain_espace, x/100, y/100));
+							interface_affichee = RIEN;
+							un_jeu->selection_flotte = NULL;
+							/*un_jeu->selection_flotte = get_flotte(get_case_terrain_espace(un_terrain_espace, x/100, y/100));*/
 							maj_affichage_flotte(un_jeu, un_terrain_espace, ecran, tab_surface, interface_affichee);
 							booleen_coordonnees_case(un_terrain_espace, un_jeu->selection_flotte->x_flotte, un_jeu->selection_flotte->y_flotte, &x_bis, &y_bis);
 							lire_son(system, son_saut_fin);
@@ -2077,7 +2091,7 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 							lire_son(system, son_saut_debut);
 							lancer_animation_bloquante(un_jeu, un_terrain_espace, saut_ftl, ecran, x_bis, y_bis);
 							deplacement_flotte(&un_jeu->tab_joueur[un_jeu->joueur_en_cours], un_terrain_espace, un_jeu->selection_flotte, une_case_terrain_espace->x_espace, une_case_terrain_espace->y_espace);
-							un_jeu->selection_flotte = get_flotte(get_case_terrain_espace(un_terrain_espace, x/100, y/100));
+							//un_jeu->selection_flotte = get_flotte(get_case_terrain_espace(un_terrain_espace, x/100, y/100));
 							maj_affichage_flotte(un_jeu, un_terrain_espace, ecran, tab_surface, interface_affichee);
 							booleen_coordonnees_case(un_terrain_espace, un_jeu->selection_flotte->x_flotte, un_jeu->selection_flotte->y_flotte, &x_bis, &y_bis);
 							lire_son(system, son_saut_fin);
