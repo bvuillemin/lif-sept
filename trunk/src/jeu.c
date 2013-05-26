@@ -449,7 +449,7 @@ bool deplacement_flotte(Joueur *un_joueur, Terrain_espace *un_terrain_espace, Fl
 		{
 			if(fusion_flotte(un_joueur, un_terrain_espace, une_flotte, case_arrivee->flotte))
 			{
-				/*free(une_flotte);*/
+				//free(une_flotte);
 				return true;
 			}
 		}
@@ -520,7 +520,6 @@ bool fusion_flotte(Joueur *un_joueur, Terrain_espace *un_terrain_espace, Flotte 
 		}
 		retirer_flotte(case_depart);
 		retirer_flotte_joueur(un_joueur, flotte_depart->indice_tableau_joueur);
-		free(flotte_depart);
 		return true;
 	}
 	return false;
@@ -619,6 +618,7 @@ void lancer_animation_bloquante(Jeu *un_jeu, Terrain_espace *un_terrain_espace, 
 		SDL_Flip(ecran);
 		SDL_Delay(une_animation->nb_ms);
 		SDL_BlitSurface(tampon, &position_tampon, ecran, &position_ecran);
+		SDL_Flip(ecran);
 	}
 	une_animation->frame_en_cours = 0;
 	une_animation->x = 0;
