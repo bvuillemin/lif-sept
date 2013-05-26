@@ -547,7 +547,7 @@ bool deplacement_unite_flotte(Jeu *un_jeu, Joueur *un_joueur, Terrain_espace *un
 		}
 		if(case_arrivee->presence_flotte == true)
 		{
-			if(fusion_flotte(un_joueur, un_terrain_espace, une_flotte, x, y))
+			if(fusion_flotte(un_joueur, un_terrain_espace, une_flotte, case_arrivee->flotte))
 			{
 				/*free(une_flotte);*/
 				return true;
