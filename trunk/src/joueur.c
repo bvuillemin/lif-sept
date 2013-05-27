@@ -50,7 +50,7 @@ void liberer_joueur(Joueur *un_joueur)
 	un_joueur->population = 0;
 	un_joueur->nb_planete = 0;
 	un_joueur->nb_planete_possible = 0;
-	free(un_joueur->tab_planete); /*on ne libère pas les planètes, c'est le terrain ui va s'en charger*/
+	free(un_joueur->tab_planete); /*on ne libère pas les planètes, c'est le terrain qui va s'en charger*/
 	testamentTabDyn(&un_joueur->tab_flotte);
 	un_joueur->nb_flotte = 0;
 	un_joueur->nb_flotte_possible = 0;
