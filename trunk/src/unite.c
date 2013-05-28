@@ -273,7 +273,6 @@ void sauvegarde_unite(const Unite *une_unite, FILE* f)
     fprintf(f, "%d\n", une_unite->pt_deplacement);
     fprintf(f, "%d\n", une_unite->pt_deplacement_total);
     fprintf(f, "%d\n", une_unite->pt_mouvement_unite);
-    sauvegarde_niveau(&une_unite->niveau_unite, f);
 }
 
 Unite* ouverture_unite(FILE *f)
@@ -294,7 +293,6 @@ Unite* ouverture_unite(FILE *f)
     sscanf(fgets(chaine, 50, f), "%d", &unite_ouverte->pt_deplacement);
     sscanf(fgets(chaine, 50, f), "%d", &unite_ouverte->pt_deplacement_total);
     sscanf(fgets(chaine, 50, f), "%d", &unite_ouverte->pt_mouvement_unite);
-    unite_ouverte->niveau_unite = *ouverture_niveau(f);
     return unite_ouverte;
 }
 /*void test_module_unite()
