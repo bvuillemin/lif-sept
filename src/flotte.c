@@ -29,7 +29,7 @@ void initialiser_flotte(Flotte *flotte)
     flotte->taille_maximum_flotte = 10; /*valeur temporaire qu'il faudra éventuellemnt modifié*/
     flotte->taille_flotte = 0;
 	flotte->pt_mouvement_espace_flotte = 0;
-    flotte->tab_unite = (Unite *)malloc(sizeof(Unite)*flotte->taille_maximum_flotte);
+    flotte->tab_unite = (Unite **)malloc(sizeof(Unite *)*flotte->taille_maximum_flotte);
 }
 
 Flotte *creer_flotte()
@@ -44,7 +44,7 @@ void liberer_flotte(Flotte *flotte)
 	int i;
 	for(i=0;i<flotte->taille_flotte;i++)
 	{
-		liberer_unite(&(flotte->tab_unite[i]));
+		liberer_unite(flotte->tab_unite[i]);
 	}
 	free(flotte->tab_unite);
 	flotte->tab_unite = NULL;
@@ -133,7 +133,7 @@ Unite * get_unite_i_flotte(const Flotte * flotte, const int i)
 {
 	if(i< flotte->taille_flotte)
 	{
-		return flotte->tab_unite+i;
+		return flotte->tab_unite[i];
 	}
 	else
 	{
@@ -156,16 +156,14 @@ int ajouter_unite_flotte(Flotte *flotte, Unite *unite)
 	int min = flotte->pt_mouvement_espace_flotte;
 	if(flotte->taille_flotte < flotte->taille_maximum_flotte)
     {
-		set_indice_joueur_unite(unite,flotte->indice_joueur);
-		set_indice_unite_dans_flotte(unite,flotte->taille_flotte);
-        flotte->tab_unite[flotte->taille_flotte] = *unite;
-        flotte->taille_flotte ++;
-
-		if((unite->pt_mouvement_unite < min)||(flotte->pt_mouvement_espace_flotte == 0))
+		set_indice_joueur_unite(unite, flotte->indice_joueur); /*erreur due je pense a la fonction, a modifier*/
+		set_indice_unite_dans_flotte(unite, flotte->taille_flotte);
+		if((get_pt_mouvement_unite(unite) < min)||(flotte->pt_mouvement_espace_flotte == 0))
 		{
-			flotte->pt_mouvement_espace_flotte = unite->pt_mouvement_unite;
+			flotte->pt_mouvement_espace_flotte = get_pt_mouvement_unite(unite);
 		}
-		//free(unite);
+        flotte->tab_unite[flotte->taille_flotte] = unite;
+        flotte->taille_flotte ++;
         return 1;
     }
     else
@@ -179,14 +177,13 @@ int transferer_unite_flotte(Flotte *flotte, Unite *unite)
 	int min = flotte->pt_mouvement_espace_flotte;
 	if(flotte->taille_flotte < flotte->taille_maximum_flotte)
     {
-		unite->indice_dans_flotte = flotte->taille_flotte;
-        flotte->tab_unite[flotte->taille_flotte] = *unite;
+		set_indice_unite_dans_flotte(unite,flotte->taille_flotte);
+        flotte->tab_unite[flotte->taille_flotte] = unite;
         flotte->taille_flotte ++;
-		if((unite->pt_mouvement_unite < min)||(flotte->pt_mouvement_espace_flotte == 0))
+		if((get_pt_mouvement_unite(unite))||(flotte->pt_mouvement_espace_flotte == 0))
 		{
-			flotte->pt_mouvement_espace_flotte = unite->pt_mouvement_unite;
+			flotte->pt_mouvement_espace_flotte = get_pt_mouvement_unite(unite);
 		}
-		liberer_unite(unite);
         return 1;
     }
     else
@@ -217,7 +214,7 @@ void afficher_flotte(const Flotte *flotte)
     for(i=0;i<flotte->taille_flotte;i++)
     {
 
-        printf("Unite %d: pv = %d pa = %d pde = %d pme = %d  x= %d y=%d\n", i+1 , flotte->tab_unite[i].pt_vie, flotte->tab_unite[i].pt_action, flotte->tab_unite[i].pt_deplacement, flotte->tab_unite[i].pt_mouvement_unite, flotte->tab_unite[i].x_unite, flotte->tab_unite[i].y_unite);
+        printf("Unite %d: pv = %d pa = %d pde = %d pme = %d  x= %d y=%d\n", i+1 , flotte->tab_unite[i]->pt_vie, flotte->tab_unite[i]->pt_action, flotte->tab_unite[i]->pt_deplacement, flotte->tab_unite[i]->pt_mouvement_unite, flotte->tab_unite[i]->x_unite, flotte->tab_unite[i]->y_unite);
     }
 
 }
@@ -235,9 +232,9 @@ void reinitialiser_mouvement_flotte(Flotte *une_flotte)
 	int min = 0;
 	for(i=0;i<une_flotte->taille_flotte;i++)
 	{
-		if((une_flotte->tab_unite[i].pt_mouvement_unite < min)||(min == 0))
+		if((une_flotte->tab_unite[i]->pt_mouvement_unite < min)||(min == 0))
 		{
-			min = une_flotte->tab_unite[i].pt_mouvement_unite;
+			min = une_flotte->tab_unite[i]->pt_mouvement_unite;
 		}
 	}
 	une_flotte->pt_mouvement_espace_flotte = min;
@@ -248,7 +245,7 @@ void reinitialiser_deplacement_unite_flotte(Flotte *une_flotte)
 	int i;
 	for(i=0;i<une_flotte->taille_flotte;i++)
 	{
-		une_flotte->tab_unite[i].pt_deplacement = une_flotte->tab_unite[i].pt_deplacement_total;
+		une_flotte->tab_unite[i]->pt_deplacement = une_flotte->tab_unite[i]->pt_deplacement_total;
 	}
 }
 
@@ -257,7 +254,7 @@ void reinitialiser_pt_action_unite_flotte(Flotte *une_flotte)
 	int i;
 	for(i=0;i<une_flotte->taille_flotte;i++)
 	{
-		reinitialiser_pt_action(une_flotte->tab_unite+i);
+		reinitialiser_pt_action(une_flotte->tab_unite[i]);
 	}
 }
 
@@ -280,7 +277,7 @@ void sauvegarde_flotte(const Flotte *une_flotte, FILE*f)
     fprintf(f, "%d\n", une_flotte->portee_vision);
     for(i=0; i<une_flotte->taille_flotte; i++)
     {
-        sauvegarde_unite(&une_flotte->tab_unite[i], f);
+        sauvegarde_unite(une_flotte->tab_unite[i], f);
     }
 }
 
@@ -300,7 +297,7 @@ Flotte* ouverture_flotte(FILE *f)
     sscanf(fgets(chaine, 50, f), "%d", &flotte_ouverte->portee_vision);
     for(i=0; i<flotte_ouverte->taille_flotte; i++)
     {
-        flotte_ouverte->tab_unite[i] = *ouverture_unite(f);
+        *flotte_ouverte->tab_unite[i] = *ouverture_unite(f);
     }
     return flotte_ouverte;
 }

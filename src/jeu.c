@@ -204,7 +204,7 @@ void ajouter_flotte_jeu(Jeu *un_jeu,Terrain_espace *un_terrain_espace, Flotte *u
 {
 	set_x_flotte(une_flotte, x);
 	set_y_flotte(une_flotte, y);
-	ajouter_flotte_joueur(&un_jeu->tab_joueur[indice_joueur], une_flotte);
+	ajouter_flotte_joueur(get_ieme_joueur_jeu(un_jeu, indice_joueur), une_flotte);
 	ajouter_toutes_flottes_terrain(un_jeu, un_terrain_espace);
 }
 
@@ -458,7 +458,6 @@ bool deplacement_flotte(Joueur *un_joueur, Terrain_espace *un_terrain_espace, Fl
 		{
 			if(fusion_flotte(un_joueur, un_terrain_espace, une_flotte, case_arrivee->flotte))
 			{
-				//free(une_flotte);
 				return true;
 			}
 		}
@@ -525,7 +524,7 @@ bool fusion_flotte(Joueur *un_joueur, Terrain_espace *un_terrain_espace, Flotte 
 	{
 		for(i=0;i<nb_unite;i++)
 		{
-			ajouter_unite_flotte(flotte_arrivee, &flotte_depart->tab_unite[i]);
+			ajouter_unite_flotte(flotte_arrivee, flotte_depart->tab_unite[i]);
 		}
 		retirer_flotte(case_depart);
 		retirer_flotte_joueur(un_joueur, flotte_depart->indice_tableau_joueur);
@@ -567,7 +566,7 @@ bool deplacement_unite_flotte(Jeu *un_jeu, Joueur *un_joueur, Terrain_espace *un
 			{
 				if(un_jeu->tab_unite_selectionnee[i] == true)
 				{
-					ajouter_unite_flotte(une_nouvelle_flotte, &une_flotte->tab_unite[i]);
+					ajouter_unite_flotte(une_nouvelle_flotte, une_flotte->tab_unite[i]);
 					retirer_unite_flotte(une_flotte, i);
 				}
 			}
