@@ -11,6 +11,11 @@
 #include <stdbool.h>
 #include <time.h>
 #include "sauvegarde.h"
+
+/************************************************************************/
+/* Initialisation, création et destruction                              */
+/************************************************************************/
+
 void initialise_sauvegarde(Sauvegarde *une_sauvegarde)
 {
     une_sauvegarde->terrain_espace = (Terrain_espace *)malloc(sizeof(Terrain_espace));
@@ -23,6 +28,23 @@ Sauvegarde *creer_sauvegarde()
     return une_sauvegarde;
 }
 
+void detruire_sauvegarde(const char nom[30])
+{
+    int i;
+    i = remove(nom);
+}
+
+/************************************************************************/
+/* Fonctions diverses                                                   */
+/************************************************************************/
+
+/**
+ * \brief      Crée une sauvegarde
+ * \details    Crée un fichier de sauvegarde à partir d'un nom et sauvegarde le jeu et le terrain_espace
+ * \param      nom                 Nom de la sauvegarde
+ * \param      un_terrain_espace   Terrain_espace à sauvegarder
+ * \param      jeu                 Jeu à sauvegarder
+ */
 void creer_fichier_sauvegarde(const char nom[30], Terrain_espace *un_terrain_espace, Jeu *un_jeu)
 {
     FILE *f;
@@ -36,13 +58,11 @@ void creer_fichier_sauvegarde(const char nom[30], Terrain_espace *un_terrain_esp
     fclose(f);
 }
 
-
-void detruire_sauvegarde(const char nom[30])
-{
-    int i;
-    i = remove(nom);
-}
-
+/**
+ * \brief      Charge une sauvegarde
+ * \details    Charge une sauvegarde dans le jeu à partir d'un nom de fichier
+ * \param      nom                 Nom de la sauvegarde
+ */
 Sauvegarde* selection_ouverture(const char nom[30])
 {
     FILE *f;
