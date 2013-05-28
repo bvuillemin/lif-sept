@@ -59,6 +59,10 @@ void liberer_joueur(Joueur *un_joueur)
 	un_joueur->nb_planete = 0;
 	un_joueur->nb_planete_possible = 0;
 	free(un_joueur->tab_planete); /*on ne libère pas les planètes, c'est le terrain qui va s'en charger*/
+	for(i=0;i<un_joueur->tab_flotte.capacite;i++)
+	{
+		liberer_flotte(&un_joueur->tab_flotte.ad[i]);
+	}
 	testamentTabDyn(&un_joueur->tab_flotte);
 	un_joueur->nb_flotte = 0;
 	un_joueur->nb_flotte_possible = 0;
@@ -196,36 +200,21 @@ void ajouter_planete_joueur(Joueur *un_joueur, Planete *une_planete)
 
 void ajouter_flotte_joueur(Joueur *un_joueur, Flotte *une_flotte)
 {
-	int i ;
-	i= un_joueur->nb_flotte;
+	int i = un_joueur->nb_flotte;
     une_flotte->indice_joueur = un_joueur->numero_joueur;
     ajouterElementTabDyn(&un_joueur->tab_flotte, une_flotte);
 	une_flotte->indice_tableau_joueur = i;
 	un_joueur->nb_flotte ++;
 	free(une_flotte);
-
-    if(i< un_joueur->nb_flotte_possible)
-    {
-       /* une_flotte->indice_tableau_joueur = i;
-        un_joueur->tab_flotte[i] = *une_flotte;
-        un_joueur->nb_flotte ++;
-        free(une_flotte);*/
-
-    }
 }
 
 void retirer_flotte_joueur(Joueur *un_joueur, int indice_flotte)
 {
     int i;
-    if(indice_flotte < un_joueur->nb_flotte - 1)
+    supprimerElementTabDyn(&un_joueur->tab_flotte, indice_flotte);
+    for(i=indice_flotte;i<un_joueur->tab_flotte.taille_utilisee - 1;i++)
     {
-        supprimerElementTabDyn(&un_joueur->tab_flotte, indice_flotte);
-        /*for(i=indice_flotte;i<un_joueur->nb_flotte - 1;i++)
-        {
-            un_joueur->tab_flotte[i] = un_joueur->tab_flotte[i+1];
-            un_joueur->tab_flotte[i].indice_tableau_joueur = i;
-        }*/
-       /* liberer_flotte(&un_joueur->tab_flotte[un_joueur->nb_flotte - 1]);*/
+        un_joueur->tab_flotte.ad[i].indice_tableau_joueur = un_joueur->tab_flotte.ad[i+1].indice_tableau_joueur ;
     }
 }
 

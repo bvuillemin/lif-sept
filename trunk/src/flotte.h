@@ -28,7 +28,7 @@
      int taille_flotte;
      int pt_mouvement_espace_flotte;
 	 int portee_vision;
-     Unite *tab_unite;
+     Unite **tab_unite;
  }Flotte;
 
 void initialiser_flotte(Flotte *flotte);

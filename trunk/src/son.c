@@ -47,9 +47,11 @@ void maj_musique(FMOD_SYSTEM *system, FMOD_SOUND *musique, char **tab_chanson)
 	bool fin_musique = false;
 	FMOD_System_GetChannel(system, 1, &channel);
 	FMOD_Channel_IsPlaying(channel, &fin_musique);
+	
 
 	if (fin_musique == false)
 	{
+		FMOD_Sound_Release(&musique);
 		lire_musique(system, musique, tab_chanson);
 	}
 }
@@ -61,6 +63,7 @@ void lire_son(FMOD_SYSTEM *system, FMOD_SOUND *son)
 
 void fermer_systeme_son(FMOD_SYSTEM *system, FMOD_SOUND *musique)
 {
+	FMOD_Sound_Release(&musique);
 	FMOD_System_Close(system);
 	FMOD_System_Release(system);
 }
