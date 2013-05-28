@@ -1,3 +1,11 @@
+/**
+ * \file      TableauDynamique.c
+ * \author    BODARD, REYNAUD, VUILLEMIN
+ * \version   1.0
+ * \brief     Définit les tableaux dynamiques
+ * \details   Cette classe définit les tableaux dynamiques et permet leur implémentation dans le jeu (dans joueur)
+ */
+
 #include <stdlib.h>
 #include <stdio.h>
 

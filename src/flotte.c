@@ -1,3 +1,11 @@
+/**
+ * \file      flotte.c
+ * \author    BODARD, REYNAUD, VUILLEMIN
+ * \version   1.0
+ * \brief     Définit les flottes du jeu
+ * \details   Cette classe définit les flottes du jeu et leurs caractéristiques
+ */
+
 #include <stdlib.h>
 #include <stdio.h>
 

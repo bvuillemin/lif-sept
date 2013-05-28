@@ -1,3 +1,11 @@
+/**
+ * \file      joueur.c
+ * \author    BODARD, REYNAUD, VUILLEMIN
+ * \version   1.0
+ * \brief     Définit les joueurs d'un jeu
+ * \details   Cette classe définit les joueurs du jeu (ia ou joueur réel) et leurs caractéristiques
+ */
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>

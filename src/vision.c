@@ -1,3 +1,11 @@
+/**
+ * \file      vision.c
+ * \author    BODARD, REYNAUD, VUILLEMIN
+ * \version   1.0
+ * \brief     Définit la vision d'un terrain
+ * \details   Cette classe définit la vision d'un terrain par un joueur
+ */
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>

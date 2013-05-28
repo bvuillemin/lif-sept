@@ -1,3 +1,11 @@
+/**
+ * \file      unite.c
+ * \author    BODARD, REYNAUD, VUILLEMIN
+ * \version   1.0
+ * \brief     Définit les unités du jeu
+ * \details   Cette classe définit les unités du jeu et leurs caractéristiques
+ */
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>

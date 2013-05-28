@@ -1,3 +1,11 @@
+/**
+ * \file      affichage.c
+ * \author    BODARD, REYNAUD, VUILLEMIN
+ * \version   1.0
+ * \brief     Définit l'affichage du jeu
+ * \details   Cette classe permet l'affichage du jeu, des menus, prend en compte les actions du joueur
+ */
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
@@ -28,6 +36,7 @@
 #include "animation.h"
 #include "batiment.h"
 #include "sauvegarde.h"
+
 
 /************************************************************************/
 /* Fonctions diverses                                                   */

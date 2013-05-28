@@ -1,3 +1,11 @@
+/**
+ * \file      terrain_espace.c
+ * \author    BODARD, REYNAUD, VUILLEMIN
+ * \version   1.0
+ * \brief     Définit un terrain d'espace
+ * \details   Cette classe définit un terrain d'espace et ses caractéristiques
+ */
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>

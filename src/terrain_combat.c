@@ -1,3 +1,11 @@
+/**
+ * \file      terrain_combat.c
+ * \author    BODARD, REYNAUD, VUILLEMIN
+ * \version   1.0
+ * \brief     Définit un terrain de combat
+ * \details   Cette classe définit un terrain de combat et ses caractéristiques
+ */
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
