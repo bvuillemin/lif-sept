@@ -1,3 +1,11 @@
+/**
+ * \file      case_terrain_espace.c
+ * \author    BODARD, REYNAUD, VUILLEMIN
+ * \version   1.0
+ * \brief     Définit les cases d'un terrain d'espace
+ * \details   Cette classe définit les cases d'un terrain d'espace et leurs caractéristiques
+ */
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>

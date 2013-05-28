@@ -1,3 +1,11 @@
+/**
+ * \file      son.c
+ * \author    BODARD, REYNAUD, VUILLEMIN
+ * \version   1.0
+ * \brief     Lecture des sons
+ * \details   Cette classe définit les sons et musiques de fond permet leur lecture dans le jeu
+ */
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>

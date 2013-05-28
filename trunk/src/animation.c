@@ -1,8 +1,17 @@
+/**
+ * \file      animation.c
+ * \author    BODARD, REYNAUD, VUILLEMIN
+ * \version   1.0
+ * \brief     Définit les animations du jeu
+ * \details   Cette classe permet l'affichage des animations du jeu
+ */
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
 #include <SDL/SDL.h>
+
 #ifdef __APPLE__
 #include "SDL_image.h"
 #else

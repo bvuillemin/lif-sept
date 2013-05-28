@@ -1,3 +1,11 @@
+/**
+ * \file      batment.c
+ * \author    BODARD, REYNAUD, VUILLEMIN
+ * \version   1.0
+ * \brief     Définit les batiments du jeu
+ * \details   Cette classe définit les batiments du jeu et leurs caractéristiques
+ */
+
 #include <stdlib.h>
 #include <stdio.h>
 

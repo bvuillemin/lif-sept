@@ -1,3 +1,11 @@
+/**
+ * \file      sauvegarde.c
+ * \author    BODARD, REYNAUD, VUILLEMIN
+ * \version   1.0
+ * \brief     Définit les sauvegardes du jeu
+ * \details   Cette classe définit les sauvegardes du jeu et les chargements de sauvegardes
+ */
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>

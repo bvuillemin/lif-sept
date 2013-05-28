@@ -1,3 +1,11 @@
+/**
+ * \file      constante.h
+ * \author    BODARD, REYNAUD, VUILLEMIN
+ * \version   1.0
+ * \brief     Définit les constantes du jeu
+ * \details   Cette classe définit les constantes du jeu, comme la résolution d'écran, les caractéristiques des unités...
+ */
+
 #ifndef _CONSTANTE_H_
 #define _CONSTANTE_H_
 

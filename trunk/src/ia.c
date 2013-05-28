@@ -1,3 +1,11 @@
+/**
+ * \file      ia.c
+ * \author    BODARD, REYNAUD, VUILLEMIN
+ * \version   1.0
+ * \brief     Définit l'ia du jeu
+ * \details   Cette classe définit l'intelligence artificielle du jeu et ses caractéristiques
+ */
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>

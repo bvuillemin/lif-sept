@@ -1,3 +1,11 @@
+/**
+ * \file      case_terrain_combat.c
+ * \author    BODARD, REYNAUD, VUILLEMIN
+ * \version   1.0
+ * \brief     Définit les cases d'un terrain de combat
+ * \details   Cette classe définit les cases d'un terrain de combat et leurs caractéristiques
+ */
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>

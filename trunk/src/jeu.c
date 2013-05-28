@@ -1,3 +1,12 @@
+/**
+ * \file      jeu.c
+ * \author    BODARD, REYNAUD, VUILLEMIN
+ * \version   1.0
+ * \brief     Définit le jeu
+ * \details   Cette classe définit le jeu et ses composantes (flottes, terrain...)
+ */
+
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>

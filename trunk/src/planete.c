@@ -1,3 +1,11 @@
+/**
+ * \file      planete.c
+ * \author    BODARD, REYNAUD, VUILLEMIN
+ * \version   1.0
+ * \brief     Définit les planètes du jeu
+ * \details   Cette classe définit les planètes du jeu et leurs caractéristiques
+ */
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
