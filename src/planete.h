@@ -1,3 +1,11 @@
+/**
+ * \file      planete.h
+ * \author    BODARD, REYNAUD, VUILLEMIN
+ * \version   1.0
+ * \brief     Définit les planètes du jeu
+ * \details   Cette classe définit les planètes du jeu et leurs caractéristiques
+ */
+
 #ifndef _PLANETE_H_
 #define _PLANETE_H_
 
@@ -5,47 +13,55 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-/**
- * \file      Module terrain
- * \author
- * \version   0.1
- * \date      13 mars 2013
- * \brief     Planète et ses particularités
- *
- * \details
- */
-
-/*Permettra d'initialiser le tableua de pointeurs sur fonction*/
+/*Permettra d'initialiser le tableau de pointeurs sur fonction*/
 struct sPlanete;
 typedef void (*Creation_batiment)(struct sPlanete*);
 typedef void (*Validation_creation_batiment)(struct sPlanete*);
 
+/**
+ * \struct sPlanete
+ * \brief Planète du jeu
+ */
  typedef struct sPlanete
  {
+     /** Abscisse */
      int x;
+     /** Ordonnée */
      int y;
+     /** Nom de la planète */
      char nom_planete[30];
+     /** indice du joueur */
 	 int indice_joueur;
-
+     /** Tableau de bâtiments */
      int batiment[10];
-     int batiment_en_cours; /*indice dans le tableau du batiment en cours de construction*/
-     int batiment_nb_tour_restant; /*entier indiquant le nombre de tours restants, si 0 on peut construire un batiment*/
-
+     /** Indice dans le tableau du batiment en cours de construction */
+     int batiment_en_cours;
+     /** Entier indiquant le nombre de tours restants, si 0 on peut construire un batiment */
+     int batiment_nb_tour_restant;
+     /** Tableau rassemblant les validations des bâtiments */
      Validation_creation_batiment tab_fonction_validation[10];
+     /** Tableau rassemblant les créations de bâtiments */
      Creation_batiment tab_fonction_creation[10];
-
+     /** unite en cours */
      int unite_en_cours;
+     /** Nombre de tours restants pour une unite */
      int unite_nb_tour_restant;
-
+     /** Définit le nombre de bâtiments construits sur cette planète */
      int taille_utilisee;
+     /** Définit la taille de la planète */
      int taille_planete;
 	 int portee_vision;
+     /** Précise si c'est une planete principale ou non */
      bool planete_principale;
+     /** Précise si la planète est colonisée (0 : no, 1 : oui) */
      bool planete_colonisee;
-
+     /** Ressources de métal */
      int metal;
+     /** Ressources d'argent */
      int argent;
+     /** Ressources de carburant */
      int carburant;
+     /** Population présente sur cette planète*/
      int population;
 
  }Planete;

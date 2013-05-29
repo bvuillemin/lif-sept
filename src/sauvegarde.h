@@ -7,9 +7,16 @@
 #include <string.h>
 #include "terrain_espace.h"
 #include "jeu.h"
+
+/**
+ * \struct Sauvegarde
+ * \brief Planète du jeu
+ */
 typedef struct
 {
+    /** terrain_espace enregistrée dans cette sauvegarde */
     Terrain_espace* terrain_espace;
+    /** jeu enregistré dans cette sauvegarde */
     Jeu* jeu;
 }Sauvegarde;
 

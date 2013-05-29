@@ -230,7 +230,7 @@ int get_planete_unite_nb_tour_restant(const Planete* une_planete)
 /**
  * \brief      Modifie les ressources d'une planète
  * \details    Modifie le niveau de métal, d'argent, de carburant et de population d'une planète mise en paramètre
- * \param      une_planete         Planete à modifier
+ * \param      une_planete         Pointeur sur Planete à modifier
  * \param      metal               Nouveau niveau de métal
  * \param      argent              Nouveau niveau d'argent
  * \param      carburant           Nouveau niveau de carburant
@@ -247,7 +247,7 @@ void modification_production_planete(Planete *une_planete,const int metal,const 
 /**
  * \brief      Affiche les détails d'une planète sur la console
  * \details    Affiche le nom, les coordonnées, le niveau de métal, d'argent, de carburant et de population d'une planète mise en paramètre
- * \param      une_planete         Planete à afficher
+ * \param      une_planete         Pointeur sur Planete à afficher
  */
 void afficher_planete(Planete *une_planete)
 {
@@ -266,7 +266,7 @@ void afficher_planete(Planete *une_planete)
 /**
  * \brief      Affiche les batiments d'une planète sur la console
  * \details    Affiche, sur la console, les batiments d'une planète passée en paramètre
- * \param      une_planete         Planete sur laquelle sont les bâtiments
+ * \param      une_planete         Pointeur sur Planete sur laquelle sont les bâtiments
  */
 void afficher_batiment(Planete *une_planete)
 {
@@ -277,7 +277,7 @@ void afficher_batiment(Planete *une_planete)
 /**
  * \brief      Valide la construction d'un batiment d'une planète
  * \details    Valide la construction d'un batiment d'une planète passée en paramètre lorsque le nombre de tours restants atteint 0
- * \param      une_planete         Planete sur laquelle est le bâtiment
+ * \param      une_planete         Pointeur sur Planete sur laquelle est le bâtiment
  */
 void validation_batiment(Planete *une_planete)
 {
@@ -290,7 +290,7 @@ void validation_batiment(Planete *une_planete)
 /**
  * \brief      Lance la construction d'un batiment d'une planète
  * \details    Lance la construction d'un batiment d'une planète passée en paramètre si un autre batiment n'est pas en cours de construction
- * \param      une_planete         Planete sur laquelle va être construit le bâtiment
+ * \param      une_planete         Pointeur sur Planete sur laquelle va être construit le bâtiment
  * \param      choix               Type de bâtiment
  */
 void creation_batiment(Planete *une_planete, int choix)
@@ -329,8 +329,8 @@ void test_module_planete()
 /**
  * \brief      Sauvegarde une planète
  * \details    Sauvegarde une planète dans un fichier déjà ouvert
- * \param      une_planete         Planete à sauvegarder
- * \param      f                   Fichier de sauvegarde
+ * \param      une_planete         Pointeur sur Planete à sauvegarder
+ * \param      f                   Pointeur sur Fichier de sauvegarde
  */
 void sauvegarde_planete(const Planete *une_planete, FILE*f)
 {
@@ -362,8 +362,8 @@ void sauvegarde_planete(const Planete *une_planete, FILE*f)
 /**
  * \brief      Charge une planète
  * \details    Charge une planète à partir d'une sauvegarde
- * \param      f                   Fichier de sauvegarde
- * \return     Une planète ayant les informations du fichier de sauvegarde
+ * \param      f                   Pointeur sur Fichier de sauvegarde
+ * \return     Un pointeur sur une planète ayant les informations du fichier de sauvegarde
  */
 Planete* ouverture_planete(FILE *f)
 {
