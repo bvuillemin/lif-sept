@@ -1,3 +1,11 @@
+/**
+ * \file      flotte.h
+ * \author    BODARD, REYNAUD, VUILLEMIN
+ * \version   1.0
+ * \brief     Définit les flottes du jeu
+ * \details   Cette classe définit les flottes du jeu et leurs caractéristiques
+ */
+
 #ifndef _FLOTTE_H_
 #define _FLOTTE_H_
 
@@ -7,27 +15,28 @@
 #include "unite.h"
 
 /**
- * \file      Module terrain
- * \author    Les queues
- * \version   0.1
- * \date      13 mars 2013
- * \brief     Planète et ses particularités
- *
- * \details
+ * \struct Flotte
+ * \brief Flotte du jeu
  */
-
-
  typedef struct
  {
+     /** Abscisse de la flotte */
      int x_flotte;
+     /** Ordonnée de la flotte */
      int y_flotte;
+     /** Numéro du joueur contrôlant la flotte */
      int indice_joueur;
+     /** Indice dans le tableau de flotte d'un joueur */
      int indice_tableau_joueur;
-
+     /** Définit la taille maximale que peut avoir une flotte */
      int taille_maximum_flotte;
+     /** Définit la taille d'une flotte */
      int taille_flotte;
+     /** Définit les cours de mouvement que peut avoir une flotte */
      int pt_mouvement_espace_flotte;
+     /** Définit la vision d'une flotte */
 	 int portee_vision;
+     /** Pointeur de pointeur sur tableau contenant les unités d'une flotte */
      Unite **tab_unite;
  }Flotte;
 

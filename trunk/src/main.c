@@ -19,7 +19,7 @@
 
 int main(int argc, char *argv[])
 {
-    //ecran_titre();
+    ecran_titre();
     Flotte *flotte;
     Unite *unite1;
     Unite *unite2;

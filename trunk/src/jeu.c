@@ -105,6 +105,12 @@ Joueur * get_ieme_joueur_jeu(Jeu * un_jeu,int i)
 /* Fonctions liÈes au jeu                                               */
 /************************************************************************/
 
+/**
+ * \brief      Ajoute un joueur au jeu
+ * \details    ajoute un joueur passé en paramètre à un jeu passé en paramètre
+ * \param      un_jeu              Pointeur sur Jeu à modifier
+ * \param      un_joueur           Pointeur sur Joueur à ajouter
+ */
 void ajouter_joueur(Jeu *un_jeu, Joueur *un_joueur)
 {
 	int i;
@@ -118,6 +124,12 @@ void ajouter_joueur(Jeu *un_jeu, Joueur *un_joueur)
 	free(un_joueur);
 }
 
+/**
+ * \brief      Passe au joueur suivant
+ * \details    Cette fonction est appelée après qu'un joueur ait fini son tour
+ * \param      un_jeu              Pointeur sur Jeu en cours
+ * \param      un_terrain_espace   Pointeur sur terrain_espace du jeu
+ */
 void joueur_suivant(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 {
 	if(un_jeu->joueur_en_cours +1 < un_jeu->nb_joueur)
@@ -131,6 +143,11 @@ void joueur_suivant(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 	}
 }
 
+/**
+ * \brief      Passe au tour suivant
+ * \param      un_jeu              Pointeur sur Jeu en cours
+ * \param      un_terrain_espace   Pointeur sur terrain_espace du jeu
+ */
 void tour_suivant(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 {
 	int metal = 0, argent = 0, carburant = 0, population = 0;
@@ -175,11 +192,20 @@ void tour_suivant(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 	un_jeu->tour_en_cours++;
 }
 
+/**
+ * \brief      Affiche les infos du jeu en cours
+ * \param      un_jeu              Pointeur sur Jeu en cours
+ */
 void afficher_info(Jeu *un_jeu)
 {
 	printf("Joueur en cours %d, tour en cours %d \n", un_jeu->joueur_en_cours, un_jeu->tour_en_cours);
 }
 
+/**
+ * \brief      Ajoute toutes les flottes de tous les joueurs sur le terrain
+ * \param      un_jeu              Pointeur sur Jeu en cours
+ * \param      un_terrain_espace   Pointeur sur terrain_espace du jeu
+ */
 void ajouter_toutes_flottes_terrain(Jeu* un_jeu, Terrain_espace* un_terrain_espace)
 {
 	Flotte* une_flotte;
@@ -200,6 +226,16 @@ void ajouter_toutes_flottes_terrain(Jeu* un_jeu, Terrain_espace* un_terrain_espa
 	}
 }
 
+/**
+ * \brief      Ajoute une flotte à un jeu
+ * \details    Ajoute une flotte à un jeu en lui attribuant des coordonnées et l'indice d'un joueur
+ * \param      un_jeu              Pointeur sur Jeu en cours
+ * \param      un_terrain_espace   Pointeur sur terrain_espace du jeu
+ * \param      une_flotte          Pointeur sur flotte à ajouter
+ * \param      indice_joueur       indice du joueur
+ * \param      x                   abscisse
+ * \param      y                   ordonnée
+ */
 void ajouter_flotte_jeu(Jeu *un_jeu,Terrain_espace *un_terrain_espace, Flotte *une_flotte, int indice_joueur, int x, int y)
 {
 	set_x_flotte(une_flotte, x);
@@ -208,6 +244,10 @@ void ajouter_flotte_jeu(Jeu *un_jeu,Terrain_espace *un_terrain_espace, Flotte *u
 	ajouter_toutes_flottes_terrain(un_jeu, un_terrain_espace);
 }
 
+/**
+ * \brief      Affiche les ressources de tous les joueurs d'un jeu
+ * \param      un_jeu              Pointeur sur Jeu en cours
+ */
 void afficher_ressource_joueur(Jeu *un_jeu)
 {
 	int i;
@@ -217,6 +257,12 @@ void afficher_ressource_joueur(Jeu *un_jeu)
 	}
 }
 
+/**
+ * \brief      Crée la vision globale d'un terrain en fonction du joueur
+ * \param      un_jeu              Pointeur sur Jeu en cours
+ * \param      un_terrain_espace   Pointeur sur terrain_espace du jeu
+ * \param      indice_joueur       indice du joueur
+ */
 void creer_vision_joueur(Jeu* un_jeu, Terrain_espace* un_terrain, int indice_joueur)
 {
 	Vision_terrain *une_vision;
@@ -229,6 +275,11 @@ void creer_vision_joueur(Jeu* un_jeu, Terrain_espace* un_terrain, int indice_jou
 	un_joueur->vision_terrain = une_vision;
 }
 
+/**
+ * \brief      Crée la vision globale d'un terrain pour tous les joueurs
+ * \param      un_jeu              Pointeur sur Jeu en cours
+ * \param      un_terrain_espace   Pointeur sur terrain_espace du jeu
+ */
 void creer_vision_jeu(Jeu *un_jeu, Terrain_espace* un_terrain_espace)
 {
 	int i;
@@ -238,6 +289,12 @@ void creer_vision_jeu(Jeu *un_jeu, Terrain_espace* un_terrain_espace)
 	}
 }
 
+/**
+ * \brief      Met à jour la vision globale d'un terrain en fonction du joueur
+ * \param      un_jeu              Pointeur sur Jeu en cours
+ * \param      un_terrain_espace   Pointeur sur terrain_espace du jeu
+ * \param      indice_joueur       indice du joueur
+ */
 void maj_vision_joueur(Jeu* un_jeu, Terrain_espace* un_terrain, int indice_joueur)
 {
 	Vision_terrain *une_vision;
@@ -250,6 +307,11 @@ void maj_vision_joueur(Jeu* un_jeu, Terrain_espace* un_terrain, int indice_joueu
 	un_joueur->vision_terrain = une_vision;
 }
 
+/**
+ * \brief      Met à jour la vision globale d'un terrain pour tous les joueurs
+ * \param      un_jeu              Pointeur sur Jeu en cours
+ * \param      un_terrain_espace   Pointeur sur terrain_espace du jeu
+ */
 void maj_vision_jeu(Jeu *un_jeu, Terrain_espace* un_terrain_espace)
 {
 	int i;
@@ -259,6 +321,11 @@ void maj_vision_jeu(Jeu *un_jeu, Terrain_espace* un_terrain_espace)
 	}
 }
 
+/**
+ * \brief      Crée l'affichage du jeu sur le terminal
+ * \param      un_jeu              Pointeur sur Jeu en cours
+ * \param      un_terrain_espace   Pointeur sur terrain_espace du jeu
+ */
 void affichage_vision_jeu(Jeu *un_jeu, Terrain_espace* un_terrain_espace)
 {
 	int i, j, k;
@@ -302,9 +369,16 @@ void affichage_vision_jeu(Jeu *un_jeu, Terrain_espace* un_terrain_espace)
 }
 
 /************************************************************************/
-/* Fonctions liÈes ‡ la crÈation d'objets du jeu                        */
+/* Fonctions liées à la création d'objets du jeu                        */
 /************************************************************************/
 
+/**
+ * \brief      Définit si une unité peut être créée sur une planète ou non
+ * \param      un_joueur           Pointeur sur le Joueur qui aura l'unité
+ * \param      une_planète         Pointeur sur Planète sélectionnée
+ * \param      choix               Choix de l'unité à créer
+ * \return     Vrai si la création est possible, Faux sinon
+ */
 bool condition_creation_unite(Joueur* un_joueur, Planete *une_planete, int choix)
 {
 	int metal, argent, carburant, population;
@@ -344,6 +418,12 @@ bool condition_creation_unite(Joueur* un_joueur, Planete *une_planete, int choix
 	return false;
 }
 
+/**
+ * \brief      Définit si un batiment peut être construit sur une planète ou non
+ * \param      une_planète         Pointeur sur Planète sélectionnée
+ * \param      choix               Choix du batiment à construire
+ * \return     Vrai si la construction est possible, Faux sinon
+ */
 bool condition_creation_batiment(Planete *une_planete, int choix)
 {
 	if((choix == 0) && (une_planete->taille_utilisee <= une_planete->taille_planete))
@@ -357,6 +437,15 @@ bool condition_creation_batiment(Planete *une_planete, int choix)
 	else return false;
 }
 
+/**
+ * \brief      Valide la création d'une unité sur une planète
+ * \details    Crée une unité sur une planète déterminée par ses coordonnées et l'attribue à un joueur donné
+ * \param      un_jeu              Pointeur sur Jeu en cours
+ * \param      un_terrain_espace   Pointeur sur terrain_espace du jeu
+ * \param      indice_joueur_en_cours       indice du joueur en cours
+ * \param      x                   Abscisse
+ * \param      y                   Ordonnée
+ */
 void validation_creation_unite_planete(Jeu *un_jeu, Terrain_espace *un_terrain_espace, int indice_joueur_en_cours, int x, int y)
 {
     Unite *une_unite;
@@ -382,6 +471,11 @@ void validation_creation_unite_planete(Jeu *un_jeu, Terrain_espace *un_terrain_e
     }
 }
 
+/**
+ * \brief      Définit si la planète peut accueillir un nouveau batiment ou non
+ * \param      une_planète         Pointeur sur Planète sélectionnée
+ * \return     Vrai si c'est est possible, Faux sinon
+ */
 bool construction_batiment_possible(Planete* une_planete)
 {
 	if((une_planete->batiment_nb_tour_restant <= 0) && (une_planete->taille_utilisee <= une_planete->taille_planete))
@@ -391,6 +485,11 @@ bool construction_batiment_possible(Planete* une_planete)
 	return false;
 }
 
+/**
+ * \brief      Définit si la planète peut accueillir une nouvelle unite ou non
+ * \param      une_planète         Pointeur sur Planète sélectionnée
+ * \return     Vrai si c'est est possible, Faux sinon
+ */
 bool construction_unite_possible(Planete* une_planete)
 {
 	if((get_planete_unite_nb_tour_restant(une_planete) <= 0) && (get_ieme_batiment(une_planete, 5)))
@@ -400,10 +499,16 @@ bool construction_unite_possible(Planete* une_planete)
 	return false;
 }
 
+
 /************************************************************************/
-/* Fonctions liÈes aux flottes                                          */
+/* Fonctions liées aux flottes                                          */
 /************************************************************************/
 
+/**
+ * \brief      Teste si une Unite est sélectionnée ou non
+ * \param      un_jeu              Pointeur sur Jeu
+ * \return     Vrai si l'unité est sélectionnée, Faux sinon
+ */
 bool test_unite_selectionnee(Jeu *un_jeu)
 {
     int i;
@@ -417,6 +522,13 @@ bool test_unite_selectionnee(Jeu *un_jeu)
     return false;
 }
 
+/**
+ * \brief      Colonise une planète
+ * \details    Colonise une planète sur laquelle est une flotte
+ * \param      un_terrain_espace   Pointeur sur Terrain_espace
+ * \param      une_flotte          Pointeur sur Flotte
+ * \param      un_jeu              Pointeur sur Jeu
+ */
 void colonisation_planete_flotte(Terrain_espace *un_terrain_espace, Flotte *une_flotte, Jeu *un_jeu)
 {
 	Planete *une_planete;
@@ -428,6 +540,15 @@ void colonisation_planete_flotte(Terrain_espace *un_terrain_espace, Flotte *une_
 	colonisation_planete(un_joueur, une_planete);
 }
 
+/**
+ * \brief      Déplace une flotte
+ * \details    Déplace une flotte d'un joueur sur des coordonnées déterminées
+ * \param      un_joueur           Pointeur sur le Joueur qui a la flotte
+ * \param      un_terrain_espace   Pointeur sur Terrain_espace
+ * \param      une_flotte          Pointeur sur Flotte
+ * \param      x                   Abscisse
+ * \param      y                   Ordonnée
+ */
 bool deplacement_flotte(Joueur *un_joueur, Terrain_espace *un_terrain_espace, Flotte *une_flotte, int x, int y)
 {
 	if(peut_se_deplacer(une_flotte, x, y))
@@ -510,6 +631,15 @@ bool fusion_flotte(Joueur *un_joueur, Terrain_espace *un_terrain_espace, Flotte 
 	return false;
 }*/
 
+/**
+ * \brief      Fusionne deux flottes
+ * \details    Fusionne deux flottes d'un joueur
+ * \param      un_joueur           Pointeur sur le Joueur qui a les flottes
+ * \param      un_terrain_espace   Pointeur sur Terrain_espace
+ * \param      flotte_depart       Pointeur sur Flotte de départ
+ * \param      flotte_arrivée      Pointeur sur Flotte d'arrivée
+ * \return     Vrai si la fusion a eu lieu, Faux sinon
+ */
 bool fusion_flotte(Joueur *un_joueur, Terrain_espace *un_terrain_espace, Flotte *flotte_depart, Flotte* flotte_arrivee)
 {
 	int i;
@@ -533,7 +663,17 @@ bool fusion_flotte(Joueur *un_joueur, Terrain_espace *un_terrain_espace, Flotte 
 	return false;
 }
 
-
+/**
+ * \brief      Sépare une unité d'une flotte
+ * \details    Sépare une unité flotte il avait place aux coordonnées mis en paramètre
+ * \param      un_jeu              Pointeur sur Jeu
+ * \param      un_joueur           Pointeur sur le Joueur qui a la flotte
+ * \param      un_terrain_espace   Pointeur sur Terrain_espace
+ * \param      une_flotte          Pointeur sur Flotte
+ * \param      x                   Abscisse
+ * \param      y                   Ordonnée
+ * \return     Vrai si la séparation a eu lieu, Faux sinon
+ */
 bool deplacement_unite_flotte(Jeu *un_jeu, Joueur *un_joueur, Terrain_espace *un_terrain_espace, Flotte *une_flotte, int x, int y)
 {/*
 	if(peut_se_deplacer(une_flotte, x, y))
@@ -582,7 +722,7 @@ bool deplacement_unite_flotte(Jeu *un_jeu, Joueur *un_joueur, Terrain_espace *un
 
 
 /************************************************************************/
-/* Fonctions liÈes aux animations                                       */
+/* Fonctions liées aux animations                                       */
 /************************************************************************/
 
 void lancer_animation(Jeu *un_jeu, Animation *une_animation, int temps, SDL_Surface *ecran, int x, int y)
@@ -787,6 +927,13 @@ void enlever_pt_action_ieme_joueur(Jeu * jeu, const int i, const int nb)
 /************************************************************************/
 /* Fonctions de suvegarde et chargement                                 */
 /************************************************************************/
+
+/**
+ * \brief      Sauvegarde un jeu
+ * \details    Sauvegarde un jeu dans un fichier déjà ouvert
+ * \param      un_jeu              Pointeur sur Jeu à sauvegarder
+ * \param      f                   Pointeur sur fichier de sauvegarde
+ */
 void sauvegarde_jeu(const Jeu *un_jeu, FILE*f)
 {
 	int i;
@@ -821,6 +968,12 @@ void sauvegarde_jeu(const Jeu *un_jeu, FILE*f)
     }
 }
 
+/**
+ * \brief      Charge un jeu
+ * \details    Charge un jeu à partir d'une sauvegarde
+ * \param      f              Pointeur sur fichier à charger
+ * \return     Une planète ayant les informations du fichier de sauvegarde
+ */
 Jeu* ouverture_jeu(FILE *f)
 {
     Jeu *jeu_ouvert;

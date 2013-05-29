@@ -26,7 +26,7 @@ void initialiser_flotte(Flotte *flotte)
 	flotte->indice_joueur = 0;
 	flotte->indice_tableau_joueur = 0;
 	flotte->portee_vision = 1;
-    flotte->taille_maximum_flotte = 10; /*valeur temporaire qu'il faudra éventuellemnt modifié*/
+    flotte->taille_maximum_flotte = 10; /*valeur temporaire qu'il faudra éventuellemnt modifier*/
     flotte->taille_flotte = 0;
 	flotte->pt_mouvement_espace_flotte = 0;
     flotte->tab_unite = (Unite **)malloc(sizeof(Unite *)*flotte->taille_maximum_flotte);
@@ -48,7 +48,7 @@ void liberer_flotte(Flotte *flotte)
 	}
 	free(flotte->tab_unite);
 	flotte->tab_unite = NULL;
-	flotte->taille_maximum_flotte = 10; /*valeur temporaire qu'il faudra éventuellemnt modifié*/
+	flotte->taille_maximum_flotte = 10; /*valeur temporaire qu'il faudra éventuellemnt modifier*/
 	flotte->taille_flotte = 0;
 	flotte->x_flotte = 0;
 	flotte->y_flotte = 0;
@@ -151,6 +151,12 @@ int get_portee_vision_flotte(const Flotte* une_flotte)
 /* Fonctions diverses                                                   */
 /************************************************************************/
 
+/**
+ * \brief      Ajoute une unite à une flotte
+ * \details    Ajoute une unite passée en paramètre à une flotte
+ * \param      flotte         Pointeur sur flotte dans laquelle sera l'unite
+ * \param      unite          Pointeur sur unite à ajouter
+ */
 int ajouter_unite_flotte(Flotte *flotte, Unite *unite)
 {
 	int min = flotte->pt_mouvement_espace_flotte;
@@ -172,6 +178,12 @@ int ajouter_unite_flotte(Flotte *flotte, Unite *unite)
     }
 }
 
+/**
+ * \brief      Transfère unite d'une flotte à une autre
+ * \details    Transfère d'une unite passée en paramètre d'une flotte à une autre passée en paramètre
+ * \param      flotte         Pointeur sur flotte dans laquelle l'unite sera transférée
+ * \param      unite          Pointeur sur unite à transférer
+ */
 int transferer_unite_flotte(Flotte *flotte, Unite *unite)
 {
 	int min = flotte->pt_mouvement_espace_flotte;
@@ -192,6 +204,12 @@ int transferer_unite_flotte(Flotte *flotte, Unite *unite)
     }
 }
 
+/**
+ * \brief      Retire une unite d'une flotte
+ * \details    Retire une unité d'une flotte passée en paramètre
+ * \param      flotte         Pointeur sur flotte dans laquelle est l'unite
+ * \param      indice_unite   indice de l'unite à supprimer
+ */
 int retirer_unite_flotte(Flotte *flotte,const int indice_unite)
 {
     int i;
@@ -207,6 +225,11 @@ int retirer_unite_flotte(Flotte *flotte,const int indice_unite)
     else{return 0;}
 }
 
+/**
+ * \brief      Affiche les informations d'une flotte
+ * \details    Affiche les coordonnées de la flotte, ses points de mouvements, sa taille, et ses différentes unités
+ * \param      flotte         Pointeur sur flotte à afficher
+ */
 void afficher_flotte(const Flotte *flotte)
 {
     int i;
@@ -219,6 +242,12 @@ void afficher_flotte(const Flotte *flotte)
 
 }
 
+/**
+ * \brief      Retire des points de mouvement à une flotte
+ * \details    Retire des points de mouvements passés en paramètre à une flotte
+ * \param      flotte         Pointeur sur flotte à modifier
+ * \param      distance       Points de mouvement à supprimer
+ */
 void enlever_pt_mouvement_espace_flotte(Flotte *une_flotte,const int distance)
 {
     int temp = get_pt_mouvement_espace_flotte(une_flotte);
@@ -226,6 +255,11 @@ void enlever_pt_mouvement_espace_flotte(Flotte *une_flotte,const int distance)
     set_pt_mouvement_espace_flotte(une_flotte, temp);
 }
 
+/**
+ * \brief      Réinitialise les points de mouvement d'une flotte
+ * \details    Réinitialise les points de mouvements de tous les unite d'une flotte passée en paramètre
+ * \param      flotte         Pointeur sur flotte à modifier
+ */
 void reinitialiser_mouvement_flotte(Flotte *une_flotte)
 {
 	int i;
@@ -240,6 +274,11 @@ void reinitialiser_mouvement_flotte(Flotte *une_flotte)
 	une_flotte->pt_mouvement_espace_flotte = min;
 }
 
+/**
+ * \brief      Réinitialise les points de déplacement des unite d'une flotte
+ * \details    Réinitialise les points de déplacement de tous les unite d'une flotte passée en paramètre
+ * \param      flotte         Pointeur sur flotte à modifier
+ */
 void reinitialiser_deplacement_unite_flotte(Flotte *une_flotte)
 {
 	int i;
@@ -249,6 +288,11 @@ void reinitialiser_deplacement_unite_flotte(Flotte *une_flotte)
 	}
 }
 
+/**
+ * \brief      Réinitialise les points d'action des unite d'une flotte
+ * \details    Réinitialise les points d'action de tous les unite d'une flotte passée en paramètre
+ * \param      flotte         Pointeur sur flotte à modifier
+ */
 void reinitialiser_pt_action_unite_flotte(Flotte *une_flotte)
 {
 	int i;
@@ -263,6 +307,12 @@ void reinitialiser_pt_action_unite_flotte(Flotte *une_flotte)
 /* Fonctions sauvegarde et chargement                                   */
 /************************************************************************/
 
+/**
+ * \brief      Sauvegarde une flotte
+ * \details    Sauvegarde une flotte dans un fichier déjà ouvert
+ * \param      flotte         Pointeur sur flotte à sauvegarder
+ * \param      f              Pointeur sur ichier de sauvegarde
+ */
 void sauvegarde_flotte(const Flotte *une_flotte, FILE*f)
 {
     int i;
@@ -281,6 +331,12 @@ void sauvegarde_flotte(const Flotte *une_flotte, FILE*f)
     }
 }
 
+/**
+ * \brief      Charge une flotte
+ * \details    Charge une flotte à partir d'une sauvegarde
+ * \param      f              Pointeur sur fichier à charger
+ * \return     Un pointeur sur une flotte ayant les informations du fichier de sauvegarde
+ */
 Flotte* ouverture_flotte(FILE *f)
 {
     Flotte* flotte_ouverte;

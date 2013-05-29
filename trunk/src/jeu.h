@@ -1,3 +1,11 @@
+/**
+ * \file      jeu.c
+ * \author    BODARD, REYNAUD, VUILLEMIN
+ * \version   1.0
+ * \brief     Définit le jeu
+ * \details   Cette classe définit le jeu et ses composantes (flottes, terrain...)
+ */
+
 #ifndef _JEU_H_
 #define _JEU_H_
 
@@ -12,28 +20,31 @@
 #include "animation.h"
 
 /**
- * \file      Module terrain
- * \author
- * \version   0.1
- * \date      13 mars 2013
- * \brief     PlanËte et ses particularitÈs
- *
- * \details
+ * \struct Jeu
+ * \brief Définit le jeu
  */
-
  typedef struct
  {
-    int tour_en_cours;
-	int joueur_en_cours;
-	int joueur_en_cours_combat;
-	int nb_joueur;
-	Joueur *tab_joueur;
-
-	Flotte *selection_flotte;
-	Planete *selection_planete;
-	bool tab_unite_selectionnee[10];
-	Animation *animation_en_cours;
-	Joueur * gagnant_combat;
+     /** Définit le nombre de tours en cours */
+     int tour_en_cours;
+     /** Définit le joueur en train de jouer */
+     int joueur_en_cours;
+     /** Définit le joueur en train de jouer lors d'un combat */
+     int joueur_en_cours_combat;
+     /** Définit le nombre de joueurs lors d'une partie */
+     int nb_joueur;
+     /** Pointeur sur tableau regroupant tous les joueurs d'une partie */
+     Joueur *tab_joueur;
+     /** Pointeur sur flotte sélectionnée */
+     Flotte *selection_flotte;
+     /** Pointeur sur planète sélectionnée */
+     Planete *selection_planete;
+     /** Unités sélectionnées */
+     bool tab_unite_selectionnee[10];
+     /** Définit l'animation à afficher (Pointeur sur Animation) */
+     Animation *animation_en_cours;
+     /** Définit le joueur qui a gagné le combat */
+     Joueur * gagnant_combat;
  }Jeu;
 
 void initialise_jeu(Jeu *un_jeu);
