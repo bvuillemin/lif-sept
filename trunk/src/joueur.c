@@ -532,4 +532,3 @@ Joueur* ouverture_joueur(FILE *f)
     sscanf(fgets(chaine, 50, f), "%d", &joueur_ouvert->pt_action_joueur_total);
     return joueur_ouvert;
 }
-

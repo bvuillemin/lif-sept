@@ -16,29 +16,45 @@ typedef enum
 	ROUGE
 }Couleur_joueur;
 
+/**
+ * \struct Joueur
+ * \brief Définit un Joueur d'un Jeu
+ */
 typedef struct
 {
+    /** Numéro du joueur */
     int numero_joueur;
+    /** Détermine si le joueur est une intelligence artificielle ou non */
 	bool ia;
-
+    /** Vision du terrain du joueur */
 	Vision_terrain* vision_terrain;
+    /** Couleur du joueur */
     Couleur_joueur couleur_joueur;
-
+    /** Ressources de métal */
     int metal;
+    /** Ressources d'argent */
     int argent;
+    /** Ressources de carburant */
     int carburant;
+    /** Population gérée par le joueur */
     int population;
-
-	int nb_planete; /*Correspond au nombre de planËtes possÈdÈes et donc au nombre de cases du tableau ci-dessous*/
+    /** Nombre de planètes possédées */
+	int nb_planete;
+    /** Nombre de planètes qu'un joueur peut posséder */
 	int nb_planete_possible;
+    /** Double pointeur de tableau de planètes que possède un joueur */
 	Planete** tab_planete;
-
+    /** Nombre de flottes que possède un joueur */
 	int nb_flotte;
+    /** Bombre de flottes que peut posséder un joueur */
 	int nb_flotte_possible;
+    /** Double pointeur de tableau de flottes que possède un joueur */
     TableauDynamique tab_flotte;
-
+    /** Points d'action d'un joueur */
 	int pt_action_joueur;
+    /** Points d'action maximales d'un joueur */
 	int pt_action_joueur_total;
+    /** Nom du joueur */
     char nom_joueur[20];
 }Joueur;
 
