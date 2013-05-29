@@ -3299,7 +3299,7 @@ void animation_attaque(Terrain_combat * un_terrain_combat,Jeu * jeu, SDL_Surface
 	else if((x_depart == x_arrivee)&&(y_depart < y_arrivee))
 	{
 		
-		while(y_depart > y_arrivee){
+		while(y_depart < y_arrivee){
 			initialise_sdl_rect(&pos_laser,x_depart,y_depart,0,0);
 			SDL_BlitSurface(laser, NULL,  ecran,&pos_laser);SDL_Flip(ecran);
 			SDL_Delay(50);
@@ -3349,7 +3349,7 @@ void animation_attaque(Terrain_combat * un_terrain_combat,Jeu * jeu, SDL_Surface
 	else if((x_depart > x_arrivee)&&(y_depart < y_arrivee))
 	{
 		
-		while(x_depart < x_arrivee){
+		while(x_depart > x_arrivee){
 			initialise_sdl_rect(&pos_laser,x_depart,y_depart,0,0);
 			SDL_BlitSurface(laser, NULL,  ecran,&pos_laser);SDL_Flip(ecran);
 			SDL_Delay(50);
@@ -3362,7 +3362,7 @@ void animation_attaque(Terrain_combat * un_terrain_combat,Jeu * jeu, SDL_Surface
 	else if((x_depart > x_arrivee)&&(y_depart > y_arrivee))
 	{
 		
-		while(x_depart < x_arrivee){
+		while(x_depart > x_arrivee){
 			initialise_sdl_rect(&pos_laser,x_depart,y_depart,0,0);
 			SDL_BlitSurface(laser, NULL,  ecran,&pos_laser);SDL_Flip(ecran);
 			SDL_Delay(50);
