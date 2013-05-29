@@ -10,7 +10,7 @@
 
 /**
  * \struct Sauvegarde
- * \brief Planète du jeu
+ * \brief Sauvegarde du jeu
  */
 typedef struct
 {

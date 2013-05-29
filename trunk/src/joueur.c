@@ -182,6 +182,11 @@ bool get_ia_joueur(Joueur* un_joueur)
 /* Fonctions                                                            */
 /************************************************************************/
 
+/**
+ * \brief      Ajoute une planète à un joueur
+ * \param      un_joueur           Pointeur sur Joueur
+ * \param      une_planete         Pointeur sur Planete
+ */
 void ajouter_planete_joueur(Joueur *un_joueur, Planete *une_planete)
 {
     int i = un_joueur->nb_planete;
@@ -198,6 +203,11 @@ void ajouter_planete_joueur(Joueur *un_joueur, Planete *une_planete)
     }
 }
 
+/**
+ * \brief      Ajoute une flotte à un joueur
+ * \param      un_joueur           Pointeur sur Joueur
+ * \param      une_fotte           Pointeur sur Flotte
+ */
 void ajouter_flotte_joueur(Joueur *un_joueur, Flotte *une_flotte)
 {
 	int i = un_joueur->nb_flotte;
@@ -208,6 +218,11 @@ void ajouter_flotte_joueur(Joueur *un_joueur, Flotte *une_flotte)
 	free(une_flotte);
 }
 
+/**
+ * \brief      Retire une flotte à un joueur
+ * \param      un_joueur           Pointeur sur Joueur
+ * \param      une_fotte           Pointeur sur Flotte
+ */
 void retirer_flotte_joueur(Joueur *un_joueur, int indice_flotte)
 {
     int i;
@@ -218,6 +233,12 @@ void retirer_flotte_joueur(Joueur *un_joueur, int indice_flotte)
     }
 }
 
+/**
+ * \brief      Ajoute unité à une flotte d'un joueur
+ * \param      un_joueur           Pointeur sur Joueur
+ * \param      une_unité           Pointeur sur Unité
+ * \param      i                   Numéro de la flotte
+ */
 void ajouter_unite_ieme_flotte_joueur(Joueur *un_joueur, Unite * unite, int i)
 {
 	Flotte * flotte;
@@ -226,6 +247,14 @@ void ajouter_unite_ieme_flotte_joueur(Joueur *un_joueur, Unite * unite, int i)
 	ajouter_unite_flotte(flotte, unite);
 }
 
+/**
+ * \brief      Transfère de ressources d'une planète un joueur
+ * \param      un_joueur           Pointeur sur Joueur
+ * \param      metal               Ressources en métal
+ * \param      argent              Ressources en argent
+ * \param      carburant           Ressources en carburant
+ * \param      populatio           Ressources en population
+ */
 void recuperer_ressource_planete(Joueur *un_joueur, int *metal, int *argent, int *carburant, int *population)
 {
 	int i;
@@ -238,48 +267,103 @@ void recuperer_ressource_planete(Joueur *un_joueur, int *metal, int *argent, int
 	}
 }
 
+/**
+ * \brief      Transfère de ressources d'un joueur
+ * \param      un_joueur           Pointeur sur Joueur
+ * \param      metal               Pointeur sur Ressources en métal
+ * \param      argent              Pointeur sur Ressources en argent
+ * \param      carburant           Pointeur sur Ressources en carburant
+ * \param      populatio           Pointeur sur Ressources en population
+ */
 void recuperer_ressource_joueur(Joueur *un_joueur, int *metal, int *argent, int *carburant, int *population)
 {
-	int i;
 	*metal = *metal + un_joueur->metal;
 	*argent = *argent + un_joueur->argent;
 	*carburant = *carburant + un_joueur->carburant;
 	*population = *population + un_joueur->population;
 }
 
+/**
+ * \brief      Ajoute des ressources en métal à un joueur
+ * \param      un_joueur           Pointeur sur Joueur
+ * \param      nb                  Ressources en métal
+ */
 void ajouter_metal(Joueur *un_joueur, int nb)
 {
     un_joueur->metal = un_joueur->metal + nb;
 }
+/**
+ * \brief      Retire des ressources en métal à un joueur
+ * \param      un_joueur           Pointeur sur Joueur
+ * \param      nb                  Ressources en métal
+ */
 void retirer_metal(Joueur *un_joueur, int nb)
 {
     un_joueur->metal = un_joueur->metal - nb;
 }
+
+/**
+ * \brief      Ajoute des ressources en argent à un joueur
+ * \param      un_joueur           Pointeur sur Joueur
+ * \param      nb                  Ressources en argent
+ */
 void ajouter_argent(Joueur *un_joueur, int nb)
 {
 	un_joueur->argent = un_joueur->argent + nb;
 }
+/**
+ * \brief      Retire des ressources en argent à un joueur
+ * \param      un_joueur           Pointeur sur Joueur
+ * \param      nb                  Ressources en argent
+ */
 void retirer_argent(Joueur *un_joueur, int nb)
 {
     un_joueur->argent = un_joueur->argent - nb;
 }
+
+/**
+ * \brief      Ajoute des ressources en carburant à un joueur
+ * \param      un_joueur           Pointeur sur Joueur
+ * \param      nb                  Ressources en carburant
+ */
 void ajouter_carburant(Joueur *un_joueur, int nb)
 {
     un_joueur->carburant = un_joueur->carburant + nb;
 }
+/**
+ * \brief      Retire des ressources en carburant à un joueur
+ * \param      un_joueur           Pointeur sur Joueur
+ * \param      nb                  Ressources en carburant
+ */
 void retirer_carburant(Joueur *un_joueur, int nb)
 {
     un_joueur->carburant = un_joueur->carburant - nb;
 }
+
+/**
+ * \brief      Ajoute des ressources en population à un joueur
+ * \param      un_joueur           Pointeur sur Joueur
+ * \param      nb                  Ressources en population
+ */
 void ajouter_population(Joueur *un_joueur, int nb)
 {
     un_joueur->population = un_joueur->population + nb;
 }
+/**
+ * \brief      Retire des ressources en population à un joueur
+ * \param      un_joueur           Pointeur sur Joueur
+ * \param      nb                  Ressources en population
+ */
 void retirer_population(Joueur *un_joueur, int nb)
 {
     un_joueur->population = un_joueur->population - nb;
 }
 
+/**
+ * \brief      Permet à un Joueur de coloniser une Planete
+ * \param      un_joueur           Pointeur sur Joueur
+ * \param      une_planete         Pointeur sur Planète
+ */
 void colonisation_planete(Joueur *un_joueur, Planete *une_planete)
 {
     int i = un_joueur->nb_planete;
@@ -309,6 +393,12 @@ void colonisation_planete(Joueur *un_joueur, Planete *une_planete)
     }
 }
 
+/**
+ * \brief      Crée une unité d'un joueur sur une planète
+ * \param      un_joueur           Pointeur sur Joueur
+ * \param      une_planete         Pointeur sur Planète
+ * \param      choix               Choix de l'unité à créer
+ */
 void creation_unite_planete(Joueur *un_joueur, Planete *une_planete, int choix)
 {
     if(une_planete->unite_nb_tour_restant <= 0)
@@ -344,6 +434,11 @@ void creation_unite_planete(Joueur *un_joueur, Planete *une_planete, int choix)
 
 }
 
+/**
+ * \brief      Retire des points d'action à un joueur
+ * \param      un_joueur           Pointeur sur Joueur
+ * \param      point               Points d'action à retirer
+ */
 void enlever_pt_action_joueur(Joueur *un_joueur, const int point)
 {
 	int temp = get_pt_action_joueur(un_joueur);
@@ -351,6 +446,10 @@ void enlever_pt_action_joueur(Joueur *un_joueur, const int point)
     set_pt_action_joueur(un_joueur, temp);
 }
 
+/**
+ * \brief      Réinitialise les points d'action d'un joueur
+ * \param      un_joueur           Pointeur sur Joueur
+ */
 void reinitialiser_pt_action_joueur(Joueur *un_joueur)
 {
 	un_joueur->pt_action_joueur=un_joueur->pt_action_joueur_total;
@@ -361,6 +460,12 @@ void reinitialiser_pt_action_joueur(Joueur *un_joueur)
 /* Fonctions sauvegarde et chargement                                   */
 /************************************************************************/
 
+/**
+ * \brief      Sauvegarde un joueur
+ * \details    Sauvegarde un joueur dans un fichier déjà ouvert
+ * \param      un_joueur           Pointeur sur Joueur à sauvegarder
+ * \param      f                   Pointeur sur Fichier de sauvegarde
+ */
 void sauvegarde_joueur(const Joueur *un_joueur, FILE*f)
 {
     int i;
@@ -387,6 +492,13 @@ void sauvegarde_joueur(const Joueur *un_joueur, FILE*f)
     fprintf(f, "%d\n", un_joueur->pt_action_joueur);
     fprintf(f, "%d\n", un_joueur->pt_action_joueur_total);
 }
+
+/**
+ * \brief      Charge un joueur
+ * \details    Charge un joueur à partir d'une sauvegarde
+ * \param      f                   Pointeur sur Fichier de sauvegarde
+ * \return     Un pointeur sur un joueur ayant les informations du fichier de sauvegarde
+ */
 Joueur* ouverture_joueur(FILE *f)
 {
     Joueur *joueur_ouvert;
