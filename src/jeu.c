@@ -18,7 +18,7 @@
 #include "TableauDynamique.h"
 
 /************************************************************************/
-/* Initialisation, crÈation et destruction                              */
+/* Initialisation, création et destruction                              */
 /************************************************************************/
 
 void initialise_jeu(Jeu *un_jeu)
@@ -102,7 +102,7 @@ Joueur * get_ieme_joueur_jeu(Jeu * un_jeu,int i)
 
 
 /************************************************************************/
-/* Fonctions liÈes au jeu                                               */
+/* Fonctions liées au jeu                                               */
 /************************************************************************/
 
 /**
@@ -725,6 +725,16 @@ bool deplacement_unite_flotte(Jeu *un_jeu, Joueur *un_joueur, Terrain_espace *un
 /* Fonctions liées aux animations                                       */
 /************************************************************************/
 
+/**
+ * \brief      Lance une animation
+ * \details    Lance une animation sur des coordonnées passées en paramètre
+ * \param      un_jeu              Pointeur sur Jeu
+ * \param      une_animation       Pointeur sur animation
+ * \param      temps               Temps d'affichage de l'animation
+ * \param      ecran               Pointeur sur l'écran (SDL_Surface) sur lequel va s'afficher l'animation
+ * \param      x                   Abscisse
+ * \param      y                   Ordonnée
+ */
 void lancer_animation(Jeu *un_jeu, Animation *une_animation, int temps, SDL_Surface *ecran, int x, int y)
 {
 	SDL_Surface *frame;
@@ -745,6 +755,16 @@ void lancer_animation(Jeu *un_jeu, Animation *une_animation, int temps, SDL_Surf
 	SDL_FreeSurface(frame);
 }
 
+/**
+ * \brief      Lance une animation bloquant le jeu
+ * \details    Lance une animation bloquant le jeu (pas d'action possible durant l'affichage de l'animation) sur des coordonnées passées en paramètre
+ * \param      un_jeu              Pointeur sur Jeu
+ * \param      une_animation       Pointeur sur animation
+ * \param      temps               Temps d'affichage de l'animation
+ * \param      ecran               Pointeur sur l'écran (SDL_Surface) sur lequel va s'afficher l'animation
+ * \param      x                   Abscisse
+ * \param      y                   Ordonnée
+ */
 void lancer_animation_bloquante(Jeu *un_jeu, Terrain_espace *un_terrain_espace, Animation *une_animation, SDL_Surface *ecran, int x, int y)
 {
 	SDL_Surface *frame;
@@ -775,6 +795,16 @@ void lancer_animation_bloquante(Jeu *un_jeu, Terrain_espace *un_terrain_espace, 
 	SDL_FreeSurface(tampon);
 }
 
+/**
+ * \brief      Lance une animation bloquant le jeu lors d'un combat
+ * \details    Lance une animation bloquant le jeu (pas d'action possible durant l'affichage de l'animation) lors d'un combat sur des coordonnées passées en paramètre
+ * \param      un_jeu              Pointeur sur Jeu
+ * \param      une_animation       Pointeur sur animation
+ * \param      temps               Temps d'affichage de l'animation
+ * \param      ecran               Pointeur sur l'écran (SDL_Surface) sur lequel va s'afficher l'animation
+ * \param      x                   Abscisse
+ * \param      y                   Ordonnée
+ */
 void lancer_animation_bloquante_combat(Jeu *un_jeu, Terrain_combat *un_terrain_combat, Animation *une_animation, SDL_Surface *ecran, int x, int y)
 {
 	SDL_Surface *frame;
@@ -805,6 +835,17 @@ void lancer_animation_bloquante_combat(Jeu *un_jeu, Terrain_combat *un_terrain_c
 	SDL_FreeSurface(tampon);
 }
 
+/**
+ * \brief      Met à jour une animation
+ * \details    Met à jour une animation passée en paramètre
+ * \param      un_jeu              Pointeur sur Jeu
+ * \param      un_terrain_espace   Pointeur sur Terrain_espace
+ * \param      une_animation       Pointeur sur animation
+ * \param      temps               Temps d'affichage de l'animation
+ * \param      ecran               Pointeur sur l'écran (SDL_Surface) sur lequel va s'afficher l'animation
+ * \param      tab_surface         Pointeur sur pointeur Stoquant toutes les surfaces de l'écran
+ * \param      interface_affichee  Entier permettant de savoir si on affiche une flotte, une planète, etc.
+ */
 void maj_animation(Jeu *un_jeu, Terrain_espace *un_terrain_espace, Animation *une_animation, int temps, SDL_Surface *ecran, SDL_Surface **tab_surface, int interface_affichee)
 {
 	SDL_Surface *frame;
@@ -832,8 +873,14 @@ void maj_animation(Jeu *un_jeu, Terrain_espace *un_terrain_espace, Animation *un
 
 
 /************************************************************************/
-/* Fonctions liÈes au combat                                            */
+/* Fonctions liées au combat                                            */
 /************************************************************************/
+
+/**
+ * \brief      Place les unités d'une flotte en haut à gauche de la carte
+ * \param      un_terrain_combat   Pointeur sur Terrain_combat
+ * \param      flotte              Pointeur sur Flotte
+ */
 void placer_unite_flotte_en_haut(Terrain_combat * un_terrain_combat, Flotte * flotte)
 {
         int i,m,n;
@@ -853,6 +900,12 @@ void placer_unite_flotte_en_haut(Terrain_combat * un_terrain_combat, Flotte * fl
         }
 
 }
+
+/**
+ * \brief      Place les unités d'une flotte en bas à droite de la carte
+ * \param      un_terrain_combat   Pointeur sur Terrain_combat
+ * \param      flotte              Pointeur sur Flotte
+ */
 void placer_unite_flotte_en_bas(Terrain_combat * un_terrain_combat, Flotte * flotte)
 {
         int i,m,n;
@@ -874,6 +927,14 @@ void placer_unite_flotte_en_bas(Terrain_combat * un_terrain_combat, Flotte * flo
         }
 
 }
+
+/**
+ * \brief      Sélectionne une case sur un terrain_combat
+ * \param      jeu                 Pointeur sur Jeu
+ * \param      un_terrain_combat   Pointeur sur Terrain_combat
+ * \param      x                   Abscisse
+ * \param      y                   Ordonnée
+ */
 void selectionner_case_combat(Jeu *jeu,Terrain_combat *un_terrain_combat,const int x, const int y)
 {
         Case_terrain_combat *une_case;
@@ -889,6 +950,11 @@ void selectionner_case_combat(Jeu *jeu,Terrain_combat *un_terrain_combat,const i
                 set_une_case_selectionnee(un_terrain_combat,1);}
 }
 
+/**
+ * \brief      Passe le tour lors d'un combat
+ * \param      jeu                 Pointeur sur Jeu
+ * \param      un_terrain_combat   Pointeur sur Terrain_combat
+ */
 void passer_tour_combat(Jeu * jeu, Terrain_combat * un_terrain_combat)
 {
         Joueur * joueur;
@@ -916,6 +982,13 @@ void passer_tour_combat(Jeu * jeu, Terrain_combat * un_terrain_combat)
 
 }
 
+/**
+ * \brief      Supprime des points d'action à un joueur
+ * \details    Supprime des points d'action à un joueur passé en paramètre
+ * \param      jeu                 Pointeur sur Jeu
+ * \param      i                   Numéro du joueur
+ * \param      nb                  Points d'action à enlever
+ */
 void enlever_pt_action_ieme_joueur(Jeu * jeu, const int i, const int nb)
 {
 	Joueur * joueur;
