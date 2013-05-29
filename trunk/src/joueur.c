@@ -396,7 +396,8 @@ Joueur* ouverture_joueur(FILE *f)
     sscanf(fgets(chaine, 50, f), "%d", &b);
     sscanf(fgets(chaine, 50, f), "%d", &c);
     joueur_ouvert = creer_joueur(chaine, b, c);
-    sscanf(fgets(chaine, 50, f), "%d", &joueur_ouvert->couleur_joueur);
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    joueur_ouvert->couleur_joueur = b;
     sscanf(fgets(chaine, 50, f), "%d", &joueur_ouvert->metal);
     sscanf(fgets(chaine, 50, f), "%d", &joueur_ouvert->argent);
     sscanf(fgets(chaine, 50, f), "%d", &joueur_ouvert->carburant);
