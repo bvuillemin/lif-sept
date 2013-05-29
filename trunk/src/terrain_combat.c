@@ -233,7 +233,7 @@ void un_tour_combat(Terrain_combat * un_terrain_combat, Flotte * flotte)
 int attaquer(Terrain_combat * un_terrain_combat,Unite * une_unite,const int x,const int y)
 {	
 	Unite * victime;
-	int pa_un, pv_vi;
+	int pt_attaque_unite, pt_vie_victime,pt_action_unite;
 	int p;
 	Case_terrain_combat * une_case;
 	une_case = get_case_terrain_combat(un_terrain_combat,x,y);
@@ -241,9 +241,10 @@ int attaquer(Terrain_combat * un_terrain_combat,Unite * une_unite,const int x,co
 	if(get_presence_unite(une_case))
 	{
 		victime = get_unite(une_case);
-		pa_un = get_pt_attaque(une_unite);
-		pv_vi = get_pt_vie(victime);
-		set_pt_vie(victime ,pv_vi - pa_un);
+		pt_attaque_unite = get_pt_attaque(une_unite);
+		pt_vie_victime = get_pt_vie(victime);
+		pt_action_unite = get_pt_action(une_unite);
+		set_pt_vie(victime ,pt_vie_victime - pt_attaque_unite);
 		printf("a réussi à attaquer\n");
 		if (get_pt_vie(victime)<=0){p=-2;return p;}
 		else{p=1;return p;}
@@ -297,6 +298,12 @@ void supprimer_unite_flotte(Terrain_combat * un_terrain_combat,Flotte * flotte ,
 	une_case = get_case_terrain_combat(un_terrain_combat,x,y);
 	retirer_unite(une_case);
 	retirer_unite_flotte(flotte,i);
+}
+void deselectionner(Terrain_combat * un_terrain_combat)
+{
+	set_selection_unite(get_selection(un_terrain_combat),0);
+	set_selection(un_terrain_combat,NULL);
+	set_une_case_selectionnee(un_terrain_combat,0);
 }
 /*void test_module_terrain_combat()
 {

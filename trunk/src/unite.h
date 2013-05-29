@@ -61,6 +61,12 @@ int get_portee(const Unite *unite_jeu);
 void set_pt_vie(Unite *unite_jeu, const int x);
 int get_pt_vie(const Unite *unite_jeu);
 
+void set_pt_attaque_total(Unite *unite_jeu, const int x);
+int get_pt_attaque_total(const Unite *unite_jeu);
+
+void set_pt_action_total(Unite *unite_jeu, const int x);
+int get_pt_action_total(const Unite *unite_jeu);
+
 void set_x_unite(Unite *unite_jeu, const int x);
 int get_x_unite(const Unite *unite_jeu);
 

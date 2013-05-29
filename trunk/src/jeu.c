@@ -15,7 +15,7 @@
 #include "affichage.h"
 #include "joueur.h"
 #include "ia.h"
-
+#include "TableauDynamique.h"
 
 /************************************************************************/
 /* Initialisation, création et destruction                              */
@@ -535,7 +535,7 @@ bool fusion_flotte(Joueur *un_joueur, Terrain_espace *un_terrain_espace, Flotte 
 
 
 bool deplacement_unite_flotte(Jeu *un_jeu, Joueur *un_joueur, Terrain_espace *un_terrain_espace, Flotte *une_flotte, int x, int y)
-{
+{/*
 	if(peut_se_deplacer(une_flotte, x, y))
 	{
 		int distance, i;
@@ -555,8 +555,8 @@ bool deplacement_unite_flotte(Jeu *un_jeu, Joueur *un_joueur, Terrain_espace *un
 		if(case_arrivee->presence_flotte == true)
 		{
 			if(fusion_flotte(un_joueur, un_terrain_espace, une_flotte, case_arrivee->flotte))
-			{
-				/*free(une_flotte);*/
+			{*/
+				/*free(une_flotte);*//*
 				return true;
 			}
 		}
@@ -576,7 +576,7 @@ bool deplacement_unite_flotte(Jeu *un_jeu, Joueur *un_joueur, Terrain_espace *un
 			un_jeu->selection_flotte = get_flotte(get_case_terrain_espace(un_terrain_espace, x, y));
 			return true;
 		}
-	}
+	}*/
 	return false;
 }
 
@@ -606,6 +606,36 @@ void lancer_animation(Jeu *un_jeu, Animation *une_animation, int temps, SDL_Surf
 }
 
 void lancer_animation_bloquante(Jeu *un_jeu, Terrain_espace *un_terrain_espace, Animation *une_animation, SDL_Surface *ecran, int x, int y)
+{
+	SDL_Surface *frame;
+	SDL_Surface * tampon;
+	SDL_Rect position_frame;
+	SDL_Rect position_ecran = {0, 0, 0, 0};
+	SDL_Rect position_tampon = {0, 0, 0, 0};
+	int i;
+
+	frame = IMG_Load(une_animation->nom);
+	initialise_sdl_rect(&position_ecran, x, y, frame->w, frame->h);
+	tampon = SDL_CreateRGBSurface(SDL_HWSURFACE, frame->w, frame->h, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
+	SDL_BlitSurface(ecran, &position_ecran, tampon, &position_tampon);
+	for(i=0;i<une_animation->nb_frame;i++)
+	{
+		initialise_sdl_rect(&position_frame, une_animation->taille_frame_x * une_animation->frame_en_cours, 0, une_animation->taille_frame_x, une_animation->taille_frame_y);
+		SDL_BlitSurface(frame, &position_frame, ecran, &position_ecran);
+		une_animation->frame_en_cours ++;
+		SDL_Flip(ecran);
+		SDL_Delay(une_animation->nb_ms);
+		SDL_BlitSurface(tampon, &position_tampon, ecran, &position_ecran);
+		SDL_Flip(ecran);
+	}
+	une_animation->frame_en_cours = 0;
+	une_animation->x = 0;
+	une_animation->y = 0;
+	SDL_FreeSurface(frame);
+	SDL_FreeSurface(tampon);
+}
+
+void lancer_animation_bloquante_combat(Jeu *un_jeu, Terrain_combat *un_terrain_combat, Animation *une_animation, SDL_Surface *ecran, int x, int y)
 {
 	SDL_Surface *frame;
 	SDL_Surface * tampon;
@@ -714,7 +744,7 @@ void selectionner_case_combat(Jeu *jeu,Terrain_combat *un_terrain_combat,const i
         {       set_une_case_selectionnee(un_terrain_combat,0);
                 set_selection(un_terrain_combat,NULL);
                 set_selection_unite(une_case, 0);
-        }else if(get_presence_unite(une_case) && !get_une_case_selectionnee(un_terrain_combat) && (get_indice_joueur_unite(unite)== jeu-> joueur_en_cours)){
+        }else if(get_presence_unite(une_case) && !get_une_case_selectionnee(un_terrain_combat) && (get_indice_joueur_unite(unite)== jeu-> joueur_en_cours_combat)){
                 set_selection_unite(une_case, 1);set_selection(un_terrain_combat,une_case);
                 set_une_case_selectionnee(un_terrain_combat,1);}
 }
@@ -723,23 +753,27 @@ void passer_tour_combat(Jeu * jeu, Terrain_combat * un_terrain_combat)
 {
         Joueur * joueur;
         Flotte * flotte;
-        if(jeu->joueur_en_cours == 0)
+	if(get_une_case_selectionnee(un_terrain_combat)){
+		deselectionner(un_terrain_combat);
+	}
+        if(jeu->joueur_en_cours_combat == 0)
         {
                 joueur=get_ieme_joueur_jeu(jeu, 0);
                 flotte = get_ieme_flotte_joueur(joueur,0);
                 reinitialiser_deplacement_unite_flotte(flotte);
                 reinitialiser_pt_action_joueur(joueur);
 
-                jeu->joueur_en_cours = 1;
+                jeu->joueur_en_cours_combat = 1;
         }
-        else if (jeu->joueur_en_cours == 1)
+        else if (jeu->joueur_en_cours_combat == 1)
         {
                 joueur=get_ieme_joueur_jeu(jeu, 1);
                 flotte = get_ieme_flotte_joueur(joueur,0);
                 reinitialiser_deplacement_unite_flotte(flotte);
                 reinitialiser_pt_action_joueur(joueur);
-                jeu->joueur_en_cours = 0;
+                jeu->joueur_en_cours_combat = 0;
         }else{printf("ERREUR ! \n");}
+
 }
 
 void enlever_pt_action_ieme_joueur(Jeu * jeu, const int i, const int nb)

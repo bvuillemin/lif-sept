@@ -12,7 +12,7 @@
 
 #include "joueur.h"
 #include "constante.h"
-
+#include "TableauDynamique.h"
 
 /************************************************************************/
 /* Initialisation, création et destruction                              */

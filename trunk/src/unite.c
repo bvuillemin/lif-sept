@@ -130,6 +130,26 @@ int get_indice_unite_dans_flotte(const Unite *unite)
 {
     return unite->indice_dans_flotte;
 }
+void set_pt_attaque(Unite *unite_jeu, const int x)
+{
+	unite_jeu->pt_attaque = x;
+}
+void set_pt_attaque_total(Unite *unite_jeu, const int x)
+{
+	unite_jeu->pt_attaque_total = x;
+}
+int get_pt_attaque_total(const Unite *unite_jeu)
+{
+	return unite_jeu->pt_attaque_total;
+}
+void set_pt_action_total(Unite *unite_jeu, const int x)
+{
+	unite_jeu->pt_action_total = x;
+}
+int get_pt_action_total(const Unite *unite_jeu)
+{
+	return unite_jeu->pt_action_total;
+}
 void set_pt_vie(Unite *unite_jeu, const int x)
 {
     unite_jeu->pt_vie = x;
@@ -169,10 +189,6 @@ void set_y_unite(Unite *unite_jeu, const int y)
 int get_y_unite(const Unite *unite_jeu)
 {
 	return unite_jeu->y_unite;
-}
-void set_pt_attaque(Unite *unite_jeu, const int x)
-{
-    unite_jeu->pt_attaque = x;
 }
 int get_pt_attaque(const Unite *unite_jeu)
 {
