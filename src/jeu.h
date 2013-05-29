@@ -33,6 +33,7 @@
 	Planete *selection_planete;
 	bool tab_unite_selectionnee[10];
 	Animation *animation_en_cours;
+	Joueur * gagnant_combat;
  }Jeu;
 
 void initialise_jeu(Jeu *un_jeu);
@@ -70,8 +71,10 @@ void lancer_animation(Jeu *un_jeu, Animation *une_animation, int temps, SDL_Surf
 void maj_animation(Jeu *un_jeu,Terrain_espace *un_terrain_espace, Animation *une_animation, int temps, SDL_Surface *ecran, SDL_Surface **tab_surface, int interface_affichee);
 void lancer_animation_bloquante(Jeu *un_jeu, Terrain_espace *un_terrain_espace, Animation *une_animation, SDL_Surface *ecran, int x, int y);
 
+void lancer_animation_bloquante_combat(Jeu *un_jeu, Terrain_combat *un_terrain_combat, Animation *une_animation, SDL_Surface *ecran, int x, int y);
+
 bool deplacement_flotte(Joueur *un_joueur, Terrain_espace *un_terrain_espace, Flotte *une_flotte, int x, int y);
-//bool fusion_flotte(Joueur *un_joueur, Terrain_espace *un_terrain_espace, Flotte *une_flotte, int x, int y);
+/*bool fusion_flotte(Joueur *un_joueur, Terrain_espace *un_terrain_espace, Flotte *une_flotte, int x, int y);*/
 bool fusion_flotte(Joueur *un_joueur, Terrain_espace *un_terrain_espace, Flotte *flotte_depart, Flotte* flotte_arrivee);
 bool test_unite_selectionnee(Jeu *un_jeu);
 bool deplacement_unite_flotte(Jeu *un_jeu, Joueur *un_joueur, Terrain_espace *un_terrain_espace, Flotte *une_flotte, int x, int y);

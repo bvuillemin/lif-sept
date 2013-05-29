@@ -37,8 +37,8 @@ int main()
 /*	ecran_titre();*/
 	jeu = creer_jeu();
 	afficher_info(jeu);
-	joueur1=creer_joueur("allie");
-	joueur2=creer_joueur("ennemi");
+	joueur1=creer_joueur("allie",1,0);
+	joueur2=creer_joueur("ennemi",2,0);
 	ajouter_joueur(jeu, joueur1);
 	ajouter_joueur(jeu, joueur2);
 	afficher_info(jeu);
@@ -52,9 +52,9 @@ int main()
 	ajouter_flotte_joueur(joueur2, flotte2);
 	flotte1 = get_ieme_flotte_joueur(joueur1,0);
 	flotte2 = get_ieme_flotte_joueur(joueur2,0);
-	unite1 = creer_unite(10,5,2,2,2,5);
-    unite2 = creer_unite(40,3,2,4,2,8);
-    unite3 = creer_unite(10,5,2,2,1,5);
+	unite1 = creer_unite(Chasseur);
+    unite2 = creer_unite(Chasseur);
+    unite3 = creer_unite(Chasseur);
 
     printf("Verif de la création de flottes\n");
 	 printf("flotte1 %d\n",flotte1->indice_joueur);
@@ -67,9 +67,9 @@ afficher_flotte(flotte1);
     ajouter_unite_flotte(flotte1, unite3);
 	afficher_flotte(flotte1);
 	
-    unite4 = creer_unite(30,5,2,2,2,5);
-    unite5 = creer_unite(30,3,2,4,2,8);
-    unite6 = creer_unite(30,5,2,2,1,5);
+    unite4 = creer_unite(Chasseur);
+    unite5 = creer_unite(Destroyer);
+    unite6 = creer_unite(Destructeur);
  printf("Verif de la création de flottes\n");
     
 afficher_flotte(flotte2);

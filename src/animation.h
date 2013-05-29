@@ -27,4 +27,4 @@ Animation *creer_animation(int nb_frame, int taille_frame_x, int taille_frame_y,
 void liberer_animation(Animation *une_animation);
 void detruire_animation(Animation **une_animation);
 
-#endif // ANIMATION_H_
+#endif /* ANIMATION_H_*/

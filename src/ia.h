@@ -23,4 +23,4 @@ typedef enum
 void appeler_ia(Terrain_espace* un_terrain_espace, Joueur *un_joueur);
 void choisir_case_deplacement_ia(Joueur *un_joueur, Terrain_espace *un_terrain_espace, Flotte* une_flotte);
 
-#endif // _IA_H_
+#endif /* _IA_H_*/

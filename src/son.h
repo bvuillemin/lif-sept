@@ -5,7 +5,8 @@
 #ifdef __APPLE__
 #include "fmod.h"
 #else
-#include <FMOD/fmod.h>
+/*#include <FMOD/fmod.h>*/
+#include "../lib/inc/fmod.h"
 #endif
 #include "son.h"
 
