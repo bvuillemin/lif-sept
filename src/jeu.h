@@ -2,8 +2,8 @@
  * \file      jeu.c
  * \author    BODARD, REYNAUD, VUILLEMIN
  * \version   1.0
- * \brief     Définit le jeu
- * \details   Cette classe définit le jeu et ses composantes (flottes, terrain...)
+ * \brief     D√©finit le jeu
+ * \details   Cette classe d√©finit le jeu et ses composantes (flottes, terrain...)
  */
 
 #ifndef _JEU_H_
@@ -21,29 +21,29 @@
 
 /**
  * \struct Jeu
- * \brief Définit le jeu
+ * \brief D√©finit le jeu
  */
  typedef struct
  {
-     /** Définit le nombre de tours en cours */
+     /** D√©finit le nombre de tours en cours */
      int tour_en_cours;
-     /** Définit le joueur en train de jouer */
+     /** D√©finit le joueur en train de jouer */
      int joueur_en_cours;
-     /** Définit le joueur en train de jouer lors d'un combat */
+     /** D√©finit le joueur en train de jouer lors d'un combat */
      int joueur_en_cours_combat;
-     /** Définit le nombre de joueurs lors d'une partie */
+     /** D√©finit le nombre de joueurs lors d'une partie */
      int nb_joueur;
      /** Pointeur sur tableau regroupant tous les joueurs d'une partie */
      Joueur *tab_joueur;
-     /** Pointeur sur flotte sélectionnée */
+     /** Pointeur sur flotte s√©lectionn√©e */
      Flotte *selection_flotte;
-     /** Pointeur sur planète sélectionnée */
+     /** Pointeur sur plan√®te s√©lectionn√©e */
      Planete *selection_planete;
-     /** Unités sélectionnées */
+     /** Unit√©s s√©lectionn√©es */
      bool tab_unite_selectionnee[10];
-     /** Définit l'animation à afficher (Pointeur sur Animation) */
+     /** D√©finit l'animation √† afficher (Pointeur sur Animation) */
      Animation *animation_en_cours;
-     /** Définit le joueur qui a gagné le combat */
+     /** D√©finit le joueur qui a gagn√© le combat */
      Joueur * gagnant_combat;
  }Jeu;
 
