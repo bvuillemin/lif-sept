@@ -44,7 +44,8 @@ void liberer_flotte(Flotte *flotte)
 	int i;
 	for(i=0;i<flotte->taille_flotte;i++)
 	{
-		liberer_unite(flotte->tab_unite[i]);
+		//liberer_unite(flotte->tab_unite[i]);
+		detruire_unite(&flotte->tab_unite[i]);
 	}
 	free(flotte->tab_unite);
 	flotte->tab_unite = NULL;

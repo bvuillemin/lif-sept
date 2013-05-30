@@ -5,8 +5,8 @@
 #ifdef __APPLE__
 #include "fmod.h"
 #else
-/*#include <FMOD/fmod.h>*/
-#include "../lib/inc/fmod.h"
+#include <FMOD/fmod.h>
+//#include "../lib/inc/fmod.h"
 #endif
 
 void initialiser_systeme_son(FMOD_SYSTEM *system);

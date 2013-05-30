@@ -19,7 +19,7 @@
 
 int main(int argc, char *argv[])
 {
-    ecran_titre();
+    //ecran_titre();
     Flotte *flotte;
     Unite *unite1;
     Unite *unite2;
@@ -89,6 +89,7 @@ int main(int argc, char *argv[])
     unite3 = creer_unite(Destructeur);
     unite4 = creer_unite(Chasseur);
 
+
 	/*flotte3 = creer_flotte();
 	unite5 = creer_unite(5, 5, 5, 5, 5, 10);
 	unite6 = creer_unite(6, 6, 6, 6, 6, 10);*/
@@ -107,7 +108,6 @@ int main(int argc, char *argv[])
 
 	ajouter_unite_flotte(flotte2, unite3);
     ajouter_unite_flotte(flotte2, unite4);
-
 	/*
 	ajouter_unite_flotte(flotte3, unite5);
 	ajouter_unite_flotte(flotte3, unite6);*/
@@ -118,8 +118,7 @@ int main(int argc, char *argv[])
 
 	creer_vision_jeu(jeu, un_terrain_espace);
 	//creer_vision_joueur(jeu, un_terrain_espace, 0);
-
-	affichage_ecran(jeu, un_terrain_espace);
+    affichage_ecran(jeu, un_terrain_espace);
 
 	while(1)
     {
