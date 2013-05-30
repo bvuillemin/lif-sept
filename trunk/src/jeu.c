@@ -13,7 +13,6 @@
 
 #include "jeu.h"
 #include "affichage.h"
-#include "joueur.h"
 #include "ia.h"
 #include "TableauDynamique.h"
 

@@ -8,8 +8,6 @@
 /*#include <FMOD/fmod.h>*/
 #include "../lib/inc/fmod.h"
 #endif
-#include "son.h"
-
 
 void initialiser_systeme_son(FMOD_SYSTEM *system);
 void fermer_systeme_son(FMOD_SYSTEM *system, FMOD_SOUND *musique);

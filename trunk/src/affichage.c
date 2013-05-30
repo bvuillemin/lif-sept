@@ -29,10 +29,7 @@
 #endif
 
 #include "affichage.h"
-#include "jeu.h"
 #include "constante.h"
-#include "terrain_espace.h"
-#include "terrain_combat.h"
 #include "son.h"
 #include "animation.h"
 #include "batiment.h"
