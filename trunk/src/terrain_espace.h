@@ -1,10 +1,6 @@
 #ifndef _TERRAIN_ESPACE_H_
 #define _TERRAIN_ESPACE_H_
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
-
 #include "case_terrain_espace.h"
 
 /**

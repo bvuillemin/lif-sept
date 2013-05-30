@@ -1,11 +1,6 @@
 #ifndef _SAUVEGARDE_H_
 #define _SAUVEGARDE_H_
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
-#include <string.h>
-#include "terrain_espace.h"
 #include "jeu.h"
 
 /**

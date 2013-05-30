@@ -6,10 +6,6 @@
  * \details   Cette classe définit les cases d'un terrain d'espace et leurs caractéristiques
  */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
-
 #include "case_terrain_espace.h"
 
 

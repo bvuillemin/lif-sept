@@ -6,13 +6,8 @@
  * \details   Cette classe définit un terrain d'espace et ses caractéristiques
  */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
 #include <math.h>
 #include <assert.h>
-
-#include "case_terrain_espace.h"
 #include "terrain_espace.h"
 
 /************************************************************************/

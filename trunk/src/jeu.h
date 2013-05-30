@@ -9,14 +9,9 @@
 #ifndef _JEU_H_
 #define _JEU_H_
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
 #include "terrain_espace.h"
 #include "terrain_combat.h"
-#include "joueur.h"
 #include "constante.h"
-#include "flotte.h"
 #include "animation.h"
 
 /**

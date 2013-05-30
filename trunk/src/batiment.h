@@ -1,9 +1,6 @@
 #ifndef _BATIMENT_H_
 #define _BATIMENT_H_
 
-#include <stdlib.h>
-#include <stdio.h>
-
 #include "planete.h"
 
 #define NB_TOUR_BATIMENT_QUARTIER_GENERAL 1

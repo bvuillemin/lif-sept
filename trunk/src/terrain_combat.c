@@ -6,15 +6,10 @@
  * \details   Cette classe définit un terrain de combat et ses caractéristiques
  */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
-#include <string.h>
 #include <math.h>
 #include "case_terrain_combat.h"
 #include "terrain_combat.h"
-#include "flotte.h"
-#include "unite.h"
+
 void set_taille_combat_x(Terrain_combat *terrain_jeu_combat,const int x)
 {
     terrain_jeu_combat->taille_combat_x = x;

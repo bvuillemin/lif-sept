@@ -6,11 +6,7 @@
  * \details   Cette classe permet l'affichage des animations du jeu
  */
 
-#include <stdlib.h>
-#include <stdio.h>
 #include <string.h>
-#include <stdbool.h>
-#include <SDL/SDL.h>
 
 #ifdef __APPLE__
 #include "SDL_image.h"

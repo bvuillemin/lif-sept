@@ -4,7 +4,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "niveau.h"
 
 /**
  * \file      Module unité
@@ -43,7 +42,6 @@ typedef struct
 	int pt_deplacement;/*dans le combat*/
 	int pt_deplacement_total;
 	int pt_mouvement_unite;/*dans l'espace*/
-	Niveau niveau_unite;
 	/*ressources nécessaires*/
 	/*compétence spéciale*/
 }Unite;

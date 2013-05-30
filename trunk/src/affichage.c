@@ -6,34 +6,20 @@
  * \details   Cette classe permet l'affichage du jeu, des menus, prend en compte les actions du joueur
  */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
-#include <string.h>
 #include <math.h>
 
 #ifdef __APPLE__
-#include "SDL_image.h"
-#include "SDL_ttf.h"
 #include "SDL_rotozoom.h"
 #include "SDL_framerate.h"
-#include "fmod.h"
 
 #else
 #include <SDL/SDL_rotozoom.h>
 #include <SDL/SDL_framerate.h>
-#include <SDL/SDL.h>
-#include <SDL/SDL_image.h>
-#include <SDL/SDL_ttf.h>
-#include <FMOD/fmod.h>
 //#include "../lib/inc/fmod.h"
 #endif
-
-#include "affichage.h"
-#include "constante.h"
-#include "son.h"
-#include "animation.h"
 #include "batiment.h"
+#include "affichage.h"
+#include "son.h"
 #include "sauvegarde.h"
 
 

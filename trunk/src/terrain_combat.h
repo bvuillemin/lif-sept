@@ -1,22 +1,14 @@
+/**
+ * \file      terrain_combat.h
+ * \author    BODARD, REYNAUD, VUILLEMIN
+ * \version   1.0
+ * \brief     Définit un terrain de combat
+ * \details   Cette classe définit un terrain de combat et ses caractéristiques
+ */
 #ifndef _TERRAIN_COMBAT_H_
 #define _TERRAIN_COMBAT_H_
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
-#include "flotte.h"
 #include "case_terrain_combat.h"
-#include "flotte.h"
-
-/**
- * \file      Module Terrain_combat
- * \author    Les queues de cheval
- * \version   0.1
- * \date      13 mars 2013
- * \brief     Terrain_combat et ses particularités
- *
- * \details
- */
 
 typedef struct
 {

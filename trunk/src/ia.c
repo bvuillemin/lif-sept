@@ -6,12 +6,8 @@
  * \details   Cette classe définit l'intelligence artificielle du jeu et ses caractéristiques
  */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
 
 #include "ia.h"
-#include "vision.h"
 
 bool detecter_case_non_visitee_plus_proche(Joueur *un_joueur, Terrain_espace *un_terrain_espace, Flotte* une_flotte, int* x, int *y)
 {

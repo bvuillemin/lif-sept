@@ -9,9 +9,6 @@
 #ifndef _FLOTTE_H_
 #define _FLOTTE_H_
 
-#include <stdlib.h>
-#include <stdio.h>
-
 #include "unite.h"
 
 /**
