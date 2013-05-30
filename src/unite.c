@@ -275,6 +275,7 @@ void reinitialiser_pt_action(Unite *une_unite)
 
 void sauvegarde_unite(const Unite *une_unite, FILE* f)
 {
+    fprintf(f, "%d\n", (int)une_unite->type);
     fprintf(f, "%d\n", une_unite->indice_joueur);
     fprintf(f, "%d\n", une_unite->indice_dans_flotte);
     fprintf(f, "%d\n", une_unite->x_unite);
@@ -293,8 +294,11 @@ void sauvegarde_unite(const Unite *une_unite, FILE* f)
 
 Unite* ouverture_unite(FILE *f)
 {
-    Unite *unite_ouverte = (Unite *)malloc(sizeof(Unite));
     char chaine[50];
+    Unite *unite_ouverte;
+    int b;
+    sscanf(fgets(chaine, 50, f), "%d", &b);
+    unite_ouverte = creer_unite(b);
     sscanf(fgets(chaine, 50, f), "%d", &unite_ouverte->indice_joueur);
     sscanf(fgets(chaine, 50, f), "%d", &unite_ouverte->indice_dans_flotte);
     sscanf(fgets(chaine, 50, f), "%d", &unite_ouverte->x_unite);
