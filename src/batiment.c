@@ -10,7 +10,6 @@
 #include <stdio.h>
 
 #include "batiment.h"
-#include "planete.h"
 
 
 /*1 pour une planete, 2 pour une planete ennemie, 3 pour une flotte, 4 pour une flotte ennemie, 5 pour la création d'unités sur une planète*/
