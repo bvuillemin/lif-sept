@@ -10,12 +10,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <time.h>
-#ifdef __APPLE__
-#include "fmod.h"
-#else
-/*#include <FMOD/fmod.h>*/
-#include "../lib/inc/fmod.h"
-#endif
+#include "son.h"
 
 void initialiser_systeme_son(FMOD_SYSTEM *system)
 {
