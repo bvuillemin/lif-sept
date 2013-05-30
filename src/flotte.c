@@ -156,6 +156,7 @@ int get_portee_vision_flotte(const Flotte* une_flotte)
  * \details    Ajoute une unite passée en paramètre à une flotte
  * \param      flotte         Pointeur sur flotte dans laquelle sera l'unite
  * \param      unite          Pointeur sur unite à ajouter
+ * \return     1 si l'ajout a eu lieu, 0 sinon
  */
 int ajouter_unite_flotte(Flotte *flotte, Unite *unite)
 {
@@ -209,6 +210,7 @@ int transferer_unite_flotte(Flotte *flotte, Unite *unite)
  * \details    Retire une unité d'une flotte passée en paramètre
  * \param      flotte         Pointeur sur flotte dans laquelle est l'unite
  * \param      indice_unite   indice de l'unite à supprimer
+ * \return     1 si l'unité a été retirée, 0 sinon
  */
 int retirer_unite_flotte(Flotte *flotte,const int indice_unite)
 {
