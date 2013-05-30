@@ -942,14 +942,17 @@ SDL_Surface* affichage_planete(Planete* une_planete, SDL_Surface *info_planete)
     char texte_planete[200] = "";
     char texte_batiment[100] = "";
     int i;
-
     if(info_planete != NULL)
     {
        SDL_FreeSurface(info_planete);
     }
 
+
     /*affichage de l'interface*/
 	info_planete = IMG_Load("../graphiques/images/interface_bas.png");
+
+    construction = IMG_Load("../graphiques/images/construction.png");
+    interdiction = IMG_Load("../graphiques/images/interdit.png");
 
     police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 14);
     fond_planete = SDL_CreateRGBSurface(SDL_SRCALPHA, TAILLE_FENETRE_X, TAILLE_FENETRE_Y - TAILLE_TERRAIN_ESPACE_Y, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
@@ -959,14 +962,17 @@ SDL_Surface* affichage_planete(Planete* une_planete, SDL_Surface *info_planete)
     sprintf(texte_planete, "Nom de la planete: %s Occupation de la planete: %d/%d Production: Metal:%d Argent:%d Carburant:%d Population:%d",
 get_nom_planete(une_planete), get_taille_utilisee(une_planete), get_taille_planete(une_planete),
 get_metal(une_planete), get_argent(une_planete), get_carburant(une_planete), get_population(une_planete));
+
     planete = TTF_RenderText_Blended(police, texte_planete, couleur_blanche);
     initialise_sdl_rect(&position_texte, 10, 10, 0, 0);
     SDL_BlitSurface(planete, NULL, fond_planete, &position_texte);
+    SDL_FreeSurface(planete);
 
     bouton_unite = SDL_CreateRGBSurface(SDL_HWSURFACE, 100, 100, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
     initialise_sdl_rect(&position_bouton_unite, TAILLE_FENETRE_X -150, 35, 100, 100);
     SDL_FillRect(bouton_unite, NULL, SDL_MapRGB(info_planete->format, 0, 0, 100));
     SDL_BlitSurface(bouton_unite, NULL, fond_planete, &position_bouton_unite);
+    SDL_FreeSurface(bouton_unite);
 
     batiment = SDL_CreateRGBSurface(SDL_HWSURFACE, 100, 100, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
     for(i=0;i<6;i++)
@@ -994,23 +1000,25 @@ get_metal(une_planete), get_argent(une_planete), get_carburant(une_planete), get
 		default :
 			break;
 		}
-		construction = IMG_Load("../graphiques/images/construction.png");
-		interdiction = IMG_Load("../graphiques/images/interdit.png");
 
         sprintf(texte_batiment, "%d", une_planete->batiment[i]);
         planete = TTF_RenderText_Blended(police, texte_batiment, couleur_blanche);
         initialise_sdl_rect(&position_texte, 15 + 120 * i, 40, 0, 0);
         initialise_sdl_rect(&position_batiment, 10 + 120*i, 35, 0, 0);
         SDL_BlitSurface(batiment, NULL, fond_planete, &position_batiment);
+
 		if((i == une_planete->batiment_en_cours) && (une_planete->batiment_nb_tour_restant != 0))
 		{
 			SDL_BlitSurface(construction, NULL, fond_planete, &position_batiment);
+			SDL_FreeSurface(construction);
 		}
 		if((i != une_planete->batiment_en_cours) && (une_planete->batiment_nb_tour_restant > 0))
 		{
 			SDL_BlitSurface(interdiction, NULL, fond_planete, &position_batiment);
+			SDL_FreeSurface(interdiction);
 		}
         SDL_BlitSurface(planete, NULL, fond_planete, &position_texte);
+        SDL_FreeSurface(planete);
 
         if((i == une_planete->batiment_en_cours) && (une_planete->batiment_nb_tour_restant != 0))
         {
@@ -1018,16 +1026,14 @@ get_metal(une_planete), get_argent(une_planete), get_carburant(une_planete), get
             initialise_sdl_rect(&position_texte, 15 + 120 * i, 60, 0, 0);
             planete = TTF_RenderText_Blended(police, texte_batiment, couleur_blanche);
             SDL_BlitSurface(planete, NULL, fond_planete, &position_texte);
+            SDL_FreeSurface(planete);
         }
+
+        SDL_FreeSurface(batiment);
+
     }
 
     TTF_CloseFont(police);
-
-    SDL_FreeSurface(planete);
-    SDL_FreeSurface(batiment);
-	SDL_FreeSurface(construction);
-	SDL_FreeSurface(interdiction);
-    SDL_FreeSurface(bouton_unite);
 
     return fond_planete;
 }
@@ -1042,7 +1048,13 @@ SDL_Surface* affichage_planete_ennemie(Case_terrain_espace *une_case_terrain_esp
 	SDL_Color couleur_blanche = {255, 255, 255};
 	char texte_planete[200] = "";
 	Planete *une_planete = get_planete(une_case_terrain_espace);
-	/*int i;*/
+
+	if(info_planete != NULL)
+    {
+       SDL_FreeSurface(info_planete);
+    }
+    /*affichage de l'interface*/
+	info_planete = IMG_Load("../graphiques/images/interface_bas.png");
 
 	police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 14);
 	fond_planete = SDL_CreateRGBSurface(SDL_SRCALPHA, TAILLE_FENETRE_X, TAILLE_FENETRE_Y - TAILLE_TERRAIN_ESPACE_Y, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
@@ -1077,6 +1089,14 @@ SDL_Surface* affichage_flotte(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SD
     char texte_flotte[200] = "";
     Flotte *une_flotte = un_jeu->selection_flotte;
 	TYPE_VAISSEAU type;
+
+	if(info_flotte != NULL)
+    {
+       SDL_FreeSurface(info_flotte);
+    }
+    /*affichage de l'interface*/
+	info_flotte = IMG_Load("../graphiques/images/interface_bas.png");
+
 
 	/*affichage des informations d'une flotte*/
     police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 14);
@@ -1169,6 +1189,13 @@ SDL_Surface* affichage_flotte_ennemie(Jeu *un_jeu, SDL_Surface *info_flotte)
 	char texte_flotte[200] = "";
 	Flotte *une_flotte = un_jeu->selection_flotte;
 
+    if(info_flotte != NULL)
+    {
+       SDL_FreeSurface(info_flotte);
+    }
+    /*affichage de l'interface*/
+	info_flotte = IMG_Load("../graphiques/images/interface_bas.png");
+
 	police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 14);
 	fond_flotte = SDL_CreateRGBSurface(SDL_HWSURFACE, TAILLE_FENETRE_X, TAILLE_FENETRE_Y - TAILLE_TERRAIN_ESPACE_Y, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
 	SDL_FillRect(fond_flotte, NULL, SDL_MapRGB(fond_flotte->format, 60, 60, 60));
@@ -1200,10 +1227,11 @@ SDL_Surface* creer_affichage_terrain(Terrain_espace *un_terrain_espace)
 	SDL_Surface *planete1 = NULL;
 	SDL_Surface *planete2 = NULL;
 	SDL_Surface *planete3 = NULL;
-	SDL_Rect position_planete;
-	SDL_Rect position;
 	SDL_Surface *image_une_case = NULL;
     SDL_Surface *fond = NULL;
+
+    SDL_Rect position_planete;
+	SDL_Rect position;
 	int i, j;
 	Case_terrain_espace *une_case;
 
@@ -1814,7 +1842,7 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 	/* Initialisation des variables                                         */
 	/************************************************************************/
 
-	/*variable SDL*/
+	/*variables SDL*/
 	SDL_Surface *ecran = NULL;
 	SDL_Surface *icone = NULL;
 	SDL_Surface **tab_surface;
@@ -1824,7 +1852,7 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 	SDL_Rect test;
 	SDL_Event event;
 
-	/*variable diverses*/
+	/*variables diverses*/
 	int continuer = 1;
 	int x = 0, y = 0, x_bis = 0, y_bis = 0;
 	int i, j;
@@ -1835,7 +1863,7 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 	Animation *saut_ftl = NULL;
 	char nom_fichier_saut_ftl[] = "../graphiques/images/effet téléportation.png";
 
-	/*varirables pour le son*/
+	/*variables pour le son*/
 	FMOD_SYSTEM *system = NULL;
 	FMOD_SOUND *musique = NULL;
 	FMOD_SOUND *son_saut_debut = NULL;
@@ -1853,10 +1881,10 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 
 	/*on initialise le tableau de chansons puis on utilise la fonction qui va mettre les noms dedans (pour plus de clarté dans le code)*/
 	tab_chanson = (char **)malloc(sizeof(char *) * 6);
-	for(j=0;j<6;j++)
+	/*for(j=0;j<6;j++)
 	{
 		tab_chanson[j] = (char *)malloc(sizeof(char) * 50);
-	}
+	}*/
 	initialiser_tableau_chanson(tab_chanson);
 
 	/*on lance les musiques du jeu et on initialise les sons*/
@@ -2176,22 +2204,23 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 	/* Libération des variables et fermetures de SDL                        */
 	/************************************************************************/
 
-	for(i=0;i<13;i++)
+    for(i=0;i<13;i++)
 	{
 	    SDL_FreeSurface(tab_surface[i]);
 	}
 	free(tab_surface);
+
 	SDL_FreeSurface(ecran);
 	SDL_FreeSurface(icone);
 
-    /*for(i=0;i<6;i++)
-	{
-		free(&tab_chanson[i]);
-	}*/
-	free(tab_chanson);
+
+	FMOD_Sound_Release(son_saut_debut);
+	FMOD_Sound_Release(son_saut_fin);
+    free(tab_chanson);
     fermer_systeme_son(system, musique);
 
 	detruire_animation(&saut_ftl);
+
 
 	TTF_Quit();
 	SDL_Quit();
@@ -2806,7 +2835,7 @@ void menu_pause(Terrain_espace *un_terrain_espace, Jeu *un_jeu)
                     SDL_FreeSurface(ecran);
                     menu_aide();
 				}
-                
+
                 /* Sauvegarder */
                 if(test_souris_rectangle(positionSauvegarder,evenement.button.x,evenement.button.y))
 				{
