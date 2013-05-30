@@ -6,11 +6,7 @@
  * \details   Cette classe définit les unités du jeu et leurs caractéristiques
  */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
 #include <math.h>
-
 #include "constante.h"
 #include "unite.h"
 

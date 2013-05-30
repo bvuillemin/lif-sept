@@ -1,13 +1,8 @@
 #ifndef _JOUEUR_H_
 #define _JOUEUR_H_
 
-#include <stdlib.h>
-#include <stdio.h>
-
-#include "planete.h"
 #include "TableauDynamique.h"
 #include "vision.h"
-
 
 typedef enum
 {

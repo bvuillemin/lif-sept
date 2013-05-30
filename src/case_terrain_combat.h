@@ -1,12 +1,6 @@
 #ifndef _CASE_TERRAIN_COMBAT_H_
 #define _CASE_TERRAIN_COMBAT_H_
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
-
-#include "planete.h"
-#include "unite.h"
 #include "joueur.h"
 
 /**

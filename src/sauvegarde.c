@@ -6,9 +6,6 @@
  * \details   Cette classe définit les sauvegardes du jeu et les chargements de sauvegardes
  */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
 #include <time.h>
 #include "sauvegarde.h"
 

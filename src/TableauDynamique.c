@@ -6,9 +6,6 @@
  * \details   Cette classe définit les tableaux dynamiques et permet leur implémentation dans le jeu (dans joueur)
  */
 
-#include <stdlib.h>
-#include <stdio.h>
-
 #include "TableauDynamique.h"
 
 void initialiserTabDyn(TableauDynamique *t)

@@ -6,12 +6,7 @@
  * \details   Cette classe définit les cases d'un terrain de combat et leurs caractéristiques
  */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
-
 #include "case_terrain_combat.h"
-#include "planete.h"
 
 void initialise_case_combat(Case_terrain_combat *une_case_terrain_combat)
 {

@@ -6,13 +6,8 @@
  * \details   Cette classe définit les joueurs du jeu (ia ou joueur réel) et leurs caractéristiques
  */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-
 #include "joueur.h"
 #include "constante.h"
-#include "TableauDynamique.h"
 
 /************************************************************************/
 /* Initialisation, création et destruction                              */

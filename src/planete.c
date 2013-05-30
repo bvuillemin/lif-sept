@@ -6,8 +6,6 @@
  * \details   Cette classe définit les planètes du jeu et leurs caractéristiques
  */
 
-#include <stdlib.h>
-#include <stdio.h>
 #include <string.h>
 
 #include "planete.h"

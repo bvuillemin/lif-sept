@@ -1,9 +1,6 @@
 #ifndef _CASE_TERRAIN_ESPACE_H_
 #define _CASE_TERRAIN_ESPACE_H_
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
 #include <string.h>
 #include "planete.h"
 #include "flotte.h"

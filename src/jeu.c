@@ -7,14 +7,9 @@
  */
 
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-
 #include "jeu.h"
 #include "affichage.h"
 #include "ia.h"
-#include "TableauDynamique.h"
 
 /************************************************************************/
 /* Initialisation, création et destruction                              */

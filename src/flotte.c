@@ -6,15 +6,7 @@
  * \details   Cette classe définit les flottes du jeu et leurs caractéristiques
  */
 
-#include <stdlib.h>
-#include <stdio.h>
-
 #include "flotte.h"
-#include "case_terrain_espace.h"
-#include "terrain_espace.h"
-#include "sauvegarde.h"
-
-
 /************************************************************************/
 /* Initialisation, création et destruction                              */
 /************************************************************************/

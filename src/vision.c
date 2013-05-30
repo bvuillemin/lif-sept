@@ -6,13 +6,7 @@
  * \details   Cette classe définit la vision d'un terrain par un joueur
  */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
-#include <string.h>
-
 #include "vision.h"
-
 
 /************************************************************************/
 /* Initialisation, crÈation et destruction                              */

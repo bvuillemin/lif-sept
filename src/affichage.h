@@ -1,7 +1,6 @@
 #ifndef _AFFICHAGE_H_
 #define _AFFICHAGE_H_
 
-#include <SDL/SDL.h>
 #ifdef __APPLE__
 #include "SDL_image.h"
 #include "SDL_ttf.h"
@@ -9,15 +8,6 @@
 #include <SDL/SDL_image.h>
 #include <SDL/SDL_ttf.h>
 #endif
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
-#include "terrain_espace.h"
-#include "case_terrain_espace.h"
-#include "unite.h"
-#include "planete.h"
-#include "niveau.h"
-#include "terrain_combat.h"
 #include "jeu.h"
 /**
  * \file      Module terrain
