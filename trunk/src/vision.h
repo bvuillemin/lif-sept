@@ -13,7 +13,7 @@ typedef enum
 typedef struct
 {
 	int indice_joueur;
-	int centre_vision; /*Va définir un centre, 0 si non, puis correspondra au rayon de vision autour de ce centre*/
+	int centre_vision; /*Va dÃˆfinir un centre, 0 si non, puis correspondra au rayon de vision autour de ce centre*/
 	Champ_vision champ_vision;
 }Vision_case;
 

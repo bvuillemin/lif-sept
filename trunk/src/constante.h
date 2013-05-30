@@ -2,14 +2,14 @@
  * \file      constante.h
  * \author    BODARD, REYNAUD, VUILLEMIN
  * \version   1.0
- * \brief     Définit les constantes du jeu
- * \details   Cette classe définit les constantes du jeu, comme la résolution d'écran, les caractéristiques des unités...
+ * \brief     D√©finit les constantes du jeu
+ * \details   Cette classe d√©finit les constantes du jeu, comme la r√©solution d'√©cran, les caract√©ristiques des unit√©s...
  */
 
 #ifndef _CONSTANTE_H_
 #define _CONSTANTE_H_
 
-/*CrÈation des unitÈs*/
+/*Cr√àation des unit√às*/
 #define PT_VIE_UNITE_1 30
 #define PT_ATTAQUE_UNITE_1 10
 #define PT_ACTION_UNITE_1 10
@@ -46,7 +46,7 @@
 #define NB_CARBURANT_UNITE_3 5000
 #define NB_POPULATION_UNITE_3 5000
 
-/*Constantes pour l'Ècran*/
+/*Constantes pour l'√àcran*/
 #define TAILLE_FENETRE_X 1280
 #define TAILLE_FENETRE_Y 768
 #define NOMBRE_BITS_COULEUR 32

@@ -2,8 +2,8 @@
  * \file      vision.c
  * \author    BODARD, REYNAUD, VUILLEMIN
  * \version   1.0
- * \brief     Définit la vision d'un terrain
- * \details   Cette classe définit la vision d'un terrain par un joueur
+ * \brief     D√©finit la vision d'un terrain
+ * \details   Cette classe d√©finit la vision d'un terrain par un joueur
  */
 
 #include <stdlib.h>
@@ -15,7 +15,7 @@
 
 
 /************************************************************************/
-/* Initialisation, crÈation et destruction                              */
+/* Initialisation, cr√àation et destruction                              */
 /************************************************************************/
 
 void initialiser_vision_terrain(Vision_terrain *une_vision_terrain, Terrain_espace *un_terrain, int indice_joueur)
@@ -95,10 +95,10 @@ Champ_vision get_champ_vision(Vision_case* une_case)
 }
 
 /************************************************************************/
-/* Fonctions qui vont dÈfinir la vision du terrain                      */
+/* Fonctions qui vont d√àfinir la vision du terrain                      */
 /************************************************************************/
 
-/*fonction qui va parcourir tout le terrain et dÈfinir pour un joueur donnÈ ses centres de vision*/
+/*fonction qui va parcourir tout le terrain et d√àfinir pour un joueur donn√à ses centres de vision*/
 void parcourir_terrain(Vision_terrain* une_vision, int indice_joueur)
 {
 	int i, j;
@@ -112,7 +112,7 @@ void parcourir_terrain(Vision_terrain* une_vision, int indice_joueur)
 		{
 			une_case = get_case_terrain_espace(un_terrain, j ,i);
 			une_vision_case = get_vision_case(une_vision, j, i);
-			/*on met toutes les cases prÈcÈdemment visitÈe a VISITEE*/
+			/*on met toutes les cases pr√àc√àdemment visit√àe a VISITEE*/
 			if (une_vision_case->champ_vision == AFFICHEE)
 			{
 				une_vision_case->champ_vision = VISITEE;
@@ -143,7 +143,7 @@ void parcourir_terrain(Vision_terrain* une_vision, int indice_joueur)
 	definir_vision(une_vision);
 }
 
-/*fonction qui ‡ partir des centres de vision va calculer la vision pour les cases autour*/
+/*fonction qui ‚Ä° partir des centres de vision va calculer la vision pour les cases autour*/
 void definir_vision(Vision_terrain* une_vision)
 {
 	int i, j;

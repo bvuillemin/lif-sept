@@ -2,8 +2,8 @@
  * \file      ia.c
  * \author    BODARD, REYNAUD, VUILLEMIN
  * \version   1.0
- * \brief     Définit l'ia du jeu
- * \details   Cette classe définit l'intelligence artificielle du jeu et ses caractéristiques
+ * \brief     D√©finit l'ia du jeu
+ * \details   Cette classe d√©finit l'intelligence artificielle du jeu et ses caract√©ristiques
  */
 
 #include <stdlib.h>
@@ -33,7 +33,7 @@ bool detecter_case_non_visitee_plus_proche(Joueur *un_joueur, Terrain_espace *un
 				trouve = true;
 				distance = calcul_distance(get_x_flotte(une_flotte), get_y_flotte(une_flotte), i, j);
 
-				/*GÈnÈration d'un nombre alÈatoire entre 0 et 1, le rand()%1 ne peut pas marcher*/
+				/*G√àn√àration d'un nombre al√àatoire entre 0 et 1, le rand()%1 ne peut pas marcher*/
 				aleatoire = rand()%10;
 				if(aleatoire < 5)
 				{
@@ -76,10 +76,10 @@ bool detecter_case_non_visitee_plus_proche(Joueur *un_joueur, Terrain_espace *un
 
 void recherche_chemin_plus_court_flotte(Terrain_espace* un_terrain_espace, Flotte* une_flotte, int x_destination, int y_destination, int* res_x, int* res_y)
 {
-	int x,y; /*CoordonnÈes du point de dÈpart*/
+	int x,y; /*Coordonn√àes du point de d√àpart*/
 	int i, j; /*Compteurs de boucle*/
 	int portee, x_max, y_max, x_min, y_min; /*Bornes de l'ensemble de recherche*/
-	int distance_arrivee; /*Sera le minimum jusqu'au point d'arrivÈe*/
+	int distance_arrivee; /*Sera le minimum jusqu'au point d'arriv√àe*/
 	int res_x_min, res_y_min;
 
 	x = get_x_flotte(une_flotte);
@@ -114,7 +114,7 @@ void recherche_chemin_plus_court_flotte(Terrain_espace* un_terrain_espace, Flott
 	res_x_min = x_min;
 	res_y_min = y_min;
 
-	/*on va chercher dans la boucle la valeur ‡ portÈe de la flotte et qui correspond au min de la distance avec la destination*/
+	/*on va chercher dans la boucle la valeur ‚Ä° port√àe de la flotte et qui correspond au min de la distance avec la destination*/
 	for(i=x_min;i<=x_max;i++)
 	{
 		for(j=y_min;j<=y_max;j++)
@@ -211,8 +211,8 @@ NIVEAU_MENACE detecter_menace_planete(Joueur* un_joueur, Terrain_espace* un_terr
 	}
 	printf("Nombre d'unites alliees-ennemies: %d-%d\n", nb_unite_alliee, nb_unite_ennemie);
 
-	/*un ratio va Ítre fait entre le nombre d'unitÈs pour indiquer un niveau de dangerositÈ*/
-	if(nb_unite_alliee != 0) /*on vÈrifie qu'il n'y a pas de division par 0*/
+	/*un ratio va √çtre fait entre le nombre d'unit√às pour indiquer un niveau de dangerosit√à*/
+	if(nb_unite_alliee != 0) /*on v√àrifie qu'il n'y a pas de division par 0*/
 	{
 		ratio = (float)nb_unite_ennemie / nb_unite_alliee;
 		printf("le ratio est: %d\n", ratio);
@@ -223,7 +223,7 @@ NIVEAU_MENACE detecter_menace_planete(Joueur* un_joueur, Terrain_espace* un_terr
 		return TOTALE;
 	}
 	
-	/*On dÈcide de quoi renvoyer*/
+	/*On d√àcide de quoi renvoyer*/
 	if(ratio == 0)
 	{
 		printf("Tout va bien\n\n");
@@ -300,8 +300,8 @@ NIVEAU_MENACE detecter_menace_flotte(Joueur* un_joueur, Terrain_espace* un_terra
 	}
 	printf("Nombre d'unites alliees-ennemies: %d-%d\n", nb_unite_alliee, nb_unite_ennemie);
 
-	/*un ratio va Ítre fait entre le nombre d'unitÈs pour indiquer un niveau de dangerositÈ*/
-	if(nb_unite_alliee != 0) /*on vÈrifie qu'il n'y a pas de division par 0*/
+	/*un ratio va √çtre fait entre le nombre d'unit√às pour indiquer un niveau de dangerosit√à*/
+	if(nb_unite_alliee != 0) /*on v√àrifie qu'il n'y a pas de division par 0*/
 	{
 		ratio = (float)nb_unite_ennemie / nb_unite_alliee;
 		printf("le ratio est: %d\n", ratio);
@@ -312,7 +312,7 @@ NIVEAU_MENACE detecter_menace_flotte(Joueur* un_joueur, Terrain_espace* un_terra
 		return TOTALE;
 	}
 
-	/*On dÈcide de quoi renvoyer*/
+	/*On d√àcide de quoi renvoyer*/
 	if(ratio == 0)
 	{
 		printf("Tout va bien\n\n");
@@ -410,7 +410,7 @@ int ressource_manquante(Joueur* un_joueur)
 	}
 	printf("Min: %d avec %d, Max: %d avec %d \n\n", min, min_ressource, max, max_ressource);
 
-	/*Calcul d'un ration pour permettre d'Èvaluer si il y a un rÈel manque*/
+	/*Calcul d'un ration pour permettre d'√àvaluer si il y a un r√àel manque*/
 	ratio = (float) min_ressource / max_ressource;
 	if(ratio < 0.5)
 	{
@@ -419,7 +419,7 @@ int ressource_manquante(Joueur* un_joueur)
 	return 0;
 }
 
-/*Va renvoyer le numÈro de l'unitÈ maximum que l'on peut construire*/
+/*Va renvoyer le num√àro de l'unit√à maximum que l'on peut construire*/
 int construire_unite_avec_ressource_disponible(Joueur* un_joueur, Planete* une_planete, int metal, int argent, int carburant, int population)
 {
 	int i;
@@ -510,7 +510,7 @@ void choisir_construction_unite(Joueur* un_joueur, Terrain_espace* un_terrain_es
 		{
 			if((menace == TOTALE) && (get_planete_principale(une_planete)))
 			{
-				/*Attaque de la planËte principale, on alloue toutes les ressources dispos*/
+				/*Attaque de la plan√ãte principale, on alloue toutes les ressources dispos*/
 				metal = get_metal_joueur(un_joueur);
 				argent = get_argent_joueur(un_joueur);
 				carburant = get_carburant_joueur(un_joueur);
