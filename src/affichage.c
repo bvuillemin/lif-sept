@@ -2477,6 +2477,7 @@ void menu_chargement_sauvegarde(void)
     longueurTexte = Texte->w;
     positionTexte.x = ((TAILLE_FENETRE_X/2.0) - (longueurTexte/2.0));
     positionTexte.y = 1*(TAILLE_FENETRE_Y)/10;
+    TTF_CloseFont(police);
 
     /*Chargement du texte*/
     police = TTF_OpenFont("../graphiques/fonts/space_age.ttf", 40);
@@ -2484,6 +2485,7 @@ void menu_chargement_sauvegarde(void)
     longueurTexte2 = Texte2->w;
     positionTexte2.x = ((TAILLE_FENETRE_X/2.0) - (longueurTexte2/2.0));
     positionTexte2.y = 2*(TAILLE_FENETRE_Y)/10;
+    TTF_CloseFont(police);
 
 
     /*AFFICHAGE*/
@@ -2510,6 +2512,7 @@ void menu_chargement_sauvegarde(void)
     /*Disparition du menu et affichage du jeu*/
     SDL_FreeSurface(ecran);
     SDL_FreeSurface(Texte);
+    SDL_FreeSurface(Texte2);
     SDL_FreeSurface(imageDeFond);
     SDL_Quit();
     affichage_ecran(jeu, un_terrain_espace);
@@ -2542,14 +2545,15 @@ void menu_creation_sauvegarde(Terrain_espace *un_terrain_espace, Jeu *un_jeu)
     longueurTexte = Texte->w;
     positionTexte.x = ((TAILLE_FENETRE_X/2.0) - (longueurTexte/2.0));
     positionTexte.y = 1*(TAILLE_FENETRE_Y)/10;
-
+    TTF_CloseFont(police);
+    
     /*Chargement du texte*/
     police = TTF_OpenFont("../graphiques/fonts/space_age.ttf", 40);
     Texte2 = TTF_RenderText_Blended(police, "Tapez le nom de la sauvegarde", couleur);
     longueurTexte2 = Texte2->w;
     positionTexte2.x = ((TAILLE_FENETRE_X/2.0) - (longueurTexte2/2.0));
     positionTexte2.y = 2*(TAILLE_FENETRE_Y)/10;
-
+    TTF_CloseFont(police);
 
     /*AFFICHAGE*/
 
@@ -2569,6 +2573,12 @@ void menu_creation_sauvegarde(Terrain_espace *un_terrain_espace, Jeu *un_jeu)
     printf("Tapez ci-dessous le nom de la sauvegarde :\n");
     scanf("%s", chaine);
     creer_fichier_sauvegarde(chaine, un_terrain_espace, un_jeu);
+    
+    /*Disparition du menu*/
+    SDL_FreeSurface(ecran);
+    SDL_FreeSurface(Texte);
+    SDL_FreeSurface(Texte2);
+    SDL_FreeSurface(imageDeFond);
 }
 
 void menu_aide(void)
@@ -2629,6 +2639,10 @@ void menu_aide(void)
                 if(test_souris_rectangle(positionDeplacer,evenement.button.x,evenement.button.y))
 				{
                     aide = 1;
+                    SDL_FreeSurface(imageDeFond_Droit);
+                    SDL_FreeSurface(Deplacer);
+                    SDL_FreeSurface(Conquerir);
+                    SDL_FreeSurface(Construire);
                     imageDeFond_Droit = IMG_Load("../graphiques/images/Deplacer1.png");
                     Deplacer = IMG_Load("../graphiques/images/Deplacer_pressé.png");
                     Conquerir = IMG_Load("../graphiques/images/Conquerir.png");
@@ -2650,6 +2664,10 @@ void menu_aide(void)
                 if(test_souris_rectangle(positionConquerir,evenement.button.x,evenement.button.y))
 				{
                     aide = 2;
+                    SDL_FreeSurface(imageDeFond_Droit);
+                    SDL_FreeSurface(Deplacer);
+                    SDL_FreeSurface(Conquerir);
+                    SDL_FreeSurface(Construire);
                     imageDeFond_Droit = IMG_Load("../graphiques/images/Fond_titre.png");
                     Deplacer = IMG_Load("../graphiques/images/Deplacer.png");
                     Conquerir = IMG_Load("../graphiques/images/Conquerir_pressé.png");
@@ -2670,6 +2688,10 @@ void menu_aide(void)
                 if(test_souris_rectangle(positionConstruire,evenement.button.x,evenement.button.y))
 				{
                     aide = 3;
+                    SDL_FreeSurface(imageDeFond_Droit);
+                    SDL_FreeSurface(Deplacer);
+                    SDL_FreeSurface(Conquerir);
+                    SDL_FreeSurface(Construire);
                     imageDeFond_Droit = IMG_Load("../graphiques/images/Fond_titre.png");
                     Deplacer = IMG_Load("../graphiques/images/Deplacer.png");
                     Conquerir = IMG_Load("../graphiques/images/Conquerir.png");
@@ -2692,6 +2714,7 @@ void menu_aide(void)
                     if(aide == 1)
                     {
                         aide = 0;
+                        SDL_FreeSurface(imageDeFond_Droit);
                         imageDeFond_Droit = IMG_Load("../graphiques/images/Deplacer2.png");
                         SDL_BlitSurface(imageDeFond_Droit, NULL, ecran, &positionImage_droit);
                         SDL_Flip(ecran);
@@ -2699,6 +2722,7 @@ void menu_aide(void)
                     if(aide == 2)
                     {
                         aide = 0;
+                        SDL_FreeSurface(imageDeFond_Droit);
                         imageDeFond_Droit = IMG_Load("../graphiques/images/Fond_titre.png");
                         SDL_BlitSurface(imageDeFond_Droit, NULL, ecran, &positionImage_droit);
                         SDL_Flip(ecran);
@@ -2706,6 +2730,7 @@ void menu_aide(void)
                     if(aide == 3)
                     {
                         aide = 0;
+                        SDL_FreeSurface(imageDeFond_Droit);
                         imageDeFond_Droit = IMG_Load("../graphiques/images/Fond_titre.png");
                         SDL_BlitSurface(imageDeFond_Droit, NULL, ecran, &positionImage_droit);
                         SDL_Flip(ecran);
@@ -2750,7 +2775,7 @@ void menu_pause(Terrain_espace *un_terrain_espace, Jeu *un_jeu)
     ecran = SDL_SetVideoMode(TAILLE_FENETRE_X, TAILLE_FENETRE_Y, 32, SDL_HWSURFACE);
     imageDeFond = IMG_Load("../graphiques/images/Fond_titre.png");
     Noir = SDL_LoadBMP("../graphiques/images/Noir.bmp");
-    Sauvegarder = IMG_Load("../graphiques/images/Aide.png");
+    Aide = IMG_Load("../graphiques/images/Aide.png");
     Sauvegarder = IMG_Load("../graphiques/images/Sauvegarder.png");
     Quitter = IMG_Load("../graphiques/images/Quitter.png");
 
@@ -2761,6 +2786,7 @@ void menu_pause(Terrain_espace *un_terrain_espace, Jeu *un_jeu)
     longueurTexte = Texte->w;
     positionTexte.x = ((TAILLE_FENETRE_X/2.0) - (longueurTexte/2.0));
     positionTexte.y = 1*(TAILLE_FENETRE_Y)/10;
+    TTF_CloseFont(police);
     SDL_BlitSurface(Texte, NULL, ecran, &positionTexte);
     longueurBouton = Sauvegarder->w;
     hauteurBouton = Sauvegarder->h;
@@ -2781,6 +2807,7 @@ void menu_pause(Terrain_espace *un_terrain_espace, Jeu *un_jeu)
 		{
             case SDL_MOUSEMOTION :
                 SDL_GetMouseState(&xm, &ym);
+                SDL_FreeSurface(Aide);
                 SDL_FreeSurface(Sauvegarder);
                 SDL_FreeSurface(Quitter);
                 SDL_FreeSurface(ecran);
@@ -2823,16 +2850,18 @@ void menu_pause(Terrain_espace *un_terrain_espace, Jeu *un_jeu)
                 if(test_souris_rectangle(positionAide,evenement.button.x,evenement.button.y))
 				{
                     continuer = 0;
+                    SDL_SetAlpha(Noir, SDL_SRCALPHA, 20);
                     for (i=0; i<30; i++)
                     {
-                        SDL_SetAlpha(Noir, SDL_SRCALPHA, 20);
                         SDL_BlitSurface(Noir, NULL, ecran, NULL);
                         SDL_Flip(ecran);
                     }
                     SDL_FreeSurface(imageDeFond);
+                    SDL_FreeSurface(Aide);
                     SDL_FreeSurface(Sauvegarder);
                     SDL_FreeSurface(Quitter);
                     SDL_FreeSurface(ecran);
+                    SDL_FreeSurface(Noir);
                     menu_aide();
 				}
 
@@ -2840,16 +2869,18 @@ void menu_pause(Terrain_espace *un_terrain_espace, Jeu *un_jeu)
                 if(test_souris_rectangle(positionSauvegarder,evenement.button.x,evenement.button.y))
 				{
                     continuer = 0;
+                    SDL_SetAlpha(Noir, SDL_SRCALPHA, 20);
                     for (i=0; i<30; i++)
                     {
-                        SDL_SetAlpha(Noir, SDL_SRCALPHA, 20);
                         SDL_BlitSurface(Noir, NULL, ecran, NULL);
                         SDL_Flip(ecran);
                     }
                     SDL_FreeSurface(imageDeFond);
+                    SDL_FreeSurface(Aide);
                     SDL_FreeSurface(Sauvegarder);
                     SDL_FreeSurface(Quitter);
                     SDL_FreeSurface(ecran);
+                    SDL_FreeSurface(Noir);
                     menu_creation_sauvegarde(un_terrain_espace, un_jeu);
 				}
 
@@ -2857,16 +2888,18 @@ void menu_pause(Terrain_espace *un_terrain_espace, Jeu *un_jeu)
                 if(test_souris_rectangle(positionQuitter,evenement.button.x,evenement.button.y))
 				{
                     continuer = 0;
+                    SDL_SetAlpha(Noir, SDL_SRCALPHA, 20);
                     for (i=0; i<30; i++)
                     {
-                        SDL_SetAlpha(Noir, SDL_SRCALPHA, 20);
                         SDL_BlitSurface(Noir, NULL, ecran, NULL);
                         SDL_Flip(ecran);
                     }
                     SDL_FreeSurface(imageDeFond);
+                    SDL_FreeSurface(Aide);
                     SDL_FreeSurface(Sauvegarder);
                     SDL_FreeSurface(Quitter);
                     SDL_FreeSurface(ecran);
+                    SDL_FreeSurface(Noir);
                     exit(0);
 				}
         }
@@ -2917,6 +2950,7 @@ void nouvelle_partie(void)
     longueurTexte = Texte->w;
     positionTexte.x = ((TAILLE_FENETRE_X/2.0) - (longueurTexte/2.0));
     positionTexte.y = 1*(TAILLE_FENETRE_Y)/10;
+    TTF_CloseFont(police);
 
     /* Chargement du texte */
     police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 40);
@@ -2934,6 +2968,7 @@ void nouvelle_partie(void)
     longueurTexte4 = Texte4->w;
     positionTexte4.x = ((TAILLE_FENETRE_X/2.0) - (longueurTexte4/2.0));
     positionTexte4.y = 6*(TAILLE_FENETRE_Y)/10;
+    TTF_CloseFont(police);
 
     /* Chargement du "Cliquez pour continuer" */
     police = TTF_OpenFont("../graphiques/fonts/space_age.ttf", 40);
@@ -2941,6 +2976,7 @@ void nouvelle_partie(void)
     longueurTexte5 = Texte5->w;
     positionTexte5.x = ((TAILLE_FENETRE_X/2.0) - (longueurTexte5/2.0));
     positionTexte5.y = 9*(TAILLE_FENETRE_Y)/10;
+    TTF_CloseFont(police);
 
 
     /*AFFICHAGE*/
@@ -2951,7 +2987,6 @@ void nouvelle_partie(void)
         SDL_BlitSurface(Noir, NULL, ecran, NULL);
         b = b-50;
         SDL_Flip(ecran);
-        SDL_FreeSurface(ecran);
         SDL_BlitSurface(imageDeFond, NULL, ecran, NULL);
         SDL_BlitSurface(Texte, NULL, ecran, &positionTexte);
         SDL_BlitSurface(Texte2, NULL, ecran, &positionTexte2);
@@ -3009,15 +3044,20 @@ void nouvelle_partie(void)
             case SDL_MOUSEBUTTONUP :
 
                 /*Disparition du menu et affichage du jeu*/
+                SDL_SetAlpha(Noir, SDL_SRCALPHA, 50);
                 for (i=0; i<10; i++)
                 {
-                    SDL_SetAlpha(Noir, SDL_SRCALPHA, 50);
                     SDL_BlitSurface(Noir, NULL, ecran, NULL);
                     SDL_Flip(ecran);
                 }
                 SDL_FreeSurface(ecran);
                 SDL_FreeSurface(Texte);
+                SDL_FreeSurface(Texte2);
+                SDL_FreeSurface(Texte3);
+                SDL_FreeSurface(Texte4);
+                SDL_FreeSurface(Texte5);
                 SDL_FreeSurface(imageDeFond);
+                SDL_FreeSurface(Noir);
                 menu_aide();
                 affichage_ecran(jeu, un_terrain_espace);
         }
@@ -3086,6 +3126,7 @@ void ecran_titre(void)
     longueurTexte = Texte->w;
     positionTexte.x = ((X/2.0) - (longueurTexte/2.0));
     positionTexte.y = 9*(Y)/10;
+    TTF_CloseFont(police);
     SDL_BlitSurface(Texte, NULL, ecran, &positionTexte);
     SDL_Flip(ecran);
 
@@ -3161,7 +3202,6 @@ void ecran_titre(void)
                 SDL_FreeSurface(NouvellePartie);
                 SDL_FreeSurface(Charger);
                 SDL_FreeSurface(Quitter);
-                SDL_FreeSurface(ecran);
                 if(test_souris_rectangle(positionNouvellePartie,xm,ym))
                 {
                     NouvellePartie = IMG_Load("../graphiques/images/Nouvelle_Partie_Pressé.png");
@@ -3201,9 +3241,9 @@ void ecran_titre(void)
                 if(test_souris_rectangle(positionNouvellePartie,clic_touche.button.x,clic_touche.button.y))
 				{
                     continuer = 0;
+                    SDL_SetAlpha(Noir, SDL_SRCALPHA, 50);
                     for (i=0; i<10; i++)
                     {
-                        SDL_SetAlpha(Noir, SDL_SRCALPHA, 50);
                         SDL_BlitSurface(Noir, NULL, ecran, NULL);
                         SDL_Flip(ecran);
                     }
@@ -3212,6 +3252,8 @@ void ecran_titre(void)
                     SDL_FreeSurface(NouvellePartie);
                     SDL_FreeSurface(Charger);
                     SDL_FreeSurface(Quitter);
+                    SDL_FreeSurface(ecran);
+                    SDL_FreeSurface(Noir);
                     nouvelle_partie();
 				}
 
@@ -3219,9 +3261,9 @@ void ecran_titre(void)
 				if(test_souris_rectangle(positionCharger,clic_touche.button.x,clic_touche.button.y))
 				{
                     continuer = 0;
+                    SDL_SetAlpha(Noir, SDL_SRCALPHA, 50);
                     for (i=0; i<10; i++)
                     {
-                        SDL_SetAlpha(Noir, SDL_SRCALPHA, 50);
                         SDL_BlitSurface(Noir, NULL, ecran, NULL);
                         SDL_Flip(ecran);
                     }
@@ -3239,9 +3281,9 @@ void ecran_titre(void)
                 if(test_souris_rectangle(positionQuitter,clic_touche.button.x,clic_touche.button.y))
 				{
                     continuer = 0;
+                    SDL_SetAlpha(Noir, SDL_SRCALPHA, 50);
                     for (i=0; i<10; i++)
                     {
-                        SDL_SetAlpha(Noir, SDL_SRCALPHA, 50);
                         SDL_BlitSurface(Noir, NULL, ecran, NULL);
                         SDL_Flip(ecran);
                     }
@@ -3250,6 +3292,8 @@ void ecran_titre(void)
                     SDL_FreeSurface(NouvellePartie);
                     SDL_FreeSurface(Charger);
                     SDL_FreeSurface(Quitter);
+                    SDL_FreeSurface(ecran);
+                    SDL_FreeSurface(Noir);
                     SDL_Quit();
                     exit(0);
 				}
