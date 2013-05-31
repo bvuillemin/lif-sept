@@ -228,7 +228,7 @@ void un_tour_combat(Terrain_combat * un_terrain_combat, Flotte * flotte)
 int attaquer(Terrain_combat * un_terrain_combat,Unite * une_unite,const int x,const int y)
 {	
 	Unite * victime;
-	int pt_attaque_unite, pt_vie_victime,pt_action_unite;
+	int pt_attaque_unite, pt_vie_victime;
 	int p;
 	Case_terrain_combat * une_case;
 	une_case = get_case_terrain_combat(un_terrain_combat,x,y);
@@ -238,7 +238,6 @@ int attaquer(Terrain_combat * un_terrain_combat,Unite * une_unite,const int x,co
 		victime = get_unite(une_case);
 		pt_attaque_unite = get_pt_attaque(une_unite);
 		pt_vie_victime = get_pt_vie(victime);
-		pt_action_unite = get_pt_action(une_unite);
 		set_pt_vie(victime ,pt_vie_victime - pt_attaque_unite);
 		printf("a réussi à attaquer\n");
 		if (get_pt_vie(victime)<=0){p=-2;return p;}

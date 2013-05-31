@@ -615,7 +615,7 @@ bool fusion_flotte(Joueur *un_joueur, Terrain_espace *un_terrain_espace, Flotte 
 		}
 		retirer_flotte_joueur(un_joueur, une_flotte->indice_tableau_joueur);
 		//free(une_flotte);
-		/*distance = calcul_distance(x_depart, y_depart, x, y);
+		distance = calcul_distance(x_depart, y_depart, x, y);
 		if(pt_mvt_arrivee > (pt_mvt_depart - distance))
 		{
 			enlever_pt_mouvement_espace_flotte(flotte_arrivee, distance);
@@ -639,10 +639,8 @@ bool fusion_flotte(Joueur *un_joueur, Terrain_espace *un_terrain_espace, Flotte 
 	int i;
 	int nb_unite = flotte_depart->taille_flotte;
 	Case_terrain_espace *case_depart;
-	Case_terrain_espace *case_arrivee;
 
 	case_depart = get_case_terrain_espace(un_terrain_espace, flotte_depart->x_flotte, flotte_depart->y_flotte);
-	case_arrivee = get_case_terrain_espace(un_terrain_espace, flotte_arrivee->x_flotte, flotte_arrivee->y_flotte);
 
 	if((flotte_arrivee->taille_flotte + flotte_depart->taille_flotte <= flotte_arrivee->taille_maximum_flotte) && (flotte_depart->indice_joueur == flotte_arrivee->indice_joueur))
 	{
