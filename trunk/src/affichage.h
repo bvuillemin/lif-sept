@@ -65,7 +65,7 @@ void maj_affichage_ressource(Jeu *un_jeu, SDL_Surface *ecran, SDL_Surface **tab_
 
 void pause();
 void input_handle(void);
-void menu_pause(Terrain_espace *un_terrain_espace, Jeu *un_jeu);
+void menu_pause(Terrain_espace *un_terrain_espace, Jeu *un_jeu, int * exit);
 void ecran_titre(void);
 void affichage_ecran_acceuil(Terrain_combat *un_terrain_combat);
 

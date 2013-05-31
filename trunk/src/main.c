@@ -4,7 +4,6 @@
 
 #include "planete.h"
 #include "case_terrain_espace.h"
-#include "niveau.h"
 #include "unite.h"
 #include "terrain_espace.h"
 #include "flotte.h"
