@@ -180,7 +180,6 @@ int ajouter_unite_flotte(Flotte *flotte, Unite *unite)
  */
 int transferer_unite_flotte(Flotte *flotte, Unite *unite)
 {
-	int min = flotte->pt_mouvement_espace_flotte;
 	if(flotte->taille_flotte < flotte->taille_maximum_flotte)
     {
 		set_indice_unite_dans_flotte(unite,flotte->taille_flotte);

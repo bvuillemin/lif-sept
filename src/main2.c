@@ -20,8 +20,8 @@ int main()
 	Jeu * jeu;
 	Joueur * joueur1;
 	Joueur * joueur2;
-
-	Terrain_combat * un_match;
+/*
+	Terrain_combat * un_match;*/
 	  Flotte *flotte1;
     Unite *unite1;
     Unite *unite2;
@@ -101,7 +101,7 @@ afficher_flotte(flotte2);
 		printf("ok!\n");
 	}*/
 	
-	lancer_combat_ecran(jeu,un_match,flotte1,flotte2);
+	lancer_combat_ecran(jeu,flotte1,flotte2);
 	return 0;
 
 }
