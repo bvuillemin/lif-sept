@@ -599,6 +599,7 @@ bool deplacement_flotte(Joueur *un_joueur, Terrain_espace *un_terrain_espace, Fl
 	}
 	return false;
 }
+
 /*
 bool fusion_flotte(Joueur *un_joueur, Terrain_espace *un_terrain_espace, Flotte *une_flotte, int x, int y)
 {
@@ -732,6 +733,32 @@ bool deplacement_unite_flotte(Jeu *un_jeu, Joueur *un_joueur, Terrain_espace *un
 		}
 	}
 	return false;
+}
+
+
+/**
+ * \brief      Permet un combat automatique
+ * \details    
+ * \param      un_jeu              Pointeur sur Jeu
+ */
+void combat_automatique(Flotte* flotte1, Flotte* flotte2)
+{
+	int i;
+	int defense_flotte1 = 0, defense_flotte2 = 0, attaque_flotte1 = 0, attaque_flotte2 = 0;
+
+	for(i=0;i<get_taille_flotte(flotte1);i++)
+	{
+		defense_flotte1 += get_pt_vie(get_unite_i_flotte(flotte1, i));
+		attaque_flotte1 += get_pt_attaque_total(get_unite_i_flotte(flotte1, i));
+	}
+	for(i=0;i<get_taille_flotte(flotte2);i++)
+	{
+		defense_flotte2 += get_pt_vie(get_unite_i_flotte(flotte2, i));
+		attaque_flotte2 += get_pt_attaque_total(get_unite_i_flotte(flotte2, i));
+	}
+
+
+
 }
 
 
