@@ -2276,8 +2276,16 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
             SDL_FreeSurface(tab_surface[i]);
 	    }
 	}*/
+    SDL_FreeSurface(tab_surface[0]);
+    SDL_FreeSurface(tab_surface[1]);
+    SDL_FreeSurface(tab_surface[3]);
+    SDL_FreeSurface(tab_surface[5]);
+    SDL_FreeSurface(tab_surface[9]);
+    SDL_FreeSurface(tab_surface[10]);
+    SDL_FreeSurface(tab_surface[11]);
 	free(tab_surface);
-
+    
+    SDL_FreeSurface(Noir);
 	SDL_FreeSurface(ecran);
 	SDL_FreeSurface(icone);
 
