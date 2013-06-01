@@ -1,10 +1,5 @@
-/**
- * \file      TableauDynamique.c
- * \author    BODARD, REYNAUD, VUILLEMIN
- * \version   1.0
- * \brief     Définit les tableaux dynamiques
- * \details   Cette classe définit les tableaux dynamiques et permet leur implémentation dans le jeu (dans joueur)
- */
+#include <stdlib.h>
+#include <stdio.h>
 
 #include "TableauDynamique.h"
 
@@ -60,7 +55,7 @@ void modifierValeurIemeElementTabDyn(TableauDynamique *t, Flotte e, unsigned int
 void supprimerElementTabDyn( TableauDynamique *t, int position )
 {
 	int i;
-	for(i=position-1;i<(*t).taille_utilisee-1;i++)
+	for(i=position;i<(*t).taille_utilisee-1;i++)
 	{
 		(*t).ad[i]=(*t).ad[i+1];
 	}
