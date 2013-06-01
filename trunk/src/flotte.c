@@ -139,6 +139,10 @@ int get_portee_vision_flotte(const Flotte* une_flotte)
 	return une_flotte->portee_vision;
 }
 
+int get_indice_tableau_joueur(const Flotte* une_flotte)
+{
+	return une_flotte->indice_tableau_joueur;
+}
 
 /************************************************************************/
 /* Fonctions diverses                                                   */
