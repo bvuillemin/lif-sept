@@ -56,6 +56,7 @@ Unite * get_unite_i_flotte(const Flotte * flotte, const int i);
 void set_indice_joueur_flotte(Flotte *flotte,const int i);
 int get_indice_joueur_flotte(const Flotte *flotte);
 int get_portee_vision_flotte(const Flotte* une_flotte);
+int get_indice_tableau_joueur(const Flotte* une_flotte);
 
 int ajouter_unite_flotte(Flotte *flotte, Unite *unite); /*renvoie 1 en cas de succès, 0 en cas d'échecs*/
 int transferer_unite_flotte(Flotte *flotte, Unite *unite);

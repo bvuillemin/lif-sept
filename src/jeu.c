@@ -744,10 +744,14 @@ bool deplacement_unite_flotte(Jeu *un_jeu, Joueur *un_joueur, Terrain_espace *un
  * \details    
  * \param      un_jeu              Pointeur sur Jeu
  */
-void combat_automatique(Flotte* flotte1, Flotte* flotte2)
+void combat_automatique(Jeu* un_jeu,Terrain_espace* un_terrain, Flotte* flotte1, Flotte* flotte2)
 {
 	int i;
 	int defense_flotte1 = 0, defense_flotte2 = 0, attaque_flotte1 = 0, attaque_flotte2 = 0;
+	int defense_flotte1_temp = 0, defense_flotte2_temp = 0;
+	int tour_en_cours = 1, gagnant = 0;
+	int valeur_rand;
+	bool combat = true;
 
 	for(i=0;i<get_taille_flotte(flotte1);i++)
 	{
@@ -760,7 +764,55 @@ void combat_automatique(Flotte* flotte1, Flotte* flotte2)
 		attaque_flotte2 += get_pt_attaque_total(get_unite_i_flotte(flotte2, i));
 	}
 
+	printf("Flotte1: attaque %d, defense %d \n", attaque_flotte1, defense_flotte1);
+	printf("Flotte2: attaque %d, defense %d \n", attaque_flotte2, defense_flotte2);
 
+	defense_flotte1_temp = defense_flotte1;
+	defense_flotte2_temp = defense_flotte2;
+
+	while(combat)
+	{
+		if(tour_en_cours%2 == 1)
+		{
+			if(defense_flotte2_temp > 0)
+			{
+				defense_flotte2_temp -= attaque_flotte1;
+				tour_en_cours++;
+			}
+			if(defense_flotte2_temp <= 0)
+			{
+				combat = false;
+				gagnant = 1;
+			}
+		}
+
+		if(tour_en_cours%2 == 0)
+		{
+			if(defense_flotte1_temp > 0)
+			{
+				defense_flotte1_temp -= attaque_flotte2;
+				tour_en_cours++;
+			}
+			if(defense_flotte1_temp <= 0)
+			{
+				combat = false;
+				gagnant = 2;
+			}
+		}
+	}
+
+	if(gagnant == 1)
+	{
+		//retirer_flotte(get_case_terrain_espace(un_terrain, get_x_flotte(flotte2), get_y_flotte(flotte2)));
+		//retirer_flotte_joueur(get_ieme_joueur_jeu(un_jeu, get_indice_joueur_flotte(flotte2)), get_indice_tableau_joueur(flotte2));
+		printf("Flotte 2 a perdu \n");
+	}
+	if(gagnant == 2)
+	{
+		retirer_flotte(get_case_terrain_espace(un_terrain, get_x_flotte(flotte1), get_y_flotte(flotte1)));
+		retirer_flotte_joueur(get_ieme_joueur_jeu(un_jeu, get_indice_joueur_flotte(flotte1)), get_indice_tableau_joueur(flotte1));
+		printf("Flotte 1 a perdu \n");
+	}
 
 }
 
