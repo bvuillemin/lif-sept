@@ -2052,6 +2052,7 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 						{
 							 if(!test_souris_rectangle(position_panneau_unite, x, y))
 							 {
+                                 set_selection_flotte(un_jeu, NULL);
 								 interface_affichee = RIEN;
 								 maj_affichage(un_jeu, un_terrain_espace, ecran, interface_affichee, NULL, tab_surface);
 								 maj_affichage_carte_terrain(un_jeu, un_terrain_espace, ecran, tab_surface, interface_affichee);
@@ -2060,6 +2061,7 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 						}
 						if(interface_affichee != PANNEAU_UNITE)
 						{
+                            set_selection_flotte(un_jeu, NULL);
 							interface_affichee = RIEN;
 							maj_affichage(un_jeu, un_terrain_espace, ecran, interface_affichee, NULL, tab_surface);
 							maj_affichage_carte_terrain(un_jeu, un_terrain_espace, ecran, tab_surface, interface_affichee);

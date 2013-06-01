@@ -93,7 +93,10 @@ Joueur * get_ieme_joueur_jeu(Jeu * un_jeu,int i)
 {
 	return un_jeu->tab_joueur + i;
 }
-
+void set_selection_flotte(Jeu * un_jeu, Flotte * une_flotte)
+{
+    un_jeu->selection_flotte = une_flotte;
+}
 
 /************************************************************************/
 /* Fonctions liées au jeu                                               */
@@ -669,8 +672,8 @@ bool fusion_flotte(Joueur *un_joueur, Terrain_espace *un_terrain_espace, Flotte 
 		{
 			ajouter_unite_flotte(flotte_arrivee, flotte_depart->tab_unite[i]);
 		}
+        retirer_flotte_joueur(un_joueur, flotte_depart->indice_tableau_joueur);
 		retirer_flotte(case_depart);
-		retirer_flotte_joueur(un_joueur, flotte_depart->indice_tableau_joueur);
 		return true;
 	}
 	return false;
