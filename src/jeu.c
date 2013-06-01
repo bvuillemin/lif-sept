@@ -144,46 +144,61 @@ void joueur_suivant(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
  */
 void tour_suivant(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 {
-	int metal = 0, argent = 0, carburant = 0, population = 0;
-	int i;
-
-	for(i=0;i<un_jeu->nb_joueur;i++)
-	{
-		if(get_ia_joueur(get_ieme_joueur_jeu(un_jeu, i)))
-		{
-			appeler_ia(un_terrain_espace, un_jeu->tab_joueur);
-		}
-		recuperer_ressource_planete(get_ieme_joueur_jeu(un_jeu, i), &metal, &argent, &carburant, &population);
-		un_jeu->tab_joueur[i].metal += metal;
-		un_jeu->tab_joueur[i].argent += argent;
-		un_jeu->tab_joueur[i].carburant += carburant;
-		un_jeu->tab_joueur[i].population += population;
-		printf("Ressources du tour %d pour le joueur %d: \nMetal: %d \nArgent: %d \nCarburant: %d \nPopulation: %d\n\n", un_jeu->tour_en_cours, i, metal, argent, carburant, population);
-		reinitialiser_mouvement_flotte(get_ieme_flotte_joueur(&un_jeu->tab_joueur[i], 0));
-
-		if(un_jeu->tab_joueur[i].tab_planete[0]->batiment_nb_tour_restant > 0)
-		{
-			un_jeu->tab_joueur[i].tab_planete[0]->batiment_nb_tour_restant --;
-		}
-		if(un_jeu->tab_joueur[i].tab_planete[0]->batiment_nb_tour_restant == 0) /*a completer pour gerer automatiquement chaque planete de chaque joueur*/
-		{
-			validation_batiment(un_jeu->tab_joueur[i].tab_planete[0]);
-			un_jeu->tab_joueur[i].tab_planete[0]->batiment_nb_tour_restant = -1;
-			un_jeu->tab_joueur[i].tab_planete[0]->batiment_en_cours = -1;
-		}
-
-		if(un_jeu->tab_joueur[i].tab_planete[0]->unite_nb_tour_restant > 0)
-		{
-			un_jeu->tab_joueur[i].tab_planete[0]->unite_nb_tour_restant --; /*de meme*/
-		}
-		if(un_jeu->tab_joueur[i].tab_planete[0]->unite_nb_tour_restant == 0)
-		{
-			validation_creation_unite_planete(un_jeu, un_terrain_espace, i, un_jeu->tab_joueur[i].tab_planete[0]->x, un_jeu->tab_joueur[i].tab_planete[0]->y);
-			un_jeu->tab_joueur[i].tab_planete[0]->unite_nb_tour_restant = -1;
-			un_jeu->tab_joueur[i].tab_planete[0]->unite_en_cours = -1;
-		}
-	}
-	un_jeu->tour_en_cours++;
+    int metal = 0, argent = 0, carburant = 0, population = 0;
+    int i, j;
+    Joueur* un_joueur;
+    Planete* une_planete;
+    
+    for(i=0;i<un_jeu->nb_joueur;i++)
+    {
+        un_joueur = get_ieme_joueur_jeu(un_jeu, i);
+        
+        if(get_ia_joueur(get_ieme_joueur_jeu(un_jeu, i)))
+        {
+            //appeler_ia(un_terrain_espace, un_jeu->tab_joueur);
+        }
+        
+        /*On récupère toutes les ressources des planètes possédées par les joueurs*/
+        recuperer_ressource_planete(get_ieme_joueur_jeu(un_jeu, i), &metal, &argent, &carburant, &population);
+        ajouter_metal(un_joueur, metal);
+        ajouter_argent(un_joueur, argent);
+        ajouter_carburant(un_joueur, carburant);
+        ajouter_population(un_joueur, population);
+        
+        printf("Ressources du tour %d pour le joueur %d: \nMetal: %d \nArgent: %d \nCarburant: %d \nPopulation: %d\n\n", un_jeu->tour_en_cours, i, metal, argent, carburant, population);
+        
+        reinitialiser_mouvement_flotte(get_ieme_flotte_joueur(un_joueur, 0));
+        
+        
+        /*On diminue d'un le temps de construction des unités et des bâtiments sur toutes les planètes*/
+        for(j=0;j<get_nb_planete(un_joueur);j++)
+        {
+            une_planete = get_ieme_planete_joueur(un_joueur, j);
+            
+            if(get_planete_batiment_nb_tour_restant(une_planete) > 0)
+            {
+                reduire_batiment_nb_tour_restant(une_planete);
+            }
+            if(get_planete_batiment_nb_tour_restant(une_planete) == 0)
+            {
+                validation_batiment(une_planete);
+                set_planete_batiment_nb_tour_restant(une_planete, -1);
+                set_planete_batiment_en_cours(une_planete, -1);
+            }
+            
+            if(get_planete_unite_nb_tour_restant(une_planete) > 0)
+            {
+                reduire_unite_nb_tour_restant(une_planete);
+            }
+            if(get_planete_unite_nb_tour_restant(une_planete) == 0)
+            {
+                validation_creation_unite_planete(un_jeu, un_terrain_espace, i, get_x_planete(une_planete), get_y_planete(une_planete));
+                set_planete_unite_nb_tour_restant(une_planete, -1);
+                set_planete_unite_en_cours(une_planete, -1);
+            }
+        }
+    }
+    un_jeu->tour_en_cours++;
 }
 
 /**
@@ -506,11 +521,16 @@ bool construction_unite_possible(Planete* une_planete)
 bool test_unite_selectionnee(Jeu *un_jeu)
 {
     int i;
+    bool temp = false;
     for(i=0;i<10;i++)
     {
-        if(un_jeu->tab_unite_selectionnee[i] == true)
+        if((un_jeu->tab_unite_selectionnee[i] == true) && (temp==true))
         {
             return true;
+        }
+        if((un_jeu->tab_unite_selectionnee[i] == true) && (temp==false))
+        {
+            temp = true;
         }
     }
     return false;
@@ -667,7 +687,7 @@ bool fusion_flotte(Joueur *un_joueur, Terrain_espace *un_terrain_espace, Flotte 
  * \return     Vrai si la séparation a eu lieu, Faux sinon
  */
 bool deplacement_unite_flotte(Jeu *un_jeu, Joueur *un_joueur, Terrain_espace *un_terrain_espace, Flotte *une_flotte, int x, int y)
-{/*
+{
 	if(peut_se_deplacer(une_flotte, x, y))
 	{
 		int distance, i;
@@ -687,8 +707,8 @@ bool deplacement_unite_flotte(Jeu *un_jeu, Joueur *un_joueur, Terrain_espace *un
 		if(case_arrivee->presence_flotte == true)
 		{
 			if(fusion_flotte(un_joueur, un_terrain_espace, une_flotte, case_arrivee->flotte))
-			{*/
-				/*free(une_flotte);*//*
+			{
+				/*free(une_flotte);*/
 				return true;
 			}
 		}
@@ -708,7 +728,7 @@ bool deplacement_unite_flotte(Jeu *un_jeu, Joueur *un_joueur, Terrain_espace *un
 			un_jeu->selection_flotte = get_flotte(get_case_terrain_espace(un_terrain_espace, x, y));
 			return true;
 		}
-	}*/
+	}
 	return false;
 }
 
