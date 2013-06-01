@@ -45,6 +45,7 @@ int main(int argc, char *argv[])
 	char info[] = "info";
 	char coloniser[] = "coloniser";
 	char afficher_carte[] = "carte";
+	char creer[] = "creer";
 
 	Planete *terre;
 	Planete *jupiter;
@@ -176,6 +177,18 @@ int main(int argc, char *argv[])
 		{
 			affiche_terrain_espace(un_terrain_espace);
 			affichage_vision_jeu(jeu, un_terrain_espace);
+		}
+		if(strcmp(menu, creer) == 0)
+		{
+			if(condition_creation_unite(get_joueur_en_cours(jeu), (jeu->tab_joueur[a]).tab_planete[0], i + 1))
+			{
+				creation_unite_planete(&jeu->tab_joueur[a], (jeu->tab_joueur[a]).tab_planete[0], 1);
+				printf("Création\n");
+			}
+			else
+			{
+				printf("Pas de création\n");
+			}
 		}
     }
 	detruire_terrain_espace(&un_terrain_espace);

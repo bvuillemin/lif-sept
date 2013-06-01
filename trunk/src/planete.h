@@ -32,6 +32,7 @@ typedef void (*Validation_creation_batiment)(struct sPlanete*);
      char nom_planete[30];
      /** indice du joueur */
 	 int indice_joueur;
+
      /** Tableau de bâtiments */
      int batiment[10];
      /** Indice dans le tableau du batiment en cours de construction */
@@ -50,6 +51,8 @@ typedef void (*Validation_creation_batiment)(struct sPlanete*);
      int taille_utilisee;
      /** Définit la taille de la planète */
      int taille_planete;
+
+	 /**Définit la portée du champ de vision de la planète*/
 	 int portee_vision;
      /** Précise si c'est une planete principale ou non */
      bool planete_principale;
@@ -96,9 +99,16 @@ void set_portee_planete(Planete* une_planete, int portee);
 int get_portee_vision(const Planete* une_planete);
 int get_ieme_batiment(const Planete* une_planete, int i);
 int get_planete_unite_nb_tour_restant(const Planete* une_planete);
+void set_planete_unite_nb_tour_restant(Planete* une_planete, int nb);
+void set_planete_unite_en_cours(Planete* une_planete, int nb);
+int get_planete_batiment_nb_tour_restant(const Planete* une_planete);
+void set_planete_batiment_nb_tour_restant(Planete* une_planete, int nb);
+void set_planete_batiment_en_cours(Planete* une_planete, int nb);
 
 
 void modification_production_planete(Planete *une_planete,const int metal,const int argent,const int carburant,const int population);
+void reduire_unite_nb_tour_restant(Planete* une_planete);
+void reduire_batiment_nb_tour_restant(Planete* une_planete);
 void afficher_planete(Planete *une_planete);
 void afficher_batiment(Planete *une_planete);
 void creation_batiment(Planete *une_planete, int choix);

@@ -220,6 +220,30 @@ int get_planete_unite_nb_tour_restant(const Planete* une_planete)
 	return une_planete->unite_nb_tour_restant;
 }
 
+void set_planete_unite_nb_tour_restant(Planete* une_planete, int nb)
+{
+	une_planete->unite_nb_tour_restant = nb;
+}
+
+void set_planete_unite_en_cours(Planete* une_planete, int nb)
+{
+	une_planete->unite_en_cours = nb;
+}
+
+int get_planete_batiment_nb_tour_restant(const Planete* une_planete)
+{
+	return une_planete->batiment_nb_tour_restant;
+}
+
+void set_planete_batiment_nb_tour_restant(Planete* une_planete, int nb)
+{
+	une_planete->batiment_nb_tour_restant = nb;
+}
+
+void set_planete_batiment_en_cours(Planete* une_planete, int nb)
+{
+	une_planete->batiment_en_cours = nb;
+}
 
 /************************************************************************/
 /* Fonctions diverses                                                   */
@@ -240,6 +264,26 @@ void modification_production_planete(Planete *une_planete,const int metal,const 
 	une_planete->argent = argent;
 	une_planete->carburant = carburant;
 	une_planete->population = population;
+}
+
+/**
+ * \brief      Enlève un au nombre de tour restant pour construire une unité
+ * \details    Utile lorsqu'on atteint le tour suivant
+ * \param      une_planete         Pointeur sur Planete à modifier
+ */
+void reduire_unite_nb_tour_restant(Planete* une_planete)
+{
+	une_planete->unite_nb_tour_restant --;
+}
+
+/**
+ * \brief      Enlève un au nombre de tour restant pour construire un bâtiment
+ * \details    Utile lorsqu'on atteint le tour suivant
+ * \param      une_planete         Pointeur sur Planete à modifier
+ */
+void reduire_batiment_nb_tour_restant(Planete* une_planete)
+{
+	une_planete->batiment_nb_tour_restant --;
 }
 
 /**
