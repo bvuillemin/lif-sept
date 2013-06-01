@@ -518,20 +518,20 @@ bool construction_unite_possible(Planete* une_planete)
  * \param      un_jeu              Pointeur sur Jeu
  * \return     Vrai si l'unité est sélectionnée, Faux sinon
  */
-bool test_unite_selectionnee(Jeu *un_jeu)
+bool test_unite_selectionnee(Jeu *un_jeu, Flotte* une_flotte)
 {
     int i;
-    bool temp = false;
+    int nb_selectionne = 0;
     for(i=0;i<10;i++)
     {
-        if((un_jeu->tab_unite_selectionnee[i] == true) && (temp==true))
+        if(un_jeu->tab_unite_selectionnee[i] == true)
         {
-            return true;
+            nb_selectionne++;
         }
-        if((un_jeu->tab_unite_selectionnee[i] == true) && (temp==false))
-        {
-            temp = true;
-        }
+    }
+    if((nb_selectionne < get_taille_flotte(une_flotte)) && (nb_selectionne >= 1))
+    {
+        return true;
     }
     return false;
 }
