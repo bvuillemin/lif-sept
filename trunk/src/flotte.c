@@ -209,7 +209,7 @@ int retirer_unite_flotte(Flotte *flotte,const int indice_unite)
     int i;
     if(flotte->taille_flotte > 0)
     {
-        for(i=indice_unite;i<flotte->taille_flotte - 1;i++)
+        for(i=indice_unite;i<flotte->taille_flotte;i++)
         {
             flotte->tab_unite[i] = flotte->tab_unite[i+1];
         }
