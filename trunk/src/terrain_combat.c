@@ -86,6 +86,14 @@ Terrain_combat *creer_terrain_combat(const int taille_combat_x, const int taille
 
 void libere_terrain_combat(Terrain_combat *terrain_jeu_combat)
 {
+	int i, j;
+	for(i=0;i<terrain_jeu_combat->taille_combat_y;i++)
+	{
+		for(j=0;j<terrain_jeu_combat->taille_combat_x;j++)
+		{
+			libere_case_terrain_combat(terrain_jeu_combat->tab_terrain_combat + (i*(terrain_jeu_combat->taille_combat_x)+j));
+		}
+	}
     free(terrain_jeu_combat->tab_terrain_combat);
     terrain_jeu_combat->taille_combat_x=0;
     terrain_jeu_combat->taille_combat_y=0;

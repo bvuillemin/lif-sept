@@ -3724,6 +3724,9 @@ void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat,Flotte* 
 					affiche_info_unite(jeu,un_terrain_combat,infos,pos_clic); /*on affiche les infos de l'unité */
 					SDL_FreeSurface(texte);
 					texte = TTF_RenderUTF8_Blended(police,infos,couleur_police);
+					verifie_etat_combat(jeu,un_terrain_combat,flotte1,flotte2,infos2); /*on vérifie si le combat est fini*/
+					SDL_FreeSurface(texte2);
+					texte2 = TTF_RenderUTF8_Blended(police,infos2,couleur_police);
 					
 				}
 				
@@ -3747,7 +3750,8 @@ void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat,Flotte* 
 						SDL_FreeSurface(texte2);
 						texte2 = TTF_RenderText_Solid(police,infos2,couleur_police);
 						SDL_BlitSurface(texte2, NULL, ecran, &pos_texte2);SDL_Flip(ecran);
-
+						
+							SDL_FreeSurface(carte);
 						carte=affiche_ecran_terrain_combat(un_terrain_combat);
 
 						while(attend_attaque){
@@ -3797,6 +3801,7 @@ void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat,Flotte* 
 									{
 										passer_tour_combat(jeu,un_terrain_combat);
 									}
+									SDL_FreeSurface(carte);
 									carte=affiche_ecran_terrain_combat(un_terrain_combat);/*on refais le terrain*/
 									SDL_BlitSurface(carte, &position_affichage_carte,  ecran,NULL);
 									SDL_BlitSurface(bordure, NULL, ecran, &position_affichage_carte);
@@ -3804,28 +3809,33 @@ void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat,Flotte* 
 								break;
 							
 							}
+						SDL_BlitSurface(interface, NULL, ecran, &pos_interface);
+						SDL_BlitSurface(texte, NULL, ecran, &pos_texte);
+						SDL_BlitSurface(texte2, NULL, ecran, &pos_texte2);
+						SDL_Flip(ecran);
 						}
 						printf("fin du while \n");//à supprrimer
 						attend_attaque=1;
 					}
 
-					carte=affiche_ecran_terrain_combat(un_terrain_combat);
 					SDL_BlitSurface(carte, &position_affichage_carte,  ecran,NULL);
 					SDL_BlitSurface(bordure, NULL, ecran, &position_affichage_carte);SDL_Flip(ecran);
 				}
 				else if(test_souris_rectangle(pos_interface_carte,pos_clic.x,pos_clic.y)){ /*si on clique à l'intérieur de l'endroit ou est la carte*/
 					sprintf(infos2," ");
-					verifie_etat_combat(jeu,un_terrain_combat,flotte1,flotte2,infos2); /*on vérifie si le combat est fini*/
 					SDL_FreeSurface(texte2);
 					texte2 = TTF_RenderUTF8_Blended(police,infos2,couleur_police);
 					selection(jeu,un_terrain_combat,pos_clic);/*on sélectionne ou désélectionne */
 					affiche_deplacement_unite(jeu,un_terrain_combat, pos_clic,carte,bordure,ecran,position_affichage_carte,infos2);/*on essais de déplacer*/
 					SDL_FreeSurface(texte2);
 					texte2 = TTF_RenderUTF8_Blended(police,infos2,couleur_police);
+					SDL_FreeSurface(carte);
 					carte=affiche_ecran_terrain_combat(un_terrain_combat);/*on refais le terrain*/
 					if(get_pt_action_joueur(get_ieme_joueur_jeu(jeu,get_joueur_en_cours_combat(jeu)))<=0)
 					{
-						passer_tour_combat(jeu,un_terrain_combat);carte=affiche_ecran_terrain_combat(un_terrain_combat);
+						passer_tour_combat(jeu,un_terrain_combat);
+						SDL_FreeSurface(carte);
+						carte=affiche_ecran_terrain_combat(un_terrain_combat);
 					}
 				}
 				else{/*si on clique ailleur*/
@@ -3834,7 +3844,9 @@ void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat,Flotte* 
 					SDL_FreeSurface(texte2);
 					texte2 = TTF_RenderUTF8_Blended(police,infos2,couleur_police);
 					if(get_pt_action_joueur(get_ieme_joueur_jeu(jeu,get_joueur_en_cours_combat(jeu)))<=0){/*si le joueur n'as plus de point d'action*/
-						passer_tour_combat(jeu,un_terrain_combat);carte=affiche_ecran_terrain_combat(un_terrain_combat);}
+						passer_tour_combat(jeu,un_terrain_combat);
+						SDL_FreeSurface(carte);
+						carte=affiche_ecran_terrain_combat(un_terrain_combat);}
 				}
 			break;
 			case SDL_KEYUP:
@@ -3905,5 +3917,6 @@ void lancer_combat_ecran(Jeu *jeu,Flotte* flotte1,Flotte * flotte2)/*lance un co
 	placer_unite_flotte_en_haut(un_combat,flotte1);
 	placer_unite_flotte_en_bas(un_combat,flotte2);
 	affichage_ecran_combat(jeu ,un_combat,flotte1,flotte2);
+	detruit_terrain_combat(&un_combat);
 
 }

@@ -4,7 +4,6 @@
 
 #include "planete.h"
 #include "case_terrain_espace.h"
-#include "niveau.h"
 #include "unite.h"
 #include "terrain_espace.h"
 #include "flotte.h"
@@ -102,6 +101,7 @@ afficher_flotte(flotte2);
 	}*/
 	
 	lancer_combat_ecran(jeu,flotte1,flotte2);
+	//detruire_jeu(&jeu);
 	return 0;
 
 }
