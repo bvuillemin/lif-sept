@@ -2181,7 +2181,7 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
                 {
                     if((un_jeu->selection_flotte->indice_joueur == un_jeu->joueur_en_cours) && (un_jeu->selection_flotte->pt_mouvement_espace_flotte >= 0))
                     {
-                        if(test_unite_selectionnee(un_jeu))
+                        if(test_unite_selectionnee(un_jeu, get_flotte_en_cours(un_jeu)))
                         {
 							booleen_coordonnees_case(un_terrain_espace, un_jeu->selection_flotte->x_flotte, un_jeu->selection_flotte->y_flotte, &x_bis, &y_bis);
 							lire_son(system, son_saut_debut);
@@ -2224,6 +2224,8 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 			case SDLK_ESCAPE:
 				continuer = 0;
                     menu_pause(un_terrain_espace, un_jeu, &continuer);
+                    maj_affichage(un_jeu, un_terrain_espace, ecran, interface_affichee, une_case_terrain_espace, tab_surface);
+                    maj_affichage_ressource(un_jeu, ecran, tab_surface);
 				break;
 			case SDLK_UP:
 				if((un_terrain_espace->affichage_y - DEPLACEMENT_AFFICHAGE> 0) && (un_terrain_espace->affichage_y - DEPLACEMENT_AFFICHAGE<= (un_terrain_espace->taille_espace_y *100) - TAILLE_TERRAIN_ESPACE_Y ))
@@ -2257,13 +2259,13 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 	/* Libération des variables et fermetures de SDL                        */
 	/************************************************************************/
 
-    for(i=0;i<13;i++)
+    /*for(i=0;i<13;i++)
 	{
 	    if((tab_surface[i] != NULL) && (i != 2) && (i=!7))
 	    {
             SDL_FreeSurface(tab_surface[i]);
 	    }
-	}
+	}*/
 	free(tab_surface);
 
 	SDL_FreeSurface(ecran);
@@ -2804,6 +2806,8 @@ void menu_aide(void)
                     }
                     SDL_FreeSurface(imageDeFond_Gauche);
                     SDL_FreeSurface(imageDeFond_Droit);
+                    SDL_FreeSurface(Noir);
+                    SDL_FreeSurface(Titre);
                     SDL_FreeSurface(Deplacer);
                     SDL_FreeSurface(Conquerir);
                     SDL_FreeSurface(Construire);
@@ -2818,10 +2822,10 @@ void menu_aide(void)
 void menu_pause(Terrain_espace *un_terrain_espace, Jeu *un_jeu, int * exit)
 {
     /* Initialisation des variables */
-    SDL_Surface *ecran, *imageDeFond, *Texte, *Noir, *Aide, *Sauvegarder, *Quitter;
+    SDL_Surface *ecran, *imageDeFond, *Texte, *Noir, *Retour, *Aide, *Sauvegarder, *Quitter;
     TTF_Font *police;
     SDL_Color couleur= {255, 255, 255};
-    SDL_Rect positionTexte, positionAide, positionSauvegarder, positionQuitter;
+    SDL_Rect positionTexte, positionRetour, positionAide, positionSauvegarder, positionQuitter;
     SDL_Event evenement;
     int continuer = 1, xm = 0, ym = 0, i;
     double longueurTexte, longueurBouton, hauteurBouton;
@@ -2830,6 +2834,7 @@ void menu_pause(Terrain_espace *un_terrain_espace, Jeu *un_jeu, int * exit)
     ecran = SDL_SetVideoMode(TAILLE_FENETRE_X, TAILLE_FENETRE_Y, 32, SDL_HWSURFACE);
     imageDeFond = IMG_Load("../graphiques/images/Fond_titre.png");
     Noir = SDL_LoadBMP("../graphiques/images/Noir.bmp");
+    Retour = IMG_Load("../graphiques/images/Retour.png");
     Aide = IMG_Load("../graphiques/images/Aide.png");
     Sauvegarder = IMG_Load("../graphiques/images/Sauvegarder.png");
     Quitter = IMG_Load("../graphiques/images/Quitter.png");
@@ -2844,14 +2849,17 @@ void menu_pause(Terrain_espace *un_terrain_espace, Jeu *un_jeu, int * exit)
     TTF_CloseFont(police);
     longueurBouton = Sauvegarder->w;
     hauteurBouton = Sauvegarder->h;
-    positionAide.x = ((TAILLE_FENETRE_X/2.0) - (longueurBouton/2.0));
-    positionAide.y = ((TAILLE_FENETRE_Y/2.0) - (hauteurBouton/2.0));
+    positionRetour.x = ((TAILLE_FENETRE_X/2.0) - (longueurBouton/2.0));
+    positionRetour.y = ((TAILLE_FENETRE_Y/2.2) - (hauteurBouton/2.0));
+    positionAide.x = positionRetour.x;
+    positionAide.y = positionRetour.y + 75;
     positionSauvegarder.x = positionAide.x;
     positionSauvegarder.y = positionAide.y + 75;
     positionQuitter.x = positionSauvegarder.x;
     positionQuitter.y = positionSauvegarder.y + 75;
     SDL_BlitSurface(imageDeFond, NULL, ecran, NULL);
     SDL_BlitSurface(Texte, NULL, ecran, &positionTexte);
+    SDL_BlitSurface(Retour, NULL, ecran, &positionRetour);
     SDL_BlitSurface(Aide, NULL, ecran, &positionAide);
     SDL_BlitSurface(Sauvegarder, NULL, ecran, &positionSauvegarder);
     SDL_BlitSurface(Quitter, NULL, ecran, &positionQuitter);
@@ -2866,10 +2874,19 @@ void menu_pause(Terrain_espace *un_terrain_espace, Jeu *un_jeu, int * exit)
 		{
             case SDL_MOUSEMOTION :
                 SDL_GetMouseState(&xm, &ym);
+                SDL_FreeSurface(Retour);
                 SDL_FreeSurface(Aide);
                 SDL_FreeSurface(Sauvegarder);
                 SDL_FreeSurface(Quitter);
                 SDL_FreeSurface(ecran);
+                if(test_souris_rectangle(positionRetour,xm,ym))
+                {
+                    Retour = IMG_Load("../graphiques/images/Retour_Pressé.png");
+                }
+                if(!test_souris_rectangle(positionRetour,xm,ym))
+                {
+                    Retour = IMG_Load("../graphiques/images/Retour.png");
+                }
                 if(test_souris_rectangle(positionAide,xm,ym))
                 {
                     Aide = IMG_Load("../graphiques/images/Aide_Pressé.png");
@@ -2896,6 +2913,7 @@ void menu_pause(Terrain_espace *un_terrain_espace, Jeu *un_jeu, int * exit)
                 }
                 SDL_BlitSurface(imageDeFond, NULL, ecran, NULL);
                 SDL_BlitSurface(Texte, NULL, ecran, &positionTexte);
+                SDL_BlitSurface(Retour, NULL, ecran, &positionRetour);
                 SDL_BlitSurface(Aide, NULL, ecran, &positionAide);
                 SDL_BlitSurface(Sauvegarder, NULL, ecran, &positionSauvegarder);
                 SDL_BlitSurface(Quitter, NULL, ecran, &positionQuitter);
@@ -2905,6 +2923,21 @@ void menu_pause(Terrain_espace *un_terrain_espace, Jeu *un_jeu, int * exit)
                 /*Chargement des menus lors d'un clic sur un bouton */
 			case SDL_MOUSEBUTTONUP:
 
+                /* Retour au jeu */
+                if(test_souris_rectangle(positionRetour,evenement.button.x,evenement.button.y))
+				{
+                    continuer = 0;
+                    *exit = 1;
+                    SDL_FreeSurface(imageDeFond);
+                    SDL_FreeSurface(Texte);
+                    SDL_FreeSurface(Retour);
+                    SDL_FreeSurface(Aide);
+                    SDL_FreeSurface(Sauvegarder);
+                    SDL_FreeSurface(Quitter);
+                    SDL_FreeSurface(ecran);
+                    SDL_FreeSurface(Noir);
+				}
+                
                 /* Aide */
                 if(test_souris_rectangle(positionAide,evenement.button.x,evenement.button.y))
 				{
@@ -2916,12 +2949,15 @@ void menu_pause(Terrain_espace *un_terrain_espace, Jeu *un_jeu, int * exit)
                         SDL_Flip(ecran);
                     }
                     SDL_FreeSurface(imageDeFond);
+                    SDL_FreeSurface(Texte);
+                    SDL_FreeSurface(Retour);
                     SDL_FreeSurface(Aide);
                     SDL_FreeSurface(Sauvegarder);
                     SDL_FreeSurface(Quitter);
                     SDL_FreeSurface(ecran);
                     SDL_FreeSurface(Noir);
                     menu_aide();
+                    menu_pause(un_terrain_espace, un_jeu, exit);
 				}
 
                 /* Sauvegarder */
@@ -2935,12 +2971,15 @@ void menu_pause(Terrain_espace *un_terrain_espace, Jeu *un_jeu, int * exit)
                         SDL_Flip(ecran);
                     }
                     SDL_FreeSurface(imageDeFond);
+                    SDL_FreeSurface(Texte);
+                    SDL_FreeSurface(Retour);
                     SDL_FreeSurface(Aide);
                     SDL_FreeSurface(Sauvegarder);
                     SDL_FreeSurface(Quitter);
                     SDL_FreeSurface(ecran);
                     SDL_FreeSurface(Noir);
                     menu_creation_sauvegarde(un_terrain_espace, un_jeu);
+                    menu_pause(un_terrain_espace, un_jeu, exit);
 				}
 
                 /* Quitter le jeu */
@@ -2954,6 +2993,8 @@ void menu_pause(Terrain_espace *un_terrain_espace, Jeu *un_jeu, int * exit)
                         SDL_Flip(ecran);
                     }
                     SDL_FreeSurface(imageDeFond);
+                    SDL_FreeSurface(Texte);
+                    SDL_FreeSurface(Retour);
                     SDL_FreeSurface(Aide);
                     SDL_FreeSurface(Sauvegarder);
                     SDL_FreeSurface(Quitter);
@@ -3356,7 +3397,6 @@ void ecran_titre(void)
                     SDL_FreeSurface(ecran);
                     SDL_FreeSurface(Noir);
                     SDL_Quit();
-                    exit(0);
 				}
         }
     }
