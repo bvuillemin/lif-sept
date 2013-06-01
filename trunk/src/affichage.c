@@ -1900,6 +1900,7 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 	SDL_Surface *ecran = NULL;
 	SDL_Surface *icone = NULL;
 	SDL_Surface **tab_surface;
+    SDL_Surface *Noir = SDL_LoadBMP("../graphiques/images/Noir.bmp");
 	SDL_Rect bouton_tour = {TAILLE_FENETRE_X -207, TAILLE_TERRAIN_ESPACE_Y - 8, 200, 33};
 	SDL_Rect position_affichage_carte = {0, TAILLE_BARRE_RESSOURCE, TAILLE_TERRAIN_ESPACE_X, TAILLE_TERRAIN_ESPACE_Y};
 	SDL_Rect position_panneau_unite = {TAILLE_FENETRE_X - 300, 20, 300, TAILLE_TERRAIN_ESPACE_Y};
@@ -2223,6 +2224,12 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 			{
 			case SDLK_ESCAPE:
 				continuer = 0;
+                    for (i=0; i<30; i++)
+                    {
+                        SDL_SetAlpha(Noir, SDL_SRCALPHA, 50);
+                        SDL_BlitSurface(Noir, NULL, ecran, NULL);
+                        SDL_Flip(ecran);
+                    }
                     menu_pause(un_terrain_espace, un_jeu, &continuer);
                     maj_affichage(un_jeu, un_terrain_espace, ecran, interface_affichee, une_case_terrain_espace, tab_surface);
                     maj_affichage_ressource(un_jeu, ecran, tab_surface);
@@ -2553,7 +2560,7 @@ void menu_chargement_sauvegarde(void)
     while (b>=0) {
         SDL_SetAlpha(Noir, SDL_SRCALPHA, b);
         SDL_BlitSurface(Noir, NULL, ecran, NULL);
-        b = b-10;
+        b = b-20;
         SDL_Flip(ecran);
         SDL_FreeSurface(ecran);
         SDL_BlitSurface(imageDeFond, NULL, ecran, NULL);
@@ -2620,7 +2627,7 @@ void menu_creation_sauvegarde(Terrain_espace *un_terrain_espace, Jeu *un_jeu)
     while (b>=0) {
         SDL_SetAlpha(Noir, SDL_SRCALPHA, b);
         SDL_BlitSurface(Noir, NULL, ecran, NULL);
-        b = b-10;
+        b = b-20;
         SDL_Flip(ecran);
         SDL_FreeSurface(ecran);
         SDL_BlitSurface(imageDeFond, NULL, ecran, NULL);
@@ -2648,7 +2655,7 @@ void menu_aide(void)
     SDL_Rect positionImage_droit, positionDeplacer, positionConquerir, positionConstruire, positionSuivant, positionQuitter;
     SDL_Event evenement;
     double hauteurBouton;
-    int i, continuer = 1, aide = 0;
+    int i, continuer = 1, aide = 0, b = 255;
 
     /* Chargement des images */
     ecran = SDL_SetVideoMode(TAILLE_FENETRE_X, TAILLE_FENETRE_Y, 32, SDL_HWSURFACE);
@@ -2676,14 +2683,22 @@ void menu_aide(void)
     positionSuivant.y = 668;
     positionQuitter.x = 21;
     positionQuitter.y = TAILLE_FENETRE_Y - hauteurBouton;
-    SDL_BlitSurface(imageDeFond_Gauche, NULL, ecran, NULL);
-    SDL_BlitSurface(imageDeFond_Droit, NULL, ecran, &positionImage_droit);
-    SDL_BlitSurface(Titre, NULL, ecran, NULL);
-    SDL_BlitSurface(Deplacer, NULL, ecran, &positionDeplacer);
-    SDL_BlitSurface(Conquerir, NULL, ecran, &positionConquerir);
-    SDL_BlitSurface(Construire, NULL, ecran, &positionConstruire);
-    SDL_BlitSurface(Quitter, NULL, ecran, &positionQuitter);
-    SDL_Flip(ecran);
+    
+    /*Animation de l'apparition du menu*/
+    while (b>=0) {
+        SDL_SetAlpha(Noir, SDL_SRCALPHA, b);
+        SDL_BlitSurface(Noir, NULL, ecran, NULL);
+        b = b-20;
+        SDL_Flip(ecran);
+        SDL_FreeSurface(ecran);
+        SDL_BlitSurface(imageDeFond_Gauche, NULL, ecran, NULL);
+        SDL_BlitSurface(imageDeFond_Droit, NULL, ecran, &positionImage_droit);
+        SDL_BlitSurface(Titre, NULL, ecran, NULL);
+        SDL_BlitSurface(Deplacer, NULL, ecran, &positionDeplacer);
+        SDL_BlitSurface(Conquerir, NULL, ecran, &positionConquerir);
+        SDL_BlitSurface(Construire, NULL, ecran, &positionConstruire);
+        SDL_BlitSurface(Quitter, NULL, ecran, &positionQuitter);
+    }
 
     /* Animation des boutons du menu */
     while(continuer)
@@ -2802,7 +2817,7 @@ void menu_aide(void)
                     continuer = 0;
                     for (i=0; i<30; i++)
                     {
-                        SDL_SetAlpha(Noir, SDL_SRCALPHA, 20);
+                        SDL_SetAlpha(Noir, SDL_SRCALPHA, 50);
                         SDL_BlitSurface(Noir, NULL, ecran, NULL);
                         SDL_Flip(ecran);
                     }
@@ -2829,7 +2844,7 @@ void menu_pause(Terrain_espace *un_terrain_espace, Jeu *un_jeu, int * exit)
     SDL_Color couleur= {255, 255, 255};
     SDL_Rect positionTexte, positionRetour, positionAide, positionSauvegarder, positionQuitter;
     SDL_Event evenement;
-    int continuer = 1, xm = 0, ym = 0, i;
+    int continuer = 1, xm = 0, ym = 0, i, b = 255;
     double longueurTexte, longueurBouton, hauteurBouton;
 
     /* Chargement des images */
@@ -2859,12 +2874,21 @@ void menu_pause(Terrain_espace *un_terrain_espace, Jeu *un_jeu, int * exit)
     positionSauvegarder.y = positionAide.y + 75;
     positionQuitter.x = positionSauvegarder.x;
     positionQuitter.y = positionSauvegarder.y + 75;
-    SDL_BlitSurface(imageDeFond, NULL, ecran, NULL);
-    SDL_BlitSurface(Texte, NULL, ecran, &positionTexte);
-    SDL_BlitSurface(Retour, NULL, ecran, &positionRetour);
-    SDL_BlitSurface(Aide, NULL, ecran, &positionAide);
-    SDL_BlitSurface(Sauvegarder, NULL, ecran, &positionSauvegarder);
-    SDL_BlitSurface(Quitter, NULL, ecran, &positionQuitter);
+    
+    /*Animation de l'apparition du menu*/
+    while (b>=0) {
+        SDL_SetAlpha(Noir, SDL_SRCALPHA, b);
+        SDL_BlitSurface(Noir, NULL, ecran, NULL);
+        b = b-20;
+        SDL_Flip(ecran);
+        SDL_FreeSurface(ecran);
+        SDL_BlitSurface(imageDeFond, NULL, ecran, NULL);
+        SDL_BlitSurface(Texte, NULL, ecran, &positionTexte);
+        SDL_BlitSurface(Retour, NULL, ecran, &positionRetour);
+        SDL_BlitSurface(Aide, NULL, ecran, &positionAide);
+        SDL_BlitSurface(Sauvegarder, NULL, ecran, &positionSauvegarder);
+        SDL_BlitSurface(Quitter, NULL, ecran, &positionQuitter);
+    }
     SDL_Flip(ecran);
 
     /* Animation des boutons du menu */
@@ -2944,7 +2968,7 @@ void menu_pause(Terrain_espace *un_terrain_espace, Jeu *un_jeu, int * exit)
                 if(test_souris_rectangle(positionAide,evenement.button.x,evenement.button.y))
 				{
                     continuer = 0;
-                    SDL_SetAlpha(Noir, SDL_SRCALPHA, 20);
+                    SDL_SetAlpha(Noir, SDL_SRCALPHA, 50);
                     for (i=0; i<30; i++)
                     {
                         SDL_BlitSurface(Noir, NULL, ecran, NULL);
@@ -2966,7 +2990,7 @@ void menu_pause(Terrain_espace *un_terrain_espace, Jeu *un_jeu, int * exit)
                 if(test_souris_rectangle(positionSauvegarder,evenement.button.x,evenement.button.y))
 				{
                     continuer = 0;
-                    SDL_SetAlpha(Noir, SDL_SRCALPHA, 20);
+                    SDL_SetAlpha(Noir, SDL_SRCALPHA, 50);
                     for (i=0; i<30; i++)
                     {
                         SDL_BlitSurface(Noir, NULL, ecran, NULL);
@@ -2988,7 +3012,7 @@ void menu_pause(Terrain_espace *un_terrain_espace, Jeu *un_jeu, int * exit)
                 if(test_souris_rectangle(positionQuitter,evenement.button.x,evenement.button.y))
 				{
                     continuer = 0;
-                    SDL_SetAlpha(Noir, SDL_SRCALPHA, 20);
+                    SDL_SetAlpha(Noir, SDL_SRCALPHA, 50);
                     for (i=0; i<30; i++)
                     {
                         SDL_BlitSurface(Noir, NULL, ecran, NULL);
@@ -3270,7 +3294,7 @@ void ecran_titre(void)
                     double hauteurBouton = NouvellePartie->h;
                     SDL_SetAlpha(Noir, SDL_SRCALPHA, b);
                     SDL_BlitSurface(Noir, NULL, ecran, NULL);
-                    b = b-10;
+                    b = b-20;
                     SDL_Flip(ecran);
                     SDL_FreeSurface(ecran);
                     SDL_BlitSurface(FondMenu, NULL, ecran, NULL);
