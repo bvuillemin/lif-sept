@@ -2303,7 +2303,8 @@ SDL_Surface * affiche_ecran_terrain_combat(const Terrain_combat *terrain_combat)
 	
 	SDL_Surface * fond =NULL;
 	SDL_Surface * quadrillage =NULL;
-	SDL_Surface * planete =NULL;
+	SDL_Surface * vaisseau =NULL;
+    SDL_Surface * vaisseau2 =NULL;
 	SDL_Surface * selection =NULL;
 	SDL_Surface * carte =NULL;
 	SDL_Rect pos,pos_plan;
@@ -2325,69 +2326,88 @@ SDL_Surface * affiche_ecran_terrain_combat(const Terrain_combat *terrain_combat)
     {
         for(i=0;i<terrain_combat->taille_combat_x;i++)
         {
-		pos.x=i*100;pos.y=j*100;
-		une_case = get_case_terrain_combat(terrain_combat, i, j);
-		if(get_presence_unite(une_case)&&(get_indice_joueur_unite(get_unite(une_case))==0))
-		{
-			if(get_type_vaisseau(get_unite(une_case))==Chasseur)
-			{
-				planete = IMG_Load("../graphiques/images/unite1_bleu.png");
-				pos_plan.x=i*100;pos_plan.y=j*100;
-				SDL_BlitSurface(planete,NULL,carte,&pos_plan);
-			}
-			else if(get_type_vaisseau(get_unite(une_case))==Destroyer)
-			{
-				planete = IMG_Load("../graphiques/images/unite3_bleu.png");
-				pos_plan.x=i*100;pos_plan.y=j*100;
-				SDL_BlitSurface(planete,NULL,carte,&pos_plan);
-			}else if(get_type_vaisseau(get_unite(une_case))==Destructeur)
-			{
-				planete = IMG_Load("../graphiques/images/unite2_bleu.png");
-				pos_plan.x=i*100;pos_plan.y=j*100;
-				SDL_BlitSurface(planete,NULL,carte,&pos_plan);
-			}
-		}
-		else if(get_presence_unite(une_case)&&(get_indice_joueur_unite(get_unite(une_case))==1))
-		{
-			if(get_type_vaisseau(get_unite(une_case))==Chasseur)
-			{
-				planete = IMG_Load("../graphiques/images/unite1_rouge.png");
-				pos_plan.x=i*100;pos_plan.y=j*100;
-				planete = rotozoomSurface (planete, 180, 1.0, 1);
-				SDL_BlitSurface(planete,NULL,carte,&pos_plan);
-			}
-			else if(get_type_vaisseau(get_unite(une_case))==Destroyer)
-			{
-				planete = IMG_Load("../graphiques/images/unite3_rouge.png");
-				pos_plan.x=i*100;pos_plan.y=j*100;
-				planete = rotozoomSurface (planete, 180, 1.0, 1);
-				SDL_BlitSurface(planete,NULL,carte,&pos_plan);
-			}else if(get_type_vaisseau(get_unite(une_case))==Destructeur)
-			{
-				planete = IMG_Load("../graphiques/images/unite2_rouge.png");
-				pos_plan.x=i*100;pos_plan.y=j*100;
-				planete = rotozoomSurface (planete, 180, 1.0, 1);
-				SDL_BlitSurface(planete,NULL,carte,&pos_plan);
-			}
-            	}else if(get_presence_unite(une_case))
-            	{
-			planete = IMG_Load("../graphiques/images/vaisseau_3.png");
-			pos_plan.x=i*100;pos_plan.y=j*100;
-			SDL_BlitSurface(planete,NULL,carte,&pos_plan);
-           	}
-		if(get_selection_unite(une_case))
-			{
-				SDL_BlitSurface(selection,NULL,carte,&pos);
-			}else{SDL_BlitSurface(quadrillage,NULL,carte,&pos);}
+            pos.x=i*100;pos.y=j*100;
+            une_case = get_case_terrain_combat(terrain_combat, i, j);
+            if(get_presence_unite(une_case)&&(get_indice_joueur_unite(get_unite(une_case))==0))
+            {
+                if(get_type_vaisseau(get_unite(une_case))==Chasseur)
+                {
+                    vaisseau = IMG_Load("../graphiques/images/unite1_bleu.png");
+                    pos_plan.x=i*100;pos_plan.y=j*100;
+                    SDL_BlitSurface(vaisseau,NULL,carte,&pos_plan);
+                    SDL_FreeSurface(vaisseau);
+                }
+                else if(get_type_vaisseau(get_unite(une_case))==Destroyer)
+                {
+                    vaisseau = IMG_Load("../graphiques/images/unite3_bleu.png");
+                    pos_plan.x=i*100;pos_plan.y=j*100;
+                    SDL_BlitSurface(vaisseau,NULL,carte,&pos_plan);
+                    SDL_FreeSurface(vaisseau);
+                }
+                else if(get_type_vaisseau(get_unite(une_case))==Destructeur)
+                {
+                    vaisseau = IMG_Load("../graphiques/images/unite2_bleu.png");
+                    pos_plan.x=i*100;pos_plan.y=j*100;
+                    SDL_BlitSurface(vaisseau,NULL,carte,&pos_plan);
+                    SDL_FreeSurface(vaisseau);
+                }
+            }
+            else if(get_presence_unite(une_case)&&(get_indice_joueur_unite(get_unite(une_case))==1))
+            {
+                if(get_type_vaisseau(get_unite(une_case))==Chasseur)
+                {
+                    vaisseau = IMG_Load("../graphiques/images/unite1_rouge.png");
+                    pos_plan.x=i*100;pos_plan.y=j*100;
+                    vaisseau2 = rotozoomSurface (vaisseau, 180, 1.0, 1);
+                    SDL_BlitSurface(vaisseau2,NULL,carte,&pos_plan);
+                    SDL_FreeSurface(vaisseau);
+                    SDL_FreeSurface(vaisseau2);
+                }
+                else if(get_type_vaisseau(get_unite(une_case))==Destroyer)
+                {
+                    vaisseau = IMG_Load("../graphiques/images/unite3_rouge.png");
+                    pos_plan.x=i*100;pos_plan.y=j*100;
+                    vaisseau2 = rotozoomSurface (vaisseau, 180, 1.0, 1);
+                    SDL_BlitSurface(vaisseau2,NULL,carte,&pos_plan);
+                    SDL_FreeSurface(vaisseau);
+                    SDL_FreeSurface(vaisseau2);
+                }
+                else if(get_type_vaisseau(get_unite(une_case))==Destructeur)
+                {
+                    vaisseau = IMG_Load("../graphiques/images/unite2_rouge.png");
+                    pos_plan.x=i*100;pos_plan.y=j*100;
+                    vaisseau2 = rotozoomSurface (vaisseau, 180, 1.0, 1);
+                    SDL_BlitSurface(vaisseau2,NULL,carte,&pos_plan);
+                    SDL_FreeSurface(vaisseau);
+                    SDL_FreeSurface(vaisseau2);
+                }
+            }
+            else if(get_presence_unite(une_case))
+            {
+                vaisseau = IMG_Load("../graphiques/images/vaisseau_3.png");
+                pos_plan.x=i*100;pos_plan.y=j*100;
+                SDL_BlitSurface(vaisseau,NULL,carte,&pos_plan);
+                SDL_FreeSurface(vaisseau);
+            }
+            if(get_selection_unite(une_case))
+            {
+                SDL_BlitSurface(selection,NULL,carte,&pos);
+            }
+            else
+            {
+                SDL_BlitSurface(quadrillage,NULL,carte,&pos);
+            }
         }
         printf("\n");
+//     A RETIRER
     }
-	SDL_FreeSurface(selection);
-	SDL_FreeSurface(planete);
-	SDL_FreeSurface(quadrillage);
-	SDL_FreeSurface(fond);
-	return carte;
+    SDL_FreeSurface(selection);
+    SDL_FreeSurface(quadrillage);
+    SDL_FreeSurface(fond);
+    return carte;
 }
+
+
 SDL_Rect coordonnee_clic(SDL_Rect position)
 {
 
@@ -2437,7 +2457,8 @@ void affiche_deplacement_unite(Jeu * jeu,Terrain_combat *un_terrain_combat,SDL_R
 		deselectionner(un_terrain_combat);
 		carte=affiche_ecran_terrain_combat(un_terrain_combat);
 		SDL_BlitSurface(carte, &position_affichage_carte,  ecran,NULL);
-	SDL_BlitSurface(bordure, NULL, ecran, &position_affichage_carte);
+        SDL_FreeSurface(carte);
+        SDL_BlitSurface(bordure, NULL, ecran, &position_affichage_carte);
 		SDL_Flip(ecran);
 		animation_avant_deplacement_unite(un_terrain_combat,jeu, carte,ecran,position_affichage_carte,pos.x,pos.y);
 	}else if(!(x==pos.x) || !(y==pos.y)){sprintf(infos2,"Déplacement impossible !");}
@@ -3463,16 +3484,16 @@ bool attaque_ecran(Jeu * jeu,Terrain_combat * un_terrain_combat, SDL_Rect pos,Fl
 
 void animation_avant_deplacement_unite(Terrain_combat * un_terrain_combat,Jeu * jeu, SDL_Surface * ecran,SDL_Surface * ecran2,SDL_Rect pos,int x, int y)
 {
-	Animation * deplacement;
-	deplacement = creer_animation(5, 100, 100,100, "../graphiques/images/effet_teleportation.png");
+	Animation * deplacement = creer_animation(5, 100, 100,100, "../graphiques/images/effet_teleportation.png");
 	lancer_animation_bloquante_combat(jeu, un_terrain_combat, deplacement, ecran2, x*100, y*100);
-
+    free(deplacement);
 }
 void animation_explosion(Terrain_combat * un_terrain_combat,Jeu * jeu, SDL_Surface * ecran,int x, int y)
 {
 	Animation * explosion;
 	explosion = creer_animation(48, 100, 100,20, "../graphiques/images/explosion.png");
 	lancer_animation_bloquante_combat(jeu, un_terrain_combat, explosion, ecran, x*100, y*100);
+    free(explosion);
 }
 
 void animation_attaque(Terrain_combat * un_terrain_combat,Jeu * jeu, SDL_Surface * ecran,Case_terrain_combat *une_case,SDL_Rect pos_arrivee)
