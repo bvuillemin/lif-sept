@@ -156,7 +156,7 @@ int ajouter_unite_flotte(Flotte *flotte, Unite *unite)
 	int min = flotte->pt_mouvement_espace_flotte;
 	if(flotte->taille_flotte < flotte->taille_maximum_flotte)
     {
-		set_indice_joueur_unite(unite, flotte->indice_joueur); /*erreur due je pense a la fonction, a modifier*/
+		set_indice_joueur_unite(unite, flotte->indice_joueur);
 		set_indice_unite_dans_flotte(unite, flotte->taille_flotte);
 		if((get_pt_mouvement_unite(unite) < min)||(flotte->pt_mouvement_espace_flotte == 0))
 		{
@@ -164,31 +164,6 @@ int ajouter_unite_flotte(Flotte *flotte, Unite *unite)
 		}
         flotte->tab_unite[flotte->taille_flotte] = unite;
         flotte->taille_flotte ++;
-        return 1;
-    }
-    else
-    {
-        return 0;
-    }
-}
-
-/**
- * \brief      Transfère unite d'une flotte à une autre
- * \details    Transfère d'une unite passée en paramètre d'une flotte à une autre passée en paramètre
- * \param      flotte         Pointeur sur flotte dans laquelle l'unite sera transférée
- * \param      unite          Pointeur sur unite à transférer
- */
-int transferer_unite_flotte(Flotte *flotte, Unite *unite)
-{
-	if(flotte->taille_flotte < flotte->taille_maximum_flotte)
-    {
-		set_indice_unite_dans_flotte(unite,flotte->taille_flotte);
-        flotte->tab_unite[flotte->taille_flotte] = unite;
-        flotte->taille_flotte ++;
-		if((get_pt_mouvement_unite(unite))||(flotte->pt_mouvement_espace_flotte == 0))
-		{
-			flotte->pt_mouvement_espace_flotte = get_pt_mouvement_unite(unite);
-		}
         return 1;
     }
     else
@@ -209,7 +184,7 @@ int retirer_unite_flotte(Flotte *flotte,const int indice_unite)
     int i;
     if(flotte->taille_flotte > 0)
     {
-        for(i=indice_unite;i<flotte->taille_flotte;i++)
+        for(i=indice_unite;i<flotte->taille_flotte - 1;i++)
         {
             flotte->tab_unite[i] = flotte->tab_unite[i+1];
         }

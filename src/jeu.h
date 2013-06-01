@@ -53,6 +53,7 @@ int get_indice_joueur_en_cours(Jeu *un_jeu);
 Planete *get_planete_en_cours(Jeu *un_jeu);
 int get_joueur_en_cours_combat(Jeu * jeu);
 Joueur * get_ieme_joueur_jeu(Jeu * un_jeu,int i);
+void set_selection_flotte(Jeu * un_jeu, Flotte * une_flotte);
 bool construction_unite_possible(Planete* une_planete);
 
 void ajouter_joueur(Jeu *un_jeu, Joueur *un_joueur);

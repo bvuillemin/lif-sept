@@ -222,10 +222,11 @@ void retirer_flotte_joueur(Joueur *un_joueur, int indice_flotte)
 {
     int i;
     supprimerElementTabDyn(&un_joueur->tab_flotte, indice_flotte);
-    for(i=indice_flotte;i<un_joueur->tab_flotte.taille_utilisee - 1;i++)
+    for(i=0;i<un_joueur->tab_flotte.taille_utilisee;i++)
     {
-        un_joueur->tab_flotte.ad[i].indice_tableau_joueur = un_joueur->tab_flotte.ad[i+1].indice_tableau_joueur ;
+        un_joueur->tab_flotte.ad[i].indice_tableau_joueur = i;
     }
+    un_joueur->nb_flotte --;
 }
 
 /**
