@@ -71,7 +71,7 @@ void affichage_ecran_acceuil(Terrain_combat *un_terrain_combat);
 
 /*pour le combat :*/
 void animation_avant_deplacement_unite(Terrain_combat * un_terrain_combat,Jeu * jeu, SDL_Surface * ecran,SDL_Surface * ecran2,SDL_Rect pos,int x, int y);
-void affichage_ecran_terrain_combat(const Terrain_combat *un_terrain_combat,SDL_Surface * carte);
+SDL_Surface * affichage_ecran_terrain_combat(const Terrain_combat *un_terrain_combat);
 void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat, Flotte* flotte1,Flotte * flotte2);
 SDL_Rect coordonnee_clic(SDL_Rect position);
 SDL_Rect coordonnee_case_du_clic(SDL_Rect position);
