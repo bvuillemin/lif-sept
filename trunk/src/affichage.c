@@ -955,7 +955,7 @@ SDL_Surface* affichage_creation_unite(Planete* une_planete, SDL_Surface *panneau
     TTF_Font *police = NULL;
     SDL_Color couleur_blanche = {255, 255, 255};
     int i;
-
+    panneau_unite = IMG_Load("../graphiques/images/interface_barrelaterale.png");
 	unite1 = IMG_Load("../graphiques/images/unite1.png");
 	unite2 = IMG_Load("../graphiques/images/unite2.png");
 	unite3 = IMG_Load("../graphiques/images/unite3.png");
@@ -983,14 +983,15 @@ SDL_Surface* affichage_creation_unite(Planete* une_planete, SDL_Surface *panneau
 
         surface_texte_unite = TTF_RenderText_Blended(police, texte_unite, couleur_blanche);
         SDL_BlitSurface(surface_texte_unite, NULL, panneau_unite, &position_texte_unite);
+        SDL_FreeSurface(surface_texte_unite);
         if(une_planete->unite_nb_tour_restant > 0)
         {
             sprintf(texte_unite, "Tour %d", une_planete->unite_nb_tour_restant);
             surface_texte_unite = TTF_RenderText_Blended(police, texte_unite, couleur_blanche);
             initialise_sdl_rect(&position_texte_unite, 10, 40 + 120 *i, 0, 0);
             SDL_BlitSurface(surface_texte_unite, NULL, panneau_unite, &position_texte_unite);
+            SDL_FreeSurface(surface_texte_unite);
         }
-        SDL_FreeSurface(surface_texte_unite);
 
 		/*if(((i + 1)== une_planete->unite_en_cours) && (une_planete->unite_nb_tour_restant != 0))
 		{
@@ -1652,7 +1653,6 @@ void initialiser_affichage(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_S
 	tab_surface[5] = IMG_Load("../graphiques/images/interface_bas.png");
 	SDL_BlitSurface(tab_surface[5], NULL, ecran, &position_interface);
 
-	tab_surface[8] = IMG_Load("../graphiques/images/interface_barrelaterale.png");
 	initialise_sdl_rect(&position_panneau_unite, TAILLE_FENETRE_X - 214, 35, 200, TAILLE_TERRAIN_ESPACE_Y-300);
 
 	/*affichage de la minimap*/
@@ -2189,7 +2189,7 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 							deplacement_unite_flotte(un_jeu, &un_jeu->tab_joueur[un_jeu->joueur_en_cours], un_terrain_espace, un_jeu->selection_flotte, x/100, y/100);
 							interface_affichee = RIEN;
 							un_jeu->selection_flotte = NULL;
-							/*un_jeu->selection_flotte = get_flotte(get_case_terrain_espace(un_terrain_espace, x/100, y/100));*/
+							un_jeu->selection_flotte = get_flotte(get_case_terrain_espace(un_terrain_espace, x/100, y/100));
 							maj_affichage_flotte(un_jeu, un_terrain_espace, ecran, tab_surface, interface_affichee);
 							booleen_coordonnees_case(un_terrain_espace, un_jeu->selection_flotte->x_flotte, un_jeu->selection_flotte->y_flotte, &x_bis, &y_bis);
 							lire_son(system, son_saut_fin);
