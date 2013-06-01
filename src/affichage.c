@@ -133,6 +133,7 @@ void afficher_infobulle_batiment(SDL_Surface* fond, int i)
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
 		j += 18;
+		SDL_FreeSurface(une_ligne);
 		TTF_CloseFont(police);
 
 		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
@@ -141,29 +142,34 @@ void afficher_infobulle_batiment(SDL_Surface* fond, int i)
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 13;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		sprintf(ligne, "d'installations sur la planete, ce");
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 13;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		sprintf(ligne, "batiment  est  a  construire  en");
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 13;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		sprintf(ligne, "priorite");
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 16;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		sprintf(ligne, "Temps de construction: %d", NB_TOUR_BATIMENT_QUARTIER_GENERAL);
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 	}
 	if(i == 1)
 	{
@@ -174,6 +180,7 @@ void afficher_infobulle_batiment(SDL_Surface* fond, int i)
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
 		j += 18;
 		TTF_CloseFont(police);
+		SDL_FreeSurface(une_ligne);
 
 		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Le  metal  est  devenu,  avec ");
@@ -181,29 +188,34 @@ void afficher_infobulle_batiment(SDL_Surface* fond, int i)
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 13;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		sprintf(ligne, "l'apparrition   des   vaisseaux");
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 13;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		sprintf(ligne, "spatiaux, un bien indispensable");
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 16;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		sprintf(ligne, "Metal: +100");
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 13;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		sprintf(ligne, "Temps de construction: %d", NB_TOUR_BATIMENT_METAL);
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 	}
 	if(i == 2)
 	{
@@ -214,6 +226,7 @@ void afficher_infobulle_batiment(SDL_Surface* fond, int i)
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
 		j += 18;
 		TTF_CloseFont(police);
+		SDL_FreeSurface(une_ligne);
 
 		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "L'or   est   la   ressource  la  plus ");
@@ -221,35 +234,41 @@ void afficher_infobulle_batiment(SDL_Surface* fond, int i)
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 12;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		sprintf(ligne, "precieuse, converti en monnaie");
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 12;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		sprintf(ligne, "il   nous   fournira   les   fonds");
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 12;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		sprintf(ligne, "necessaires  a  la  guerre");
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 15;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		sprintf(ligne, "Argent: +100");
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 12;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		sprintf(ligne, "Temps de construction: %d", NB_TOUR_BATIMENT_METAL);
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 	}
 	if(i == 3)
 	{
@@ -260,6 +279,7 @@ void afficher_infobulle_batiment(SDL_Surface* fond, int i)
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
 		j += 18;
 		TTF_CloseFont(police);
+		SDL_FreeSurface(une_ligne);
 
 		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Le carburant est extrait du sous");
@@ -267,35 +287,41 @@ void afficher_infobulle_batiment(SDL_Surface* fond, int i)
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 12;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		sprintf(ligne, "sol et nous permet  d'emmener");
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 12;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		sprintf(ligne, "nos vaisseaux jusqu'au fin fond");
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 12;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		sprintf(ligne, "de la galaxie");
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 15;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		sprintf(ligne, "Carburant: +100");
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 12;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		sprintf(ligne, "Temps de construction: %d", NB_TOUR_BATIMENT_CARBURANT);
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 	}
 	if(i == 4)
 	{
@@ -306,6 +332,7 @@ void afficher_infobulle_batiment(SDL_Surface* fond, int i)
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
 		j += 18;
 		TTF_CloseFont(police);
+		SDL_FreeSurface(une_ligne);
 
 		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "La construction sur nos colonies");
@@ -313,35 +340,41 @@ void afficher_infobulle_batiment(SDL_Surface* fond, int i)
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 12;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		sprintf(ligne, "d'habitations   nous   fournira");
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 12;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		sprintf(ligne, "la  main  d'oeuvre,  vitale  a");
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 12;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		sprintf(ligne, "l'effort   de   guerre");
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 15;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		sprintf(ligne, "Population: +100");
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 12;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		sprintf(ligne, "Temps de construction: %d", NB_TOUR_BATIMENT_POPULATION);
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 	}
 	if(i == 5)
 	{
@@ -352,6 +385,7 @@ void afficher_infobulle_batiment(SDL_Surface* fond, int i)
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
 		j += 18;
 		TTF_CloseFont(police);
+		SDL_FreeSurface(une_ligne);
 
 		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Le  spatioport  nous  autorisera");
@@ -359,35 +393,41 @@ void afficher_infobulle_batiment(SDL_Surface* fond, int i)
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 12;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		sprintf(ligne, "a  un  developpement  toujours");
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 12;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		sprintf(ligne, "plus  grand,  pour  partir  a  la ");
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 12;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		sprintf(ligne, "conquete de l'espace");
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 15;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		sprintf(ligne, "Active construction des unites");
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 12;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		sprintf(ligne, "Temps de construction: %d", NB_TOUR_BATIMENT_SPATIOPORT);
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 	}
 }
 
@@ -410,6 +450,7 @@ void afficher_infobulle_unite(Jeu* un_jeu, SDL_Surface* fond,int i)
 	SDL_BlitSurface(une_ligne, NULL, fond, &position);
 	j += 18;
 	TTF_CloseFont(police);
+	SDL_FreeSurface(une_ligne);
 
 	police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 	sprintf(ligne, "Point de vie: %d", get_pt_vie(une_unite));
@@ -417,6 +458,7 @@ void afficher_infobulle_unite(Jeu* un_jeu, SDL_Surface* fond,int i)
 	initialise_sdl_rect(&position, 4, j, 0, 0);
 	j += 13;
 	SDL_BlitSurface(une_ligne, NULL, fond, &position);
+	SDL_FreeSurface(une_ligne);
 
 	police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 	sprintf(ligne, "Attaque: %d", get_pt_attaque(une_unite));
@@ -424,6 +466,7 @@ void afficher_infobulle_unite(Jeu* un_jeu, SDL_Surface* fond,int i)
 	initialise_sdl_rect(&position, 4, j, 0, 0);
 	j += 13;
 	SDL_BlitSurface(une_ligne, NULL, fond, &position);
+	SDL_FreeSurface(une_ligne);
 
 	police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 	sprintf(ligne, "Action: %d", get_pt_action(une_unite));
@@ -431,6 +474,7 @@ void afficher_infobulle_unite(Jeu* un_jeu, SDL_Surface* fond,int i)
 	initialise_sdl_rect(&position, 4, j, 0, 0);
 	j += 13;
 	SDL_BlitSurface(une_ligne, NULL, fond, &position);
+	SDL_FreeSurface(une_ligne);
 
 	police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 	sprintf(ligne, "Point de mouvement: %d", get_pt_mouvement_unite(une_unite));
@@ -438,6 +482,7 @@ void afficher_infobulle_unite(Jeu* un_jeu, SDL_Surface* fond,int i)
 	initialise_sdl_rect(&position, 4, j, 0, 0);
 	j += 13;
 	SDL_BlitSurface(une_ligne, NULL, fond, &position);
+	SDL_FreeSurface(une_ligne);
 
 }
 
@@ -459,6 +504,7 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
 		j += 18;
 		TTF_CloseFont(police);
+		SDL_FreeSurface(une_ligne);
 
 		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Point de vie: %d", PT_VIE_UNITE_1);
@@ -466,6 +512,7 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 13;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Attaque: %d", PT_ATTAQUE_UNITE_1);
@@ -473,6 +520,7 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 13;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Action: %d", PT_ACTION_UNITE_1);
@@ -480,6 +528,7 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 13;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Point de mouvement: %d", PT_MOUVEMENT_UNITE_1);
@@ -487,6 +536,7 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 13;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Point de mouvement-combat: %d", PT_DEPLACEMENT_UNITE_1);
@@ -494,6 +544,7 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 13;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "-----------");
@@ -501,6 +552,7 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 13;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Metal: %d", NB_METAL_UNITE_1);
@@ -508,6 +560,7 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 13;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Argent: %d", NB_ARGENT_UNITE_1);
@@ -515,6 +568,7 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 13;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Carburant: %d", NB_CARBURANT_UNITE_1);
@@ -522,6 +576,7 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 13;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Population: %d", NB_POPULATION_UNITE_1);
@@ -529,6 +584,7 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 13;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Temps de construction: %d", NB_TOUR_UNITE_1);
@@ -536,6 +592,7 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 13;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 	}
 	if(i==1)
 	{
@@ -546,6 +603,7 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
 		j += 18;
 		TTF_CloseFont(police);
+		SDL_FreeSurface(une_ligne);
 
 		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Point de vie: %d", PT_VIE_UNITE_2);
@@ -553,6 +611,7 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 13;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Attaque: %d", PT_ATTAQUE_UNITE_2);
@@ -560,6 +619,7 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 13;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Action: %d", PT_ACTION_UNITE_2);
@@ -567,6 +627,7 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 13;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Point de mouvement: %d", PT_MOUVEMENT_UNITE_2);
@@ -574,6 +635,7 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 13;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Point de mouvement-combat: %d", PT_DEPLACEMENT_UNITE_2);
@@ -581,6 +643,7 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 13;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "-----------");
@@ -588,6 +651,7 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 13;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Metal: %d", NB_METAL_UNITE_2);
@@ -595,6 +659,7 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 13;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Argent: %d", NB_ARGENT_UNITE_2);
@@ -602,6 +667,7 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 13;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Carburant: %d", NB_CARBURANT_UNITE_2);
@@ -609,6 +675,7 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 13;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Population: %d", NB_POPULATION_UNITE_2);
@@ -616,6 +683,7 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 13;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Temps de construction: %d", NB_TOUR_UNITE_2);
@@ -623,6 +691,7 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 13;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 	}
 	if(i==2)
 	{
@@ -633,6 +702,7 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
 		j += 18;
 		TTF_CloseFont(police);
+		SDL_FreeSurface(une_ligne);
 
 		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Point de vie: %d", PT_VIE_UNITE_3);
@@ -640,6 +710,7 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 13;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Attaque: %d", PT_ATTAQUE_UNITE_3);
@@ -647,6 +718,7 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 13;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Action: %d", PT_ACTION_UNITE_3);
@@ -654,6 +726,7 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 13;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Point de mouvement: %d", PT_MOUVEMENT_UNITE_3);
@@ -661,6 +734,7 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 13;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Point de mouvement-combat: %d", PT_DEPLACEMENT_UNITE_3);
@@ -668,6 +742,7 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 13;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "-----------");
@@ -675,6 +750,7 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 13;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Metal: %d", NB_METAL_UNITE_3);
@@ -682,6 +758,7 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 13;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Argent: %d", NB_ARGENT_UNITE_3);
@@ -689,6 +766,7 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 13;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Carburant: %d", NB_CARBURANT_UNITE_3);
@@ -696,6 +774,7 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 13;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Population: %d", NB_POPULATION_UNITE_3);
@@ -703,6 +782,7 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 13;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 
 		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Temps de construction: %d", NB_TOUR_UNITE_3);
@@ -710,6 +790,7 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 13;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
+		SDL_FreeSurface(une_ligne);
 	}
 }
 
@@ -759,12 +840,13 @@ void afficher_infobulle(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surf
 		}
 
 		/*test de la position du pointeur dsouris et affichage des informations adéquates*/
-		SDL_FreeSurface(tab_surface[12]);
 		tab_surface[12] = SDL_CreateRGBSurface(SDL_HWSURFACE, taille_infobulle_x, taille_infobulle_y, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
 		SDL_FillRect(tab_surface[12], NULL, SDL_MapRGB(ecran->format, 255, 255, 255));
 		fond = SDL_CreateRGBSurface(SDL_HWSURFACE, taille_infobulle_x - 4, taille_infobulle_y - 4, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
 		SDL_FillRect(fond, NULL, SDL_MapRGB(ecran->format, 128, 128, 128));
 		SDL_BlitSurface(fond, NULL, tab_surface[12], &position_fond);
+		SDL_FreeSurface(fond);
+
 		if(interface_affichee == PLANETE || interface_affichee == PANNEAU_UNITE)
 		{
 			for(i=0;i<6;i++)
@@ -805,7 +887,7 @@ void afficher_infobulle(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surf
 			}
 		}
 	}
-	SDL_FreeSurface(fond);
+	SDL_FreeSurface(tab_surface[12]);
 }
 
 
@@ -2177,7 +2259,7 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 
     for(i=0;i<13;i++)
 	{
-	    if((tab_surface[i] != NULL) && (i != 2))
+	    if((tab_surface[i] != NULL) && (i != 2) && (i=!7))
 	    {
             SDL_FreeSurface(tab_surface[i]);
 	    }
@@ -3756,4 +3838,4 @@ void lancer_combat_ecran(Jeu *jeu,Flotte* flotte1,Flotte * flotte2)/*lance un co
 	placer_unite_flotte_en_bas(un_combat,flotte2);
 	affichage_ecran_combat(jeu ,un_combat,flotte1,flotte2);
 
-}*/
+}
