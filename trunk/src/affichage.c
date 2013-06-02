@@ -3894,16 +3894,16 @@ void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat,Flotte* 
               	    	continuer = 0;
                     break;
 
-					case SDLK_UP: /*Flèche haut*/
+					case SDLK_DOWN: /*Flèche haut*/
                			position_affichage_carte.y--;
                 	break;
-            		case SDLK_DOWN: /* Flèche bas*/
+            		case SDLK_UP: /* Flèche bas*/
             	   		position_affichage_carte.y++;
            		    break;
-        	    	case SDLK_RIGHT: /* Flèche droite*/
+        	    	case SDLK_LEFT: /* Flèche droite*/
                			position_affichage_carte.x++;
                		break;
-  	      	    	case SDLK_LEFT: /*Flèche gauche*/
+  	      	    	case SDLK_RIGHT: /*Flèche gauche*/
   	     	        	position_affichage_carte.x--;
              	    break;
 					case SDLK_p: /*Flèche gauche*/
@@ -3915,9 +3915,7 @@ void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat,Flotte* 
 
             	}
             break;
-		}/*
-		carte=affiche_ecran_terrain_combat(un_terrain_combat);
-		SDL_FillRect(ecran, NULL, couleur);*/
+		}
 		
 		evenement.type=0;
 		sprintf(infos3," %s !",get_ieme_joueur_jeu(jeu,get_joueur_en_cours_combat(jeu))->nom_joueur);

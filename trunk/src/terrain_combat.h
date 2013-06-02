@@ -10,12 +10,21 @@
 
 #include "case_terrain_combat.h"
 
+/**
+ * \struct Terrain_combat
+ * \brief Terrain du combat
+ */
 typedef struct
 {
+    /** Taille du terrain en abscisse */
     int taille_combat_x;
+    /** Taille du terrain en ordonnées */
     int taille_combat_y;
+    /** 1 si une case est sélectionnée 0 sinon */
 	bool une_case_selectionnee;
+    /** Case sélectionnée */
 	Case_terrain_combat * selection;
+    /** Les cases du terrain*/
     Case_terrain_combat *tab_terrain_combat; /*x en abscisse, y en ordonnée, on commence à 0 (à modifier?)*/
 }Terrain_combat;
 
