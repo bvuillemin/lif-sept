@@ -2438,7 +2438,7 @@ SDL_Rect coordonnee_case_du_clic(SDL_Rect position)
 	else{position.y=0;}
 	return position;
 }
-void affiche_deplacement_unite(Jeu * jeu,Terrain_combat *un_terrain_combat,SDL_Rect position,SDL_Surface * carte,SDL_Surface * bordure,SDL_Surface * ecran,SDL_Rect position_affichage_carte, char* infos2)
+void affiche_deplacement_unite(Jeu * jeu,Terrain_combat *un_terrain_combat,SDL_Rect position,SDL_Surface * carte,SDL_Surface * bordure,SDL_Surface * ecran,SDL_Rect position_affichage_carte,SDL_Rect pos_bordure, char* infos2)
 {
 	SDL_Rect pos;
 	int i,x,y;
@@ -2453,23 +2453,28 @@ void affiche_deplacement_unite(Jeu * jeu,Terrain_combat *un_terrain_combat,SDL_R
 		x=get_x_combat(get_selection(un_terrain_combat)); y = get_y_combat(get_selection(un_terrain_combat));
 		une_case = get_selection(un_terrain_combat);
 		une_unite = get_unite(une_case);
-
 		p=deplacement_unite(un_terrain_combat, une_unite ,pos.x,pos.y);
-
 	}
 	if(p)
 	{
-		animation_avant_deplacement_unite(un_terrain_combat,jeu, carte,ecran,position_affichage_carte,x,y);
+		pos.y = 100*y + position_affichage_carte.y;
+		pos.x = 100*x + position_affichage_carte.x;
+		animation_avant_deplacement_unite(un_terrain_combat,jeu, carte,ecran,position_affichage_carte,pos.x,pos.y);
 		i=get_joueur_en_cours_combat(jeu);
 		enlever_pt_action_ieme_joueur(jeu,i,1);
 		deselectionner(un_terrain_combat);
 		carte=affiche_ecran_terrain_combat(un_terrain_combat);
-		SDL_BlitSurface(carte, &position_affichage_carte,  ecran,NULL);
+		SDL_BlitSurface(carte, NULL,  ecran,&position_affichage_carte);
         SDL_FreeSurface(carte);
-        SDL_BlitSurface(bordure, NULL, ecran, &position_affichage_carte);
+        SDL_BlitSurface(bordure, NULL, ecran, &pos_bordure);
 		SDL_Flip(ecran);
+		pos = coordonnee_clic(position);
+		pos.y = pos.y + position_affichage_carte.y;
+		pos.x = pos.x + position_affichage_carte.x;
 		animation_avant_deplacement_unite(un_terrain_combat,jeu, carte,ecran,position_affichage_carte,pos.x,pos.y);
-	}else if(!(x==pos.x) || !(y==pos.y)){sprintf(infos2,"Déplacement impossible !");}
+	}else if(!(x==pos.x) || !(y==pos.y)){
+		sprintf(infos2,"Déplacement impossible !");
+	}
 
 }
 
@@ -3493,7 +3498,7 @@ bool attaque_ecran(Jeu * jeu,Terrain_combat * un_terrain_combat, SDL_Rect pos,Fl
 void animation_avant_deplacement_unite(Terrain_combat * un_terrain_combat,Jeu * jeu, SDL_Surface * ecran,SDL_Surface * ecran2,SDL_Rect pos,int x, int y)
 {
 	Animation * deplacement = creer_animation(5, 100, 100,100, "../graphiques/images/effet_teleportation.png");
-	lancer_animation_bloquante_combat(jeu, un_terrain_combat, deplacement, ecran2, x*100, y*100);
+	lancer_animation_bloquante_combat(jeu, un_terrain_combat, deplacement, ecran2, x, y);
     free(deplacement);
 }
 void animation_explosion(Terrain_combat * un_terrain_combat,Jeu * jeu, SDL_Surface * ecran,int x, int y)
@@ -3652,26 +3657,33 @@ void verifie_etat_combat(Jeu *jeu,Terrain_combat *un_terrain_combat,Flotte *flot
 
 void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat,Flotte* flotte1,Flotte * flotte2)
 {
-	SDL_Rect pos_clic,pos_texte,pos_texte2,pos_interface, position_affichage_carte,position_passer,pos_attaquer,pos_interface_carte;
+	SDL_Rect pos_clic,pos_bordure,pos_texte,pos_texte2,pos_texte3,pos_interface,pos_interface_haut, position_affichage_carte,position_passer,pos_attaquer,pos_interface_carte;
 	SDL_Surface *ecran = NULL;
 	SDL_Surface *interface = NULL;
 	SDL_Surface *interface_haut = NULL;
 	SDL_Surface *bordure = NULL;
 	SDL_Surface *carte = NULL;
 	SDL_Surface* passer, *attaquer =NULL;
-	SDL_Surface* texte, *texte2 =NULL;
+	SDL_Surface* texte, *texte2,*texte3 ;
 
 	TTF_Font *police = NULL;
 	SDL_Color couleur_police = {255,255,255};
-	char infos[255] = "",infos2[255]="";
+	char infos[255] = "",infos2[255]="",infos3[255]="OK";
 
 	bool continuer,attend_attaque,attaque_reussi;
 	SDL_Event evenement;
 
 	Uint32 couleur;
 
+	texte=NULL;
+	texte2=NULL;
+	texte3=NULL;
+
 	continuer=1;attend_attaque=1;attaque_reussi=0;
-	initialise_sdl_rect(&pos_interface_carte,0,0,TAILLE_FENETRE_X,400);
+	initialise_sdl_rect(&pos_texte3,10,5,0,0);
+	initialise_sdl_rect(&pos_interface_haut,0,0,TAILLE_FENETRE_X,400);
+	initialise_sdl_rect(&pos_bordure,X_CARTE,Y_CARTE,TAILLE_FENETRE_X,400);
+	initialise_sdl_rect(&pos_interface_carte,X_CARTE,Y_CARTE,TAILLE_FENETRE_X,400);
 	initialise_sdl_rect(&pos_interface,X_INTERFACE,Y_INTERFACE,0,0);
 	initialise_sdl_rect(&position_affichage_carte,X_CARTE,Y_CARTE,0,0);
 	initialise_sdl_rect(&pos_attaquer,X_BOUTON_ATTAQUER,Y_BOUTON_ATTAQUER,TAILLE_X_BOUTON_ATTAQUER,TAILLE_Y_BOUTON_ATTAQUER);
@@ -3702,11 +3714,10 @@ void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat,Flotte* 
 	SDL_FillRect(ecran, NULL, couleur);
 	SDL_Flip(ecran);
 
-
-	
 	couleur = NOIR;
 
 	interface = IMG_Load("../graphiques/images/interface_combat_bas.png");
+	interface_haut=	IMG_Load("../graphiques/images/interface_combat_haut.png");
 	bordure = IMG_Load("../graphiques/images/bordure.png");
 	attaquer= IMG_Load("../graphiques/images/Attaquer.png");
 	passer= IMG_Load("../graphiques/images/Passer.png");
@@ -3715,8 +3726,9 @@ void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat,Flotte* 
 	carte =affiche_ecran_terrain_combat(un_terrain_combat);
 
 	SDL_BlitSurface(carte, NULL, ecran, &position_affichage_carte);SDL_Flip(ecran);
-	SDL_BlitSurface(bordure, NULL, ecran, &position_affichage_carte);SDL_Flip(ecran);
+	SDL_BlitSurface(bordure, NULL, ecran, &pos_bordure);SDL_Flip(ecran);
 	SDL_BlitSurface(interface, NULL, ecran, &pos_interface);SDL_Flip(ecran);
+	SDL_BlitSurface(interface_haut, NULL, ecran, &pos_interface_haut);SDL_Flip(ecran);
 	SDL_BlitSurface(attaquer, NULL, interface, &pos_attaquer);
 	SDL_BlitSurface(passer, NULL, interface, &position_passer);
 	SDL_Flip(ecran);
@@ -3736,6 +3748,10 @@ void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat,Flotte* 
 	pos_interface_carte.w=carte->w;pos_interface_carte.h=carte->h;
 	texte = TTF_RenderUTF8_Blended(police,infos,couleur_police);
 	texte2 = TTF_RenderUTF8_Blended(police,infos2,couleur_police);
+	sprintf(infos3," %s !",get_ieme_joueur_jeu(jeu,get_joueur_en_cours_combat(jeu))->nom_joueur);
+	texte3 = TTF_RenderUTF8_Blended(police,infos3,couleur_police);
+	SDL_BlitSurface(texte3, NULL, ecran, &pos_texte3);
+	SDL_Flip(ecran);
 	while(continuer)
 	{
 		SDL_PollEvent(&evenement);
@@ -3746,8 +3762,8 @@ void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat,Flotte* 
 			continuer =0;
 			break;
 			case SDL_MOUSEMOTION: /*mouvement de la souris*/
-				pos_clic.x=evenement.motion.x + position_affichage_carte.x; /*la position de la souris sur la carte*/
-				pos_clic.y=evenement.motion.y + position_affichage_carte.y;
+				pos_clic.x=evenement.motion.x - position_affichage_carte.x; /*la position de la souris sur la carte*/
+				pos_clic.y=evenement.motion.y - position_affichage_carte.y;
 
 				if(test_souris_rectangle(pos_interface_carte,pos_clic.x,pos_clic.y)) /*si la souris est à l'intérieur de la partie ou s'affiche la carte*/
 				{
@@ -3763,8 +3779,8 @@ void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat,Flotte* 
 			break;
 			case SDL_MOUSEBUTTONUP: /* Clic de la souris */
 				printf("CLIC!");//à supprimer
-				pos_clic.x=evenement.button.x + position_affichage_carte.x;
-				pos_clic.y=evenement.button.y + position_affichage_carte.y;
+				pos_clic.x=evenement.button.x - position_affichage_carte.x;
+				pos_clic.y=evenement.button.y - position_affichage_carte.y;
 				if(test_souris_rectangle(position_passer,pos_clic.x,pos_clic.y)) /*clic sur le bouton "passer"*/
 				{
 					passer_tour_combat(jeu,un_terrain_combat);
@@ -3793,8 +3809,8 @@ void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat,Flotte* 
 									attend_attaque=0;
 								break;
 								case SDL_MOUSEMOTION:
-									pos_clic.x=evenement.motion.x + position_affichage_carte.x;
-									pos_clic.y=evenement.motion.y + position_affichage_carte.y;
+									pos_clic.x=evenement.motion.x - position_affichage_carte.x;
+									pos_clic.y=evenement.motion.y - position_affichage_carte.y;
 									if(test_souris_rectangle(pos_interface_carte,pos_clic.x,pos_clic.y)){
 										sprintf(infos2," ");
 										affiche_info_unite(jeu,un_terrain_combat,infos,pos_clic);
@@ -3807,8 +3823,8 @@ void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat,Flotte* 
 								break;
 								case SDL_MOUSEBUTTONUP: /* Clic de la souris */
 									printf("attaquons?\n");//à supprimer
-									pos_clic.x=evenement.button.x + position_affichage_carte.x;
-									pos_clic.y=evenement.button.y + position_affichage_carte.y;
+									pos_clic.x=evenement.button.x - position_affichage_carte.x;
+									pos_clic.y=evenement.button.y - position_affichage_carte.y;
 
 									attaque_reussi=attaque_ecran(jeu,un_terrain_combat,pos_clic,flotte1, flotte2); /*tentative d'attaque*/
 									if(attaque_reussi)/*si on réussi à attaque on lance l'animation et on retire un point d'action au joueur*/
@@ -3834,7 +3850,8 @@ void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat,Flotte* 
 									SDL_FreeSurface(carte);
 									carte=affiche_ecran_terrain_combat(un_terrain_combat);/*on refais le terrain*/
 									SDL_BlitSurface(carte, &position_affichage_carte,  ecran,NULL);
-									SDL_BlitSurface(bordure, NULL, ecran, &position_affichage_carte);
+									SDL_BlitSurface(bordure, NULL, ecran, &pos_bordure);
+									SDL_BlitSurface(interface_haut, NULL, ecran, &pos_interface_haut);
 									SDL_Flip(ecran);
 								break;
 							
@@ -3849,14 +3866,15 @@ void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat,Flotte* 
 					}
 
 					SDL_BlitSurface(carte, &position_affichage_carte,  ecran,NULL);
-					SDL_BlitSurface(bordure, NULL, ecran, &position_affichage_carte);SDL_Flip(ecran);
+					SDL_BlitSurface(bordure, NULL, ecran, &pos_bordure);
+					SDL_BlitSurface(interface_haut, NULL, ecran, &pos_interface_haut);SDL_Flip(ecran);
 				}
 				else if(test_souris_rectangle(pos_interface_carte,pos_clic.x,pos_clic.y)){ /*si on clique à l'intérieur de l'endroit ou est la carte*/
 					sprintf(infos2," ");
 					SDL_FreeSurface(texte2);
 					texte2 = TTF_RenderUTF8_Blended(police,infos2,couleur_police);
 					selection(jeu,un_terrain_combat,pos_clic);/*on sélectionne ou désélectionne */
-					affiche_deplacement_unite(jeu,un_terrain_combat, pos_clic,carte,bordure,ecran,position_affichage_carte,infos2);/*on essais de déplacer*/
+					affiche_deplacement_unite(jeu,un_terrain_combat, pos_clic,carte,bordure,ecran,position_affichage_carte,pos_bordure,infos2);/*on essais de déplacer*/
 					SDL_FreeSurface(texte2);
 					texte2 = TTF_RenderUTF8_Blended(police,infos2,couleur_police);
 					SDL_FreeSurface(carte);
@@ -3915,12 +3933,16 @@ void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat,Flotte* 
 		SDL_FillRect(ecran, NULL, couleur);*/
 		
 		evenement.type=0;
+		sprintf(infos3," %s !",get_ieme_joueur_jeu(jeu,get_joueur_en_cours_combat(jeu))->nom_joueur);
+		texte3 = TTF_RenderUTF8_Blended(police,infos3,couleur_police);
 		SDL_FillRect(ecran, NULL, couleur);
 		SDL_BlitSurface(carte, NULL,  ecran,&position_affichage_carte);
-	SDL_BlitSurface(bordure, NULL, ecran, &position_affichage_carte);
+		SDL_BlitSurface(bordure, NULL, ecran, &pos_bordure);
+		SDL_BlitSurface(interface_haut, NULL, ecran, &pos_interface_haut);
 		SDL_BlitSurface(interface, NULL, ecran, &pos_interface);
 		SDL_BlitSurface(texte, NULL, ecran, &pos_texte);
 		SDL_BlitSurface(texte2, NULL, ecran, &pos_texte2);
+		SDL_BlitSurface(texte3, NULL, ecran, &pos_texte3);
 		SDL_Flip(ecran);
 	}
 
@@ -3931,6 +3953,8 @@ void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat,Flotte* 
 	TTF_CloseFont(police);
 	TTF_Quit();
 	SDL_FreeSurface(interface);
+	SDL_FreeSurface(interface_haut);
+
 	SDL_FreeSurface(texte);
 	SDL_FreeSurface(carte);
 	SDL_FreeSurface(passer);
