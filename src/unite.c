@@ -220,6 +220,13 @@ int get_pt_mouvement_unite(const Unite *unite_jeu)
 /* Fonctions diverses                                                   */
 /************************************************************************/
 
+/**
+ * \brief      Vérifie si une unité peut se déplacer
+ * \details    Renvoie 1 si l'unité peut se déplacer, 0 sinon
+ * \param      une_unite         Pointeur sur Unite 
+ * \param      x	cordonnée en abscisse de l'unité
+ * \param      y	cordonnée en ordonnée de l'unité
+ */
 bool unite_peut_se_deplacer(const Unite *une_unite, int x, int y)
 {
     int x_min, y_min, x_max, y_max;
@@ -236,11 +243,23 @@ bool unite_peut_se_deplacer(const Unite *une_unite, int x, int y)
     else {return false;}
 }
 
+
+/**
+ * \brief      Calcule la distance entre deux point
+ * \details    Renvoie la distance entre une case de coordonnées (x_depart,y_depart) et une case de coordonnées (x_arrivee,y_arrivee)
+ */
 int calcul_distance_unite(const int x_depart, const int y_depart, const int x_arrivee, const int y_arrivee)
 {
     return ceil(sqrt(pow(x_depart - x_arrivee, 2) + pow(y_depart - y_arrivee, 2)) - 0.1); /*on enleve 0.1 pour etre un peu plus précis: si on se deplace de 7.05 on veut que ce soit 7*/
 }
 
+
+/**
+ * \brief      enlève des points de déplacements à l'unité
+ * \details    enlève "distance" au points de déplacement de l'unité
+ * \param      une_unite         Pointeur sur Unite 
+ * \param      distance		le nombre de points de déplacement à retirer
+ */
 void enlever_pt_mouvement_combat_unite(Unite *une_unite, const int distance)
 {
     int temp = get_pt_deplacement(une_unite);
@@ -248,6 +267,13 @@ void enlever_pt_mouvement_combat_unite(Unite *une_unite, const int distance)
     set_pt_deplacement(une_unite, temp);
 }
 
+
+/**
+ * \brief      enlève des points d'action à l'unité
+ * \details    enlève "point" au points d'action de l'unité
+ * \param      une_unite         Pointeur sur Unite 
+ * \param      point		le nombre de points d'action à retirer
+ */
 void enlever_pt_action_unite(Unite *une_unite, const int point)
 {
 	int temp = get_pt_action(une_unite);
@@ -255,10 +281,22 @@ void enlever_pt_action_unite(Unite *une_unite, const int point)
     set_pt_action(une_unite, temp);
 }
 
+
+/**
+ * \brief      réinitialise les points de déplacement de l'unité
+ * \details    
+ * \param      une_unite         Pointeur sur Unite 
+ */
 void reinitialiser_mouvement_combat_unite(Unite *une_unite)
 {
 	une_unite->pt_deplacement = une_unite->pt_deplacement_total;
 }
+
+/**
+ * \brief      réinitialise les points d'action de l'unité
+ * \details    
+ * \param      une_unite         Pointeur sur Unite 
+ */
 void reinitialiser_pt_action(Unite *une_unite)
 {
 	une_unite->pt_action = une_unite->pt_action_total;

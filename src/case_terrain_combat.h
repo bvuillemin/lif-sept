@@ -5,20 +5,28 @@
 
 /**
  * \file      Module case_terrain_combat
- * \author    Les queues de cheval
- * \version   0.1
- * \date      13 mars 2013
+ * \author    BODARD, REYNAUD, VUILLEMIN
+ * \version   1.0
  * \brief     Case du Terrain_combat et ses particularités
  *
  * \details
  */
 
+/**
+ * \struct Case_terrain_combat
+ * \brief case du terrain du combat
+ */
 typedef struct
 {
+    /**abscisse et ordonnée de la case*/
     int x_combat,y_combat;
+    /**type de la case*/
     char type_case_terrain_combat;/* N si non initialisé*/
+    /**1 si la case contient une unité, 0 sinon*/
     bool presence_unite;
+    /**1 si la case est sélectionnée 0 sinon*/
 	bool selection_unite;
+    /**une unité*/
 	Unite *unite;
 	/*int id_joueur;*/
 }Case_terrain_combat;

@@ -22,26 +22,46 @@ typedef enum
 	Destructeur
 }TYPE_VAISSEAU;
 
+
+/**
+ * \struct Unite
+ * \brief unité
+ */
 typedef struct
 {
+    /** type de vaisseau */
 	TYPE_VAISSEAU type;
+    /** indice du joueur possédant cette unité */
 	int indice_joueur;
+    /** indice dans le tableau de la flotte à laquelle l'unité appartient */
 	int indice_dans_flotte;
+    /** coordonnée en abscisse de l'unité*/
 	int x_unite;
+    /** coordonnée en ordonnée de l'unité*/
 	int y_unite;
 
+    /** portée de l'unité*/
 	int portee;
+    /** points de vie de l'unité*/
 	int pt_vie;
+    /** points de vie total de l'unité*/
 	int pt_vie_total;
 
+    /** point d'attaque de l'unité*/
 	int pt_attaque;
+    /** point d'attaque total de l'unité*/
 	int pt_attaque_total;
+    /** point d'action de l'unité*/
 	int pt_action;
+    /** point d'action total de l'unité*/
 	int pt_action_total;
 
-	int pt_deplacement;/*dans le combat*/
+    /** point de déplacement dans le combat de l'unité*/
+	int pt_deplacement;
+    /** point de déplacement total de l'unité*/
 	int pt_deplacement_total;
-	int pt_mouvement_unite;/*dans l'espace*/
+    /** point de mouvement dans l'espace de l'unité*/
+	int pt_mouvement_unite;
 	/*ressources nécessaires*/
 	/*compétence spéciale*/
 }Unite;
