@@ -2043,6 +2043,15 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 					/*pour passer au joueur suivant*/
 					if (test_souris_rectangle(bouton_tour, x, y))
 					{
+						if(get_indice_joueur_en_cours(un_jeu) == 0)
+						{
+							set_affichage(un_terrain_espace, 2000 - TAILLE_TERRAIN_ESPACE_X, 1500 - TAILLE_TERRAIN_ESPACE_Y);
+						}
+						if(get_indice_joueur_en_cours(un_jeu) == 1)
+						{
+							set_affichage(un_terrain_espace, 0, 0);
+						}
+
 						interface_affichee = RIEN;
 						joueur_suivant(un_jeu, un_terrain_espace);
 
@@ -3141,9 +3150,9 @@ void nouvelle_partie(void)
 	un_terrain_espace = creer_terrain_espace(20, 15);
     modification_terrain_espace(un_terrain_espace, 'E');
 
-    ajouter_planete_terrain_espace(un_terrain_espace, 2, 1, nom_terre);
+    /*ajouter_planete_terrain_espace(un_terrain_espace, 2, 1, nom_terre);
     ajouter_planete_terrain_espace(un_terrain_espace, 4, 3, nom_jupiter);
-	ajouter_planete_terrain_espace(un_terrain_espace, 0, 3, nom_venus);
+	ajouter_planete_terrain_espace(un_terrain_espace, 0, 3, nom_venus);*/
     affiche_terrain_espace(un_terrain_espace);
 
     terre = get_planete_terrain_espace(un_terrain_espace, 2, 1);
