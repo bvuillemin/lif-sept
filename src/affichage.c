@@ -3907,16 +3907,16 @@ void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat,Flotte* 
               	    	continuer = 0;
                     break;
 
-					case SDLK_z: /*Flèche haut*/
+					case SDLK_UP: /*Flèche haut*/
                			position_affichage_carte.y--;
                 	break;
-            		case SDLK_s: /* Flèche bas*/
+            		case SDLK_DOWN: /* Flèche bas*/
             	   		position_affichage_carte.y++;
            		    break;
-        	    	case SDLK_d: /* Flèche droite*/
+        	    	case SDLK_RIGHT: /* Flèche droite*/
                			position_affichage_carte.x++;
                		break;
-  	      	    	case SDLK_q: /*Flèche gauche*/
+  	      	    	case SDLK_LEFT: /*Flèche gauche*/
   	     	        	position_affichage_carte.x--;
              	    break;
 					case SDLK_p: /*Flèche gauche*/
