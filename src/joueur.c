@@ -187,7 +187,7 @@ void ajouter_planete_joueur(Joueur *un_joueur, Planete *une_planete)
     int i = un_joueur->nb_planete;
     if(i< un_joueur->nb_planete_possible)
     {
-        (un_joueur->tab_planete)[i] = une_planete;
+        un_joueur->tab_planete[i] = une_planete;
         un_joueur->nb_planete ++;
         une_planete->planete_colonisee = true;
         if(i==0)
@@ -196,6 +196,48 @@ void ajouter_planete_joueur(Joueur *un_joueur, Planete *une_planete)
         }
 		une_planete->indice_joueur = un_joueur->numero_joueur;
     }
+}
+
+/**
+ * \brief      Ajoute une planète à un joueur avec un indice précis pour le placer dans le tableau de planètes
+ * \param      un_joueur           Pointeur sur Joueur
+ * \param      une_planete         Pointeur sur Planete
+ * \param      indice              Indice de la position où placer la flotte
+ */
+void ajouter_planete_avec_indice_joueur(Joueur* un_joueur, Planete* une_planete, int indice)
+{
+	if(un_joueur->tab_planete[indice] == NULL)
+	{
+		un_joueur->nb_planete ++;
+	}
+	un_joueur->tab_planete[indice] = une_planete;
+	une_planete->planete_colonisee = true;
+	if(indice==0)
+	{
+		une_planete->planete_principale = true;
+	}
+	une_planete->indice_joueur = un_joueur->numero_joueur;
+}
+
+
+/**
+ * \brief      Supprime une planète d'un joueur
+ * \param      un_joueur           Pointeur sur Joueur
+ * \param      une_planete         Pointeur sur Planete
+ */
+void supprimer_planete_joueur(Joueur* un_joueur, Planete* une_planete)
+{
+	int i, j;
+	for(i=0;i<get_nb_planete(un_joueur);i++)
+	{
+		if((get_x_planete(get_ieme_planete_joueur(un_joueur, i)) == get_x_planete(une_planete)) && (get_y_planete(get_ieme_planete_joueur(un_joueur, i)) == get_y_planete(une_planete)))
+		{
+			for(j = i;j<get_nb_planete(un_joueur) - 1;j++)
+			{
+				ajouter_planete_avec_indice_joueur(un_joueur, get_ieme_planete_joueur(un_joueur, j+1), j);
+			}
+		}
+	}
 }
 
 /**

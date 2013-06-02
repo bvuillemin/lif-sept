@@ -94,6 +94,8 @@ void retirer_population(Joueur *un_joueur, int nb);
 void recuperer_ressource_planete(Joueur *un_joueur, int *metal, int *argent, int *carburant, int *population);
 void recuperer_ressource_joueur(Joueur *un_joueur, int *metal, int *argent, int *carburant, int *population);
 void ajouter_planete_joueur(Joueur *un_joueur, Planete *une_planete);
+void ajouter_planete_avec_indice_joueur(Joueur* un_joueur, Planete* une_planete, int indice);
+void supprimer_planete_joueur(Joueur* un_joueur, Planete* une_planete);
 void ajouter_flotte_joueur(Joueur *un_joueur, Flotte *une_flotte);
 void retirer_flotte_joueur(Joueur *un_joueur, int indice_flotte);
 void ajouter_unite_ieme_flotte_joueur(Joueur *un_joueur, Unite * unite, int i);

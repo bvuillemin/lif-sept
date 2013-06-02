@@ -74,6 +74,7 @@ void validation_creation_unite_planete(Jeu *un_jeu, Terrain_espace *un_terrain_e
 void ajouter_flotte_jeu(Jeu *un_jeu,Terrain_espace *un_terrain_espace, Flotte *une_flotte, int indice_joueur, int x, int y);
 void colonisation_planete_flotte(Terrain_espace *un_terrain_espace, Flotte *une_flotte, Jeu *un_jeu);
 void combat_automatique(Jeu* un_jeu, Terrain_espace* un_terrain_espace, Flotte* flotte1, Flotte* flotte2);
+void capture_planete(Jeu* un_jeu, Terrain_espace* un_terrain, Flotte* une_flotte);
 
 void lancer_animation(Jeu *un_jeu, Animation *une_animation, int temps, SDL_Surface *ecran, int x, int y);
 void maj_animation(Jeu *un_jeu,Terrain_espace *un_terrain_espace, Animation *une_animation, int temps, SDL_Surface *ecran, SDL_Surface **tab_surface, int interface_affichee);
