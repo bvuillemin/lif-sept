@@ -886,8 +886,8 @@ void afficher_infobulle(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surf
 				}
 			}
 		}
+        SDL_FreeSurface(tab_surface[12]);
 	}
-	SDL_FreeSurface(tab_surface[12]);
 }
 
 
@@ -1952,7 +1952,7 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 		timer = tps_nouveau - tps_ancien;
 		if(timer >= TEMPS_INFOBULLE)
 		{
-//			afficher_infobulle(un_jeu, un_terrain_espace, ecran, tab_surface, interface_affichee, x_info, y_info);
+			afficher_infobulle(un_jeu, un_terrain_espace, ecran, tab_surface, interface_affichee, x_info, y_info);
 			tps_ancien = tps_nouveau;
 			infobulle = true;
 		}
@@ -1972,12 +1972,12 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 			x_info = event.motion.x;
 			y_info = event.motion.y;
 			tps_ancien = SDL_GetTicks();
-			/*if(infobulle == true)
+			if(infobulle == true)
 			{
 				maj_affichage(un_jeu, un_terrain_espace, ecran, interface_affichee, une_case_terrain_espace, tab_surface);
 				maj_affichage_carte_terrain(un_jeu, un_terrain_espace, ecran, tab_surface, interface_affichee);
 				infobulle = false;
-			}*/
+			}
             break;
 		case SDL_MOUSEBUTTONUP:
             if (event.button.button == SDL_BUTTON_LEFT)
@@ -2165,10 +2165,10 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 							booleen_coordonnees_case(un_terrain_espace, un_jeu->selection_flotte->x_flotte, un_jeu->selection_flotte->y_flotte, &x_bis, &y_bis);
 							lire_son(system, son_saut_debut);
 							lancer_animation_bloquante(un_jeu, un_terrain_espace, saut_ftl, ecran, x_bis, y_bis);
-							deplacement_unite_flotte(un_jeu, &un_jeu->tab_joueur[un_jeu->joueur_en_cours], un_terrain_espace, un_jeu->selection_flotte, x/100, y/100);
+							deplacement_unite_flotte(un_jeu, &un_jeu->tab_joueur[un_jeu->joueur_en_cours], un_terrain_espace, un_jeu->selection_flotte, une_case_terrain_espace->x_espace, une_case_terrain_espace->y_espace);
 							interface_affichee = RIEN;
-							un_jeu->selection_flotte = NULL;
-							un_jeu->selection_flotte = get_flotte(get_case_terrain_espace(un_terrain_espace, x/100, y/100));
+//							un_jeu->selection_flotte = NULL;
+							un_jeu->selection_flotte = get_flotte(get_case_terrain_espace(un_terrain_espace, une_case_terrain_espace->x_espace, une_case_terrain_espace->y_espace));
 							maj_affichage_flotte(un_jeu, un_terrain_espace, ecran, tab_surface, interface_affichee);
 							booleen_coordonnees_case(un_terrain_espace, un_jeu->selection_flotte->x_flotte, un_jeu->selection_flotte->y_flotte, &x_bis, &y_bis);
 							lire_son(system, son_saut_fin);
