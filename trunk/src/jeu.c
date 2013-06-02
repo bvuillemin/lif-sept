@@ -757,8 +757,9 @@ bool deplacement_unite_flotte(Jeu *un_jeu, Joueur *un_joueur, Terrain_espace *un
  * \brief      Permet un combat automatique
  * \details    
  * \param      un_jeu              Pointeur sur Jeu
+  * \return    Retourne l'entier correspondant à la flotte gagnante, 1 pour l'attaquante, 2 pour la défense
  */
-void combat_automatique(Jeu* un_jeu,Terrain_espace* un_terrain, Flotte* flotte1, Flotte* flotte2)
+int combat_automatique(Jeu* un_jeu,Terrain_espace* un_terrain, Flotte* flotte1, Flotte* flotte2)
 {
 	int i;
 	int defense_flotte1 = 0, defense_flotte2 = 0, attaque_flotte1 = 0, attaque_flotte2 = 0;
@@ -792,7 +793,7 @@ void combat_automatique(Jeu* un_jeu,Terrain_espace* un_terrain, Flotte* flotte1,
 		{
 			if(defense_flotte2_temp > 0)
 			{
-				defense_flotte2_temp -= (attaque_flotte1 * ((float)valeur_rand/100));
+				defense_flotte2_temp -= ((float) attaque_flotte1 * ((float)valeur_rand/100));
 				tour_en_cours++;
 			}
 			if(defense_flotte2_temp <= 0)
@@ -802,11 +803,12 @@ void combat_automatique(Jeu* un_jeu,Terrain_espace* un_terrain, Flotte* flotte1,
 			}
 		}
 
-		if(tour_en_cours%2 == 0)
+		valeur_rand = rand()%100;
+		if(tour_en_cours%2 == 0 && combat)
 		{
 			if(defense_flotte1_temp > 0)
 			{
-				defense_flotte1_temp -= (attaque_flotte2  * ((float)valeur_rand/100));
+				defense_flotte1_temp -= ((float) attaque_flotte2  * ((float)valeur_rand/100));
 				tour_en_cours++;
 			}
 			if(defense_flotte1_temp <= 0)
@@ -824,7 +826,8 @@ void combat_automatique(Jeu* un_jeu,Terrain_espace* un_terrain, Flotte* flotte1,
 		printf("Flotte 2 a perdu \n");
 		printf("Flotte 1, defense: %d/%d\n", defense_flotte1_temp, defense_flotte1);
 
-		rapport = ((float)defense_flotte1_temp/defense_flotte1) * 100;
+		rapport = ((float)defense_flotte1_temp/defense_flotte1)* defense_flotte1;
+		rapport = defense_flotte1 - rapport;
 		rapport = rapport / get_taille_flotte(flotte1);
 		for(i=0;i<get_taille_flotte(flotte1);i++)
 		{
@@ -833,8 +836,10 @@ void combat_automatique(Jeu* un_jeu,Terrain_espace* un_terrain, Flotte* flotte1,
 			{
 				liberer_unite(get_unite_i_flotte(flotte1, i));
 				retirer_unite_flotte(flotte1, i);
+				i--;
 			}
 		}
+		return 1;
 	}
 	if(gagnant == 2)
 	{
@@ -843,7 +848,8 @@ void combat_automatique(Jeu* un_jeu,Terrain_espace* un_terrain, Flotte* flotte1,
 		printf("Flotte 1 a perdu \n");
 		printf("Flotte 2, defense: %d/%d\n", defense_flotte2_temp, defense_flotte2);
 
-		rapport = ((float)defense_flotte2_temp/defense_flotte2) * 100;
+		rapport = ((float)defense_flotte2_temp/defense_flotte2)* defense_flotte2;
+		rapport = defense_flotte2 - rapport;
 		rapport = rapport / get_taille_flotte(flotte2);
 		for(i=0;i<get_taille_flotte(flotte2);i++)
 		{
@@ -854,6 +860,7 @@ void combat_automatique(Jeu* un_jeu,Terrain_espace* un_terrain, Flotte* flotte1,
 				retirer_unite_flotte(flotte2, i);
 			}
 		}
+		return 2;
 	}
 }
 
