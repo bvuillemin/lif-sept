@@ -96,6 +96,12 @@ Planete* get_planete_terrain_espace(const Terrain_espace *terrain_espace, int x,
 	else {return NULL;}
 }
 
+void set_affichage(Terrain_espace* un_terrain, int x, int y)
+{
+	un_terrain->affichage_x = x;
+	un_terrain->affichage_y = y;
+}
+
 
 /************************************************************************/
 /* Fonctions diverses                                                   */
@@ -149,11 +155,12 @@ void modification_terrain_espace(const Terrain_espace *terrain_espace, const cha
     }
 }
 
-void ajouter_planete_terrain_espace(Terrain_espace *terrain_espace, int x, int y, char nom_planete[30])
+void ajouter_planete_terrain_espace(Terrain_espace *terrain_espace, int x, int y, char nom_planete[30], int metal, int argent, int carburant, int  population)
 {
-    Planete *terre;
-    terre = creer_planete(nom_planete);
-    ajouter_planete(&(terrain_espace->tab_terrain_espace[y*(terrain_espace->taille_espace_x)+x]), terre);
+    Planete *une_planete;
+    une_planete = creer_planete(nom_planete);
+	modification_production_planete(une_planete, metal, argent, carburant, population);
+    ajouter_planete(&(terrain_espace->tab_terrain_espace[y*(terrain_espace->taille_espace_x)+x]), une_planete);
 }
 
 void calcul_deplacement_flotte(Flotte *une_flotte)

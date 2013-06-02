@@ -26,13 +26,8 @@ int main(int argc, char *argv[])
 	Flotte *flotte2;
     Unite *unite3;
     Unite *unite4;
-	
-	Flotte *flotte3;
-	Unite *unite5;
-	Unite *unite6;
 
 	Terrain_espace *un_terrain_espace;
-	/*Terrain_combat * un_terrain_combat;*/
 
     int a = 1;
 	char menu[50];
@@ -47,8 +42,10 @@ int main(int argc, char *argv[])
 	char afficher_carte[] = "carte";
 	char creer[] = "creer";
 
-	Planete *terre;
-	Planete *jupiter;
+	/*Liste des planètes*/
+	Planete* Terre;
+	Planete* Caprica;
+
 	Joueur *joueur;
 	Joueur *joueur2;
 	Jeu *jeu;
@@ -57,26 +54,34 @@ int main(int argc, char *argv[])
 	int y = 0;
 	int i;
 
-    char nom_joueur[]="Pierre";
-	char nom_joueur2[]="Boulet";
-	char nom_terre[]="terre";
-	char nom_jupiter[]="jupiter";
-	char nom_venus[]="venus";
+    char nom_joueur[]="Joueur 1";
+	char nom_joueur2[]="Joueur 2";
 
 	srand(time(NULL));
 	un_terrain_espace = creer_terrain_espace(20, 15);
     modification_terrain_espace(un_terrain_espace, 'E');
 
-    ajouter_planete_terrain_espace(un_terrain_espace, 2, 1, nom_terre);
-    ajouter_planete_terrain_espace(un_terrain_espace, 4, 3, nom_jupiter);
-	ajouter_planete_terrain_espace(un_terrain_espace, 0, 3, nom_venus);
+    ajouter_planete_terrain_espace(un_terrain_espace, 1, 1, "Terre", 300, 300, 300, 300);
+    ajouter_planete_terrain_espace(un_terrain_espace, 4, 4, "Jupiter", 50, 25, 300, 25);
+	ajouter_planete_terrain_espace(un_terrain_espace, 0, 4, "Mars", 150, 100, 20, 150);
+	ajouter_planete_terrain_espace(un_terrain_espace, 0, 6, "Venus", 200, 200, 10, 50);
+	ajouter_planete_terrain_espace(un_terrain_espace, 1, 8, "Saturne", 20, 30, 200, 50);
+
+	ajouter_planete_terrain_espace(un_terrain_espace, 10, 7, "Kobol", 200, 300, 150, 50);
+
+	ajouter_planete_terrain_espace(un_terrain_espace, 18, 13, "Caprica", 300, 300, 300, 300);
+	ajouter_planete_terrain_espace(un_terrain_espace, 15, 14, "Gemenon", 50, 25, 300, 25);
+	ajouter_planete_terrain_espace(un_terrain_espace, 19, 9, "Picon", 150, 100, 20, 150);
+	ajouter_planete_terrain_espace(un_terrain_espace, 14, 11, "Sagitarron", 200, 200, 10, 50);
+	ajouter_planete_terrain_espace(un_terrain_espace, 10, 13, "Tauron", 20, 30, 200, 50);
+
     affiche_terrain_espace(un_terrain_espace);
 
-    terre = get_planete_terrain_espace(un_terrain_espace, 2, 1);
-    jupiter = get_planete_terrain_espace(un_terrain_espace, 4, 3);
+    Terre = get_planete_terrain_espace(un_terrain_espace, 1, 1);
+    Caprica = get_planete_terrain_espace(un_terrain_espace, 18, 13);
 
 	joueur = creer_joueur(nom_joueur, 0, false);
-	joueur2 = creer_joueur(nom_joueur2, 1, true);
+	joueur2 = creer_joueur(nom_joueur2, 1, false);
 	jeu = creer_jeu();
     ajouter_joueur(jeu, joueur);
 	ajouter_joueur(jeu, joueur2);
@@ -86,22 +91,12 @@ int main(int argc, char *argv[])
     unite2 = creer_unite(Destroyer);
 
 	flotte2 = creer_flotte();
-    unite3 = creer_unite(Destructeur);
-    unite4 = creer_unite(Chasseur);
+	unite3 = creer_unite(Chasseur);
+	unite4 = creer_unite(Destroyer);
 
+	ajouter_planete_joueur(get_ieme_joueur_jeu(jeu, 0), Terre);
 
-	flotte3 = creer_flotte();
-	unite5 = creer_unite(Chasseur);
-	unite6 = creer_unite(Destructeur);
-
-	ajouter_planete_joueur(&jeu->tab_joueur[0], terre);
-	afficher_planete(jeu->tab_joueur[0].tab_planete[0]);
-
-	ajouter_planete_joueur(&jeu->tab_joueur[1], jupiter);
-	afficher_planete(jeu->tab_joueur[1].tab_planete[0]);
-
-    modification_production_planete(jeu->tab_joueur[0].tab_planete[0], 100, 50, 10, 100);
-	modification_production_planete(jeu->tab_joueur[1].tab_planete[0], 200, 50, 75, 0);
+	ajouter_planete_joueur(get_ieme_joueur_jeu(jeu, 1), Caprica);
 
     ajouter_unite_flotte(flotte, unite1);
     ajouter_unite_flotte(flotte, unite2);
@@ -109,12 +104,8 @@ int main(int argc, char *argv[])
 	ajouter_unite_flotte(flotte2, unite3);
     ajouter_unite_flotte(flotte2, unite4);
 	
-	ajouter_unite_flotte(flotte3, unite5);
-	ajouter_unite_flotte(flotte3, unite6);
-
 	ajouter_flotte_jeu(jeu, un_terrain_espace, flotte, 0, 2, 2);
-	ajouter_flotte_jeu(jeu, un_terrain_espace, flotte2, 0, 5, 5);
-	ajouter_flotte_jeu(jeu, un_terrain_espace, flotte3, 1, 0, 4);
+	ajouter_flotte_jeu(jeu, un_terrain_espace, flotte2, 1, 5, 5);
 
 	creer_vision_jeu(jeu, un_terrain_espace);
     affichage_ecran(jeu, un_terrain_espace);
@@ -143,7 +134,7 @@ int main(int argc, char *argv[])
         }
         if(strcmp(menu, info_planete) == 0)
         {
-            afficher_planete(terre);
+            afficher_planete(Terre);
             /*afficher_planete(jupiter);*/
         }
 		if(strcmp(menu, info_flotte) == 0)
@@ -169,8 +160,8 @@ int main(int argc, char *argv[])
         }
         if(strcmp(menu, coloniser) == 0)
         {
-			colonisation_planete(&(jeu->tab_joueur[a]), terre);
-			colonisation_planete(&(jeu->tab_joueur[a]), jupiter);
+			colonisation_planete(&(jeu->tab_joueur[a]), Terre);
+			colonisation_planete(&(jeu->tab_joueur[a]), Caprica);
         }
 		if(strcmp(menu, afficher_carte) == 0)
 		{
