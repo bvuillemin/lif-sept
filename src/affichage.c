@@ -2252,8 +2252,18 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 						if((un_jeu->joueur_en_cours != get_indice_joueur_flotte(get_flotte(get_case_terrain_espace(un_terrain_espace, x/100, y/100)))) && (un_jeu->selection_flotte->pt_mouvement_espace_flotte >= 0))
 						{
 							/*mettre fonction attaque prenant en param le terrain, le jeu, les 2 flottes*/
-							combat_automatique(un_jeu, un_terrain_espace, get_flotte_en_cours(un_jeu), get_flotte(get_case_terrain_espace(un_terrain_espace, x/100, y/100)));
-							maj_affichage_flotte(un_jeu, un_terrain_espace, ecran, tab_surface, interface_affichee);
+							if(combat_automatique(un_jeu, un_terrain_espace, get_flotte_en_cours(un_jeu), get_flotte(get_case_terrain_espace(un_terrain_espace, x/100, y/100))) == 1)
+							{
+								deplacement_flotte(&un_jeu->tab_joueur[un_jeu->joueur_en_cours], un_terrain_espace, un_jeu->selection_flotte, une_case_terrain_espace->x_espace, une_case_terrain_espace->y_espace);
+								maj_affichage_flotte(un_jeu, un_terrain_espace, ecran, tab_surface, interface_affichee);
+								booleen_coordonnees_case(un_terrain_espace, un_jeu->selection_flotte->x_flotte, un_jeu->selection_flotte->y_flotte, &x_bis, &y_bis);
+								lire_son(system, son_saut_fin);
+								lancer_animation_bloquante(un_jeu, un_terrain_espace, saut_ftl, ecran, x_bis, y_bis);
+							}
+							else
+							{
+								maj_affichage_flotte(un_jeu, un_terrain_espace, ecran, tab_surface, interface_affichee);
+							}
 						}
 					}
                 }

@@ -87,11 +87,11 @@ int main(int argc, char *argv[])
 	ajouter_joueur(jeu, joueur2);
 
     flotte = creer_flotte();
-    unite1 = creer_unite(Chasseur);
-    unite2 = creer_unite(Destroyer);
+    unite1 = creer_unite(Destroyer);
+    unite2 = creer_unite(Destructeur);
 
 	flotte2 = creer_flotte();
-	unite3 = creer_unite(Chasseur);
+	unite3 = creer_unite(Destructeur);
 	unite4 = creer_unite(Destroyer);
 
 	ajouter_planete_joueur(get_ieme_joueur_jeu(jeu, 0), Terre);
