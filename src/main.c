@@ -117,7 +117,6 @@ int main(int argc, char *argv[])
 	ajouter_flotte_jeu(jeu, un_terrain_espace, flotte3, 1, 0, 4);
 
 	creer_vision_jeu(jeu, un_terrain_espace);
-	//creer_vision_joueur(jeu, un_terrain_espace, 0);
     affichage_ecran(jeu, un_terrain_espace);
 
 	while(1)

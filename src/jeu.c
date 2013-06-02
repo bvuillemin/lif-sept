@@ -73,9 +73,9 @@ int get_joueur_en_cours_combat(Jeu * jeu)
 {
 	return jeu->joueur_en_cours_combat;
 }
-Joueur *get_joueur_en_cours(Jeu *un_jeu)
+Joueur* get_joueur_en_cours(Jeu *un_jeu)
 {
-	return &un_jeu->tab_joueur[un_jeu->joueur_en_cours];
+	return get_ieme_joueur_jeu(un_jeu, un_jeu->joueur_en_cours);
 }
 Flotte *get_flotte_en_cours(Jeu *un_jeu)
 {

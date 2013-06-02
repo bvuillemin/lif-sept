@@ -1486,6 +1486,7 @@ SDL_Surface* creer_affichage_vision(Jeu *un_jeu, Joueur* un_joueur)
 	SDL_Surface *jamais_visitee = NULL;
 	SDL_Surface *visitee = NULL;
 	SDL_Surface *fond = NULL;
+	SDL_Surface *brouillard = NULL;
 	SDL_Rect position_affichage;
 	int i, j;
 	Terrain_espace* un_terrain_espace;
@@ -1498,8 +1499,7 @@ SDL_Surface* creer_affichage_vision(Jeu *un_jeu, Joueur* un_joueur)
 	fond = SDL_CreateRGBSurface(SDL_HWSURFACE,un_terrain_espace->taille_espace_x * 100, un_terrain_espace->taille_espace_y * 100, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
 	SDL_FillRect(fond, NULL, SDL_MapRGB(fond->format, 0, 0, 255));
 
-	jamais_visitee = SDL_CreateRGBSurface(SDL_HWSURFACE, 100, 100, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
-	SDL_FillRect(jamais_visitee, NULL, SDL_MapRGB(fond->format, 0, 0, 0));
+	jamais_visitee = IMG_Load("../graphiques/images/brouillard.png");
 
 	affichee = SDL_CreateRGBSurface(SDL_HWSURFACE, 100, 100, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
 	SDL_FillRect(affichee, NULL, SDL_MapRGB(fond->format, 255, 255, 255));
@@ -1530,7 +1530,6 @@ SDL_Surface* creer_affichage_vision(Jeu *un_jeu, Joueur* un_joueur)
 	}
 
 	SDL_SetColorKey(fond, SDL_SRCCOLORKEY, SDL_MapRGB(fond->format, 255, 255, 255));
-	/*SDL_SetColorKey(fond, 128, SDL_MapRGB(fond->format, 0, 255, 0));*/
 
 	SDL_FreeSurface(visitee);
 	SDL_FreeSurface(jamais_visitee);
@@ -1552,16 +1551,13 @@ void maj_affichage_vision(Jeu *un_jeu, Joueur* un_joueur, SDL_Surface *ecran, SD
 
 	une_vision = un_joueur->vision_terrain;
 	un_terrain_espace = un_joueur->vision_terrain->terrain_espace;
-	maj_vision_joueur(un_jeu, un_terrain_espace, 0);
-
-	//SDL_FreeSurface(tab_surface[11]);
+	maj_vision_joueur(un_jeu, un_terrain_espace, get_indice_joueur_en_cours(un_jeu));
 
 	tab_surface[11] = SDL_CreateRGBSurface(SDL_HWSURFACE,un_terrain_espace->taille_espace_x * 100, un_terrain_espace->taille_espace_y * 100, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
 	SDL_FillRect(tab_surface[11], NULL, SDL_MapRGB(tab_surface[11]->format, 0, 0, 255));
 	SDL_SetColorKey(tab_surface[11], SDL_SRCCOLORKEY, SDL_MapRGB(tab_surface[11]->format, 0, 0, 255));
 
-	jamais_visitee = SDL_CreateRGBSurface(SDL_HWSURFACE, 100, 100, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
-	SDL_FillRect(jamais_visitee, NULL, SDL_MapRGB(tab_surface[11]->format, 0, 0, 0));
+	jamais_visitee = IMG_Load("../graphiques/images/brouillard.png");
 
 	affichee = SDL_CreateRGBSurface(SDL_HWSURFACE, 100, 100, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
 	SDL_FillRect(affichee, NULL, SDL_MapRGB(tab_surface[11]->format, 255, 255, 255));
@@ -1569,7 +1565,6 @@ void maj_affichage_vision(Jeu *un_jeu, Joueur* un_joueur, SDL_Surface *ecran, SD
 
 	visitee = SDL_CreateRGBSurface(SDL_HWSURFACE, 100, 100, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
 	SDL_FillRect(visitee, NULL, SDL_MapRGB(tab_surface[11]->format, 0, 0, 0));
-	//SDL_SetColorKey(visitee, SDL_SRCCOLORKEY, SDL_MapRGB(tab_surface[11]->format, 0, 255, 0));
 	SDL_SetAlpha(visitee, SDL_SRCALPHA, 100);
 
 	for(i=0;i< un_terrain_espace->taille_espace_y;i++)
@@ -1601,22 +1596,7 @@ void maj_affichage_vision(Jeu *un_jeu, Joueur* un_joueur, SDL_Surface *ecran, SD
 
 void initialiser_affichage(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface **tab_surface)
 {
-   /* SDL_Surface *carte = NULL
-	SDL_Surface *carte_flotte = NULL;
-	SDL_Surface *ressource= NULL;
-	SDL_Surface *deplacement_carte = NULL;
-	SDL_Surface *interface = NULL;
-	SDL_Surface *mini_carte = NULL;
-	SDL_Surface *info = NULL;
-	SDL_Surface *panneau_unite = NULL;
-	SDL_Surface *minimap = NULL;
-    SDL_Surface *bouton_passer_tour = NULL;
-    SDL_Surface *bordure = NULL;
-	SDL_Surface *visibilite = NULL;
-	SDL_Surface *infobulle = NULL;*/
-
-	int i;
-
+    int i;
 	SDL_Rect position = {0, 0, 0, 0};
 	SDL_Rect position_interface = {0, TAILLE_TERRAIN_ESPACE_Y + 30, 0, 0};
 	SDL_Rect position_affichage_carte = {0, 30, TAILLE_TERRAIN_ESPACE_X, TAILLE_TERRAIN_ESPACE_Y};
@@ -1728,22 +1708,17 @@ void maj_carte_terrain(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surfa
 
 void maj_affichage_carte_terrain(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface **tab_surface, INTERFACE_AFFICHEE interface_affichee)
 {
-   
     SDL_Rect position_minimap = {TAILLE_FENETRE_X - TAILLE_MINIMAP_X, TAILLE_FENETRE_Y - TAILLE_MINIMAP_Y, 0, 0};
     SDL_Rect position_affichage_carte = {0, 30, TAILLE_TERRAIN_ESPACE_X, TAILLE_TERRAIN_ESPACE_Y};
 	SDL_Rect position_affichage_info = {0,TAILLE_TERRAIN_ESPACE_Y + 25 , TAILLE_FENETRE_X, TAILLE_FENETRE_Y - TAILLE_TERRAIN_ESPACE_Y};
 	SDL_Rect position_panneau_unite = {TAILLE_FENETRE_X - 214, 35, 200, TAILLE_TERRAIN_ESPACE_Y-300};
     SDL_Rect affichage_carte = {un_terrain_espace->affichage_x, un_terrain_espace->affichage_y, TAILLE_TERRAIN_ESPACE_X, TAILLE_TERRAIN_ESPACE_Y};
     SDL_Rect position_bouton_tour = {TAILLE_FENETRE_X -207, TAILLE_TERRAIN_ESPACE_Y - 8, 0, 0};
-	
 
     /*Réaffichage des différentes parties de la carte*/
     SDL_BlitSurface(tab_surface[0], &affichage_carte, ecran, &position_affichage_carte);
     SDL_BlitSurface(tab_surface[1], &affichage_carte, ecran, &position_affichage_carte);
 	SDL_BlitSurface(tab_surface[11], &affichage_carte, ecran, &position_affichage_carte);
-
-	/*creation de l'affichage de la visibilité*/
-	//maj_affichage_vision(un_jeu, un_jeu->tab_joueur, ecran, tab_surface);
 
     /*affichage de la bordure*/
     SDL_BlitSurface(tab_surface[3], NULL, ecran, &position_affichage_carte);
@@ -1760,9 +1735,6 @@ void maj_affichage_carte_terrain(Jeu *un_jeu, Terrain_espace *un_terrain_espace,
     }
 	if(interface_affichee == PANNEAU_UNITE)
 	{
-		//SDL_FreeSurface(tab_surface[7]);
-		//SDL_FreeSurface(tab_surface[8]);
-		
 		tab_surface[7] = affichage_planete(get_planete_en_cours(un_jeu), tab_surface[7]);
 		SDL_BlitSurface(tab_surface[7], NULL, ecran, &position_affichage_info);
 		tab_surface[8] = affichage_creation_unite(get_planete_en_cours(un_jeu), tab_surface[8]);
@@ -1791,8 +1763,8 @@ void maj_affichage_flotte(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Su
     SDL_BlitSurface(tab_surface[1], &affichage_carte, ecran, &position_affichage_carte);
 
 	/*creation de l'affichage de la visibilité*/
-	SDL_FreeSurface(tab_surface[11]);
-	maj_affichage_vision(un_jeu, un_jeu->tab_joueur, ecran, tab_surface);
+	/*SDL_FreeSurface(tab_surface[11]);*/
+	maj_affichage_vision(un_jeu, get_joueur_en_cours(un_jeu), ecran, tab_surface);
 	SDL_BlitSurface(tab_surface[11], &affichage_carte, ecran, &position_affichage_carte);
 
     /*affichage de l'interface*/
@@ -2073,6 +2045,10 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 					{
 						interface_affichee = RIEN;
 						joueur_suivant(un_jeu, un_terrain_espace);
+
+						/*creation de l'affichage de la visibilité*/
+						SDL_FreeSurface(tab_surface[11]);
+						tab_surface[11] = creer_affichage_vision(un_jeu, get_ieme_joueur_jeu(un_jeu, get_indice_joueur_en_cours(un_jeu)));
 						maj_affichage_carte_terrain(un_jeu, un_terrain_espace, ecran, tab_surface, interface_affichee);
 						maj_affichage(un_jeu, un_terrain_espace, ecran, interface_affichee, NULL, tab_surface);
 						maj_affichage_flotte(un_jeu, un_terrain_espace, ecran, tab_surface, interface_affichee);
@@ -2113,7 +2089,7 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
                     if(test_souris_rectangle(test, x, y))
                     {
                         une_case_terrain_espace = get_case_terrain_espace(un_terrain_espace, un_jeu->selection_planete->x, un_jeu->selection_planete->y);
-                        interface_affichee = 5;
+                        interface_affichee = PANNEAU_UNITE;
                         maj_affichage(un_jeu, un_terrain_espace, ecran, interface_affichee, NULL, tab_surface);
                     }
 				}
