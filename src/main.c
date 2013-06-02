@@ -18,7 +18,7 @@
 
 int main(int argc, char *argv[])
 {
-    ecran_titre();
+    //ecran_titre();
     Flotte *flotte;
     Unite *unite1;
     Unite *unite2;
@@ -105,7 +105,7 @@ int main(int argc, char *argv[])
     ajouter_unite_flotte(flotte2, unite4);
 	
 	ajouter_flotte_jeu(jeu, un_terrain_espace, flotte, 0, 2, 2);
-	ajouter_flotte_jeu(jeu, un_terrain_espace, flotte2, 1, 5, 5);
+	ajouter_flotte_jeu(jeu, un_terrain_espace, flotte2, 1, 3, 3);
 
 	creer_vision_jeu(jeu, un_terrain_espace);
     affichage_ecran(jeu, un_terrain_espace);
