@@ -2167,7 +2167,6 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 							lancer_animation_bloquante(un_jeu, un_terrain_espace, saut_ftl, ecran, x_bis, y_bis);
 							deplacement_unite_flotte(un_jeu, &un_jeu->tab_joueur[un_jeu->joueur_en_cours], un_terrain_espace, un_jeu->selection_flotte, une_case_terrain_espace->x_espace, une_case_terrain_espace->y_espace);
 							interface_affichee = RIEN;
-//							un_jeu->selection_flotte = NULL;
 							un_jeu->selection_flotte = get_flotte(get_case_terrain_espace(un_terrain_espace, une_case_terrain_espace->x_espace, une_case_terrain_espace->y_espace));
 							maj_affichage_flotte(un_jeu, un_terrain_espace, ecran, tab_surface, interface_affichee);
 							booleen_coordonnees_case(un_terrain_espace, un_jeu->selection_flotte->x_flotte, un_jeu->selection_flotte->y_flotte, &x_bis, &y_bis);
