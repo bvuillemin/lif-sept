@@ -170,8 +170,10 @@ void tour_suivant(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
         
         printf("Ressources du tour %d pour le joueur %d: \nMetal: %d \nArgent: %d \nCarburant: %d \nPopulation: %d\n\n", un_jeu->tour_en_cours, i, metal, argent, carburant, population);
         
-        reinitialiser_mouvement_flotte(get_ieme_flotte_joueur(un_joueur, 0));
-        
+		for(j=0;j<get_nb_flotte_joueur(un_joueur);j++)
+		{
+			reinitialiser_mouvement_flotte(get_ieme_flotte_joueur(un_joueur, j));
+		}
         
         /*On diminue d'un le temps de construction des unités et des bâtiments sur toutes les planètes*/
         for(j=0;j<get_nb_planete(un_joueur);j++)

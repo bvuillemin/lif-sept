@@ -6,7 +6,6 @@
  * \details   Cette classe définit l'intelligence artificielle du jeu et ses caractéristiques
  */
 
-
 #include "ia.h"
 
 bool detecter_case_non_visitee_plus_proche(Joueur *un_joueur, Terrain_espace *un_terrain_espace, Flotte* une_flotte, int* x, int *y)
@@ -130,14 +129,20 @@ void recherche_chemin_plus_court_flotte(Terrain_espace* un_terrain_espace, Flott
 	*res_y = res_y_min;
 }
 
-void choisir_case_deplacement_ia(Joueur *un_joueur, Terrain_espace *un_terrain_espace, Flotte* une_flotte)
+void choisir_case_deplacement_ia(Joueur *un_joueur, Terrain_espace *un_terrain_espace, Flotte* une_flotte, COMPORTEMENT_IA comportement)
 {
 	int i, j;
 	int k, l;
 	int x, y;
 	int x2, y2;
 
-	if (true) /*rajouter flag exploration*/
+	if(comportement == DEFENSE)
+	{
+
+	}
+
+
+	if (comportement == EXPLORATION)
 	{
 		while(une_flotte->pt_mouvement_espace_flotte > 0)
 		{
@@ -349,13 +354,13 @@ COMPORTEMENT_IA calcul_niveau_menace_globale(Joueur* un_joueur, Terrain_espace* 
 	{
 		menace = detecter_menace_planete(un_joueur, un_terrain, get_ieme_planete_joueur(un_joueur, i));
 		if(menace == FAIBLE)
-			res += 1;
-		if(menace == IMPORTANTE)
-			res += 2;
-		if(menace == TOTALE)
 			res += 3;
+		if(menace == IMPORTANTE)
+			res += 6;
+		if(menace == TOTALE)
+			res += 9;
 	}
-	ratio = (double)res/(get_nb_planete(un_joueur) + get_nb_flotte_joueur(un_joueur));
+	ratio = (double)res/((get_nb_planete(un_joueur) * 3)+ get_nb_flotte_joueur(un_joueur));
 	printf("Ratio niveau global %d", ratio);
 	return EXPLORATION;
 }
@@ -530,7 +535,29 @@ void choisir_construction_unite(Joueur* un_joueur, Terrain_espace* un_terrain_es
 	}
 }
 
-
+Planete* detecter_plus_haute_menace_planete(Joueur* un_joueur, Terrain_espace* un_terrain)
+{
+	int i;
+	Planete* une_planete;
+	Planete* temp;
+	NIVEAU_MENACE menace;
+	for(i=0;i<get_nb_planete(un_joueur);i++)
+	{
+		une_planete = get_ieme_planete_joueur(un_joueur, i);
+		menace = detecter_menace_planete(un_joueur, un_terrain, une_planete);
+		if((i==0) && (menace != NON)) /*Si c'est la planète principale on la protège à tout prix*/
+		{
+			return une_planete;
+		}
+		if(menace == TOTALE)
+		{
+			return une_planete;
+		}
+		else{temp = une_planete;}
+	}
+	return temp;
+}
+	
 
 /************************************************************************/
 /* Appel de l'IA                                                        */
@@ -544,7 +571,7 @@ void appeler_ia(Terrain_espace* un_terrain_espace, Joueur *un_joueur)
 		comportement = calcul_niveau_menace_globale(un_joueur, un_terrain_espace);
 		detecter_menace_planete(un_joueur, un_terrain_espace, get_ieme_planete_joueur(un_joueur, 0));
 		detecter_menace_flotte(un_joueur, un_terrain_espace, get_ieme_flotte_joueur(un_joueur, 0));
-		choisir_case_deplacement_ia(un_joueur, un_terrain_espace, get_ieme_flotte_joueur(un_joueur, 0));
+		choisir_case_deplacement_ia(un_joueur, un_terrain_espace, get_ieme_flotte_joueur(un_joueur, 0), comportement);
 		choisir_construction_batiment(un_joueur, get_ieme_planete_joueur(un_joueur, 0));
 	}
 }
