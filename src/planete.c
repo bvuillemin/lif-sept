@@ -369,6 +369,15 @@ void test_module_planete()
 /************************************************************************/
 
 /**
+ * \brief      Supprime le "\ n" d'une chaine de caracteres
+ * \param      s                   Pointeur sur chaine
+ */
+void suppr_retour( char *s )
+{
+    s[strcspn ( s, "\n" )] = '\0';
+}
+
+/**
  * \brief      Sauvegarde une planète
  * \details    Sauvegarde une planète dans un fichier déjà ouvert
  * \param      une_planete         Pointeur sur Planete à sauvegarder
@@ -413,6 +422,7 @@ Planete* ouverture_planete(FILE *f)
     char chaine[50];
     int b, i;
     fgets(chaine, 50, f);
+    suppr_retour(chaine);
     planete_ouverte = creer_planete(chaine);
     sscanf(fgets(chaine, 50, f), "%d", &planete_ouverte->x);
     sscanf(fgets(chaine, 50, f), "%d", &planete_ouverte->y);

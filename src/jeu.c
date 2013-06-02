@@ -1129,22 +1129,6 @@ void sauvegarde_jeu(const Jeu *un_jeu, FILE*f)
     {
         sauvegarde_joueur(&un_jeu->tab_joueur[i], f);
     }
-    if(un_jeu->selection_flotte != NULL)
-    {
-        fprintf(f, "Flotte_Jeu\n");
-        sauvegarde_flotte(un_jeu->selection_flotte, f);
-    }
-    else{
-        fprintf(f, "AUCUNE_SELECTION\n");
-    }
-    if(un_jeu->selection_planete != NULL)
-    {
-        fprintf(f, "Planete_Jeu\n");
-        sauvegarde_planete(un_jeu->selection_planete, f);
-    }
-    else{
-        fprintf(f, "AUCUNE_SELECTION\n");
-    }
     for(i=0;i<10;i++)
     {
         fprintf(f, "%d\n", un_jeu->tab_unite_selectionnee[i]);
@@ -1170,16 +1154,6 @@ Jeu* ouverture_jeu(FILE *f)
     for(i=0;i<jeu_ouvert->nb_joueur;i++)
     {
         jeu_ouvert->tab_joueur[i] = *ouverture_joueur(f);
-    }
-    fgets(chaine, 50, f);
-    if(strcmp(chaine, "AUCUNE_SELECTION\n")!=0)
-    {
-        ouverture_flotte(f);
-    }
-    fgets(chaine, 50, f);
-    if(strcmp(chaine, "AUCUNE_SELECTION\n")!=0)
-    {
-        ouverture_planete(f);
     }
     for(i=0;i<10;i++)
     {
