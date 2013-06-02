@@ -707,12 +707,26 @@ bool deplacement_unite_flotte(Jeu *un_jeu, Joueur *un_joueur, Terrain_espace *un
 			return false;
 		}
 		if(case_arrivee->presence_flotte == true)
-		{
-			if(fusion_flotte(un_joueur, un_terrain_espace, une_flotte, case_arrivee->flotte))
-			{
-				return true;
-			}
-		}
+        {
+            une_nouvelle_flotte = get_flotte(case_arrivee);
+            if((une_nouvelle_flotte->taille_flotte + une_flotte->taille_flotte <= une_nouvelle_flotte->taille_maximum_flotte) && (une_flotte->indice_joueur == une_nouvelle_flotte->indice_joueur))
+            {
+                for(i=0;i<get_taille_flotte(une_flotte);i++)
+                {
+                    if(un_jeu->tab_unite_selectionnee[i] == true)
+                    {
+                        ajouter_unite_flotte(une_nouvelle_flotte, get_unite_i_flotte(une_flotte, i));
+                        retirer_unite_flotte(une_flotte, i);
+                        for(j=i;j<9;j++)
+                        {
+                            un_jeu->tab_unite_selectionnee[j] = un_jeu->tab_unite_selectionnee[j+1];
+                        }
+                        i--;
+                    }
+                }
+                return true;
+            }
+        }
 		if(case_arrivee->presence_flotte == false)
 		{
 			une_nouvelle_flotte = creer_flotte();
