@@ -245,6 +245,11 @@ void set_planete_batiment_en_cours(Planete* une_planete, int nb)
 	une_planete->batiment_en_cours = nb;
 }
 
+int get_indice_joueur_planete(Planete *une_planete)
+{
+	return une_planete->indice_joueur;
+}
+
 /************************************************************************/
 /* Fonctions diverses                                                   */
 /************************************************************************/

@@ -823,13 +823,28 @@ void combat_automatique(Jeu* un_jeu,Terrain_espace* un_terrain, Flotte* flotte1,
 	}
 	if(gagnant == 2)
 	{
-		retirer_flotte(get_case_terrain_espace(un_terrain, get_x_flotte(flotte1), get_y_flotte(flotte1)));
-		retirer_flotte_joueur(get_ieme_joueur_jeu(un_jeu, get_indice_joueur_flotte(flotte1)), get_indice_tableau_joueur(flotte1));
+		//retirer_flotte(get_case_terrain_espace(un_terrain, get_x_flotte(flotte1), get_y_flotte(flotte1)));
+		//retirer_flotte_joueur(get_ieme_joueur_jeu(un_jeu, get_indice_joueur_flotte(flotte1)), get_indice_tableau_joueur(flotte1));
 		printf("Flotte 1 a perdu \n");
 	}
 
 }
 
+
+/**
+ * \brief      Capture d'une planète par une flotte ennemie
+ * \details    Le pointeur sur planète va être supprimé du tableau du joueur qui possédait la planète et va être ajouté à celui qui attaque
+ * \param      un_jeu              Pointeur sur Jeu
+ */
+void capture_planete(Jeu* un_jeu, Terrain_espace* un_terrain, Flotte* une_flotte)
+{
+	Planete* une_planete = get_planete_terrain_espace(un_terrain, get_x_flotte(une_flotte), get_y_flotte(une_flotte));
+	if(get_indice_joueur_planete(une_planete) != get_indice_joueur_flotte(une_flotte))
+	{
+		supprimer_planete_joueur(get_ieme_joueur_jeu(un_jeu, get_indice_joueur_planete(une_planete)), une_planete);
+		ajouter_planete_joueur(get_ieme_joueur_jeu(un_jeu, get_indice_joueur_flotte(une_flotte)), une_planete);
+	}
+}
 
 /************************************************************************/
 /* Fonctions liées aux animations                                       */

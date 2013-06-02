@@ -1031,9 +1031,6 @@ SDL_Surface* affichage_planete(Planete* une_planete, SDL_Surface *info_planete)
 
     police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 14);
     fond_planete = IMG_Load("../graphiques/images/interface_bas.png");
-//    fond_planete = SDL_CreateRGBSurface(SDL_SRCALPHA, TAILLE_FENETRE_X, TAILLE_FENETRE_Y - TAILLE_TERRAIN_ESPACE_Y, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
-//    SDL_FillRect(fond_planete, NULL, SDL_MapRGB(info_planete->format, 60, 60, 60));
-//    SDL_SetColorKey(fond_planete, SDL_SRCCOLORKEY, SDL_MapRGB(fond_planete->format, 60, 60, 60));
 
     sprintf(texte_planete, "Nom de la planete: %s Occupation de la planete: %d/%d Production: Metal:%d Argent:%d Carburant:%d Population:%d",
 get_nom_planete(une_planete), get_taille_utilisee(une_planete), get_taille_planete(une_planete),
@@ -1044,9 +1041,8 @@ get_metal(une_planete), get_argent(une_planete), get_carburant(une_planete), get
     SDL_BlitSurface(planete, NULL, fond_planete, &position_texte);
     SDL_FreeSurface(planete);
 
-    bouton_unite = SDL_CreateRGBSurface(SDL_HWSURFACE, 100, 100, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
+    bouton_unite = IMG_Load("../graphiques/images/Creer_unite.png");
     initialise_sdl_rect(&position_bouton_unite, TAILLE_FENETRE_X -150, 35, 100, 100);
-    SDL_FillRect(bouton_unite, NULL, SDL_MapRGB(info_planete->format, 0, 0, 100));
     SDL_BlitSurface(bouton_unite, NULL, fond_planete, &position_bouton_unite);
     SDL_FreeSurface(bouton_unite);
 
@@ -1148,6 +1144,7 @@ SDL_Surface* affichage_flotte(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SD
 	SDL_Surface *une_unite3 = NULL;
 	SDL_Surface *selection = NULL;
 	SDL_Surface *bouton_coloniser = NULL;
+	SDL_Surface *bouton_attaquer = NULL;
 	SDL_Rect position_texte = {10, 10, 0, 0};
     SDL_Rect position_une_unite;
 	SDL_Rect position_bouton_coloniser = {TAILLE_FENETRE_X - 150, 35, 0, 0};
@@ -1163,9 +1160,6 @@ SDL_Surface* affichage_flotte(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SD
 
 	/*affichage des informations d'une flotte*/
     police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 14);
-//    info_flotte = SDL_CreateRGBSurface(SDL_HWSURFACE, TAILLE_FENETRE_X, TAILLE_FENETRE_Y - TAILLE_TERRAIN_ESPACE_Y, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
-//    SDL_FillRect(info_flotte, NULL, SDL_MapRGB(info_flotte->format, 60, 60, 60));
-//    SDL_SetColorKey(info_flotte, SDL_SRCCOLORKEY, SDL_MapRGB(info_flotte->format, 60, 60, 60));
 
     sprintf(texte_flotte, "Coordonnes de la flotte: %d %d, pt mouvement %d, taille : %d", une_flotte->x_flotte, une_flotte->y_flotte, une_flotte->pt_mouvement_espace_flotte,une_flotte->taille_flotte);
     flotte = TTF_RenderText_Blended(police, texte_flotte, couleur_blanche);
@@ -1224,11 +1218,17 @@ SDL_Surface* affichage_flotte(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SD
     }
 
 	/*affichage du bouton pour coloniser une planète*/
-	if((get_type_case_terrain_espace(get_case_terrain_espace(un_terrain_espace, une_flotte->x_flotte, une_flotte->y_flotte)) == 'P') && (!get_planete_colonisee(get_planete_terrain_espace(un_terrain_espace, une_flotte->x_flotte, une_flotte->y_flotte))))
+	if((get_type_case_terrain_espace(get_case_terrain_espace(un_terrain_espace, get_x_flotte(une_flotte), get_y_flotte(une_flotte))) == 'P') && (!get_planete_colonisee(get_planete_terrain_espace(un_terrain_espace, une_flotte->x_flotte, une_flotte->y_flotte))))
 	{
-		bouton_coloniser = SDL_CreateRGBSurface(SDL_HWSURFACE, 100, 100, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
-		SDL_FillRect(bouton_coloniser, NULL, SDL_MapRGB(info_flotte->format, 0, 0, 200));
+		bouton_coloniser = IMG_Load("../graphiques/images/Attaquer.png");
 		SDL_BlitSurface(bouton_coloniser, NULL, info_flotte, &position_bouton_coloniser);
+	}
+
+	/*affichage du bouton pour apturer une planète ennemie*/
+	if((get_type_case_terrain_espace(get_case_terrain_espace(un_terrain_espace, get_x_flotte(une_flotte), get_y_flotte(une_flotte))) == 'P') && (get_indice_joueur_planete(get_planete_terrain_espace(un_terrain_espace, une_flotte->x_flotte, une_flotte->y_flotte)) != get_indice_joueur_flotte(une_flotte)))
+	{
+		bouton_attaquer = IMG_Load("../graphiques/images/Attaquer.png");
+		SDL_BlitSurface(bouton_attaquer, NULL, info_flotte, &position_bouton_coloniser);
 	}
 
     TTF_CloseFont(police);
@@ -1237,6 +1237,7 @@ SDL_Surface* affichage_flotte(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SD
 	SDL_FreeSurface(une_unite3);
     SDL_FreeSurface(selection);
 	SDL_FreeSurface(bouton_coloniser);
+	SDL_FreeSurface(bouton_attaquer);
 
     return info_flotte;
 }
@@ -1883,6 +1884,7 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 	int continuer = 1;
 	int x = 0, y = 0, x_bis = 0, y_bis = 0;
 	int i, j;
+	int flotte_planete = 0;
 	bool infobulle = false;
 	int tps_ancien = 10,tps_nouveau = 0, timer = 0, x_info = 0, y_info = 0;
 	INTERFACE_AFFICHEE interface_affichee = RIEN; /*1 pour une planete, 2 pour une planete ennemie, 3 pour une flotte, 4 pour une flotte ennemie, 5 pour la création d'unités sur une planète*/
@@ -1987,8 +1989,8 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
                 if(booleen_case_pointeur_souris(un_terrain_espace, x, y)) /*test des clics ayant lieu sur le terrain*/
                 {
                     une_case_terrain_espace = case_pointeur_souris(un_terrain_espace, x, y);
-					/*si la case est une planète, on affiche l'interface correspondante*/
-                    if(une_case_terrain_espace->type_case_terrain_espace == 'P')
+					/*si la case est une planète, on affiche l'interface correspondante et qu'il n'y a pas de flotte*/
+                    if((une_case_terrain_espace->type_case_terrain_espace == 'P') && (une_case_terrain_espace->presence_flotte == false))
                     {
                         un_jeu->selection_planete = get_planete(une_case_terrain_espace);
 						if(un_jeu->selection_planete->indice_joueur == get_indice_joueur_en_cours(un_jeu))
@@ -2003,9 +2005,9 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
                         reinitialiser_tableau_selection_unite(un_jeu);
                     }
 					/*si une flotte est présente*/
-                    if(une_case_terrain_espace->presence_flotte == true)
-                    {
-                        un_jeu->selection_flotte = une_case_terrain_espace->flotte;
+					if((une_case_terrain_espace->presence_flotte == true) && (une_case_terrain_espace->type_case_terrain_espace != 'P'))
+					{
+						un_jeu->selection_flotte = une_case_terrain_espace->flotte;
 						if(un_jeu->selection_flotte->indice_joueur == un_jeu->joueur_en_cours)
 						{
 							interface_affichee = FLOTTE;
@@ -2015,8 +2017,46 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 							interface_affichee = FLOTTE_ENNEMIE;
 						}
 						maj_affichage(un_jeu, un_terrain_espace, ecran, interface_affichee, NULL, tab_surface);
-                        reinitialiser_tableau_selection_unite(un_jeu);
-                    }
+						reinitialiser_tableau_selection_unite(un_jeu);
+					}
+
+					/*si les deux sont vrais, qu'il y a une planète et une flotte sur la même case, on va passer de l'un à l'autre à chaque fois qu'in clique*/
+					if((une_case_terrain_espace->type_case_terrain_espace == 'P') && (une_case_terrain_espace->presence_flotte == true) && (flotte_planete%2 == 0))
+					{
+						un_jeu->selection_planete = get_planete(une_case_terrain_espace);
+						if(un_jeu->selection_planete->indice_joueur == get_indice_joueur_en_cours(un_jeu))
+						{
+							interface_affichee = PLANETE;
+						}
+						else
+						{
+							interface_affichee = PLANETE_ENNEMIE;
+						}
+						maj_affichage(un_jeu, un_terrain_espace, ecran, interface_affichee, une_case_terrain_espace, tab_surface);
+						reinitialiser_tableau_selection_unite(un_jeu);
+					}
+					if((une_case_terrain_espace->type_case_terrain_espace == 'P') && (une_case_terrain_espace->presence_flotte == true) && (flotte_planete%2 == 1))
+					{
+						un_jeu->selection_flotte = une_case_terrain_espace->flotte;
+						if(un_jeu->selection_flotte->indice_joueur == un_jeu->joueur_en_cours)
+						{
+							interface_affichee = FLOTTE;
+						}
+						else
+						{
+							interface_affichee = FLOTTE_ENNEMIE;
+						}
+						maj_affichage(un_jeu, un_terrain_espace, ecran, interface_affichee, NULL, tab_surface);
+						reinitialiser_tableau_selection_unite(un_jeu);
+						flotte_planete = true;
+					}
+					if((une_case_terrain_espace->type_case_terrain_espace == 'P') && (une_case_terrain_espace->presence_flotte == true))
+					{
+						flotte_planete++;
+					}
+
+
+
 					/*si rien de cela, on va revenir à l'interface simple, sans informations*/
                     if(test_souris_rectangle(position_affichage_carte, x, y) && (une_case_terrain_espace->type_case_terrain_espace != 'P') && (une_case_terrain_espace->presence_flotte == false))
                     {
@@ -2131,12 +2171,23 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 						}
 					}
 					initialise_sdl_rect(&test, TAILLE_FENETRE_X - 150, TAILLE_TERRAIN_ESPACE_Y + 55, 100, 100);
-					if(test_souris_rectangle(test, x, y)) /*va coloniser la planète*/
+					if(get_type_case_terrain_espace(get_case_terrain_espace(un_terrain_espace, get_x_flotte(get_flotte_en_cours(un_jeu)), get_y_flotte(get_flotte_en_cours(un_jeu)))))
 					{
-						colonisation_planete_flotte(un_terrain_espace, get_flotte_en_cours(un_jeu), un_jeu);
+						if(test_souris_rectangle(test, x, y)) /*va coloniser la planète*/
+						{
+							if((get_indice_joueur_planete(get_planete_terrain_espace(un_terrain_espace, get_x_flotte(get_flotte_en_cours(un_jeu)), get_y_flotte(get_flotte_en_cours(un_jeu))))) == -1)
+							{
+								colonisation_planete_flotte(un_terrain_espace, get_flotte_en_cours(un_jeu), un_jeu);
+							}
+							if((get_indice_joueur_planete(get_planete_terrain_espace(un_terrain_espace, get_x_flotte(get_flotte_en_cours(un_jeu)), get_y_flotte(get_flotte_en_cours(un_jeu))))) != get_indice_joueur_flotte(get_flotte_en_cours(un_jeu)) && (get_indice_joueur_planete(get_planete_terrain_espace(un_terrain_espace, get_x_flotte(get_flotte_en_cours(un_jeu)), get_y_flotte(get_flotte_en_cours(un_jeu))))) != -1)
+							{
+								capture_planete(un_jeu, un_terrain_espace, get_flotte_en_cours(un_jeu));
+							}
+						}
+						maj_carte_terrain(un_jeu, un_terrain_espace, ecran, tab_surface, interface_affichee);
+						maj_affichage(un_jeu, un_terrain_espace, ecran, interface_affichee, NULL, tab_surface);
+
 					}
-					maj_carte_terrain(un_jeu, un_terrain_espace, ecran, tab_surface, interface_affichee);
-					maj_affichage(un_jeu, un_terrain_espace, ecran, interface_affichee, NULL, tab_surface);
 				}
 
 				/*panneau de création d'unités*/

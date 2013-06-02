@@ -78,7 +78,7 @@ int main(int argc, char *argv[])
     affiche_terrain_espace(un_terrain_espace);
 
     Terre = get_planete_terrain_espace(un_terrain_espace, 1, 1);
-    Caprica = get_planete_terrain_espace(un_terrain_espace, 18, 13);
+    Caprica = get_planete_terrain_espace(un_terrain_espace, 4, 4);
 
 	joueur = creer_joueur(nom_joueur, 0, false);
 	joueur2 = creer_joueur(nom_joueur2, 1, false);
