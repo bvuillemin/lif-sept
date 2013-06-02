@@ -2293,6 +2293,12 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 /************************************************************************/
 /* Fonctions liées au combat                                             */
 /************************************************************************/
+/**
+ * \brief      crée l'affichage carte du combat à partir  du terrain crée
+ * \details    
+ * \param      terrain_combat         Pointeur sur Terrain_combat 
+ * \return     un surface sdl corrrespondant au terrain du combat
+ */
 SDL_Surface * affiche_ecran_terrain_combat(const Terrain_combat *terrain_combat)
 {
 	
@@ -2402,7 +2408,12 @@ SDL_Surface * affiche_ecran_terrain_combat(const Terrain_combat *terrain_combat)
     return carte;
 }
 
-
+/**
+ * \brief      donne les coordonnée de la case sur laquelle est la souris en pixel 
+ * \details     
+ * \param      position       SDl_Rect qui contient les coordonées de la souris
+ * \return     SDL_rect qui contient les coordonée de la case en pixel
+ */
 SDL_Rect coordonnee_clic(SDL_Rect position)
 {
 
@@ -2414,6 +2425,13 @@ SDL_Rect coordonnee_clic(SDL_Rect position)
 	else{position.y=0;}
 	return position;
 }
+
+/**
+ * \brief      donne les coordonnée de la case sur laquelle est la souris
+ * \details    
+ * \param      position         SDl_Rect qui contient les coordonées de la souris
+ * \return     SDL_rect qui contient les coordonée de la case
+ */
 SDL_Rect coordonnee_case_du_clic(SDL_Rect position)
 {
 
@@ -2425,6 +2443,20 @@ SDL_Rect coordonnee_case_du_clic(SDL_Rect position)
 	else{position.y=0;}
 	return position;
 }
+
+/**
+ * \brief      affiche le déplacement de l'unité
+ * \details    
+ * \param      un_terrain_combat        Pointeur sur Terrain_combat 
+ * \param      jeu        Pointeur sur Jeu 
+ * \param      position         SDl_Rect qui contient les coordonées de la souris
+ * \param      position_affichage_carte         SDl_Rect qui contient la position de la carte
+ * \param      pos_bordure         SDl_Rect qui contient la position de la bordure
+ * \param      carte        Pointeur sur SDL_Surface 
+ * \param      bordure        Pointeur sur SDL_Surface 
+ * \param      ecran        Pointeur sur SDL_Surface  
+ * \param      infos2        Pointeur sur char
+ */
 void affiche_deplacement_unite(Jeu * jeu,Terrain_combat *un_terrain_combat,SDL_Rect position,SDL_Surface * carte,SDL_Surface * bordure,SDL_Surface * ecran,SDL_Rect position_affichage_carte,SDL_Rect pos_bordure, char* infos2)
 {
 	SDL_Rect pos;
@@ -2465,6 +2497,13 @@ void affiche_deplacement_unite(Jeu * jeu,Terrain_combat *un_terrain_combat,SDL_R
 
 }
 
+/**
+ * \brief      permet de sélectionner ou désélectionner une case
+ * \details    
+ * \param      position         SDl_Rect qui contient les coordonées de la souris
+ * \param      un_terrain_combat        Pointeur sur Terrain_combat 
+ * \param      jeu        Pointeur sur Jeu 
+ */
 void selection(Jeu * jeu,Terrain_combat *un_terrain_combat,SDL_Rect position)
 {
 	SDL_Rect pos;
@@ -2503,6 +2542,10 @@ void affiche_info_unite(Jeu * jeu,Terrain_combat *un_terrain_combat,char * infos
 
 }
 
+/**
+ * \brief      met en pause l'application
+ * \details    
+ */
 void pause()
 {
 
@@ -3453,7 +3496,15 @@ void ecran_titre(void)
     pause();
 }
 
-
+/**
+ * \brief      affiche l'attaque 
+ * \details    
+ * \param      un_terrain_combat        Pointeur sur Terrain_combat 
+ * \param      jeu        Pointeur sur Jeu  
+ * \param      flotte1        Pointeur sur Flotte 
+ * \param      flotte2        Pointeur sur Flotte 
+ * \return     1 si l'attaque à réussi, 0 sinon
+ */
 bool attaque_ecran(Jeu * jeu,Terrain_combat * un_terrain_combat, SDL_Rect pos,Flotte* flotte1,Flotte * flotte2)
 {/*tentative d'attaque*/
 	int p;
@@ -3482,12 +3533,33 @@ bool attaque_ecran(Jeu * jeu,Terrain_combat * un_terrain_combat, SDL_Rect pos,Fl
 	return 0;
 }
 
+/**
+ * \brief      animation du déplacement en (x,y)
+ * \details    
+ * \param      un_terrain_combat        Pointeur sur Terrain_combat 
+ * \param      jeu        Pointeur sur Jeu  
+ * \param      ecran        Pointeur sur SDL_Surface  
+ * \param      ecran2        Pointeur sur SDL_Surface 
+ * \param      pos        SDL_Rect
+ * \param      x        abscisse
+ * \param      y        ordonnée
+ */
 void animation_avant_deplacement_unite(Terrain_combat * un_terrain_combat,Jeu * jeu, SDL_Surface * ecran,SDL_Surface * ecran2,SDL_Rect pos,int x, int y)
 {
 	Animation * deplacement = creer_animation(5, 100, 100,100, "../graphiques/images/effet_teleportation.png");
 	lancer_animation_bloquante_combat(jeu, un_terrain_combat, deplacement, ecran2, x, y);
     free(deplacement);
 }
+
+/**
+ * \brief      animation d'une explosion en (x,y)
+ * \details    
+ * \param      un_terrain_combat        Pointeur sur Terrain_combat 
+ * \param      jeu        Pointeur sur Jeu  
+ * \param      ecran        Pointeur sur SDL_Surface  
+ * \param      x        abscisse
+ * \param      y        ordonnée
+ */
 void animation_explosion(Terrain_combat * un_terrain_combat,Jeu * jeu, SDL_Surface * ecran,int x, int y)
 {
 	Animation * explosion;
@@ -3496,6 +3568,15 @@ void animation_explosion(Terrain_combat * un_terrain_combat,Jeu * jeu, SDL_Surfa
     free(explosion);
 }
 
+/**
+ * \brief      animation de l'attaque
+ * \details    
+ * \param      un_terrain_combat        Pointeur sur Terrain_combat 
+ * \param      jeu        Pointeur sur Jeu  
+ * \param      ecran        Pointeur sur SDL_Surface  
+ * \param      une_case        Pointeur sur Case_terrain_combat 
+ * \param      pos_arrivee        SDL_Rect
+ */
 void animation_attaque(Terrain_combat * un_terrain_combat,Jeu * jeu, SDL_Surface * ecran,Case_terrain_combat *une_case,SDL_Rect pos_arrivee)
 {/*animation de l'attaque*/
 	SDL_Rect pos_laser,pos;
@@ -3622,6 +3703,15 @@ void clic_sur_bouton_attaque(SDL_Event evenement,SDL_Rect pos_clic,SDL_Rect pos_
 {// inutile peut-etre...
 }
 
+/**
+ * \brief      vérifie si le combat est terminé
+ * \details    
+ * \param      un_terrain_combat        Pointeur sur Terrain_combat 
+ * \param      jeu        Pointeur sur Jeu  
+ * \param      flotte1        Pointeur sur Flotte  
+ * \param      flotte2        Pointeur sur Flotte  
+ * \param      infos2        Pointeur sur char  
+ */
 void verifie_etat_combat(Jeu *jeu,Terrain_combat *un_terrain_combat,Flotte *flotte1,Flotte *flotte2,char * infos2){
 /*vérifie si le combat est fini et quel joueur l'a remporté*/
 	int taille_flotte1,taille_flotte2,i;
@@ -3642,6 +3732,14 @@ void verifie_etat_combat(Jeu *jeu,Terrain_combat *un_terrain_combat,Flotte *flot
 	}
 }
 
+/**
+ * \brief      affichage du combat
+ * \details    
+ * \param      un_terrain_combat        Pointeur sur Terrain_combat 
+ * \param      jeu        Pointeur sur Jeu  
+ * \param      flotte1        Pointeur sur Flotte  
+ * \param      flotte2        Pointeur sur Flotte 
+ */
 void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat,Flotte* flotte1,Flotte * flotte2)
 {
 	SDL_Rect pos_clic,pos_bordure,pos_texte,pos_texte2,pos_texte3,pos_interface,pos_interface_haut, position_affichage_carte,position_passer,pos_attaquer,pos_interface_carte;
@@ -3948,6 +4046,14 @@ void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat,Flotte* 
     SDL_Quit();
 }
 
+/**
+ * \brief      lancement du combat à partir de deux flottes
+ * \details    
+ * \param      un_terrain_combat        Pointeur sur Terrain_combat 
+ * \param      jeu        Pointeur sur Jeu  
+ * \param      flotte1        Pointeur sur Flotte  
+ * \param      flotte2        Pointeur sur Flotte 
+ */
 void lancer_combat_ecran(Jeu *jeu,Flotte* flotte1,Flotte * flotte2)/*lance un combat à partir de deux flottes*/
 {
 	Terrain_combat * un_combat; 
