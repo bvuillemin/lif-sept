@@ -766,6 +766,7 @@ void combat_automatique(Jeu* un_jeu,Terrain_espace* un_terrain, Flotte* flotte1,
 	int tour_en_cours = 1, gagnant = 0;
 	int valeur_rand;
 	bool combat = true;
+	float rapport = 0;
 
 	for(i=0;i<get_taille_flotte(flotte1);i++)
 	{
@@ -786,11 +787,12 @@ void combat_automatique(Jeu* un_jeu,Terrain_espace* un_terrain, Flotte* flotte1,
 
 	while(combat)
 	{
+		valeur_rand = rand()%100;
 		if(tour_en_cours%2 == 1)
 		{
 			if(defense_flotte2_temp > 0)
 			{
-				defense_flotte2_temp -= attaque_flotte1;
+				defense_flotte2_temp -= (attaque_flotte1 * ((float)valeur_rand/100));
 				tour_en_cours++;
 			}
 			if(defense_flotte2_temp <= 0)
@@ -804,7 +806,7 @@ void combat_automatique(Jeu* un_jeu,Terrain_espace* un_terrain, Flotte* flotte1,
 		{
 			if(defense_flotte1_temp > 0)
 			{
-				defense_flotte1_temp -= attaque_flotte2;
+				defense_flotte1_temp -= (attaque_flotte2  * ((float)valeur_rand/100));
 				tour_en_cours++;
 			}
 			if(defense_flotte1_temp <= 0)
@@ -817,17 +819,42 @@ void combat_automatique(Jeu* un_jeu,Terrain_espace* un_terrain, Flotte* flotte1,
 
 	if(gagnant == 1)
 	{
-		//retirer_flotte(get_case_terrain_espace(un_terrain, get_x_flotte(flotte2), get_y_flotte(flotte2)));
-		//retirer_flotte_joueur(get_ieme_joueur_jeu(un_jeu, get_indice_joueur_flotte(flotte2)), get_indice_tableau_joueur(flotte2));
+		retirer_flotte(get_case_terrain_espace(un_terrain, get_x_flotte(flotte2), get_y_flotte(flotte2)));
+		retirer_flotte_joueur(get_ieme_joueur_jeu(un_jeu, get_indice_joueur_flotte(flotte2)), get_indice_tableau_joueur(flotte2));
 		printf("Flotte 2 a perdu \n");
+		printf("Flotte 1, defense: %d/%d\n", defense_flotte1_temp, defense_flotte1);
+
+		rapport = ((float)defense_flotte1_temp/defense_flotte1) * 100;
+		rapport = rapport / get_taille_flotte(flotte1);
+		for(i=0;i<get_taille_flotte(flotte1);i++)
+		{
+			set_pt_vie(get_unite_i_flotte(flotte1, i), (get_pt_vie(get_unite_i_flotte(flotte1, i)) - rapport));
+			if(get_pt_vie(get_unite_i_flotte(flotte1, i)) <= 0)
+			{
+				liberer_unite(get_unite_i_flotte(flotte1, i));
+				retirer_unite_flotte(flotte1, i);
+			}
+		}
 	}
 	if(gagnant == 2)
 	{
-		//retirer_flotte(get_case_terrain_espace(un_terrain, get_x_flotte(flotte1), get_y_flotte(flotte1)));
-		//retirer_flotte_joueur(get_ieme_joueur_jeu(un_jeu, get_indice_joueur_flotte(flotte1)), get_indice_tableau_joueur(flotte1));
+		retirer_flotte(get_case_terrain_espace(un_terrain, get_x_flotte(flotte1), get_y_flotte(flotte1)));
+		retirer_flotte_joueur(get_ieme_joueur_jeu(un_jeu, get_indice_joueur_flotte(flotte1)), get_indice_tableau_joueur(flotte1));
 		printf("Flotte 1 a perdu \n");
-	}
+		printf("Flotte 2, defense: %d/%d\n", defense_flotte2_temp, defense_flotte2);
 
+		rapport = ((float)defense_flotte2_temp/defense_flotte2) * 100;
+		rapport = rapport / get_taille_flotte(flotte2);
+		for(i=0;i<get_taille_flotte(flotte2);i++)
+		{
+			set_pt_vie(get_unite_i_flotte(flotte2, i), (get_pt_vie(get_unite_i_flotte(flotte2, i)) - rapport));
+			if(get_pt_vie(get_unite_i_flotte(flotte2, i)) <= 0)
+			{
+				liberer_unite(get_unite_i_flotte(flotte2, i));
+				retirer_unite_flotte(flotte2, i);
+			}
+		}
+	}
 }
 
 

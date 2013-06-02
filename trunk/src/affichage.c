@@ -2253,6 +2253,7 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 						{
 							/*mettre fonction attaque prenant en param le terrain, le jeu, les 2 flottes*/
 							combat_automatique(un_jeu, un_terrain_espace, get_flotte_en_cours(un_jeu), get_flotte(get_case_terrain_espace(un_terrain_espace, x/100, y/100)));
+							maj_affichage_flotte(un_jeu, un_terrain_espace, ecran, tab_surface, interface_affichee);
 						}
 					}
                 }
