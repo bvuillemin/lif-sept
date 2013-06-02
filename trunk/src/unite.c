@@ -349,19 +349,21 @@ Unite* ouverture_unite(FILE *f)
     sscanf(fgets(chaine, 50, f), "%d", &unite_ouverte->pt_mouvement_unite);
     return unite_ouverte;
 }
-/*void test_module_unite()
+/*
+void test_module_unite()
 {
-    Unite *guerriers;
-    printf("Verif de la création d'une unité\n");
-    guerriers = creer_unite();
-    if((guerriers->pt_vie == 0) && (guerriers->pt_attaque == 0) && (guerriers->pt_attaque == 0) && (guerriers->pt_deplacement == 0))
-    {
-		printf ("OK \n");
-	}
-	else
-	{
-		printf ("Echec\n");
-	}
+    Unite * chasseur;
+	Unite * destroyer;
+	Unite *destructeur;
 
-}
-*/
+	chasseur = creer_unite(Chasseur);
+	destroyer = creer_unite(Destroyer);
+	destructeur = creer_unite(Destructeur);
+	
+	assert(chasseur->x_unite = chasseur->y_unite = 0);
+	assert(destroyer->x_unite = destroyer->y_unite = 0);
+	assert(destructeur->x_unite = destructeur->y_unite = 0);
+	
+
+}*/
+

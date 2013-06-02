@@ -9,6 +9,7 @@
 #include <SDL/SDL_ttf.h>
 #endif
 #include "jeu.h"
+#include "son.h"
 /**
  * \file      Module terrain
  * \author
@@ -75,7 +76,7 @@ SDL_Surface * affichage_ecran_terrain_combat(const Terrain_combat *un_terrain_co
 void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat, Flotte* flotte1,Flotte * flotte2);
 SDL_Rect coordonnee_clic(SDL_Rect position);
 SDL_Rect coordonnee_case_du_clic(SDL_Rect position);
-void affiche_deplacement_unite(Jeu * jeu,Terrain_combat *un_terrain_combat,SDL_Rect position,SDL_Surface * carte,SDL_Surface * bordure,SDL_Surface * ecran,SDL_Rect position_affichage_carte,SDL_Rect pos_bordure, char* infos2);
+void affiche_deplacement_unite(Jeu * jeu,Terrain_combat *un_terrain_combat,SDL_Rect position,SDL_Surface * carte,SDL_Surface * bordure,SDL_Surface * ecran,SDL_Rect position_affichage_carte,SDL_Rect pos_bordure, char* infos2,FMOD_SYSTEM *system,FMOD_SOUND *son_saut_debut,FMOD_SOUND *son_saut_fin);
 void selection(Jeu * jeu,Terrain_combat *un_terrain_combat,SDL_Rect position);
 void affiche_info_unite(Jeu * jeu,Terrain_combat *un_terrain_combat,char * infos,SDL_Rect position);
 bool attaque_ecran(Jeu * jeu,Terrain_combat * un_terrain_combat, SDL_Rect pos,Flotte* flotte1,Flotte * flotte2);
