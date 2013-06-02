@@ -2642,15 +2642,13 @@ void input_handle(void)
     }
 }
 
-void menu_chargement_sauvegarde(void)
+void menu_chargement_sauvegarde(Terrain_espace **un_terrain_espace, Jeu **un_jeu)
 {
     /*Initialisation des variables*/
     SDL_Surface *ecran, *imageDeFond, *Texte, *Texte2, *Noir;
     TTF_Font *police;
     SDL_Color couleur= {255, 255, 255};
     SDL_Rect positionTexte, positionTexte2;
-    Terrain_espace *un_terrain_espace;
-    Jeu *jeu;
     Sauvegarde *une_sauvegarde;
     int b = 255;
     char chaine[50];
@@ -2701,8 +2699,8 @@ void menu_chargement_sauvegarde(void)
     printf("Tapez ci-dessous le nom de la sauvegarde :\n");
     scanf("%s", chaine);
     une_sauvegarde = selection_ouverture(chaine);
-    jeu = une_sauvegarde->jeu;
-    un_terrain_espace = une_sauvegarde->terrain_espace;
+    *un_jeu = une_sauvegarde->jeu;
+    *un_terrain_espace = une_sauvegarde->terrain_espace;
 
     /*Disparition du menu et affichage du jeu*/
     SDL_FreeSurface(ecran);
@@ -2710,7 +2708,7 @@ void menu_chargement_sauvegarde(void)
     SDL_FreeSurface(Texte2);
     SDL_FreeSurface(imageDeFond);
     SDL_FreeSurface(Noir);
-    affichage_ecran(jeu, un_terrain_espace);
+    affichage_ecran(*un_jeu, *un_terrain_espace);
 }
 
 void menu_creation_sauvegarde(Terrain_espace *un_terrain_espace, Jeu *un_jeu)
@@ -3161,7 +3159,72 @@ void menu_pause(Terrain_espace *un_terrain_espace, Jeu *un_jeu, int * exit)
     }
 }
 
-void nouvelle_partie(void)
+void init_nouvelle_partie(char nom1[], char nom2[], Terrain_espace **un_terrain_espace, Jeu **jeu)
+{
+    Flotte *flotte;
+    Unite *unite1;
+    Unite *unite2;
+    
+	Flotte *flotte2;
+    Unite *unite3;
+    Unite *unite4;
+    
+	/*Liste des planètes*/
+	Planete* Terre;
+	Planete* Caprica;
+    
+	Joueur *joueur;
+	Joueur *joueur2;
+    
+    modification_terrain_espace(*un_terrain_espace, 'E');
+    
+    ajouter_planete_terrain_espace(*un_terrain_espace, 1, 1, "Terre", 300, 300, 300, 300);
+    ajouter_planete_terrain_espace(*un_terrain_espace, 4, 4, "Jupiter", 50, 25, 300, 25);
+	ajouter_planete_terrain_espace(*un_terrain_espace, 0, 4, "Mars", 150, 100, 20, 150);
+	ajouter_planete_terrain_espace(*un_terrain_espace, 0, 6, "Venus", 200, 200, 10, 50);
+	ajouter_planete_terrain_espace(*un_terrain_espace, 1, 8, "Saturne", 20, 30, 200, 50);
+    
+	ajouter_planete_terrain_espace(*un_terrain_espace, 10, 7, "Kobol", 200, 300, 150, 50);
+    
+	ajouter_planete_terrain_espace(*un_terrain_espace, 18, 13, "Caprica", 300, 300, 300, 300);
+	ajouter_planete_terrain_espace(*un_terrain_espace, 15, 14, "Gemenon", 50, 25, 300, 25);
+	ajouter_planete_terrain_espace(*un_terrain_espace, 19, 9, "Picon", 150, 100, 20, 150);
+	ajouter_planete_terrain_espace(*un_terrain_espace, 14, 11, "Sagitarron", 200, 200, 10, 50);
+	ajouter_planete_terrain_espace(*un_terrain_espace, 10, 13, "Tauron", 20, 30, 200, 50);
+    
+    Terre = get_planete_terrain_espace(*un_terrain_espace, 1, 1);
+    Caprica = get_planete_terrain_espace(*un_terrain_espace, 4, 4);
+    
+	joueur = creer_joueur(nom1, 0, false);
+	joueur2 = creer_joueur(nom2, 1, false);
+	*jeu = creer_jeu();
+    ajouter_joueur(*jeu, joueur);
+	ajouter_joueur(*jeu, joueur2);
+    
+    flotte = creer_flotte();
+    unite1 = creer_unite(Destroyer);
+    unite2 = creer_unite(Destructeur);
+    
+	flotte2 = creer_flotte();
+	unite3 = creer_unite(Destructeur);
+	unite4 = creer_unite(Destroyer);
+    
+	ajouter_planete_joueur(get_ieme_joueur_jeu(*jeu, 0), Terre);
+    
+	ajouter_planete_joueur(get_ieme_joueur_jeu(*jeu, 1), Caprica);
+    
+    ajouter_unite_flotte(flotte, unite1);
+    ajouter_unite_flotte(flotte, unite2);
+    
+	ajouter_unite_flotte(flotte2, unite3);
+    ajouter_unite_flotte(flotte2, unite4);
+	
+	ajouter_flotte_jeu(*jeu, *un_terrain_espace, flotte, 0, 2, 2);
+	ajouter_flotte_jeu(*jeu, *un_terrain_espace, flotte2, 1, 3, 3);
+    
+}
+
+void nouvelle_partie(Terrain_espace ** un_terrain_espace, Jeu **un_jeu)
 {
     /*Initialisation des variables*/
     SDL_Surface *ecran, *imageDeFond, *Texte, *Texte2, *Texte3, *Texte4, *Texte5, *Noir;
@@ -3169,26 +3232,16 @@ void nouvelle_partie(void)
     SDL_Color couleur= {255, 255, 255};
     SDL_Rect positionTexte, positionTexte2, positionTexte3, positionTexte4, positionTexte5;
     SDL_Event evenement;
-    Terrain_espace *un_terrain_espace;
-    Jeu *jeu;
-    Planete *terre;
-	Joueur *joueur;
-    Flotte *flotte;
-    Unite *unite1;
-    Unite *unite2;
-
-	Flotte *flotte2;
-    Unite *unite3;
-    Unite *unite4;
+    
     int b = 255, i, continuer = 1;
 	double longueurTexte, longueurTexte2, longueurTexte3, longueurTexte4, longueurTexte5;
 
-	char nom_joueur[]="Pierre";
-	char nom_terre[]="terre";
-	char nom_jupiter[]="jupiter";
-	char nom_venus[]="venus";
-
-
+	char nom1[50];
+    char nom2[50];
+    
+    
+    *un_terrain_espace = creer_terrain_espace(20, 15);
+    *un_jeu = creer_jeu();
 
     /*CHARGEMENT*/
 
@@ -3250,45 +3303,6 @@ void nouvelle_partie(void)
         SDL_BlitSurface(Texte5, NULL, ecran, &positionTexte5);
     }
 
-    /*Initialisation du terrain et du jeu (A MODIFIER)*/
-
-	un_terrain_espace = creer_terrain_espace(20, 15);
-    modification_terrain_espace(un_terrain_espace, 'E');
-
-    /*ajouter_planete_terrain_espace(un_terrain_espace, 2, 1, nom_terre);
-    ajouter_planete_terrain_espace(un_terrain_espace, 4, 3, nom_jupiter);
-	ajouter_planete_terrain_espace(un_terrain_espace, 0, 3, nom_venus);*/
-    affiche_terrain_espace(un_terrain_espace);
-
-    terre = get_planete_terrain_espace(un_terrain_espace, 2, 1);
-
-	joueur = creer_joueur(nom_joueur, 0, false);
-	jeu = creer_jeu();
-    ajouter_joueur(jeu, joueur);
-
-    flotte = creer_flotte();
-    unite1 = creer_unite(Chasseur);
-    unite2 = creer_unite(Destroyer);
-
-	flotte2 = creer_flotte();
-    unite3 = creer_unite(Destructeur);
-    unite4 = creer_unite(Chasseur);
-
-	ajouter_planete_joueur(&jeu->tab_joueur[0], terre);
-	afficher_planete(jeu->tab_joueur[0].tab_planete[0]);
-
-    modification_production_planete(jeu->tab_joueur[0].tab_planete[0], 100, 50, 10, 100);
-
-    ajouter_unite_flotte(flotte, unite1);
-    ajouter_unite_flotte(flotte, unite2);
-
-	ajouter_unite_flotte(flotte2, unite3);
-    ajouter_unite_flotte(flotte2, unite4);
-
-	ajouter_flotte_jeu(jeu, un_terrain_espace, flotte, 0, 2, 2);
-	ajouter_flotte_jeu(jeu, un_terrain_espace, flotte2, 0, 5, 5);
-
-	creer_vision_jeu(jeu, un_terrain_espace);
 
     /* Attente du clic */
     while(continuer)
@@ -3297,7 +3311,7 @@ void nouvelle_partie(void)
 		switch(evenement.type)
 		{
             case SDL_MOUSEBUTTONUP :
-
+                continuer = 0;
                 /*Disparition du menu et affichage du jeu*/
                 SDL_SetAlpha(Noir, SDL_SRCALPHA, 50);
                 for (i=0; i<10; i++)
@@ -3305,18 +3319,68 @@ void nouvelle_partie(void)
                     SDL_BlitSurface(Noir, NULL, ecran, NULL);
                     SDL_Flip(ecran);
                 }
-                SDL_FreeSurface(ecran);
                 SDL_FreeSurface(Texte);
                 SDL_FreeSurface(Texte2);
                 SDL_FreeSurface(Texte3);
                 SDL_FreeSurface(Texte4);
                 SDL_FreeSurface(Texte5);
                 SDL_FreeSurface(imageDeFond);
-                SDL_FreeSurface(Noir);
-                menu_aide();
-                affichage_ecran(jeu, un_terrain_espace);
         }
     }
+    /*Initialisation des variables*/
+    
+    
+    /*CHARGEMENT*/
+    
+    /*Initialisation de l'écran et des images */
+    imageDeFond = IMG_Load("../graphiques/images/Sauvegarde_Fond.png");
+    
+    /*Chargement du titre*/
+    police = TTF_OpenFont("../graphiques/fonts/space_age.ttf", 60);
+    Texte = TTF_RenderText_Blended(police, "Noms des joueurs", couleur);
+    longueurTexte = Texte->w;
+    positionTexte.x = ((TAILLE_FENETRE_X/2.0) - (longueurTexte/2.0));
+    positionTexte.y = 1*(TAILLE_FENETRE_Y)/10;
+    TTF_CloseFont(police);
+    
+    /*Chargement du texte*/
+    police = TTF_OpenFont("../graphiques/fonts/space_age.ttf", 40);
+    Texte2 = TTF_RenderText_Blended(police, "Tapez les noms sur le terminal", couleur);
+    longueurTexte2 = Texte2->w;
+    positionTexte2.x = ((TAILLE_FENETRE_X/2.0) - (longueurTexte2/2.0));
+    positionTexte2.y = 2*(TAILLE_FENETRE_Y)/10;
+    TTF_CloseFont(police);
+    
+    /*AFFICHAGE*/
+    b = 255;
+    /*Animation de l'apparition du menu*/
+    while (b>=0) {
+        SDL_SetAlpha(Noir, SDL_SRCALPHA, b);
+        SDL_BlitSurface(Noir, NULL, ecran, NULL);
+        b = b-20;
+        SDL_Flip(ecran);
+        SDL_FreeSurface(ecran);
+        SDL_BlitSurface(imageDeFond, NULL, ecran, NULL);
+        SDL_BlitSurface(Texte, NULL, ecran, &positionTexte);
+        SDL_BlitSurface(Texte2, NULL, ecran, &positionTexte2);
+    }
+    
+    /*Scan du nom et sauvegarde*/
+    printf("Tapez ci-dessous le nom du joueur 1 :\n");
+    scanf("%s", nom1);
+    printf("Tapez ci-dessous le nom du joueur 2 :\n");
+    scanf("%s", nom2);
+    
+    /*Disparition du menu*/
+    SDL_FreeSurface(ecran);
+    SDL_FreeSurface(Texte);
+    SDL_FreeSurface(Texte2);
+    SDL_FreeSurface(Noir);
+    SDL_FreeSurface(imageDeFond);
+    menu_aide();
+    init_nouvelle_partie(nom1, nom2, un_terrain_espace, un_jeu);
+    creer_vision_jeu(*un_jeu, *un_terrain_espace);
+    affichage_ecran(*un_jeu, *un_terrain_espace);
 }
 
 void ecran_titre(void)
@@ -3326,11 +3390,12 @@ void ecran_titre(void)
     TTF_Font *police;
     double a = 0.0, b = 1, X = TAILLE_FENETRE_X, Y = TAILLE_FENETRE_Y;
 	double longueurTitre, hauteurTitre, longueurTexte;
-    int continuer = 1, xm = 0, ym = 0, i;
+    int continuer = 1, xm = 0, ym = 0, i, partie;
 	SDL_Rect positionTitre, positionTexte, positionPetit_Titre, positionNouvellePartie, positionCharger, positionQuitter;
     SDL_Event clic_touche;
 	SDL_Color couleur= {255, 255, 255};
-
+    Terrain_espace *un_terrain_espace = NULL;
+    Jeu * un_jeu = NULL;
 
     /*CHARGEMENT*/
 
@@ -3448,7 +3513,7 @@ void ecran_titre(void)
     }
 
     /* Animation des boutons du menu */
-    continuer = 1;
+    continuer = 1, partie = 0;
     while(continuer)
 	{
 		SDL_WaitEvent(&clic_touche);
@@ -3497,7 +3562,7 @@ void ecran_titre(void)
                 /* Nouvelle Partie */
                 if(test_souris_rectangle(positionNouvellePartie,clic_touche.button.x,clic_touche.button.y))
 				{
-                    continuer = 0;
+                    partie = 1;
                     SDL_SetAlpha(Noir, SDL_SRCALPHA, 50);
                     for (i=0; i<10; i++)
                     {
@@ -3511,13 +3576,13 @@ void ecran_titre(void)
                     SDL_FreeSurface(Quitter);
                     SDL_FreeSurface(ecran);
                     SDL_FreeSurface(Noir);
-                    nouvelle_partie();
+                    nouvelle_partie(&un_terrain_espace, &un_jeu);
 				}
 
                 /* Charger une partie */
 				if(test_souris_rectangle(positionCharger,clic_touche.button.x,clic_touche.button.y))
 				{
-                    continuer = 0;
+                    partie = 1;
                     SDL_SetAlpha(Noir, SDL_SRCALPHA, 50);
                     for (i=0; i<10; i++)
                     {
@@ -3531,13 +3596,13 @@ void ecran_titre(void)
                     SDL_FreeSurface(Quitter);
                     SDL_FreeSurface(ecran);
                     SDL_FreeSurface(Noir);
-                    menu_chargement_sauvegarde();
+                    menu_chargement_sauvegarde(&un_terrain_espace, &un_jeu);
+                    
 				}
 
                 /* Quitter le jeu */
                 if(test_souris_rectangle(positionQuitter,clic_touche.button.x,clic_touche.button.y))
 				{
-                    continuer = 0;
                     SDL_SetAlpha(Noir, SDL_SRCALPHA, 50);
                     for (i=0; i<10; i++)
                     {
@@ -3553,9 +3618,15 @@ void ecran_titre(void)
                     SDL_FreeSurface(Noir);
                     SDL_Quit();
 				}
+            case SDL_QUIT :
+                continuer = 0;
+                if (partie == 1)
+                {
+                    detruire_jeu(&un_jeu);
+                    detruire_terrain_espace(&un_terrain_espace);
+                }
         }
     }
-    pause();
 }
 
 /**

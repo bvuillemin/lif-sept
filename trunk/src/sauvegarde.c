@@ -25,11 +25,19 @@ Sauvegarde *creer_sauvegarde()
     return une_sauvegarde;
 }
 
-void detruire_sauvegarde(const char nom[30])
+void liberer_sauvegarde(Sauvegarde *une_sauvegarde)
 {
-    int i;
-    i = remove(nom);
+    detruire_terrain_espace(&une_sauvegarde->terrain_espace);
+    detruire_jeu(&une_sauvegarde->jeu);
 }
+
+void detruire_sauvegarde(Sauvegarde **une_sauvegarde)
+{
+	liberer_sauvegarde(*une_sauvegarde);
+	free(*une_sauvegarde);
+	*une_sauvegarde = NULL;
+}
+
 
 /************************************************************************/
 /* Fonctions diverses                                                   */
