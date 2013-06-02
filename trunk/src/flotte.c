@@ -326,7 +326,7 @@ Flotte* ouverture_flotte(FILE *f)
     sscanf(fgets(chaine, 50, f), "%d", &flotte_ouverte->portee_vision);
     for(i=0; i<flotte_ouverte->taille_flotte; i++)
     {
-        *flotte_ouverte->tab_unite[i] = *ouverture_unite(f);
+        flotte_ouverte->tab_unite[i] = ouverture_unite(f);
     }
     return flotte_ouverte;
 }

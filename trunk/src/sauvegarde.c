@@ -65,6 +65,7 @@ Sauvegarde* selection_ouverture(const char nom[30])
     FILE *f;
 	char chaine[50];
     Sauvegarde* une_sauvegarde;
+    int i;
     une_sauvegarde = creer_sauvegarde();
     f = fopen(nom, "r");
     if (f==NULL)
@@ -85,7 +86,10 @@ Sauvegarde* selection_ouverture(const char nom[30])
         {
             une_sauvegarde->jeu = ouverture_jeu(f);
         }
-        creer_vision_joueur(une_sauvegarde->jeu, une_sauvegarde->terrain_espace, 0);
+        for(i=0; i<une_sauvegarde->jeu->nb_joueur; i++)
+        {
+            creer_vision_joueur(une_sauvegarde->jeu, une_sauvegarde->terrain_espace, i);
+        }
     }
     fclose(f);
     return une_sauvegarde;
