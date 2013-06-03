@@ -145,7 +145,7 @@ int get_population_joueur(const Joueur *un_joueur)
 }
 void set_nb_planete(Joueur *un_joueur, int nb)
 {
-
+    un_joueur->nb_planete = nb;
 }
 int get_nb_planete(Joueur *un_joueur)
 {
@@ -238,6 +238,7 @@ void supprimer_planete_joueur(Joueur* un_joueur, Planete* une_planete)
 			}
 		}
 	}
+    set_nb_planete(un_joueur, (get_nb_planete(un_joueur) - 1));
 }
 
 /**

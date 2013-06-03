@@ -1986,7 +1986,7 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 			{
 				x = event.button.x;
                 y = event.button.y;
-                if(booleen_case_pointeur_souris(un_terrain_espace, x, y)) /*test des clics ayant lieu sur le terrain*/
+                if(test_souris_rectangle(position_affichage_carte,x,y)) /*test des clics ayant lieu sur le terrain*/
                 {
                     une_case_terrain_espace = case_pointeur_souris(un_terrain_espace, x, y);
 					/*si la case est une planète, on affiche l'interface correspondante et qu'il n'y a pas de flotte*/
