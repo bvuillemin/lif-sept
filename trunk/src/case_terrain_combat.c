@@ -164,20 +164,16 @@ void retirer_unite(Case_terrain_combat *une_case_terrain_combat)
     une_case_terrain_combat->presence_unite = false;
 }
 
-void test_module_case_terrain_combat()
+void testRegression_case_terrain_combat()
 {
     Case_terrain_combat *une_case_terrain_combat;
-    printf("Verif de la création de cases\n");
     une_case_terrain_combat = creer_case_combat();
     definir_case_terrain_combat(une_case_terrain_combat, 'E');
-    affiche_case_terrain_combat(une_case_terrain_combat);
-    if((une_case_terrain_combat->x_combat == 0) && (une_case_terrain_combat->y_combat == 0))
-    {
-		printf ("OK \n");
-	}
-	else
-	{
-		printf ("Echec\n");
-	}
+    assert(une_case_terrain_combat->x_combat == 0);
+    assert(une_case_terrain_combat->y_combat == 0);
+    assert(une_case_terrain_combat->type_case_terrain_combat == 'E');
+    assert(une_case_terrain_combat->presence_unite == false);
+    assert(une_case_terrain_combat->selection_unite == false);
+    detruit_case_terrain_combat(&une_case_terrain_combat);
 }
 

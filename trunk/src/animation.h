@@ -16,7 +16,7 @@ typedef struct
 
 	int tps_debut_anim;
 	int frame_en_cours;
-	int x; /*coordonÈes o˘ blitter la frame*/
+	int x; /*coordonées où blitter la frame*/
 	int y;
 
 }Animation;
@@ -26,5 +26,5 @@ void initialiser_animation(Animation *une_animation, int nb_frame, int taille_fr
 Animation *creer_animation(int nb_frame, int taille_frame_x, int taille_frame_y, int nb_ms, char nom[255]);
 void liberer_animation(Animation *une_animation);
 void detruire_animation(Animation **une_animation);
-
+void testRegression_Animation();
 #endif /* ANIMATION_H_*/

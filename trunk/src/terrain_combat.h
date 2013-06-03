@@ -68,7 +68,7 @@ bool peut_attaquer_hor_vert(Terrain_combat * un_terrain_combat, const Unite * un
 int attaquer(Terrain_combat * un_terrain_combat,Unite * une_unite,const int x,const int y);
 void supprimer_unite_flotte(Terrain_combat * un_terrain_combat,Flotte * flotte ,Unite* unite);
 void deselectionner(Terrain_combat * un_terrain_combat);
-/*void test_module_terrain_combat();*/
+void testRegression_terrain_combat();
 
 
 

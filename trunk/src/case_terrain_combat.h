@@ -62,7 +62,7 @@ void ajouter_unite(Case_terrain_combat *une_case_terrain_combat, Unite *une_unit
 void retirer_unite(Case_terrain_combat *une_case_terrain_combat);
 
 void affiche_case_terrain_combat(const Case_terrain_combat *une_case_terrain_combat);
-void test_module_case_terrain_combat();
+void testRegression_case_terrain_combat();
 
 
 #endif
