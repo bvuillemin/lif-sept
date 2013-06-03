@@ -1911,7 +1911,7 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace, FMOD_SYSTEM
 	initialiser_tableau_chanson(tab_chanson);
 
 	/*on lance les musiques du jeu et on initialise les sons*/
-	//lire_musique(system, musique, tab_chanson);
+	lire_musique(system, musique, tab_chanson, 1);
 	FMOD_System_CreateSound(system, "../audio/son/FTL_Saut.mp3", FMOD_CREATESAMPLE, 0, &son_saut_debut);
 	FMOD_System_CreateSound(system, "../audio/son/FTL_Exit.mp3", FMOD_CREATESAMPLE, 0, &son_saut_fin);
 
@@ -1941,7 +1941,7 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace, FMOD_SYSTEM
 	{
 		/*mise à jour de valeurs "globales"*/
 		SDL_PollEvent(&event);
-		//maj_musique(system, musique, tab_chanson);
+		maj_musique(system, musique, tab_chanson, 1);
 
 		/*pour afficher les infobulles*/
 		tps_nouveau = SDL_GetTicks();
@@ -2247,9 +2247,8 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace, FMOD_SYSTEM
 						{
 							/*mettre fonction attaque prenant en param le terrain, le jeu, les 2 flottes*/
 							//combat_automatique(un_jeu, un_terrain_espace, get_flotte_en_cours(un_jeu), get_flotte(get_case_terrain_espace(un_terrain_espace, x/100, y/100))) 
-							if(lancer_combat_ecran(un_jeu, un_terrain_espace, get_flotte_en_cours(un_jeu), get_flotte(get_case_terrain_espace(un_terrain_espace, x/100, y/100)),ecran) == 1)
+							if(lancer_combat_ecran(un_jeu, un_terrain_espace, get_flotte_en_cours(un_jeu), get_flotte(get_case_terrain_espace(un_terrain_espace, x/100, y/100)), ecran, system, musique) == 1)
 							{
-				
 								deplacement_flotte(&un_jeu->tab_joueur[un_jeu->joueur_en_cours], un_terrain_espace, un_jeu->selection_flotte, une_case_terrain_espace->x_espace, une_case_terrain_espace->y_espace);
 								maj_affichage(un_jeu, un_terrain_espace, ecran,interface_affichee,NULL, tab_surface);
 								maj_affichage_flotte(un_jeu, un_terrain_espace, ecran, tab_surface, interface_affichee);
@@ -3469,7 +3468,7 @@ void ecran_titre(void)
 
                 /* Disparition du titre */
                 initialiser_tableau_chanson_menu(tab_chanson);
-                lire_musique(system, musique, tab_chanson);
+                lire_musique(system, musique, tab_chanson, 1);
                 while (b<256) {
                     a = a+0.01;
                     Titre_Anime = rotozoomSurface(Titre, 0, a, 2);
@@ -4253,7 +4252,7 @@ bool verifie_etat_combat(Jeu *jeu,Terrain_combat *un_terrain_combat,Flotte *flot
  * \param      flotte1        Pointeur sur Flotte  
  * \param      flotte2        Pointeur sur Flotte 
  */
-int affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat,Flotte* flotte1,Flotte * flotte2,SDL_Surface * ecran)
+int affichage_ecran_combat(Jeu* jeu, Terrain_combat *un_terrain_combat, Flotte* flotte1,Flotte* flotte2,SDL_Surface* ecran, FMOD_SYSTEM* system, FMOD_SOUND* musique)
 {
 	SDL_Rect pos_clic,pos_bordure,pos_texte,pos_texte2,pos_texte3,pos_interface,pos_interface_haut, position_affichage_carte,position_passer,pos_attaquer,pos_interface_carte;
 	SDL_Surface *interface = NULL;
@@ -4275,8 +4274,6 @@ int affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat,Flotte* f
 
 
 	/*variables pour le son*/
-	FMOD_SYSTEM *system = NULL;
-	FMOD_SOUND *musique = NULL;
 	FMOD_SOUND *son_saut_debut = NULL;
 	FMOD_SOUND *son_saut_fin = NULL;
 	FMOD_SOUND *tir_laser = NULL;
@@ -4298,8 +4295,9 @@ int affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat,Flotte* f
 	FMOD_System_CreateSound(system, "../audio/son/FTL_Exit.mp3", FMOD_CREATESAMPLE, 0, &son_saut_fin);
 	FMOD_System_CreateSound(system, "../audio/son/laser.mp3", FMOD_CREATESAMPLE, 0, &tir_laser);
 	FMOD_System_CreateSound(system, "../audio/son/Explosion.mp3", FMOD_CREATESAMPLE, 0, &explosion);
-	FMOD_System_CreateSound(system, "../audio/son/SONAR2.wav", FMOD_CREATESAMPLE, 0, &son_selection);
 	
+	lire_musique(system, musique, tab_chanson, 1);
+
 	texte=NULL;
 	texte2=NULL;
 	texte3=NULL;
@@ -4356,11 +4354,10 @@ int affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat,Flotte* f
 	texte3 = TTF_RenderUTF8_Blended(police,infos3,couleur_police);
 	SDL_BlitSurface(texte3, NULL, ecran, &pos_texte3);
 	SDL_Flip(ecran);
-	lire_musique(system, musique, tab_chanson);
 	while(continuer)
 	{
 		SDL_PollEvent(&evenement);
-		maj_musique(system, musique, tab_chanson);
+		maj_musique(system, musique, tab_chanson, 1);
 		switch(evenement.type)
 		{
 			case SDL_QUIT:
@@ -4596,15 +4593,15 @@ int affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat,Flotte* f
  * \param      flotte1        Pointeur sur Flotte  
  * \param      flotte2        Pointeur sur Flotte 
  */
-int lancer_combat_ecran(Jeu *jeu, Terrain_espace* un_terrain_espace, Flotte* flotte1,Flotte * flotte2,SDL_Surface * ecran)/*lance un combat à partir de deux flottes*/
+int lancer_combat_ecran(Jeu *jeu, Terrain_espace* un_terrain_espace, Flotte* flotte1,  Flotte * flotte2, SDL_Surface * ecran, FMOD_SYSTEM* system, FMOD_SOUND* musique)/*lance un combat à partir de deux flottes*/
 {
 	int gagnant;
 	Terrain_combat * un_combat; 
-	un_combat=creer_terrain_combat(X_CASE_COMBAT,Y_CASE_COMBAT);
-	modification_terrain_combat(un_combat,'E');
-	placer_unite_flotte_en_haut(un_combat,flotte1);
-	placer_unite_flotte_en_bas(un_combat,flotte2);
-	gagnant = affichage_ecran_combat(jeu ,un_combat,flotte1,flotte2,ecran);
+	un_combat=creer_terrain_combat(X_CASE_COMBAT, Y_CASE_COMBAT);
+	modification_terrain_combat(un_combat, 'E');
+	placer_unite_flotte_en_haut(un_combat, flotte1);
+	placer_unite_flotte_en_bas(un_combat, flotte2);
+	gagnant = affichage_ecran_combat(jeu, un_combat, flotte1, flotte2, ecran, system, musique);
 	detruit_terrain_combat(&un_combat);
 
 	if(gagnant == 1)

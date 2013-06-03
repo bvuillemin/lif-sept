@@ -18,7 +18,7 @@ void initialiser_systeme_son(FMOD_SYSTEM *system)
 	FMOD_System_Init(system, 1, FMOD_INIT_NORMAL, NULL);
 }
 
-void lire_musique(FMOD_SYSTEM *system, FMOD_SOUND *musique, char **tab_chanson)
+void lire_musique(FMOD_SYSTEM *system, FMOD_SOUND *musique, char **tab_chanson, int canal_audio)
 {
 	FMOD_RESULT resultat;
 	FMOD_CHANNEL *channel;
@@ -32,25 +32,24 @@ void lire_musique(FMOD_SYSTEM *system, FMOD_SOUND *musique, char **tab_chanson)
 		/*exit(EXIT_FAILURE);*/
 	}
 
-	FMOD_System_PlaySound(system, 1, musique, 0, NULL);
+	FMOD_System_PlaySound(system, canal_audio, musique, 0, NULL);
 	FMOD_System_GetChannel(system, 1, &channel);
 	FMOD_Channel_SetVolume(channel, 0.5);
 }
 
 
 
-void maj_musique(FMOD_SYSTEM *system, FMOD_SOUND *musique, char **tab_chanson)
+void maj_musique(FMOD_SYSTEM *system, FMOD_SOUND *musique, char **tab_chanson, int canal_audio)
 {
 	FMOD_CHANNEL *channel;
 	FMOD_BOOL fin_musique = false;
 	FMOD_System_GetChannel(system, 1, &channel);
 	FMOD_Channel_IsPlaying(channel, &fin_musique);
-	
 
 	if (fin_musique == false)
 	{
 		FMOD_Sound_Release(musique);
-		lire_musique(system, musique, tab_chanson);
+		lire_musique(system, musique, tab_chanson, canal_audio);
 	}
 }
 
@@ -80,12 +79,12 @@ void initialiser_tableau_chanson(char **tab_chanson)
 
 void initialiser_tableau_chanson_combat(char **tab_chanson)
 {
-	tab_chanson[0] = "../audio/musique/Darkness_of_the_Unknown.mp3";
-	tab_chanson[1] = "../audio/musique/Darkness_of_the_Unknown.mp3";
-	tab_chanson[2] = "../audio/musique/Darkness_of_the_Unknown.mp3";
-	tab_chanson[3] = "../audio/musique/Darkness_of_the_Unknown.mp3";
-	tab_chanson[4] = "../audio/musique/Darkness_of_the_Unknown.mp3";
-	tab_chanson[5] = "../audio/musique/Darkness_of_the_Unknown.mp3";
+	tab_chanson[0] = "../audio/musique/Combat1.mp3";
+	tab_chanson[1] = "../audio/musique/Combat1.mp3";
+	tab_chanson[2] = "../audio/musique/Combat1.mp3";
+	tab_chanson[3] = "../audio/musique/Combat1.mp3";
+	tab_chanson[4] = "../audio/musique/Combat1.mp3";
+	tab_chanson[5] = "../audio/musique/Combat1.mp3";
 }
 
 void initialiser_tableau_chanson_menu(char **tab_chanson)

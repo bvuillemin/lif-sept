@@ -18,7 +18,6 @@
 #include "jeu.h"
 #include "son.h"
 
-
 typedef enum
 {
 	RIEN,
@@ -72,8 +71,8 @@ void affichage_ecran_acceuil(Terrain_combat *un_terrain_combat);
 
 /*pour le combat :*/
 void animation_avant_deplacement_unite(Terrain_combat * un_terrain_combat,Jeu * jeu, SDL_Surface * ecran,SDL_Surface * ecran2,SDL_Rect pos,int x, int y);
-SDL_Surface * affichage_ecran_terrain_combat(const Terrain_combat *un_terrain_combat);
-int affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat, Flotte* flotte1,Flotte * flotte2,SDL_Surface * ecran);
+SDL_Surface * affichage_ecran_terrain_combat(const Terrain_combat *un_terrain_combat, FMOD_SYSTEM* system, FMOD_SOUND* musique);
+int affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat, Flotte* flotte1,Flotte * flotte2,SDL_Surface * ecran, FMOD_SYSTEM* system, FMOD_SOUND* musique);
 SDL_Rect coordonnee_clic(SDL_Rect position);
 SDL_Rect coordonnee_case_du_clic(SDL_Rect position);
 void affiche_deplacement_unite(Jeu * jeu,Terrain_combat *un_terrain_combat,SDL_Rect position,SDL_Surface * carte,SDL_Surface * bordure,SDL_Surface * ecran,SDL_Rect position_affichage_carte,SDL_Rect pos_bordure, char* infos2,FMOD_SYSTEM *system,FMOD_SOUND *son_saut_debut,FMOD_SOUND *son_saut_fin);
@@ -85,24 +84,5 @@ void clic_sur_bouton_attaque(SDL_Event evenement,SDL_Rect pos_clic,SDL_Rect pos_
 bool verifie_etat_combat(Jeu *jeu,Terrain_combat *un_terrain_combat,Flotte *flotte1,Flotte *flotte2,char *infos2,int gagnant);
 void animation_explosion(Terrain_combat * un_terrain_combat,Jeu * jeu, SDL_Surface * ecran,int x, int y);
 void animation_attaque(Terrain_combat * un_terrain_combat,Jeu * jeu, SDL_Surface * ecran,Case_terrain_combat *une_case,SDL_Rect pos_arrivee);
-/*
-SDL_Surface * surface = NULL;
-SDL_Rect position;
-Uint32 couleur;
 
-couleur = SDL_MapRGB(surface->format,r,g,b);
-surface =SDL_SetVideoMode(TAILLE_ECRAN_COMBAT_X,TAILLE_ECRAN_COMBAT_Y,nb_couleur,SDL_HWSURFACE|SDL_RESIZABLE|SDL_DOUBLEBUF)
-SDL_CreateRGBSurface(options, taille_x, taille_y, nb_couleurs, 0, 0, 0, 0)
-SDL_FillRect(surface, NULL, couleur)
-SDL_BlitSurface(surface_a_coller,NULL,surface_support,&position)
-SDL_WM_SetCaption("nom_fenetre","nom_icone");
-SDL_WM_SetIcon(IMG_Load("sdl_icone.bmp"), NULL);
-SDL_FreeSurface(surface)
-
-SDL_WaitEvent : elle attend qu'un événement se produise. Cette fonction est dite bloquante car elle suspend l'exécution du programme tant qu'aucun événement ne s'est produit ;
-
-SDL_PollEvent : cette fonction fait la même chose mais n'est pas bloquante. Elle vous dit si un événement s'est produit ou non. Même si aucun événement ne s'est produit, elle rend la main à votre programme de suite.
-
-
-*/
 #endif
