@@ -1569,7 +1569,6 @@ SDL_Surface* creer_affichage_vision(Jeu *un_jeu, Joueur* un_joueur)
 	SDL_Surface *jamais_visitee = NULL;
 	SDL_Surface *visitee = NULL;
 	SDL_Surface *fond = NULL;
-	SDL_Surface *brouillard = NULL;
 	SDL_Rect position_affichage;
 	int i, j;
 	Terrain_espace* un_terrain_espace;
@@ -1683,7 +1682,6 @@ void initialiser_affichage(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_S
 	SDL_Rect position = {0, 0, 0, 0};
 	SDL_Rect position_interface = {0, TAILLE_TERRAIN_ESPACE_Y + 30, 0, 0};
 	SDL_Rect position_affichage_carte = {0, 30, TAILLE_TERRAIN_ESPACE_X, TAILLE_TERRAIN_ESPACE_Y};
-	SDL_Rect position_affichage_info = {0,TAILLE_TERRAIN_ESPACE_Y + 25 , TAILLE_FENETRE_X, TAILLE_FENETRE_Y - TAILLE_TERRAIN_ESPACE_Y};
 	SDL_Rect affichage_carte = {0, 0, 0, 0};
 	SDL_Rect position_panneau_unite = {TAILLE_FENETRE_X - 300, 20, 300, TAILLE_TERRAIN_ESPACE_Y};
 	SDL_Rect position_minimap = {TAILLE_FENETRE_X - TAILLE_MINIMAP_X, TAILLE_FENETRE_Y - TAILLE_MINIMAP_Y, 0, 0};
@@ -1750,10 +1748,8 @@ void initialiser_affichage(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_S
 
 void maj_carte_terrain(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface **tab_surface, INTERFACE_AFFICHEE interface_affichee)
 {
-	SDL_Rect position = {0, 0, 0, 0};
 	SDL_Rect position_interface = {0, TAILLE_TERRAIN_ESPACE_Y + 30, 0, 0};
 	SDL_Rect position_mini_carte = {TAILLE_FENETRE_X - 240, TAILLE_FENETRE_Y - 158};
-	SDL_Rect position_affichage_info = {0,TAILLE_TERRAIN_ESPACE_Y + 25 , TAILLE_FENETRE_X, TAILLE_FENETRE_Y - TAILLE_TERRAIN_ESPACE_Y};
 	SDL_Rect position_affichage_carte = {0, 30, TAILLE_TERRAIN_ESPACE_X, TAILLE_TERRAIN_ESPACE_Y};
 	SDL_Rect affichage_carte = {0, 0, 0, 0};
 	SDL_Rect position_bouton_tour = {TAILLE_FENETRE_X -207, TAILLE_TERRAIN_ESPACE_Y - 8, 0, 0};
@@ -1829,7 +1825,6 @@ void maj_affichage_carte_terrain(Jeu *un_jeu, Terrain_espace *un_terrain_espace,
 
 void maj_affichage_flotte(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface **tab_surface, INTERFACE_AFFICHEE interface_affichee)
 {
-    SDL_Rect position = {0, 0, 0, 0};
     SDL_Rect position_interface = {0, TAILLE_TERRAIN_ESPACE_Y + 30, 0, 0};
     SDL_Rect position_mini_carte = {TAILLE_FENETRE_X - 240, TAILLE_FENETRE_Y - 158};
     SDL_Rect position_affichage_info = {0,TAILLE_TERRAIN_ESPACE_Y + 30 , TAILLE_FENETRE_X, TAILLE_FENETRE_Y - TAILLE_TERRAIN_ESPACE_Y};
@@ -2253,6 +2248,10 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace, FMOD_SYSTEM
 							if((get_indice_joueur_planete(get_planete_terrain_espace(un_terrain_espace, get_x_flotte(get_flotte_en_cours(un_jeu)), get_y_flotte(get_flotte_en_cours(un_jeu))))) != get_indice_joueur_flotte(get_flotte_en_cours(un_jeu)) && (get_indice_joueur_planete(get_planete_terrain_espace(un_terrain_espace, get_x_flotte(get_flotte_en_cours(un_jeu)), get_y_flotte(get_flotte_en_cours(un_jeu))))) != -1)
 							{
 								capture_planete(un_jeu, un_terrain_espace, get_flotte_en_cours(un_jeu));
+                                if(get_planete_principale(get_planete_terrain_espace(un_terrain_espace, get_x_flotte(get_flotte_en_cours(un_jeu)), get_y_flotte(get_flotte_en_cours(un_jeu)))) == true)
+                                {
+                                    continuer = 0;
+                                }
 							}
 						}
 						maj_carte_terrain(un_jeu, un_terrain_espace, ecran, tab_surface, interface_affichee);
@@ -2531,8 +2530,6 @@ SDL_Surface * affiche_ecran_terrain_combat(const Terrain_combat *terrain_combat)
                 SDL_BlitSurface(quadrillage,NULL,carte,&pos);
             }
         }
-        printf("\n");
-//     A RETIRER
     }
     SDL_FreeSurface(selection);
     SDL_FreeSurface(quadrillage);
@@ -2721,7 +2718,7 @@ void menu_chargement_sauvegarde(Terrain_espace **un_terrain_espace, Jeu **un_jeu
     SDL_Surface *ecran, *imageDeFond, *Texte, *Texte2, *Noir;
     TTF_Font *police;
     SDL_Color couleur= {255, 255, 255};
-    SDL_Rect positionTexte, positionTexte2;
+    SDL_Rect positionTexte, positionTexte2, position_saisie_texte;
     Sauvegarde *une_sauvegarde;
     int b = 255;
     char chaine[50];
@@ -2741,16 +2738,14 @@ void menu_chargement_sauvegarde(Terrain_espace **un_terrain_espace, Jeu **un_jeu
     police = TTF_OpenFont("../graphiques/fonts/space_age.ttf", 60);
     Texte = TTF_RenderText_Blended(police, "Charger une partie", couleur);
     longueurTexte = Texte->w;
-    positionTexte.x = ((TAILLE_FENETRE_X/2.0) - (longueurTexte/2.0));
-    positionTexte.y = 1*(TAILLE_FENETRE_Y)/10;
+    initialise_sdl_rect(&positionTexte, ((TAILLE_FENETRE_X/2.0) - (longueurTexte/2.0)), 1*(TAILLE_FENETRE_Y)/10, 0, 0);
     TTF_CloseFont(police);
-
+    
     /*Chargement du texte*/
     police = TTF_OpenFont("../graphiques/fonts/space_age.ttf", 40);
     Texte2 = TTF_RenderText_Blended(police, "Tapez le nom de la sauvegarde", couleur);
     longueurTexte2 = Texte2->w;
-    positionTexte2.x = ((TAILLE_FENETRE_X/2.0) - (longueurTexte2/2.0));
-    positionTexte2.y = 2*(TAILLE_FENETRE_Y)/10;
+    initialise_sdl_rect(&positionTexte2, ((TAILLE_FENETRE_X/2.0) - (longueurTexte2/2.0)), 9*(TAILLE_FENETRE_Y)/10, 0, 0);
     TTF_CloseFont(police);
 
 
@@ -2769,8 +2764,8 @@ void menu_chargement_sauvegarde(Terrain_espace **un_terrain_espace, Jeu **un_jeu
     }
 
     /*Scan du nom et chargement de la sauvegarde*/
-    printf("Tapez ci-dessous le nom de la sauvegarde :\n");
-    scanf("%s", chaine);
+    initialise_sdl_rect(&position_saisie_texte, 350, (TAILLE_FENETRE_Y)/5, 0, 0);
+	saisie_texte_sdl(chaine, ecran, position_saisie_texte);
     une_sauvegarde = selection_ouverture(chaine);
     *un_jeu = une_sauvegarde->jeu;
     *un_terrain_espace = une_sauvegarde->terrain_espace;
@@ -2790,7 +2785,7 @@ void menu_creation_sauvegarde(Terrain_espace *un_terrain_espace, Jeu *un_jeu)
     SDL_Surface *ecran, *imageDeFond, *Texte, *Texte2, *Noir;
     TTF_Font *police;
     SDL_Color couleur= {255, 255, 255};
-    SDL_Rect positionTexte, positionTexte2;
+    SDL_Rect positionTexte, positionTexte2, position_saisie_texte;
     int b = 255;
     char chaine[50];
 	double longueurTexte, longueurTexte2;
@@ -2809,16 +2804,14 @@ void menu_creation_sauvegarde(Terrain_espace *un_terrain_espace, Jeu *un_jeu)
     police = TTF_OpenFont("../graphiques/fonts/space_age.ttf", 60);
     Texte = TTF_RenderText_Blended(police, "Sauvegarder une partie", couleur);
     longueurTexte = Texte->w;
-    positionTexte.x = ((TAILLE_FENETRE_X/2.0) - (longueurTexte/2.0));
-    positionTexte.y = 1*(TAILLE_FENETRE_Y)/10;
+    initialise_sdl_rect(&positionTexte, ((TAILLE_FENETRE_X/2.0) - (longueurTexte/2.0)), 1*(TAILLE_FENETRE_Y)/10, 0, 0);
     TTF_CloseFont(police);
     
     /*Chargement du texte*/
     police = TTF_OpenFont("../graphiques/fonts/space_age.ttf", 40);
     Texte2 = TTF_RenderText_Blended(police, "Tapez le nom de la sauvegarde", couleur);
     longueurTexte2 = Texte2->w;
-    positionTexte2.x = ((TAILLE_FENETRE_X/2.0) - (longueurTexte2/2.0));
-    positionTexte2.y = 2*(TAILLE_FENETRE_Y)/10;
+    initialise_sdl_rect(&positionTexte2, ((TAILLE_FENETRE_X/2.0) - (longueurTexte2/2.0)), 9*(TAILLE_FENETRE_Y)/10, 0, 0);
     TTF_CloseFont(police);
 
     /*AFFICHAGE*/
@@ -2836,8 +2829,8 @@ void menu_creation_sauvegarde(Terrain_espace *un_terrain_espace, Jeu *un_jeu)
     }
 
     /*Scan du nom et sauvegarde*/
-    printf("Tapez ci-dessous le nom de la sauvegarde :\n");
-    scanf("%s", chaine);
+    initialise_sdl_rect(&position_saisie_texte, 350, (TAILLE_FENETRE_Y)/5, 0, 0);
+	saisie_texte_sdl(chaine, ecran, position_saisie_texte);
     creer_fichier_sauvegarde(chaine, un_terrain_espace, un_jeu);
     
     /*Disparition du menu*/
@@ -3296,6 +3289,66 @@ void init_nouvelle_partie(char nom1[], char nom2[], Terrain_espace **un_terrain_
 	ajouter_flotte_jeu(*jeu, *un_terrain_espace, flotte2, 1, 3, 3);
 }
 
+
+void game_over(char nom[30])
+{
+    /*Initialisation des variables*/
+    SDL_Surface *ecran, *imageDeFond, *Texte, *Texte2, *Noir;
+    TTF_Font *police;
+    SDL_Color couleur= {255, 255, 255};
+    SDL_Rect positionTexte, positionTexte2, position_saisie_texte;
+    int b = 255;
+    char chaine[50];
+	double longueurTexte, longueurTexte2;
+    
+    
+    /*CHARGEMENT*/
+    
+    /*Initialisation de l'écran et des images */
+    SDL_Init(SDL_INIT_VIDEO);
+    ecran = SDL_SetVideoMode(TAILLE_FENETRE_X, TAILLE_FENETRE_Y, 32, SDL_HWSURFACE);
+    imageDeFond = IMG_Load("../graphiques/images/Sauvegarde_Fond.png");
+    Noir = SDL_LoadBMP("../graphiques/images/Noir.bmp");
+    
+    /*Chargement du titre*/
+    TTF_Init();
+    police = TTF_OpenFont("../graphiques/fonts/space_age.ttf", 60);
+    Texte = TTF_RenderText_Blended(police, "Charger une partie", couleur);
+    longueurTexte = Texte->w;
+    initialise_sdl_rect(&positionTexte, ((TAILLE_FENETRE_X/2.0) - (longueurTexte/2.0)), 1*(TAILLE_FENETRE_Y)/10, 0, 0);
+    TTF_CloseFont(police);
+    
+    /*Chargement du texte*/
+    police = TTF_OpenFont("../graphiques/fonts/space_age.ttf", 40);
+    Texte2 = TTF_RenderText_Blended(police, "Tapez le nom de la sauvegarde", couleur);
+    longueurTexte2 = Texte2->w;
+    initialise_sdl_rect(&positionTexte2, ((TAILLE_FENETRE_X/2.0) - (longueurTexte2/2.0)), 9*(TAILLE_FENETRE_Y)/10, 0, 0);
+    TTF_CloseFont(police);
+    
+    
+    /*AFFICHAGE*/
+    
+    /*Animation de l'apparition du menu*/
+    while (b>=0) {
+        SDL_SetAlpha(Noir, SDL_SRCALPHA, b);
+        SDL_BlitSurface(Noir, NULL, ecran, NULL);
+        b = b-20;
+        SDL_Flip(ecran);
+        SDL_FreeSurface(ecran);
+        SDL_BlitSurface(imageDeFond, NULL, ecran, NULL);
+        SDL_BlitSurface(Texte, NULL, ecran, &positionTexte);
+        SDL_BlitSurface(Texte2, NULL, ecran, &positionTexte2);
+    }
+    initialise_sdl_rect(&position_saisie_texte, 350, (TAILLE_FENETRE_Y)/5, 0, 0);
+	saisie_texte_sdl(chaine, ecran, position_saisie_texte);
+    /*Disparition du menu et affichage du jeu*/
+    SDL_FreeSurface(ecran);
+    SDL_FreeSurface(Texte);
+    SDL_FreeSurface(Texte2);
+    SDL_FreeSurface(imageDeFond);
+    SDL_FreeSurface(Noir);
+}
+
 void nouvelle_partie(Terrain_espace ** un_terrain_espace, Jeu **un_jeu, FMOD_SYSTEM *system, FMOD_SOUND *musique)
 {
     /*Initialisation des variables*/
@@ -3327,25 +3380,25 @@ void nouvelle_partie(Terrain_espace ** un_terrain_espace, Jeu **un_jeu, FMOD_SYS
     /* Chargement du titre */
     TTF_Init();
     police = TTF_OpenFont("../graphiques/fonts/space_age.ttf", 60);
-    Texte = TTF_RenderText_Blended(police, "Conquest Of Space", couleur);
+    Texte = TTF_RenderUTF8_Blended(police, "Conquest Of Space", couleur);
     longueurTexte = Texte->w;
     positionTexte.x = ((TAILLE_FENETRE_X/2.0) - (longueurTexte/2.0));
     positionTexte.y = 1*(TAILLE_FENETRE_Y)/10;
     TTF_CloseFont(police);
 
     /* Chargement du texte */
-    police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 40);
-    Texte2 = TTF_RenderText_Blended(police, "Les Etats-Unis veulent a tout prix", couleur);
+    police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 30);
+    Texte2 = TTF_RenderUTF8_Blended(police, "En l'an 2157, les chercheurs découvrent, aux frontières du", couleur);
     longueurTexte2 = Texte2->w;
     positionTexte2.x = ((TAILLE_FENETRE_X/2.0) - (longueurTexte2/2.0));
-    positionTexte2.y = 4*(TAILLE_FENETRE_Y)/10;
+    positionTexte2.y = 3*(TAILLE_FENETRE_Y)/10;
 
-    Texte3 = TTF_RenderText_Blended(police, "trouver le secret de la vie pour faire renaitre", couleur);
+    Texte3 = TTF_RenderUTF8_Blended(police, "sytème solaire, une espèce en tout point similaire à la nôtre", couleur);
     longueurTexte3 = Texte3->w;
     positionTexte3.x = ((TAILLE_FENETRE_X/2.0) - (longueurTexte3/2.0));
-    positionTexte3.y = 5*(TAILLE_FENETRE_Y)/10;
+    positionTexte3.y = 4*(TAILLE_FENETRE_Y)/10;
 
-    Texte4 = TTF_RenderText_Blended(police, "Billy Mays. BLABLABLABLA. Aidez-les !!", couleur);
+    Texte4 = TTF_RenderUTF8_Blended(police, "Seulement, celle-ci ne cherchait pas la paix...", couleur);
     longueurTexte4 = Texte4->w;
     positionTexte4.x = ((TAILLE_FENETRE_X/2.0) - (longueurTexte4/2.0));
     positionTexte4.y = 6*(TAILLE_FENETRE_Y)/10;
@@ -3406,7 +3459,7 @@ void nouvelle_partie(Terrain_espace ** un_terrain_espace, Jeu **un_jeu, FMOD_SYS
     /*CHARGEMENT*/
     
     /*Initialisation de l'écran et des images */
-    imageDeFond = IMG_Load("../graphiques/images/Sauvegarde_Fond.png");
+    imageDeFond = IMG_Load("../graphiques/images/Fond_Nouvelle_Partie.png");
     
     /*Chargement du titre*/
     police = TTF_OpenFont("../graphiques/fonts/space_age.ttf", 60);
@@ -3732,7 +3785,7 @@ void saisie_texte_sdl(char nom[50], SDL_Surface* ecran, SDL_Rect position_saisie
 	police = TTF_OpenFont("../graphiques/fonts/space_age.ttf", 40);
 
 	fond_texte = SDL_CreateRGBSurface(SDL_HWSURFACE, 600, 50, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
-	SDL_FillRect(fond_texte, NULL, SDL_MapRGB(ecran->format, 0, 0, 0));
+	SDL_FillRect(fond_texte, NULL, SDL_MapRGB(ecran->format, 10, 10, 10));
 	SDL_BlitSurface(fond_texte, NULL, ecran, &position_saisie_texte);
 	SDL_Flip(ecran);
 
