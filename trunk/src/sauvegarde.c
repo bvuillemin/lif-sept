@@ -102,3 +102,16 @@ Sauvegarde* selection_ouverture(const char nom[30])
     fclose(f);
     return une_sauvegarde;
 }
+
+
+void testRegression_sauvegarde(void)
+{
+    Jeu* un_jeu = creer_jeu();
+    Terrain_espace* un_terrain_espace = creer_terrain_espace(1, 1);
+    creer_fichier_sauvegarde("test", un_terrain_espace, un_jeu);
+    assert(selection_ouverture("Test")->terrain_espace->taille_espace_x == un_terrain_espace->taille_espace_x);
+    assert(selection_ouverture("Test")->terrain_espace->taille_espace_y == un_terrain_espace->taille_espace_y);
+    assert(selection_ouverture("Test")->jeu->tour_en_cours == un_jeu->tour_en_cours);
+    assert(selection_ouverture("Test")->jeu->joueur_en_cours == un_jeu->joueur_en_cours);
+    assert(selection_ouverture("Test")->jeu->nb_joueur == un_jeu->nb_joueur);
+}

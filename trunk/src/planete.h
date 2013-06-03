@@ -8,7 +8,7 @@
 
 #ifndef _PLANETE_H_
 #define _PLANETE_H_
-
+#include <assert.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>

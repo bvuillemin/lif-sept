@@ -7,7 +7,6 @@
  */
 
 #include <string.h>
-
 #include "planete.h"
 #include "batiment.h"
 
