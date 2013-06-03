@@ -88,3 +88,12 @@ void initialiser_tableau_chanson_combat(char **tab_chanson)
 	tab_chanson[5] = "../audio/musique/Darkness_of_the_Unknown.mp3";
 }
 
+void initialiser_tableau_chanson_menu(char **tab_chanson)
+{
+	tab_chanson[0] = "../audio/musique/Menu.mp3";
+	tab_chanson[1] = "../audio/musique/Menu.mp3";
+	tab_chanson[2] = "../audio/musique/Menu.mp3";
+	tab_chanson[3] = "../audio/musique/Menu.mp3";
+	tab_chanson[4] = "../audio/musique/Menu.mp3";
+	tab_chanson[5] = "../audio/musique/Menu.mp3";
+}

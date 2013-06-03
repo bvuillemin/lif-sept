@@ -52,7 +52,7 @@ SDL_Surface* creer_affichage_flotte(Terrain_espace *un_terrain_espace);
 SDL_Surface* affichage_minimap(Terrain_espace *un_terrain_espace);
 SDL_Surface* creer_affichage_vision(Jeu *un_jeu, Joueur* un_joueur);
 
-void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace);
+void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace, FMOD_SYSTEM *system, FMOD_SOUND *musique);
 SDL_Surface* creer_affichage_terrain(Terrain_espace *un_terrain_espace);
 SDL_Surface* affichage_terrain(Terrain_espace *un_terrain_espace, SDL_Surface *carte);
 SDL_Surface* affichage_ressource(Jeu *un_jeu, SDL_Surface *surface_ressource);
