@@ -2397,14 +2397,14 @@ SDL_Surface * affiche_ecran_terrain_combat(const Terrain_combat *terrain_combat)
                 }
                 else if(get_type_vaisseau(get_unite(une_case))==Destroyer)
                 {
-                    vaisseau = IMG_Load("../graphiques/images/unite3_bleu.png");
+                    vaisseau = IMG_Load("../graphiques/images/unite2_bleu.png");
                     pos_plan.x=i*100;pos_plan.y=j*100;
                     SDL_BlitSurface(vaisseau,NULL,carte,&pos_plan);
                     SDL_FreeSurface(vaisseau);
                 }
                 else if(get_type_vaisseau(get_unite(une_case))==Destructeur)
                 {
-                    vaisseau = IMG_Load("../graphiques/images/unite2_bleu.png");
+                    vaisseau = IMG_Load("../graphiques/images/unite3_bleu.png");
                     pos_plan.x=i*100;pos_plan.y=j*100;
                     SDL_BlitSurface(vaisseau,NULL,carte,&pos_plan);
                     SDL_FreeSurface(vaisseau);
@@ -2423,7 +2423,7 @@ SDL_Surface * affiche_ecran_terrain_combat(const Terrain_combat *terrain_combat)
                 }
                 else if(get_type_vaisseau(get_unite(une_case))==Destroyer)
                 {
-                    vaisseau = IMG_Load("../graphiques/images/unite3_rouge.png");
+                    vaisseau = IMG_Load("../graphiques/images/unite2_rouge.png");
                     pos_plan.x=i*100;pos_plan.y=j*100;
                     vaisseau2 = rotozoomSurface (vaisseau, 180, 1.0, 1);
                     SDL_BlitSurface(vaisseau2,NULL,carte,&pos_plan);
@@ -2432,7 +2432,7 @@ SDL_Surface * affiche_ecran_terrain_combat(const Terrain_combat *terrain_combat)
                 }
                 else if(get_type_vaisseau(get_unite(une_case))==Destructeur)
                 {
-                    vaisseau = IMG_Load("../graphiques/images/unite2_rouge.png");
+                    vaisseau = IMG_Load("../graphiques/images/unite3_rouge.png");
                     pos_plan.x=i*100;pos_plan.y=j*100;
                     vaisseau2 = rotozoomSurface (vaisseau, 180, 1.0, 1);
                     SDL_BlitSurface(vaisseau2,NULL,carte,&pos_plan);
@@ -2530,8 +2530,7 @@ void affiche_deplacement_unite(Jeu * jeu,Terrain_combat *un_terrain_combat,SDL_R
 		une_case = get_selection(un_terrain_combat);
 		une_unite = get_unite(une_case);
 		p=deplacement_unite(un_terrain_combat, une_unite ,pos.x,pos.y);
-	}
-	if(p)
+		if(p)
 	{
 		pos.y = 100*y + position_affichage_carte.y;
 		pos.x = 100*x + position_affichage_carte.x;
@@ -2554,6 +2553,8 @@ void affiche_deplacement_unite(Jeu * jeu,Terrain_combat *un_terrain_combat,SDL_R
 		sprintf(infos2,"Déplacement impossible !");
 	}
 
+	}
+	
 }
 
 /**
@@ -4215,7 +4216,7 @@ void clic_sur_bouton_attaque(SDL_Event evenement,SDL_Rect pos_clic,SDL_Rect pos_
  * \param      flotte2        Pointeur sur Flotte  
  * \param      infos2        Pointeur sur char  
  */
-void verifie_etat_combat(Jeu *jeu,Terrain_combat *un_terrain_combat,Flotte *flotte1,Flotte *flotte2,char * infos2,int gagnant,bool* continuer){
+bool verifie_etat_combat(Jeu *jeu,Terrain_combat *un_terrain_combat,Flotte *flotte1,Flotte *flotte2,char * infos2,int gagnant){
 /*vérifie si le combat est fini et quel joueur l'a remporté*/
 	int taille_flotte1,taille_flotte2,i;
 	Joueur * joueur;
@@ -4227,7 +4228,7 @@ void verifie_etat_combat(Jeu *jeu,Terrain_combat *un_terrain_combat,Flotte *flot
 		joueur = get_ieme_joueur_jeu(jeu,i);
 		sprintf(infos2,"Gagné %s!",joueur->nom_joueur);
 		gagnant = 1;
-		*continuer = 0;
+		return 0;
 	}
 	else if(taille_flotte2 == 0)
 	{
@@ -4235,8 +4236,9 @@ void verifie_etat_combat(Jeu *jeu,Terrain_combat *un_terrain_combat,Flotte *flot
 		joueur = get_ieme_joueur_jeu(jeu,i);
 		sprintf(infos2,"Gagné %s !",joueur->nom_joueur);
 		gagnant = 2;
-		*continuer = 0;
+		return 0;
 	}
+	return 1;
 }
 
 /**
@@ -4341,7 +4343,6 @@ int affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat,Flotte* f
 
 
 	police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf",16);
-	TTF_SetFontStyle(police, TTF_STYLE_ITALIC );
 
 	pos_texte.x=X_TEXTE;pos_texte.y=Y_TEXTE;
 	pos_texte2.x=X_TEXTE;pos_texte2.y=Y_TEXTE - 20;
@@ -4377,7 +4378,7 @@ int affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat,Flotte* f
 					} /*on affiche les infos de l'unité */
 					SDL_FreeSurface(texte);
 					texte = TTF_RenderUTF8_Blended(police,infos,couleur_police);
-					verifie_etat_combat(jeu,un_terrain_combat,flotte1,flotte2,infos2,gagnant,&continuer); /*on vérifie si le combat est fini*/
+					continuer =verifie_etat_combat(jeu,un_terrain_combat,flotte1,flotte2,infos2,gagnant); /*on vérifie si le combat est fini*/
 					SDL_FreeSurface(texte2);
 					texte2 = TTF_RenderUTF8_Blended(police,infos2,couleur_police);
 					
@@ -4563,8 +4564,11 @@ int affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat,Flotte* f
 
 
 
+	
+		SDL_FillRect(ecran, NULL, couleur);
+		SDL_Flip(ecran);
 
-
+			SDL_Delay(1000);
 	TTF_CloseFont(police);
 	SDL_FreeSurface(interface);
 	SDL_FreeSurface(interface_haut);
