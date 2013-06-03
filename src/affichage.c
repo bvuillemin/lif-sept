@@ -1911,7 +1911,7 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace, FMOD_SYSTEM
 	initialiser_tableau_chanson(tab_chanson);
 
 	/*on lance les musiques du jeu et on initialise les sons*/
-	lire_musique(system, musique, tab_chanson, 1);
+	lire_musique(system, musique, tab_chanson);
 	FMOD_System_CreateSound(system, "../audio/son/FTL_Saut.mp3", FMOD_CREATESAMPLE, 0, &son_saut_debut);
 	FMOD_System_CreateSound(system, "../audio/son/FTL_Exit.mp3", FMOD_CREATESAMPLE, 0, &son_saut_fin);
 
@@ -1941,7 +1941,7 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace, FMOD_SYSTEM
 	{
 		/*mise à jour de valeurs "globales"*/
 		SDL_PollEvent(&event);
-		maj_musique(system, musique, tab_chanson, 1);
+		maj_musique(system, musique, tab_chanson);
 
 		/*pour afficher les infobulles*/
 		tps_nouveau = SDL_GetTicks();
@@ -3468,7 +3468,7 @@ void ecran_titre(void)
 
                 /* Disparition du titre */
                 initialiser_tableau_chanson_menu(tab_chanson);
-                lire_musique(system, musique, tab_chanson, 1);
+                lire_musique(system, musique, tab_chanson);
                 while (b<256) {
                     a = a+0.01;
                     Titre_Anime = rotozoomSurface(Titre, 0, a, 2);
@@ -4285,7 +4285,7 @@ int affichage_ecran_combat(Jeu* jeu, Terrain_combat *un_terrain_combat, Flotte* 
 	FMOD_System_CreateSound(system, "../audio/son/laser.mp3", FMOD_CREATESAMPLE, 0, &tir_laser);
 	FMOD_System_CreateSound(system, "../audio/son/Explosion.mp3", FMOD_CREATESAMPLE, 0, &explosion);
 	
-	lire_musique(system, musique, tab_chanson, 1);
+	lire_musique(system, musique, tab_chanson);
 
 	texte=NULL;
 	texte2=NULL;
@@ -4349,7 +4349,7 @@ int affichage_ecran_combat(Jeu* jeu, Terrain_combat *un_terrain_combat, Flotte* 
 	while(continuer)
 	{
 		SDL_PollEvent(&evenement);
-		maj_musique(system, musique, tab_chanson, 1);
+		maj_musique(system, musique, tab_chanson);
 		switch(evenement.type)
 		{
 			case SDL_QUIT:
@@ -4382,7 +4382,7 @@ int affichage_ecran_combat(Jeu* jeu, Terrain_combat *un_terrain_combat, Flotte* 
 					passer_tour_combat(jeu,un_terrain_combat);
 					sprintf(infos2,"Passe le tour !");
 					SDL_FreeSurface(texte2);
-					texte2 = TTF_RenderText_Solid(police,infos2,couleur_police);
+					texte2 = TTF_RenderUTF8_Blended(police,infos2,couleur_police);
 				}
 				else if(test_souris_rectangle(pos_attaquer,pos_clic.x,pos_clic.y))/*clic sur le bouton "attaquer"*/
 				{
@@ -4390,7 +4390,7 @@ int affichage_ecran_combat(Jeu* jeu, Terrain_combat *un_terrain_combat, Flotte* 
 					{
 						sprintf(infos2,"Preparation de l'attaque");
 						SDL_FreeSurface(texte2);
-						texte2 = TTF_RenderText_Solid(police,infos2,couleur_police);
+						texte2 = TTF_RenderUTF8_Blended(police,infos2,couleur_police);
 						SDL_BlitSurface(texte2, NULL, ecran, &pos_texte2);SDL_Flip(ecran);
 						SDL_FreeSurface(carte);
 						carte=affiche_ecran_terrain_combat(un_terrain_combat);
@@ -4415,7 +4415,7 @@ int affichage_ecran_combat(Jeu* jeu, Terrain_combat *un_terrain_combat, Flotte* 
 											affiche_info_unite(jeu,un_terrain_combat,infos,pos_clic);
 										}
 										SDL_FreeSurface(texte);
-										texte = TTF_RenderText_Solid(police,infos,couleur_police);
+										texte = TTF_RenderUTF8_Blended(police,infos,couleur_police);
 										SDL_BlitSurface(texte, NULL, ecran, &pos_texte);
 										SDL_Flip(ecran);
 									}
@@ -4430,7 +4430,7 @@ int affichage_ecran_combat(Jeu* jeu, Terrain_combat *un_terrain_combat, Flotte* 
 									{
 										sprintf(infos2,"Attaquons !");
 										SDL_FreeSurface(texte2);
-										texte2 = TTF_RenderText_Solid(police,infos2,couleur_police);
+										texte2 = TTF_RenderUTF8_Blended(police,infos2,couleur_police);
 										SDL_BlitSurface(interface, NULL, ecran, &pos_interface);
 										SDL_BlitSurface(texte2, NULL, ecran, &pos_texte2);
 										SDL_Flip(ecran);
@@ -4444,7 +4444,7 @@ int affichage_ecran_combat(Jeu* jeu, Terrain_combat *un_terrain_combat, Flotte* 
 									{
 										sprintf(infos2,"Imposible d'attaquer !");
 										SDL_FreeSurface(texte2);
-										texte2 = TTF_RenderText_Solid(police,infos2,couleur_police);
+										texte2 = TTF_RenderUTF8_Blended(police,infos2,couleur_police);
 									}
 									attend_attaque=0;
 									if(get_pt_action_joueur(get_ieme_joueur_jeu(jeu,get_joueur_en_cours_combat(jeu)))<=0) /*si le joueur n'as plus de points d'action on passe le tour*/
@@ -4490,7 +4490,7 @@ int affichage_ecran_combat(Jeu* jeu, Terrain_combat *un_terrain_combat, Flotte* 
 					}
 				}
 				else
-				{/*si on clique ailleur*/
+				{/*si on clique ailleurs*/
 					sprintf(infos2," ");/*on vérifie si le combat est fini*/
 					SDL_FreeSurface(texte2);
 					texte2 = TTF_RenderUTF8_Blended(police,infos2,couleur_police);
