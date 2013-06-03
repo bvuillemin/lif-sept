@@ -2247,7 +2247,7 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace, FMOD_SYSTEM
 						{
 							/*mettre fonction attaque prenant en param le terrain, le jeu, les 2 flottes*/
 							//combat_automatique(un_jeu, un_terrain_espace, get_flotte_en_cours(un_jeu), get_flotte(get_case_terrain_espace(un_terrain_espace, x/100, y/100))) 
-							if(lancer_combat_ecran(un_jeu, get_flotte_en_cours(un_jeu), get_flotte(get_case_terrain_espace(un_terrain_espace, x/100, y/100)),ecran) == 1)
+							if(lancer_combat_ecran(un_jeu, un_terrain_espace, get_flotte_en_cours(un_jeu), get_flotte(get_case_terrain_espace(un_terrain_espace, x/100, y/100)),ecran) == 1)
 							{
 				
 								deplacement_flotte(&un_jeu->tab_joueur[un_jeu->joueur_en_cours], un_terrain_espace, un_jeu->selection_flotte, une_case_terrain_espace->x_espace, une_case_terrain_espace->y_espace);
@@ -4288,10 +4288,6 @@ int affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat,Flotte* f
 	/* Début de la fonction, initialisation des différentes valeurs         */
 	/************************************************************************/
 
-	/*initialiser le son*/
-	FMOD_System_Create(&system);
-	FMOD_System_Init(system, 10, FMOD_INIT_NORMAL, NULL);
-
 	/*on initialise le tableau de chansons puis on utilise la fonction qui va mettre les noms dedans (pour plus de clarté dans le code)*/
 	tab_chanson = (char **)malloc(sizeof(char *) * 6);
 	initialiser_tableau_chanson_combat(tab_chanson);
@@ -4364,7 +4360,7 @@ int affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat,Flotte* f
 	while(continuer)
 	{
 		SDL_PollEvent(&evenement);
-		
+		maj_musique(system, musique, tab_chanson);
 		switch(evenement.type)
 		{
 			case SDL_QUIT:
@@ -4600,7 +4596,7 @@ int affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat,Flotte* f
  * \param      flotte1        Pointeur sur Flotte  
  * \param      flotte2        Pointeur sur Flotte 
  */
-int lancer_combat_ecran(Jeu *jeu,Flotte* flotte1,Flotte * flotte2,SDL_Surface * ecran)/*lance un combat à partir de deux flottes*/
+int lancer_combat_ecran(Jeu *jeu, Terrain_espace* un_terrain_espace, Flotte* flotte1,Flotte * flotte2,SDL_Surface * ecran)/*lance un combat à partir de deux flottes*/
 {
 	int gagnant;
 	Terrain_combat * un_combat; 
@@ -4610,5 +4606,18 @@ int lancer_combat_ecran(Jeu *jeu,Flotte* flotte1,Flotte * flotte2,SDL_Surface * 
 	placer_unite_flotte_en_bas(un_combat,flotte2);
 	gagnant = affichage_ecran_combat(jeu ,un_combat,flotte1,flotte2,ecran);
 	detruit_terrain_combat(&un_combat);
-	return 1;
+
+	if(gagnant == 1)
+	{
+		retirer_flotte(get_case_terrain_espace(un_terrain_espace, get_x_flotte(flotte2), get_y_flotte(flotte2)));
+		retirer_flotte_joueur(get_ieme_joueur_jeu(jeu, get_indice_joueur_flotte(flotte2)), get_indice_tableau_joueur(flotte2));
+		return 1;
+	}
+	if(gagnant == 2)
+	{
+		retirer_flotte(get_case_terrain_espace(un_terrain_espace, get_x_flotte(flotte1), get_y_flotte(flotte1)));
+		retirer_flotte_joueur(get_ieme_joueur_jeu(jeu, get_indice_joueur_flotte(flotte1)), get_indice_tableau_joueur(flotte1));
+		return 2;
+	}
+	return 0;
 }
