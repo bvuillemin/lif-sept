@@ -3401,7 +3401,7 @@ void ecran_titre(void)
     /*initialiser le son*/
 	FMOD_System_Create(&system);
 	FMOD_System_Init(system, 10, FMOD_INIT_NORMAL, NULL);
-    tab_chanson = (char **)malloc(sizeof(char *) * 6);
+	tab_chanson = (char **)malloc(sizeof(char *) * 6);
     initialiser_tableau_chanson(tab_chanson);
     
     /*CHARGEMENT*/
@@ -4016,7 +4016,8 @@ bool attaque_ecran(Jeu * jeu,Terrain_combat * un_terrain_combat, SDL_Rect pos,Fl
 	}
 	if((p==0)||(p==1)){/*que l'attaque ai réussie ou pas , si il reste des points de vies à la "victime"*/
 		return p;/*retourne 1 si l'attaque à réussi , 0 sinon*/
-	}else if(p==-2)/*une unité n'a plus de point de vie*/
+	}
+	else if(p==-2)/*une unité n'a plus de point de vie*/
 	{
 		une_case = get_case_terrain_combat(un_terrain_combat,pos.x,pos.y);
 		unite=get_unite(une_case);
@@ -4024,7 +4025,8 @@ bool attaque_ecran(Jeu * jeu,Terrain_combat * un_terrain_combat, SDL_Rect pos,Fl
 		if(i==0)
 		{
 			supprimer_unite_flotte(un_terrain_combat,flotte1,unite);
-		}else if(i==1){supprimer_unite_flotte(un_terrain_combat,flotte2,unite);}
+		}
+		else if(i==1){supprimer_unite_flotte(un_terrain_combat,flotte2,unite);}
 		return 1;
 	}
 	return 0;
@@ -4098,8 +4100,8 @@ void animation_attaque(Terrain_combat * un_terrain_combat,Jeu * jeu, SDL_Surface
 
 	if((x_depart < x_arrivee)&&(y_depart == y_arrivee))
 	{
-		
-		while(x_depart < x_arrivee){
+		while(x_depart < x_arrivee)
+		{
 			initialise_sdl_rect(&pos_laser,x_depart,y_depart,0,0);
 			SDL_BlitSurface(laser, NULL,  ecran,&pos_laser);SDL_Flip(ecran);
 			SDL_Delay(50);
@@ -4110,7 +4112,6 @@ void animation_attaque(Terrain_combat * un_terrain_combat,Jeu * jeu, SDL_Surface
 	}
 	else if((x_depart > x_arrivee)&&(y_depart == y_arrivee))
 	{
-		
 		while(x_depart > x_arrivee){
 			initialise_sdl_rect(&pos_laser,x_depart,y_depart,0,0);
 			SDL_BlitSurface(laser, NULL,  ecran,&pos_laser);SDL_Flip(ecran);
@@ -4122,7 +4123,6 @@ void animation_attaque(Terrain_combat * un_terrain_combat,Jeu * jeu, SDL_Surface
 	}
 	else if((x_depart == x_arrivee)&&(y_depart < y_arrivee))
 	{
-		
 		while(y_depart < y_arrivee){
 			initialise_sdl_rect(&pos_laser,x_depart,y_depart,0,0);
 			SDL_BlitSurface(laser, NULL,  ecran,&pos_laser);SDL_Flip(ecran);
@@ -4134,7 +4134,6 @@ void animation_attaque(Terrain_combat * un_terrain_combat,Jeu * jeu, SDL_Surface
 	}
 	else if((x_depart == x_arrivee)&&(y_depart > y_arrivee))
 	{
-		
 		while(y_depart > y_arrivee){
 			initialise_sdl_rect(&pos_laser,x_depart,y_depart,0,0);
 			SDL_BlitSurface(laser, NULL,  ecran,&pos_laser);SDL_Flip(ecran);
@@ -4146,7 +4145,6 @@ void animation_attaque(Terrain_combat * un_terrain_combat,Jeu * jeu, SDL_Surface
 	}
 	else if((x_depart < x_arrivee)&&(y_depart < y_arrivee))
 	{
-		
 		while(x_depart < x_arrivee){
 			initialise_sdl_rect(&pos_laser,x_depart,y_depart,0,0);
 			SDL_BlitSurface(laser, NULL,  ecran,&pos_laser);SDL_Flip(ecran);
@@ -4159,7 +4157,6 @@ void animation_attaque(Terrain_combat * un_terrain_combat,Jeu * jeu, SDL_Surface
 	}
 	else if((x_depart < x_arrivee)&&(y_depart > y_arrivee))
 	{
-		
 		while(x_depart < x_arrivee){
 			initialise_sdl_rect(&pos_laser,x_depart,y_depart,0,0);
 			SDL_BlitSurface(laser, NULL,  ecran,&pos_laser);SDL_Flip(ecran);
@@ -4172,7 +4169,6 @@ void animation_attaque(Terrain_combat * un_terrain_combat,Jeu * jeu, SDL_Surface
 	}
 	else if((x_depart > x_arrivee)&&(y_depart < y_arrivee))
 	{
-		
 		while(x_depart > x_arrivee){
 			initialise_sdl_rect(&pos_laser,x_depart,y_depart,0,0);
 			SDL_BlitSurface(laser, NULL,  ecran,&pos_laser);SDL_Flip(ecran);
@@ -4185,7 +4181,6 @@ void animation_attaque(Terrain_combat * un_terrain_combat,Jeu * jeu, SDL_Surface
 	}
 	else if((x_depart > x_arrivee)&&(y_depart > y_arrivee))
 	{
-		
 		while(x_depart > x_arrivee){
 			initialise_sdl_rect(&pos_laser,x_depart,y_depart,0,0);
 			SDL_BlitSurface(laser, NULL,  ecran,&pos_laser);SDL_Flip(ecran);
@@ -4199,11 +4194,6 @@ void animation_attaque(Terrain_combat * un_terrain_combat,Jeu * jeu, SDL_Surface
 	SDL_Delay(1000);
 	SDL_FreeSurface(laser);
 	SDL_FreeSurface(copie);
-	
-}
-
-void clic_sur_bouton_attaque(SDL_Event evenement,SDL_Rect pos_clic,SDL_Rect pos_texte2,SDL_Rect position_affichage_carte,SDL_Rect pos_interface_carte,Jeu *jeu, Terrain_combat *un_terrain_combat,Flotte * flotte1,Flotte * flotte2, char * infos2,TTF_Font *police,SDL_Color couleur_police,SDL_Surface *carte,SDL_Surface *ecran,SDL_Surface * texte2, bool attend_attaque,bool attaque_reussi,bool continuer)
-{// inutile peut-etre...
 }
 
 /**

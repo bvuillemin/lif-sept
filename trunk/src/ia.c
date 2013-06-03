@@ -563,11 +563,12 @@ Planete* detecter_plus_haute_menace_planete(Joueur* un_joueur, Terrain_espace* u
 /* Appel de l'IA                                                        */
 /************************************************************************/
 
-void appeler_ia(Terrain_espace* un_terrain_espace, Joueur *un_joueur)
+void appeler_ia(Jeu* un_jeu, Terrain_espace* un_terrain_espace, Joueur *un_joueur)
 {
 	if(get_ia_joueur(un_joueur))
 	{
 		COMPORTEMENT_IA comportement;
+		printf("Debut IA\n");
 		comportement = calcul_niveau_menace_globale(un_joueur, un_terrain_espace);
 		detecter_menace_planete(un_joueur, un_terrain_espace, get_ieme_planete_joueur(un_joueur, 0));
 		detecter_menace_flotte(un_joueur, un_terrain_espace, get_ieme_flotte_joueur(un_joueur, 0));

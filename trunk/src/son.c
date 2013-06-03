@@ -42,7 +42,6 @@ void lire_musique(FMOD_SYSTEM *system, FMOD_SOUND *musique, char **tab_chanson)
 	if (resultat != FMOD_OK)
 	{
 		fprintf(stderr, "Impossible de lire le fichier mp3\n");
-		/*exit(EXIT_FAILURE);*/
 	}
 
 	FMOD_System_PlaySound(system, 1, musique, 0, NULL);
