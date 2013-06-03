@@ -66,7 +66,7 @@ typedef struct
 	/*compétence spéciale*/
 }Unite;
 
-void initialise_unite(Unite *unite_jeu, TYPE_VAISSEAU type);
+void initialiser_unite(Unite *unite_jeu, TYPE_VAISSEAU type);
 Unite *creer_unite(TYPE_VAISSEAU type);
 
 void liberer_unite(Unite *unite_jeu);
