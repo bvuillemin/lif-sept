@@ -1,3 +1,10 @@
+/**
+ * \file      affichage.c
+ * \author    BODARD, REYNAUD, VUILLEMIN
+ * \version   1.0
+ * \brief     Définit l'affichage du jeu
+ * \details   Cette classe permet l'affichage du jeu, des menus, prend en compte les actions du joueur
+ */
 #ifndef _AFFICHAGE_H_
 #define _AFFICHAGE_H_
 
@@ -10,15 +17,6 @@
 #endif
 #include "jeu.h"
 #include "son.h"
-/**
- * \file      Module terrain
- * \author
- * \version   0.1
- * \date      13 mars 2013
- * \brief
- *
- * \details
- */
 
 
 typedef enum
