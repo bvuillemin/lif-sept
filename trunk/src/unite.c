@@ -14,7 +14,7 @@
 /* Initialisation, création et destruction                              */
 /************************************************************************/
 
-void initialise_unite(Unite *unite_jeu, TYPE_VAISSEAU type)
+void initialiser_unite(Unite *unite_jeu, TYPE_VAISSEAU type)
 {
 	if(type == Chasseur)
 	{
@@ -78,7 +78,7 @@ void initialise_unite(Unite *unite_jeu, TYPE_VAISSEAU type)
 Unite *creer_unite(TYPE_VAISSEAU type)
 {
     Unite *nouvelle_unite = (Unite *)malloc(sizeof(Unite));
-    initialise_unite(nouvelle_unite, type);
+    initialiser_unite(nouvelle_unite, type);
     return nouvelle_unite;
 }
 
