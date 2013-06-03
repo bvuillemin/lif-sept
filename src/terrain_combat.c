@@ -422,18 +422,13 @@ void deselectionner(Terrain_combat * un_terrain_combat)
 	set_une_case_selectionnee(un_terrain_combat,0);
 }
 
-/*void test_module_terrain_combat()
+void testRegression_terrain_combat()
 {
-    Terrain_combat *terrain_combat;
-    terrain_combat = creer_terrain(20, 20);
-    modification_terrain(terrain_combat, 'E');
-    affiche_terrain(terrain_combat);
-
-    affiche_terrain(terrain_combat);
-
-    detruit_terrain_combat(&terrain_combat);
+    Terrain_combat *un_terrain_combat;
+    un_terrain_combat = creer_terrain_combat(1, 1);
+    modification_terrain_combat(un_terrain_combat, 'E');
+    assert(un_terrain_combat->tab_terrain_combat->type_case_terrain_combat == 'E');
+    detruit_terrain_combat(&un_terrain_combat);
 
 }
-
-*/
 

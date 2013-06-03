@@ -104,10 +104,7 @@ bool get_presence_flotte(Case_terrain_espace* une_case)
 
 void definir_case_terrain_espace(Case_terrain_espace *une_case_terrain_espace, char c)
 {
-    if((c == 'E')||(c == 'F')||(c == 'P'))
-    {
-        c = get_type_case_terrain_espace(une_case_terrain_espace);
-    }
+    une_case_terrain_espace->type_case_terrain_espace = c;
 }
 
 void affiche_case_terrain_espace(const Case_terrain_espace *une_case_terrain_espace)
@@ -196,4 +193,16 @@ Case_terrain_espace* ouverture_case_terrain_espace(FILE*f)
         fgets(chaine, 50, f);
     }
     return case_terrain_espace_ouverte;
+}
+
+void testRegression_case_terrain_espace()
+{
+    Case_terrain_espace *une_case_terrain_espace;
+    une_case_terrain_espace = creer_case_espace();
+    definir_case_terrain_espace(une_case_terrain_espace, 'E');
+    assert(une_case_terrain_espace->x_espace == 0);
+    assert(une_case_terrain_espace->y_espace == 0);
+    assert(une_case_terrain_espace->type_case_terrain_espace == 'E');
+    assert(une_case_terrain_espace->presence_flotte == false);
+    detruire_case_terrain_espace(une_case_terrain_espace);
 }

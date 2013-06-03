@@ -51,7 +51,7 @@ void test_module_case_terrain_espace();
 
 void sauvegarde_case_terrain_espace(const Case_terrain_espace *une_case_terrain_espace, FILE*f);
 Case_terrain_espace* ouverture_case_terrain_espace(FILE*f);
-
+void testRegression_case_terrain_espace();
 
 
 

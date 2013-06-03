@@ -169,19 +169,22 @@ void definir_vision(Vision_terrain* une_vision)
 		}
 	}
 }
-void testRegression_Vision()
+void testRegression_Vision_terrain()
 {
     Vision_terrain *une_vision_terrain;
-    Vision_case *une_vision_case;
     Terrain_espace *un_terrain_espace = creer_terrain_espace(1, 1);
     une_vision_terrain = creer_vision_terrain(un_terrain_espace, 0);
     assert(une_vision_terrain->indice_joueur == 0);
     assert(une_vision_terrain->terrain_espace == un_terrain_espace);
+    detruire_vision_terrain(&une_vision_terrain);
+}
+void testRegression_Vision_case()
+{
+    Vision_case *une_vision_case;
     une_vision_case = creer_vision_case(0);
     assert(une_vision_case->indice_joueur == 0);
     assert(une_vision_case->centre_vision == 0);
     assert(une_vision_case->champ_vision == JAMAIS_VISITEE);
-    detruire_vision_terrain(&une_vision_terrain);
     liberer_vision_case(une_vision_case);
     free(une_vision_case);
 }

@@ -40,5 +40,6 @@ Champ_vision get_champ_vision(Vision_case* une_case);
 
 void parcourir_terrain(Vision_terrain* une_vision, int indice_joueur);
 void definir_vision(Vision_terrain* une_vision);
-void testRegression_Vision();
+void testRegression_Vision_terrain();
+void testRegression_Vision_case();
 #endif

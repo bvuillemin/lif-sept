@@ -5,7 +5,7 @@
  * \brief     Définit les animations du jeu
  * \details   Cette classe permet l'affichage des animations du jeu
  */
-
+#include <assert.h>
 #include <string.h>
 
 #ifdef __APPLE__
@@ -54,4 +54,17 @@ void detruire_animation(Animation **une_animation)
 	liberer_animation(*une_animation);
 	free(*une_animation);
 	*une_animation = NULL;
+}
+
+void testRegression_Animation()
+{
+    Animation *une_animation;
+    une_animation = creer_animation(0, 0, 0, 0, "TEST");
+    assert(une_animation->frame_en_cours == 0);
+    assert(une_animation->nb_frame == 0);
+    assert(une_animation->nb_ms == 0);
+    assert(une_animation->x == 0);
+    assert(une_animation->y == 0);
+    assert(une_animation->tps_debut_anim == 0);
+    assert(strcmp(une_animation->nom, "TEST") == 0);
 }
