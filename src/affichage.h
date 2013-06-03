@@ -73,16 +73,16 @@ void affichage_ecran_acceuil(Terrain_combat *un_terrain_combat);
 /*pour le combat :*/
 void animation_avant_deplacement_unite(Terrain_combat * un_terrain_combat,Jeu * jeu, SDL_Surface * ecran,SDL_Surface * ecran2,SDL_Rect pos,int x, int y);
 SDL_Surface * affichage_ecran_terrain_combat(const Terrain_combat *un_terrain_combat);
-void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat, Flotte* flotte1,Flotte * flotte2);
+int affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat, Flotte* flotte1,Flotte * flotte2,SDL_Surface * ecran);
 SDL_Rect coordonnee_clic(SDL_Rect position);
 SDL_Rect coordonnee_case_du_clic(SDL_Rect position);
 void affiche_deplacement_unite(Jeu * jeu,Terrain_combat *un_terrain_combat,SDL_Rect position,SDL_Surface * carte,SDL_Surface * bordure,SDL_Surface * ecran,SDL_Rect position_affichage_carte,SDL_Rect pos_bordure, char* infos2,FMOD_SYSTEM *system,FMOD_SOUND *son_saut_debut,FMOD_SOUND *son_saut_fin);
 void selection(Jeu * jeu,Terrain_combat *un_terrain_combat,SDL_Rect position);
 void affiche_info_unite(Jeu * jeu,Terrain_combat *un_terrain_combat,char * infos,SDL_Rect position);
 bool attaque_ecran(Jeu * jeu,Terrain_combat * un_terrain_combat, SDL_Rect pos,Flotte* flotte1,Flotte * flotte2);
-void lancer_combat_ecran(Jeu * jeu, Flotte* flotte1,Flotte * flotte2);
+int lancer_combat_ecran(Jeu * jeu, Flotte* flotte1,Flotte * flotte2,SDL_Surface * ecran);
 void clic_sur_bouton_attaque(SDL_Event evenement,SDL_Rect pos_clic,SDL_Rect pos_texte2,SDL_Rect position_affichage_carte,SDL_Rect pos_interface_carte,Jeu *jeu, Terrain_combat *un_terrain_combat,Flotte * flotte1,Flotte * flotte2, char * infos2,TTF_Font *police,SDL_Color couleur_police,SDL_Surface *carte,SDL_Surface *ecran,SDL_Surface * texte2, bool attend_attaque,bool attaque_reussi,bool continuer);
-void verifie_etat_combat(Jeu *jeu,Terrain_combat *un_terrain_combat,Flotte *flotte1,Flotte *flotte2,char *infos2);
+void verifie_etat_combat(Jeu *jeu,Terrain_combat *un_terrain_combat,Flotte *flotte1,Flotte *flotte2,char *infos2,int gagnant,bool continuer);
 void animation_explosion(Terrain_combat * un_terrain_combat,Jeu * jeu, SDL_Surface * ecran,int x, int y);
 void animation_attaque(Terrain_combat * un_terrain_combat,Jeu * jeu, SDL_Surface * ecran,Case_terrain_combat *une_case,SDL_Rect pos_arrivee);
 /*

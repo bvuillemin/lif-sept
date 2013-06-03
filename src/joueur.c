@@ -256,6 +256,7 @@ void ajouter_flotte_joueur(Joueur *un_joueur, Flotte *une_flotte)
     une_flotte->indice_joueur = un_joueur->numero_joueur;
 	une_flotte->indice_tableau_joueur = i;
 	un_joueur->nb_flotte ++;
+	changer_indice_joueur_unite_flotte(une_flotte);
     ajouterElementTabDyn(&un_joueur->tab_flotte, une_flotte);
 	free(une_flotte);
 }
