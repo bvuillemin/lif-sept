@@ -15,7 +15,7 @@
 
 void initialise_joueur(Joueur *un_joueur, char nom[20], int indice_joueur, bool ia)
 {
-    un_joueur->numero_joueur = -1;
+    un_joueur->numero_joueur = indice_joueur;
 	un_joueur->ia = ia;
 	un_joueur->couleur_joueur = DEFAUT;
 	strcpy(un_joueur->nom_joueur, nom);
@@ -27,6 +27,7 @@ void initialise_joueur(Joueur *un_joueur, char nom[20], int indice_joueur, bool 
 	un_joueur->nb_planete_possible = 10;
 	un_joueur->tab_planete = (Planete **)malloc(sizeof(Planete *) * 10);
 	un_joueur->nb_flotte = 0;
+    
 	un_joueur->nb_flotte_possible = 10;
 	initialiserTabDyn(&un_joueur->tab_flotte);
 	un_joueur->pt_action_joueur = 3;
@@ -54,7 +55,7 @@ void liberer_joueur(Joueur *un_joueur)
 	un_joueur->nb_planete = 0;
 	un_joueur->nb_planete_possible = 0;
 	free(un_joueur->tab_planete); /*on ne libère pas les planètes, c'est le terrain qui va s'en charger*/
-	for(i=0;i<un_joueur->tab_flotte.capacite;i++)
+	for(i=0;i<un_joueur->tab_flotte.taille_utilisee;i++)
 	{
 		liberer_flotte(&un_joueur->tab_flotte.ad[i]);
 	}
@@ -63,7 +64,10 @@ void liberer_joueur(Joueur *un_joueur)
 	un_joueur->nb_flotte_possible = 0;
 	un_joueur->pt_action_joueur = 0;
 	un_joueur->pt_action_joueur_total = 0;
-	liberer_vision_terrain(un_joueur->vision_terrain);
+    if (un_joueur->vision_terrain != NULL)
+    {
+        liberer_vision_terrain(un_joueur->vision_terrain);
+    }
 	free(un_joueur->vision_terrain);
 }
 
@@ -571,4 +575,14 @@ Joueur* ouverture_joueur(FILE *f)
     sscanf(fgets(chaine, 50, f), "%d", &joueur_ouvert->pt_action_joueur);
     sscanf(fgets(chaine, 50, f), "%d", &joueur_ouvert->pt_action_joueur_total);
     return joueur_ouvert;
+}
+
+void testRegression_Joueur()
+{
+    Joueur *un_joueur;
+    un_joueur = creer_joueur("TEST", 0, false);
+    assert(strcmp(un_joueur->nom_joueur, "TEST") == 0);
+    assert(un_joueur->numero_joueur == 0);
+    assert(un_joueur->ia == false);
+    detruire_joueur(&un_joueur);
 }

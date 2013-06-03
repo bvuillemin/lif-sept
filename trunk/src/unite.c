@@ -5,7 +5,6 @@
  * \brief     Définit les unités du jeu
  * \details   Cette classe définit les unités du jeu et leurs caractéristiques
  */
-
 #include <math.h>
 #include "constante.h"
 #include "unite.h"
@@ -349,21 +348,25 @@ Unite* ouverture_unite(FILE *f)
     sscanf(fgets(chaine, 50, f), "%d", &unite_ouverte->pt_mouvement_unite);
     return unite_ouverte;
 }
-/*
-void test_module_unite()
+
+void testRegression_Unite()
 {
     Unite * chasseur;
 	Unite * destroyer;
-	Unite *destructeur;
+	Unite * destructeur;
 
 	chasseur = creer_unite(Chasseur);
 	destroyer = creer_unite(Destroyer);
 	destructeur = creer_unite(Destructeur);
 	
-	assert(chasseur->x_unite = chasseur->y_unite = 0);
-	assert(destroyer->x_unite = destroyer->y_unite = 0);
-	assert(destructeur->x_unite = destructeur->y_unite = 0);
-	
-
-}*/
+	assert(chasseur->x_unite == 0);
+    assert(chasseur->y_unite == 0);
+	assert(destroyer->x_unite == 0);
+    assert(destroyer->y_unite == 0);
+	assert(destructeur->x_unite == 0);
+    assert(destructeur->y_unite == 0);
+    detruire_unite(&chasseur);
+    detruire_unite(&destroyer);
+    detruire_unite(&destructeur);
+}
 

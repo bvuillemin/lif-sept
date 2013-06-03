@@ -107,5 +107,6 @@ void reinitialiser_pt_action_joueur(Joueur *joueur);
 
 void sauvegarde_joueur(const Joueur *un_joueur, FILE*f);
 Joueur* ouverture_joueur(FILE *f);
+void testRegression_Joueur();
 
 #endif

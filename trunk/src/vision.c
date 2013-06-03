@@ -137,7 +137,7 @@ void parcourir_terrain(Vision_terrain* une_vision, int indice_joueur)
 	definir_vision(une_vision);
 }
 
-/*fonction qui ‡ partir des centres de vision va calculer la vision pour les cases autour*/
+/*fonction qui à partir des centres de vision va calculer la vision pour les cases autour*/
 void definir_vision(Vision_terrain* une_vision)
 {
 	int i, j;
@@ -168,4 +168,20 @@ void definir_vision(Vision_terrain* une_vision)
 			}
 		}
 	}
+}
+void testRegression_Vision()
+{
+    Vision_terrain *une_vision_terrain;
+    Vision_case *une_vision_case;
+    Terrain_espace *un_terrain_espace = creer_terrain_espace(1, 1);
+    une_vision_terrain = creer_vision_terrain(un_terrain_espace, 0);
+    assert(une_vision_terrain->indice_joueur == 0);
+    assert(une_vision_terrain->terrain_espace == un_terrain_espace);
+    une_vision_case = creer_vision_case(0);
+    assert(une_vision_case->indice_joueur == 0);
+    assert(une_vision_case->centre_vision == 0);
+    assert(une_vision_case->champ_vision == JAMAIS_VISITEE);
+    detruire_vision_terrain(&une_vision_terrain);
+    liberer_vision_case(une_vision_case);
+    free(une_vision_case);
 }

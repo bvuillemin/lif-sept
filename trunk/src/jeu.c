@@ -1213,3 +1213,22 @@ Jeu* ouverture_jeu(FILE *f)
     }
     return jeu_ouvert;
 }
+
+void testRegression_Jeu()
+{
+    Jeu *un_jeu;
+    int i;
+    un_jeu = creer_jeu();
+    assert(un_jeu->tour_en_cours == 0);
+    assert(un_jeu->joueur_en_cours == 0);
+    assert(un_jeu->joueur_en_cours_combat == 0);
+    assert(un_jeu->nb_joueur == 0);
+    assert(un_jeu->selection_flotte == NULL);
+    assert(un_jeu->selection_planete == NULL);
+    assert(un_jeu->animation_en_cours == NULL);
+    for(i=0;i<10;i++)
+    {
+        assert (un_jeu->tab_unite_selectionnee[i] == false);
+    }
+    detruire_jeu(&un_jeu);
+}

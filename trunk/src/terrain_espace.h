@@ -47,6 +47,7 @@ void calcul_deplacement_flotte(Flotte *une_flotte);
 void sauvegarde_terrain_espace(const Terrain_espace *un_terrain_espace, FILE*f);
 Terrain_espace* ouverture_terrain_espace(FILE *f);
 
+void testRegression_Terrain_espace(void);
 /*void test_module_terrain_espace();*/
 
 #endif

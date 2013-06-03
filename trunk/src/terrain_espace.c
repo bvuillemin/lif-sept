@@ -241,21 +241,12 @@ Terrain_espace* ouverture_terrain_espace(FILE *f)
     return terrain_ouvert;
 }
 
-/*void test_module_terrain_espace()
+void testRegression_Terrain_espace(void)
 {
-    Terrain_espace_espace *terrain_espace;
-    terrain_espace = creer_terrain(20, 20);
-    modification_terrain(terrain_espace, 'E');
-    affiche_terrain(terrain_espace);
-
-    ajouter_planete_terrain(terrain_espace, 4, 2);
-    affiche_terrain(terrain_espace);
-
-    affiche_planete(terrain_espace->tab_terrain_espace[2*(terrain_espace->taille_espace_x)+1].planete);
-
-    detruit_terrain_espace(&terrain_espace);
+    Terrain_espace *un_terrain_espace;
+    un_terrain_espace = creer_terrain_espace(1, 1);
+    modification_terrain_espace(un_terrain_espace, 'E');
+    assert(un_terrain_espace->tab_terrain_espace->type_case_terrain_espace == 'E');
+    detruire_terrain_espace(&un_terrain_espace);
 
 }
-
-*/
-
