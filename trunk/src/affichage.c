@@ -2252,9 +2252,14 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 						if((un_jeu->joueur_en_cours != get_indice_joueur_flotte(get_flotte(get_case_terrain_espace(un_terrain_espace, x/100, y/100)))) && (un_jeu->selection_flotte->pt_mouvement_espace_flotte >= 0))
 						{
 							/*mettre fonction attaque prenant en param le terrain, le jeu, les 2 flottes*/
-							if(combat_automatique(un_jeu, un_terrain_espace, get_flotte_en_cours(un_jeu), get_flotte(get_case_terrain_espace(un_terrain_espace, x/100, y/100))) == 1)
+
+							//
+//combat_automatique(un_jeu, un_terrain_espace, get_flotte_en_cours(un_jeu), get_flotte(get_case_terrain_espace(un_terrain_espace, x/100, y/100))) 
+							if(lancer_combat_ecran(un_jeu, get_flotte_en_cours(un_jeu), get_flotte(get_case_terrain_espace(un_terrain_espace, x/100, y/100)),ecran) == 1)
 							{
+				
 								deplacement_flotte(&un_jeu->tab_joueur[un_jeu->joueur_en_cours], un_terrain_espace, un_jeu->selection_flotte, une_case_terrain_espace->x_espace, une_case_terrain_espace->y_espace);
+								maj_affichage(un_jeu, un_terrain_espace, ecran,interface_affichee,NULL, tab_surface);
 								maj_affichage_flotte(un_jeu, un_terrain_espace, ecran, tab_surface, interface_affichee);
 								booleen_coordonnees_case(un_terrain_espace, un_jeu->selection_flotte->x_flotte, un_jeu->selection_flotte->y_flotte, &x_bis, &y_bis);
 								lire_son(system, son_saut_fin);
@@ -3210,7 +3215,7 @@ void init_nouvelle_partie(char nom1[], char nom2[], Terrain_espace **un_terrain_
 	flotte2 = creer_flotte();
 	unite3 = creer_unite(Destructeur);
 	unite4 = creer_unite(Destroyer);
-    
+
 	ajouter_planete_joueur(get_ieme_joueur_jeu(*jeu, 0), Terre);
     
 	ajouter_planete_joueur(get_ieme_joueur_jeu(*jeu, 1), Caprica);
@@ -3223,6 +3228,7 @@ void init_nouvelle_partie(char nom1[], char nom2[], Terrain_espace **un_terrain_
 	
 	ajouter_flotte_jeu(*jeu, *un_terrain_espace, flotte, 0, 2, 2);
 	ajouter_flotte_jeu(*jeu, *un_terrain_espace, flotte2, 1, 3, 3);
+
     
 }
 
@@ -3853,7 +3859,7 @@ void clic_sur_bouton_attaque(SDL_Event evenement,SDL_Rect pos_clic,SDL_Rect pos_
  * \param      flotte2        Pointeur sur Flotte  
  * \param      infos2        Pointeur sur char  
  */
-void verifie_etat_combat(Jeu *jeu,Terrain_combat *un_terrain_combat,Flotte *flotte1,Flotte *flotte2,char * infos2){
+void verifie_etat_combat(Jeu *jeu,Terrain_combat *un_terrain_combat,Flotte *flotte1,Flotte *flotte2,char * infos2,int gagnant,bool continuer){
 /*vérifie si le combat est fini et quel joueur l'a remporté*/
 	int taille_flotte1,taille_flotte2,i;
 	Joueur * joueur;
@@ -3861,15 +3867,19 @@ void verifie_etat_combat(Jeu *jeu,Terrain_combat *un_terrain_combat,Flotte *flot
 	taille_flotte2 = get_taille_flotte(flotte2);
 	if(taille_flotte1 == 0)
 	{
-		i= get_indice_joueur_flotte(flotte1);
+		i= get_indice_joueur_flotte(flotte2);
 		joueur = get_ieme_joueur_jeu(jeu,i);
 		sprintf(infos2,"Gagné %s!",joueur->nom_joueur);
+		gagnant = 1;
+		continuer = 0;
 	}
 	else if(taille_flotte2 == 0)
 	{
-		i= get_indice_joueur_flotte(flotte2);
+		i= get_indice_joueur_flotte(flotte1);
 		joueur = get_ieme_joueur_jeu(jeu,i);
 		sprintf(infos2,"Gagné %s !",joueur->nom_joueur);
+		gagnant = 2;
+		continuer = 0;
 	}
 }
 
@@ -3881,10 +3891,9 @@ void verifie_etat_combat(Jeu *jeu,Terrain_combat *un_terrain_combat,Flotte *flot
  * \param      flotte1        Pointeur sur Flotte  
  * \param      flotte2        Pointeur sur Flotte 
  */
-void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat,Flotte* flotte1,Flotte * flotte2)
+int affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat,Flotte* flotte1,Flotte * flotte2,SDL_Surface * ecran)
 {
 	SDL_Rect pos_clic,pos_bordure,pos_texte,pos_texte2,pos_texte3,pos_interface,pos_interface_haut, position_affichage_carte,position_passer,pos_attaquer,pos_interface_carte;
-	SDL_Surface *ecran = NULL;
 	SDL_Surface *interface = NULL;
 	SDL_Surface *interface_haut = NULL;
 	SDL_Surface *bordure = NULL;
@@ -3896,6 +3905,7 @@ void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat,Flotte* 
 	SDL_Color couleur_police = {255,255,255};
 	char infos[255] = "",infos2[255]="",infos3[255]="OK";
 
+	int gagnant = 2;
 	bool continuer,attend_attaque,attaque_reussi;
 	SDL_Event evenement;
 
@@ -3922,22 +3932,15 @@ void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat,Flotte* 
 
 	/*on initialise le tableau de chansons puis on utilise la fonction qui va mettre les noms dedans (pour plus de clarté dans le code)*/
 	tab_chanson = (char **)malloc(sizeof(char *) * 6);
-	/*for(j=0;j<6;j++)
-	{
-		tab_chanson[j] = (char *)malloc(sizeof(char) * 50);
-
-	}*/
-	initialiser_tableau_chanson(tab_chanson);
+	initialiser_tableau_chanson_combat(tab_chanson);
 
 	/*on lance les musiques du jeu et on initialise les sons*/
-	//lire_musique(system, musique, tab_chanson);
+
 	FMOD_System_CreateSound(system, "../audio/son/FTL_Saut.mp3", FMOD_CREATESAMPLE, 0, &son_saut_debut);
 	FMOD_System_CreateSound(system, "../audio/son/FTL_Exit.mp3", FMOD_CREATESAMPLE, 0, &son_saut_fin);
 	FMOD_System_CreateSound(system, "../audio/son/laser.mp3", FMOD_CREATESAMPLE, 0, &tir_laser);
 	FMOD_System_CreateSound(system, "../audio/son/Explosion.mp3", FMOD_CREATESAMPLE, 0, &explosion);
 	FMOD_System_CreateSound(system, "../audio/son/SONAR2.wav", FMOD_CREATESAMPLE, 0, &son_selection);
-//	"../audio/musique/Star wars.mp3"
-
 	
 	texte=NULL;
 	texte2=NULL;
@@ -3953,27 +3956,11 @@ void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat,Flotte* 
 	initialise_sdl_rect(&pos_attaquer,X_BOUTON_ATTAQUER,Y_BOUTON_ATTAQUER,TAILLE_X_BOUTON_ATTAQUER,TAILLE_Y_BOUTON_ATTAQUER);
 	initialise_sdl_rect(&position_passer,X_BOUTON_PASSER,Y_BOUTON_PASSER,TAILLE_X_BOUTON_ATTAQUER,TAILLE_Y_BOUTON_ATTAQUER);
 
-	 if (SDL_Init(SDL_INIT_VIDEO) == -1) /*Démarrage de la SDL. Si erreur :*/
-    {
-        fprintf(stderr, "Erreur d'initialisation de la SDL : %s\n", SDL_GetError()); /* Écriture de l'erreur*/
-        exit(EXIT_FAILURE); /* On quitte le programme*/
-    }
-	if(TTF_Init() == -1)
-	{
-    	fprintf(stderr, "Erreur d'initialisation de TTF_Init : %s\n", TTF_GetError());
-   		exit(EXIT_FAILURE);
-	}
-
-	SDL_WM_SetCaption("Conquest of Space", "COS");
-  	ecran =SDL_SetVideoMode(TAILLE_FENETRE_X,TAILLE_FENETRE_Y,NOMBRE_BITS_COULEUR,SDL_HWSURFACE|SDL_RESIZABLE|SDL_DOUBLEBUF);
+	
 	
 
-	  if (ecran == NULL) /*Si l'ouverture a échoué, on le note et on arrête*/
-    {
-        fprintf(stderr, "Impossible de charger le mode vidéo : %s\n", SDL_GetError());
-        exit(EXIT_FAILURE);
-    }
-
+	SDL_WM_SetCaption("Conquest of Space", "COS");
+	
 	couleur = SDL_MapRGB(ecran->format,150,0,0);
 	SDL_FillRect(ecran, NULL, couleur);
 	SDL_Flip(ecran);
@@ -4016,9 +4003,7 @@ void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat,Flotte* 
 	texte3 = TTF_RenderUTF8_Blended(police,infos3,couleur_police);
 	SDL_BlitSurface(texte3, NULL, ecran, &pos_texte3);
 	SDL_Flip(ecran);
-	FMOD_System_CreateSound(system, "../audio/son/Darkness_of_the_Unknown.mp3", FMOD_SOFTWARE | FMOD_2D | FMOD_CREATESTREAM, 0, &musique);
-	FMOD_Sound_SetLoopCount(musique, -1);
-	FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, musique, 0, NULL);
+	lire_musique(system, musique, tab_chanson);
 	while(continuer)
 	{
 		SDL_PollEvent(&evenement);
@@ -4032,12 +4017,15 @@ void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat,Flotte* 
 				pos_clic.x=evenement.motion.x - position_affichage_carte.x; /*la position de la souris sur la carte*/
 				pos_clic.y=evenement.motion.y - position_affichage_carte.y;
 
-				if(test_souris_rectangle(pos_interface_carte,pos_clic.x,pos_clic.y)) /*si la souris est à l'intérieur de la partie ou s'affiche la carte*/
-				{
-					affiche_info_unite(jeu,un_terrain_combat,infos,pos_clic); /*on affiche les infos de l'unité */
+				if((pos_clic.x+X_CARTE<=get_taille_combat_x(un_terrain_combat)*100)&&(pos_clic.x+X_CARTE>=0)&&(pos_clic.y+Y_CARTE>=0)&&(pos_clic.y+Y_CARTE <= get_taille_combat_y(un_terrain_combat)*100)) /*si la souris est à l'intérieur de la partie ou s'affiche la carte*/
+				{sprintf(infos," ");
+					if(get_presence_unite(get_case_terrain_combat(un_terrain_combat , coordonnee_case_du_clic(pos_clic).x,coordonnee_case_du_clic(pos_clic).y)))
+					{
+						affiche_info_unite(jeu,un_terrain_combat,infos,pos_clic);
+					} /*on affiche les infos de l'unité */
 					SDL_FreeSurface(texte);
 					texte = TTF_RenderUTF8_Blended(police,infos,couleur_police);
-					verifie_etat_combat(jeu,un_terrain_combat,flotte1,flotte2,infos2); /*on vérifie si le combat est fini*/
+					verifie_etat_combat(jeu,un_terrain_combat,flotte1,flotte2,infos2,gagnant,continuer); /*on vérifie si le combat est fini*/
 					SDL_FreeSurface(texte2);
 					texte2 = TTF_RenderUTF8_Blended(police,infos2,couleur_police);
 					
@@ -4078,9 +4066,14 @@ void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat,Flotte* 
 								case SDL_MOUSEMOTION:
 									pos_clic.x=evenement.motion.x - position_affichage_carte.x;
 									pos_clic.y=evenement.motion.y - position_affichage_carte.y;
-									if(test_souris_rectangle(pos_interface_carte,pos_clic.x,pos_clic.y)){
+									if((pos_clic.x+X_CARTE<=get_taille_combat_x(un_terrain_combat)*100)&&(pos_clic.x+X_CARTE>=0)&&(pos_clic.y+Y_CARTE>=0)&&(pos_clic.y+Y_CARTE <= get_taille_combat_y(un_terrain_combat)*100)){
 										sprintf(infos2," ");
-										affiche_info_unite(jeu,un_terrain_combat,infos,pos_clic);
+										
+
+										if(get_presence_unite(get_case_terrain_combat(un_terrain_combat , coordonnee_case_du_clic(pos_clic).x,coordonnee_case_du_clic(pos_clic).y)))
+										{
+											affiche_info_unite(jeu,un_terrain_combat,infos,pos_clic);
+										}
 										SDL_FreeSurface(texte);
 										texte = TTF_RenderText_Solid(police,infos,couleur_police);
 										SDL_BlitSurface(texte, NULL, ecran, &pos_texte);
@@ -4103,9 +4096,9 @@ void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat,Flotte* 
 						SDL_BlitSurface(interface, NULL, ecran, &pos_interface);
 						SDL_BlitSurface(texte2, NULL, ecran, &pos_texte2);
 						SDL_Flip(ecran);
-										FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, tir_laser, 0, NULL);
+										lire_son(system, tir_laser);
 										animation_attaque(un_terrain_combat,jeu, ecran,get_selection(un_terrain_combat),pos_clic);
-										FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, explosion, 0, NULL);
+										lire_son(system, explosion);
 										animation_explosion(un_terrain_combat,jeu, ecran,(X_CARTE+ pos_clic.x), (Y_CARTE + pos_clic.y));
 										enlever_pt_action_joueur(get_ieme_joueur_jeu(jeu,get_joueur_en_cours_combat(jeu)), 1);
 									}else
@@ -4159,8 +4152,7 @@ void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat,Flotte* 
 					}
 				}
 				else{/*si on clique ailleur*/
-					sprintf(infos2," ");
-					verifie_etat_combat(jeu,un_terrain_combat,flotte1,flotte2,infos2);/*on vérifie si le combat est fini*/
+					sprintf(infos2," ");/*on vérifie si le combat est fini*/
 					SDL_FreeSurface(texte2);
 					texte2 = TTF_RenderUTF8_Blended(police,infos2,couleur_police);
 					if(get_pt_action_joueur(get_ieme_joueur_jeu(jeu,get_joueur_en_cours_combat(jeu)))<=0){/*si le joueur n'as plus de point d'action*/
@@ -4214,6 +4206,7 @@ void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat,Flotte* 
 		SDL_BlitSurface(texte2, NULL, ecran, &pos_texte2);
 		SDL_BlitSurface(texte3, NULL, ecran, &pos_texte3);
 		SDL_Flip(ecran);
+		
 	}
 
 
@@ -4221,7 +4214,6 @@ void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat,Flotte* 
 
 
 	TTF_CloseFont(police);
-	TTF_Quit();
 	SDL_FreeSurface(interface);
 	SDL_FreeSurface(interface_haut);
 
@@ -4230,15 +4222,14 @@ void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat,Flotte* 
 	SDL_FreeSurface(passer);
 	SDL_FreeSurface(attaquer);
 	SDL_FreeSurface(bordure);
-    SDL_Quit();
+
 	FMOD_Sound_Release(son_saut_debut);
 	FMOD_Sound_Release(son_saut_fin);
-	FMOD_Sound_Release(musique);
 	FMOD_Sound_Release(tir_laser);
 	FMOD_Sound_Release(son_selection);
 	FMOD_Sound_Release(explosion);
-	FMOD_System_Close(system);
-	FMOD_System_Release(system);
+	fermer_systeme_son(system, musique);
+	return gagnant;
 }
 
 /**
@@ -4249,14 +4240,15 @@ void affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat,Flotte* 
  * \param      flotte1        Pointeur sur Flotte  
  * \param      flotte2        Pointeur sur Flotte 
  */
-void lancer_combat_ecran(Jeu *jeu,Flotte* flotte1,Flotte * flotte2)/*lance un combat à partir de deux flottes*/
+int lancer_combat_ecran(Jeu *jeu,Flotte* flotte1,Flotte * flotte2,SDL_Surface * ecran)/*lance un combat à partir de deux flottes*/
 {
+	int gagnant;
 	Terrain_combat * un_combat; 
 	un_combat=creer_terrain_combat(X_CASE_COMBAT,Y_CASE_COMBAT);
 	modification_terrain_combat(un_combat,'E');
 	placer_unite_flotte_en_haut(un_combat,flotte1);
 	placer_unite_flotte_en_bas(un_combat,flotte2);
-	affichage_ecran_combat(jeu ,un_combat,flotte1,flotte2);
+	gagnant = affichage_ecran_combat(jeu ,un_combat,flotte1,flotte2,ecran);
 	detruit_terrain_combat(&un_combat);
-
+	return 1;
 }

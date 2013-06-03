@@ -246,6 +246,18 @@ void reinitialiser_mouvement_flotte(Flotte *une_flotte)
 	une_flotte->pt_mouvement_espace_flotte = min;
 }
 
+
+
+//
+void changer_indice_joueur_unite_flotte(Flotte *une_flotte)
+{
+	int i;
+	for(i=0;i<une_flotte->taille_flotte;i++)
+	{
+		set_indice_joueur_unite(une_flotte->tab_unite[i],une_flotte->indice_joueur);
+	}
+}
+
 /**
  * \brief      Réinitialise les points de déplacement des unite d'une flotte
  * \details    Réinitialise les points de déplacement de tous les unite d'une flotte passée en paramètre

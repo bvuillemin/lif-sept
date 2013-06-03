@@ -37,6 +37,8 @@ void lire_musique(FMOD_SYSTEM *system, FMOD_SOUND *musique, char **tab_chanson)
 	FMOD_Channel_SetVolume(channel, 0.5);
 }
 
+
+
 void maj_musique(FMOD_SYSTEM *system, FMOD_SOUND *musique, char **tab_chanson)
 {
 	FMOD_CHANNEL *channel;
@@ -54,7 +56,9 @@ void maj_musique(FMOD_SYSTEM *system, FMOD_SOUND *musique, char **tab_chanson)
 
 void lire_son(FMOD_SYSTEM *system, FMOD_SOUND *son)
 {
-	FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, son, 0, NULL);
+	FMOD_CHANNEL *channel;
+	FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, son, 0, &channel);
+	FMOD_Channel_SetVolume(channel, 0.5);
 }
 
 void fermer_systeme_son(FMOD_SYSTEM *system, FMOD_SOUND *musique)
@@ -73,3 +77,14 @@ void initialiser_tableau_chanson(char **tab_chanson)
 	tab_chanson[4] = "../audio/musique/Star wars.mp3";
 	tab_chanson[5] = "../audio/musique/Stargate.mp3";
 }
+
+void initialiser_tableau_chanson_combat(char **tab_chanson)
+{
+	tab_chanson[0] = "../audio/musique/Darkness_of_the_Unknown.mp3";
+	tab_chanson[1] = "../audio/musique/Darkness_of_the_Unknown.mp3";
+	tab_chanson[2] = "../audio/musique/Darkness_of_the_Unknown.mp3";
+	tab_chanson[3] = "../audio/musique/Darkness_of_the_Unknown.mp3";
+	tab_chanson[4] = "../audio/musique/Darkness_of_the_Unknown.mp3";
+	tab_chanson[5] = "../audio/musique/Darkness_of_the_Unknown.mp3";
+}
+

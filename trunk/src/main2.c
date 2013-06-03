@@ -33,7 +33,7 @@ int main()
 	/*int i;
 	char c;
 	bool p;*/
-/*	ecran_titre();*/
+	ecran_titre();
 	jeu = creer_jeu();
 	afficher_info(jeu);
 	joueur1=creer_joueur("allie",1,0);
@@ -100,7 +100,7 @@ afficher_flotte(flotte2);
 		printf("ok!\n");
 	}*/
 	
-	lancer_combat_ecran(jeu,flotte1,flotte2);
+	//lancer_combat_ecran(jeu,flotte1,flotte2);
 	//detruire_jeu(&jeu);
 	return 0;
 
