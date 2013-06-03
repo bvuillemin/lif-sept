@@ -156,9 +156,9 @@ void tour_suivant(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
     {
         un_joueur = get_ieme_joueur_jeu(un_jeu, i);
         
-        if(get_ia_joueur(get_ieme_joueur_jeu(un_jeu, i)))
+        if(get_ia_joueur(un_joueur))
         {
-            //appeler_ia(un_terrain_espace, un_jeu->tab_joueur);
+            appeler_ia(un_jeu, un_terrain_espace, un_joueur);
         }
         
         /*On récupère toutes les ressources des planètes possédées par les joueurs*/
