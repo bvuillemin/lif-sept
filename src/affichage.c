@@ -27,6 +27,14 @@
 /* Fonctions diverses                                                   */
 /************************************************************************/
 
+/**
+ * \brief      Test d'un clic souris dans un rectangle
+ * \details    Les coordonnées en x et y du clic souris permettent de savoir si le clic a lieu dans le rectangle passé en paramètre
+ * \param      taille_surface  Rectangle SDL servant au test
+ * \param      x	           Position en pixels du clic souris
+ * \param      y	           Position en pixels du clic souris
+ * \return     Booléen	       Renvoie vrai si le clic souris a lieu dans le rectangle
+ */
 bool test_souris_rectangle (SDL_Rect taille_surface, int x, int y) /*Va tester si x et y sont dans le rectangle, utile pour les menus*/
 {
 	if((x >= taille_surface.x) && (x<= taille_surface.x + taille_surface.w) && (y >= taille_surface.y) && (y<= taille_surface.y + taille_surface.h))
@@ -36,6 +44,15 @@ bool test_souris_rectangle (SDL_Rect taille_surface, int x, int y) /*Va tester s
 	else return false;
 }
 
+/**
+ * \brief      Va définir les valeurs d'un rectangle SDL
+ * \details    Utile tout le long de l'affichage, permet surtout de simplifier le code
+ * \param      taille_surface  Rectangle SDL que l'on veut modifier
+ * \param      x	           Position en pixels du coin supérieur gauche
+ * \param      y	           Position en pixels du coin supérieur gauche
+ * \param      w	           Largeur en pixels du rectangle
+ * \param      h	           Hauteur en pixels du rectangle
+ */
 void initialise_sdl_rect(SDL_Rect *un_rectangle, int x, int y, int w, int h) /*Va modifier les atrributs d'un SDL_rect*/
 {
 	un_rectangle->x = x;
@@ -44,18 +61,18 @@ void initialise_sdl_rect(SDL_Rect *un_rectangle, int x, int y, int w, int h) /*V
 	un_rectangle->h = h;
 }
 
-bool booleen_case_pointeur_souris(Terrain_espace *un_terrain_espace, int x, int y) /*Fonction qui va tester la case pointée par la souris, les coordonnées x et y sont en pixels*/
-{
-	x = (un_terrain_espace->affichage_x + x) / 100;
-	y = (un_terrain_espace->affichage_y + y - 20) / 100;
-	if ((x >= 0) && (x < un_terrain_espace->taille_espace_x) && (y >= 0) && (y < un_terrain_espace->taille_espace_y))
-	{
-		return true;
-	}
-	else return false;
-}
 
-bool booleen_coordonnees_case(Terrain_espace *un_terrain_espace, int x_case, int y_case, int *x, int *y)/*fonction qui va récuperer les coordonnées sur l'écran d'une case et les mettre dans x et y, ou renvoyer false si elle n'est pas affichee*/
+/**
+ * \brief      Renvoie une case grâce aux coordonnéees en pixels
+ * \details    Fonction qui va récuperer les coordonnées sur l'écran d'une case et les mettre dans x et y, ou renvoyer false si elle n'est pas affichée
+ * \param      un_terrain_espace  Le terrain pour récupérer les coordonnées de l'affichage
+ * \param      x_case	          Position en pixels du clic souris
+ * \param      y_case	          Position en pixels du clic souris
+ * \param      x	              Pointeur sur entier
+ * \param      y	              Pointeur sur entier
+ * \return     Booléen	          Renvoie vrai si le clic souris a lieu sur une case
+ */
+bool booleen_coordonnees_case(Terrain_espace *un_terrain_espace, int x_case, int y_case, int *x, int *y)
 {
 	SDL_Rect affichage_map = {un_terrain_espace->affichage_x - 1, un_terrain_espace->affichage_y - 1, un_terrain_espace->affichage_x + TAILLE_TERRAIN_ESPACE_X, un_terrain_espace->affichage_y + TAILLE_TERRAIN_ESPACE_Y};
 	if(test_souris_rectangle(affichage_map, x_case * 100, y_case *100))
@@ -67,14 +84,30 @@ bool booleen_coordonnees_case(Terrain_espace *un_terrain_espace, int x_case, int
 	else return false;
 }
 
+
+/**
+ * \brief      Test d'un clic souris sur la minimap
+ * \param      x	           Position en pixels du clic souris
+ * \param      y	           Position en pixels du clic souris
+ * \return     Booléen	       Renvoie vrai si le clic souris a lieu sur la minimap
+ */
 bool booleen_minimap_pointeur_souris(int x, int y)
 {
 	SDL_Rect position_minimap = {TAILLE_FENETRE_X - TAILLE_MINIMAP_X, TAILLE_FENETRE_Y - TAILLE_MINIMAP_Y, TAILLE_MINIMAP_X, TAILLE_MINIMAP_Y};
 	return test_souris_rectangle (position_minimap, x, y);
 }
 
+
+/**
+ * \brief      Va changer l'affichage en fonction du clic souris qui est fait
+ * \details    Le clic sur la minimap permet un déplacement sur le terrain
+ * \param      un_terrain_espace  Le terrain grâce auquel se fait l'affichage
+ * \param      x	              Position en pixels du clic souris
+ * \param      y	              Position en pixels du clic souris
+ */
 void test_minimap_souris(Terrain_espace *un_terrain_espace, int x, int y)
 {
+	//a modifier 
     SDL_Rect position_minimap = {TAILLE_FENETRE_X - TAILLE_MINIMAP_X, TAILLE_FENETRE_Y - TAILLE_MINIMAP_Y, 0, 0};
     int x_calcule, y_calcule;
 
@@ -91,7 +124,16 @@ void test_minimap_souris(Terrain_espace *un_terrain_espace, int x, int y)
     }
 }
 
-Case_terrain_espace* case_pointeur_souris(Terrain_espace *un_terrain_espace, int x, int y) /*Fonction qui va renvoyer la case pointée par la souris, les coordonnées x et y sont en pixels*/
+
+/**
+ * \brief      Fonction qui va renvoyer la case pointée par la souris
+ * \details    Les coordonnées en x et y du clic souris permettent de savoir quelle case a été sélectionnée
+ * \param      un_terrain_espace           Rectangle SDL servant au test
+ * \param      x	                       Position en pixels du clic souris
+ * \param      y	                       Position en pixels du clic souris
+ * \return     Case_terrain_espace	       Renvoie la case pointée par les coordonnées 
+ */
+Case_terrain_espace* case_pointeur_souris(Terrain_espace *un_terrain_espace, int x, int y)
 {
 	x = (un_terrain_espace->affichage_x + x) / 100;
 	y = (un_terrain_espace->affichage_y + y - 33) / 100;
@@ -102,6 +144,11 @@ Case_terrain_espace* case_pointeur_souris(Terrain_espace *un_terrain_espace, int
 	else return NULL;
 }
 
+/**
+ * \brief      Remet à 0 le tableau d'unités sélectionnées
+ * \details    Ce tableau prend les unités en cours de sélection
+ * \param      un_jeu  Pointeur sur le jeu
+ */
 void reinitialiser_tableau_selection_unite(Jeu *un_jeu)
 {
     int i;
@@ -116,6 +163,11 @@ void reinitialiser_tableau_selection_unite(Jeu *un_jeu)
 /* Fonctions d'affichage des infobulles                                 */
 /************************************************************************/
 
+/**
+ * \brief      Détaille les infobulles des bâtiments
+ * \param      fond        Surface du fond des infobulles et sur laquelle sera blitté les informations
+ * \param      i	       Bâtiment dont on veut afficher l'infobulle
+ */
 void afficher_infobulle_batiment(SDL_Surface* fond, int i)
 {
 	SDL_Surface* une_ligne;
@@ -431,7 +483,14 @@ void afficher_infobulle_batiment(SDL_Surface* fond, int i)
 	}
 }
 
-void afficher_infobulle_unite(Jeu* un_jeu, SDL_Surface* fond,int i)
+
+/**
+ * \brief      Détaille les infobulles des unités.
+ * \param      fond        Surface du fond des infobulles et sur laquelle sera blitté les informations
+ * \param      un_jeu      Pointeur sur jeu pour récupérer des informations
+ * \param      i	       Indice de l'unité dont on veut récupérer les informations
+ */
+void afficher_infobulle_unite(Jeu* un_jeu, SDL_Surface* fond, int i)
 {
 	SDL_Surface* une_ligne;
 	Unite *une_unite;
@@ -486,6 +545,12 @@ void afficher_infobulle_unite(Jeu* un_jeu, SDL_Surface* fond,int i)
 
 }
 
+
+/**
+ * \brief      Détaille les infobulles pour créer les unités
+ * \param      fond        Surface du fond des infobulles et sur laquelle sera blitté les informations
+ * \param      i	       Unité dont on veut afficher l'infobulle
+ */
 void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 {
 	SDL_Surface* une_ligne;
@@ -794,6 +859,17 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 	}
 }
 
+
+/**
+ * \brief      Choisit l'infobulle qui sera affichée
+ * \param      un_jeu             Pointeur sur le jeu pour récupérer des informations
+ * \param      un_terrain_espace  Pointeur sur un Terrain_espace 
+ * \param      ecran			  Pointeur sur l'écran pour blitter les informations
+ * \param      tab_surface	      Tableau de pointeurs sur surface pour blitter les informations
+ * \param      interface_affichee Indique l'interface en cours d'affichage		
+ * \param      x			      Coordonnées en pixel de l'endroit où afficher l'infobulle
+ * \param      y			      Coordonnées en pixel de l'endroit où afficher l'infobulle
+ */
 void afficher_infobulle(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface **tab_surface, INTERFACE_AFFICHEE interface_affichee, int x, int y)
 {
 	SDL_Surface* fond = NULL;
@@ -895,6 +971,12 @@ void afficher_infobulle(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surf
 /* Fonctions d'affichage des éléments de la carte                       */
 /************************************************************************/
 
+/**
+ * \brief      Surface sur laquelle les ressource sont affichées
+ * \param      un_jeu             Pointeur sur le jeu pour récupérer des informations
+ * \param      un_jeu             Pointeur sur le jeu pour récupérer des informations
+ * \return     SDL_Surface        Renvoie la surface voulue
+ */
 SDL_Surface* affichage_ressource(Jeu *un_jeu, SDL_Surface *surface_ressource)
 {
     SDL_Surface *nom_ressource = NULL;
@@ -1811,9 +1893,6 @@ void maj_affichage(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *
     SDL_BlitSurface(tab_surface[5], NULL, ecran, &position_interface);
     SDL_BlitSurface(tab_surface[6], NULL, ecran, &position_mini_carte);
 
-    /*affichage de la barre de ressources*/
-	//maj_affichage_ressource(un_jeu, ecran, tab_surface);
-
         if(interface_affichee == RIEN)
         {
             /*affichage de la minimap*/
@@ -2049,8 +2128,6 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace, FMOD_SYSTEM
 						flotte_planete++;
 					}
 
-
-
 					/*si rien de cela, on va revenir à l'interface simple, sans informations*/
                     if(test_souris_rectangle(position_affichage_carte, x, y) && (une_case_terrain_espace->type_case_terrain_espace != 'P') && (une_case_terrain_espace->presence_flotte == false))
                     {
@@ -2204,7 +2281,6 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace, FMOD_SYSTEM
 				}
 			}
 
-
 			if(event.button.button == SDL_BUTTON_RIGHT)
             {
                 x = event.button.x;
@@ -2249,6 +2325,7 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace, FMOD_SYSTEM
 							//combat_automatique(un_jeu, un_terrain_espace, get_flotte_en_cours(un_jeu), get_flotte(get_case_terrain_espace(un_terrain_espace, x/100, y/100))) 
 							if(lancer_combat_ecran(un_jeu, un_terrain_espace, get_flotte_en_cours(un_jeu), get_flotte(get_case_terrain_espace(un_terrain_espace, x/100, y/100)), ecran, system, musique) == 1)
 							{
+								lire_musique(system, musique, tab_chanson);
 								deplacement_flotte(&un_jeu->tab_joueur[un_jeu->joueur_en_cours], un_terrain_espace, un_jeu->selection_flotte, une_case_terrain_espace->x_espace, une_case_terrain_espace->y_espace);
 								maj_affichage(un_jeu, un_terrain_espace, ecran,interface_affichee,NULL, tab_surface);
 								maj_affichage_flotte(un_jeu, un_terrain_espace, ecran, tab_surface, interface_affichee);
@@ -2339,7 +2416,6 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace, FMOD_SYSTEM
 	FMOD_Sound_Release(son_saut_fin);
 
 	detruire_animation(&saut_ftl);
-
 
 	TTF_Quit();
 	SDL_Quit();
@@ -3218,8 +3294,6 @@ void init_nouvelle_partie(char nom1[], char nom2[], Terrain_espace **un_terrain_
 	
 	ajouter_flotte_jeu(*jeu, *un_terrain_espace, flotte, 0, 2, 2);
 	ajouter_flotte_jeu(*jeu, *un_terrain_espace, flotte2, 1, 3, 3);
-
-    
 }
 
 void nouvelle_partie(Terrain_espace ** un_terrain_espace, Jeu **un_jeu, FMOD_SYSTEM *system, FMOD_SOUND *musique)
