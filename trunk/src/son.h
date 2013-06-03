@@ -17,5 +17,5 @@ void maj_musique(FMOD_SYSTEM *system, FMOD_SOUND *musique, char **tab_chanson);
 
 void initialiser_tableau_chanson(char **tab_chanson);
 void initialiser_tableau_chanson_combat(char **tab_chanson);
-
+void initialiser_tableau_chanson_menu(char **tab_chanson);
 #endif

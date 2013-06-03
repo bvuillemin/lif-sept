@@ -1863,7 +1863,7 @@ void maj_affichage(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *
 /* Boucle principale                                                    */
 /************************************************************************/
 
-void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
+void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace, FMOD_SYSTEM *system, FMOD_SOUND *musique)
 {
 	/************************************************************************/
 	/* Initialisation des variables                                         */
@@ -1893,8 +1893,6 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 	char nom_fichier_saut_ftl[] = "../graphiques/images/effet téléportation.png";
 
 	/*variables pour le son*/
-	FMOD_SYSTEM *system = NULL;
-	FMOD_SOUND *musique = NULL;
 	FMOD_SOUND *son_saut_debut = NULL;
 	FMOD_SOUND *son_saut_fin = NULL;
 	char **tab_chanson = NULL;
@@ -1903,10 +1901,6 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 	/************************************************************************/
 	/* Début de la fonction, initialisation des différentes valeurs         */
 	/************************************************************************/
-
-	/*initialiser le son*/
-	FMOD_System_Create(&system);
-	FMOD_System_Init(system, 10, FMOD_INIT_NORMAL, NULL);
 
 	/*on initialise le tableau de chansons puis on utilise la fonction qui va mettre les noms dedans (pour plus de clarté dans le code)*/
 	tab_chanson = (char **)malloc(sizeof(char *) * 6);
@@ -2346,8 +2340,6 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 
 	FMOD_Sound_Release(son_saut_debut);
 	FMOD_Sound_Release(son_saut_fin);
-    free(tab_chanson);
-    fermer_systeme_son(system, musique);
 
 	detruire_animation(&saut_ftl);
 
@@ -2649,7 +2641,7 @@ void input_handle(void)
     }
 }
 
-void menu_chargement_sauvegarde(Terrain_espace **un_terrain_espace, Jeu **un_jeu)
+void menu_chargement_sauvegarde(Terrain_espace **un_terrain_espace, Jeu **un_jeu, FMOD_SYSTEM *system, FMOD_SOUND *musique)
 {
     /*Initialisation des variables*/
     SDL_Surface *ecran, *imageDeFond, *Texte, *Texte2, *Noir;
@@ -2715,7 +2707,7 @@ void menu_chargement_sauvegarde(Terrain_espace **un_terrain_espace, Jeu **un_jeu
     SDL_FreeSurface(Texte2);
     SDL_FreeSurface(imageDeFond);
     SDL_FreeSurface(Noir);
-    affichage_ecran(*un_jeu, *un_terrain_espace);
+    affichage_ecran(*un_jeu, *un_terrain_espace, system, musique);
 }
 
 void menu_creation_sauvegarde(Terrain_espace *un_terrain_espace, Jeu *un_jeu)
@@ -3232,7 +3224,7 @@ void init_nouvelle_partie(char nom1[], char nom2[], Terrain_espace **un_terrain_
     
 }
 
-void nouvelle_partie(Terrain_espace ** un_terrain_espace, Jeu **un_jeu)
+void nouvelle_partie(Terrain_espace ** un_terrain_espace, Jeu **un_jeu, FMOD_SYSTEM *system, FMOD_SOUND *musique)
 {
     /*Initialisation des variables*/
     SDL_Surface *ecran, *imageDeFond, *Texte, *Texte2, *Texte3, *Texte4, *Texte5, *Noir;
@@ -3388,7 +3380,7 @@ void nouvelle_partie(Terrain_espace ** un_terrain_espace, Jeu **un_jeu)
     menu_aide();
     init_nouvelle_partie(nom1, nom2, un_terrain_espace, un_jeu);
     creer_vision_jeu(*un_jeu, *un_terrain_espace);
-    affichage_ecran(*un_jeu, *un_terrain_espace);
+    affichage_ecran(*un_jeu, *un_terrain_espace, system, musique);
 }
 
 void ecran_titre(void)
@@ -3404,7 +3396,16 @@ void ecran_titre(void)
 	SDL_Color couleur= {255, 255, 255};
     Terrain_espace *un_terrain_espace = NULL;
     Jeu * un_jeu = NULL;
-
+    FMOD_SYSTEM *system = NULL;
+	FMOD_SOUND *musique = NULL;
+    char **tab_chanson;
+    
+    /*initialiser le son*/
+	FMOD_System_Create(&system);
+	FMOD_System_Init(system, 10, FMOD_INIT_NORMAL, NULL);
+    tab_chanson = (char **)malloc(sizeof(char *) * 6);
+    initialiser_tableau_chanson(tab_chanson);
+    
     /*CHARGEMENT*/
 
     /* Chargement des images */
@@ -3424,7 +3425,7 @@ void ecran_titre(void)
 
     /* Affichage du titre de la fenêtre */
     SDL_WM_SetCaption("Conquest Of Space", NULL);
-
+    
     /* Boucle pour le zoom du titre */
     while (a<1) {
         a = a+0.008;
@@ -3468,6 +3469,8 @@ void ecran_titre(void)
                 continuer = 0;
 
                 /* Disparition du titre */
+                initialiser_tableau_chanson_menu(tab_chanson);
+                lire_musique(system, musique, tab_chanson);
                 while (b<256) {
                     a = a+0.01;
                     Titre_Anime = rotozoomSurface(Titre, 0, a, 2);
@@ -3488,7 +3491,7 @@ void ecran_titre(void)
                 SDL_FreeSurface(imageDeFond);
                 SDL_FreeSurface(Texte);
                 SDL_FreeSurface(Titre);
-
+                
                 /* Animation à l'affichage du menu */
                 while (b>=0) {
                     double longueurPetit_Titre = Petit_Titre->w;
@@ -3592,7 +3595,7 @@ void ecran_titre(void)
                     SDL_FreeSurface(Quitter);
                     SDL_FreeSurface(ecran);
                     SDL_FreeSurface(Noir);
-                    nouvelle_partie(&un_terrain_espace, &un_jeu);
+                    nouvelle_partie(&un_terrain_espace, &un_jeu, system, musique);
 				}
 
                 /* Charger une partie */
@@ -3613,7 +3616,7 @@ void ecran_titre(void)
                     SDL_FreeSurface(Quitter);
                     SDL_FreeSurface(ecran);
                     SDL_FreeSurface(Noir);
-                    menu_chargement_sauvegarde(&un_terrain_espace, &un_jeu);
+                    menu_chargement_sauvegarde(&un_terrain_espace, &un_jeu, system, musique);
                     
 				}
 
@@ -3634,6 +3637,8 @@ void ecran_titre(void)
                     SDL_FreeSurface(Quitter);
                     SDL_FreeSurface(ecran);
                     SDL_FreeSurface(Noir);
+                    free(tab_chanson);
+                    fermer_systeme_son(system, musique);
                     SDL_Quit();
 				}
         }
