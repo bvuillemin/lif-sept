@@ -3563,13 +3563,21 @@ void ecran_titre(void)
                 SDL_BlitSurface(Quitter, NULL, ecran, &positionQuitter);
                 SDL_Flip(ecran);
                 break;
-
+                
+            case SDL_QUIT :
+                if (partie == 1)
+                {
+                    detruire_jeu(&un_jeu);
+                    detruire_terrain_espace(&un_terrain_espace);
+                }
+                break;
             /*Chargement des menus lors d'un clic sur un bouton */
 			case SDL_MOUSEBUTTONUP:
 
                 /* Nouvelle Partie */
                 if(test_souris_rectangle(positionNouvellePartie,clic_touche.button.x,clic_touche.button.y))
 				{
+                    continuer = 0;
                     partie = 1;
                     SDL_SetAlpha(Noir, SDL_SRCALPHA, 50);
                     for (i=0; i<10; i++)
@@ -3590,6 +3598,7 @@ void ecran_titre(void)
                 /* Charger une partie */
 				if(test_souris_rectangle(positionCharger,clic_touche.button.x,clic_touche.button.y))
 				{
+                    continuer = 0;
                     partie = 1;
                     SDL_SetAlpha(Noir, SDL_SRCALPHA, 50);
                     for (i=0; i<10; i++)
@@ -3611,6 +3620,7 @@ void ecran_titre(void)
                 /* Quitter le jeu */
                 if(test_souris_rectangle(positionQuitter,clic_touche.button.x,clic_touche.button.y))
 				{
+                    continuer = 0;
                     SDL_SetAlpha(Noir, SDL_SRCALPHA, 50);
                     for (i=0; i<10; i++)
                     {
@@ -3626,13 +3636,6 @@ void ecran_titre(void)
                     SDL_FreeSurface(Noir);
                     SDL_Quit();
 				}
-            case SDL_QUIT :
-                continuer = 0;
-                if (partie == 1)
-                {
-                    detruire_jeu(&un_jeu);
-                    detruire_terrain_espace(&un_terrain_espace);
-                }
         }
     }
 }
