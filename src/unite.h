@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
-
+#include <assert.h>
 /**
  * \file      Module unité
  * \author    Les queues de cheval
@@ -119,7 +119,7 @@ void reinitialiser_pt_action(Unite *une_unite);
 void sauvegarde_unite(const Unite *une_unite, FILE* f);
 Unite* ouverture_unite(FILE *f);
 
-void test_module_unite();
+void testRegression_Unite();
 
 #endif
 

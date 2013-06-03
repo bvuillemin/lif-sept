@@ -36,7 +36,6 @@ void liberer_flotte(Flotte *flotte)
 	int i;
 	for(i=0;i<flotte->taille_flotte;i++)
 	{
-		//liberer_unite(flotte->tab_unite[i]);
 		detruire_unite(&flotte->tab_unite[i]);
 	}
 	free(flotte->tab_unite);
@@ -333,44 +332,34 @@ Flotte* ouverture_flotte(FILE *f)
 
 
 
-/*void test_module_flotte()
+void testRegression_flotte()
 {
     Flotte *flotte;
     Unite *unite1;
     Unite *unite2;
     Unite *unite3;
-    unite1 = creer_unite();
-    unite2 = creer_unite();
-    unite3 = creer_unite();
-
-    printf("Verif de la création de flottes\n");
     flotte = creer_flotte();
+    unite1 = creer_unite(Chasseur);
+    unite2 = creer_unite(Destroyer);
+    unite3 = creer_unite(Destructeur);
 
-    ajouter_unite_flotte(flotte, unite1);
-    ajouter_unite_flotte(flotte, unite2);
+    assert(ajouter_unite_flotte(flotte, unite1) == 1);
+    assert(ajouter_unite_flotte(flotte, unite2) == 1);
+    assert(ajouter_unite_flotte(flotte, unite3) == 1);
+
+    set_pt_vie((flotte->tab_unite[0]), 10);
+    set_pt_vie((flotte->tab_unite[1]), 15);
+    set_pt_vie((flotte->tab_unite[2]), 20);
+
+    retirer_unite_flotte(flotte, 2);
     ajouter_unite_flotte(flotte, unite3);
+    set_pt_vie((flotte->tab_unite[2]), 30);
 
-    set_pt_vie(&(flotte->tab_unite[0]), 10);
-    set_pt_vie(&(flotte->tab_unite[1]), 15);
-    set_pt_vie(&(flotte->tab_unite[2]), 20);
-
-    afficher_flotte(flotte);
-
-    retirer_unite_flotte(flotte, 1);
-    ajouter_unite_flotte(flotte, unite3);
-    set_pt_vie(&(flotte->tab_unite[2]), 30);
-    afficher_flotte(flotte);
-
-    if((flotte->taille_maximum_flotte == 10) && (flotte->taille_flotte == 3))
-    {
-		printf ("OK \n");
-	}
-	else
-	{
-		printf ("Echec\n");
-	}
-
-
-
-}*/
+    assert(flotte->taille_maximum_flotte == 10);
+    assert(flotte->taille_flotte == 3);
+    assert(flotte->indice_joueur == 0);
+    assert(flotte->x_flotte == 0);
+    assert(flotte->y_flotte == 0);
+    detruire_flotte(&flotte);
+}
 

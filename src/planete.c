@@ -452,3 +452,13 @@ Planete* ouverture_planete(FILE *f)
     sscanf(fgets(chaine, 50, f), "%d", &planete_ouverte->population);
     return planete_ouverte;
 }
+
+void testRegression_Planete()
+{
+    Planete *une_planete;
+    une_planete = creer_planete("TEST");
+    assert(strcmp(une_planete->nom_planete, "TEST") == 0);
+    assert(une_planete->x == 0);
+    assert(une_planete->y == 0);
+    detruire_planete(&une_planete);
+}

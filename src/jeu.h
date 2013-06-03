@@ -95,5 +95,6 @@ void enlever_pt_action_ieme_joueur(Jeu * jeu,const int i, const int nb);
 
 void sauvegarde_jeu(const Jeu *un_jeu, FILE*f);
 Jeu* ouverture_jeu(FILE *f);
+void testRegression_Jeu();
 
 #endif

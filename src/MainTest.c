@@ -19,6 +19,13 @@
 int main(int argc, char *argv[])
 {
     testRegression_sauvegarde();
+    testRegression_Terrain_espace();
+    testRegression_Unite();
+    testRegression_Vision();
+    testRegression_Planete();
+    testRegression_Joueur();
+    testRegression_Jeu();
+    testRegression_flotte();
     printf("Tests réussis");
 	return EXIT_SUCCESS;
 }

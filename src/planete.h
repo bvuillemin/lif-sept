@@ -119,5 +119,6 @@ void test_module_planete();
 void suppr_retour( char *s );
 void sauvegarde_planete(const Planete *une_planete, FILE*f);
 Planete* ouverture_planete(FILE *f);
+void testRegression_Planete();
 
 #endif

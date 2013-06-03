@@ -71,7 +71,7 @@ void reinitialiser_pt_action_unite_flotte(Flotte *une_flotte);
 void sauvegarde_flotte(const Flotte *une_flotte, FILE*f);
 Flotte* ouverture_flotte(FILE *f);
 
-void test_module_flotte();
+void testRegression_flotte();
 
 #endif
 
