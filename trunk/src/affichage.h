@@ -64,6 +64,8 @@ void initialiser_affichage(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_S
 void maj_carte_terrain(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface **tab_surface, INTERFACE_AFFICHEE interface_affichee);
 void maj_affichage_ressource(Jeu *un_jeu, SDL_Surface *ecran, SDL_Surface **tab_surface);
 
+void saisie_texte_sdl(char* nom, SDL_Surface* ecran, SDL_Rect position_saisie_texte);
+
 void pause();
 void input_handle(void);
 void menu_pause(Terrain_espace *un_terrain_espace, Jeu *un_jeu, int * exit);

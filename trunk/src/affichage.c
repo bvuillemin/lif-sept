@@ -2246,9 +2246,7 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace, FMOD_SYSTEM
 						if((un_jeu->joueur_en_cours != get_indice_joueur_flotte(get_flotte(get_case_terrain_espace(un_terrain_espace, x/100, y/100)))) && (un_jeu->selection_flotte->pt_mouvement_espace_flotte >= 0))
 						{
 							/*mettre fonction attaque prenant en param le terrain, le jeu, les 2 flottes*/
-
-							//
-//combat_automatique(un_jeu, un_terrain_espace, get_flotte_en_cours(un_jeu), get_flotte(get_case_terrain_espace(un_terrain_espace, x/100, y/100))) 
+							//combat_automatique(un_jeu, un_terrain_espace, get_flotte_en_cours(un_jeu), get_flotte(get_case_terrain_espace(un_terrain_espace, x/100, y/100))) 
 							if(lancer_combat_ecran(un_jeu, get_flotte_en_cours(un_jeu), get_flotte(get_case_terrain_espace(un_terrain_espace, x/100, y/100)),ecran) == 1)
 							{
 				
@@ -2519,7 +2517,7 @@ SDL_Rect coordonnee_case_du_clic(SDL_Rect position)
 void affiche_deplacement_unite(Jeu * jeu,Terrain_combat *un_terrain_combat,SDL_Rect position,SDL_Surface * carte,SDL_Surface * bordure,SDL_Surface * ecran,SDL_Rect position_affichage_carte,SDL_Rect pos_bordure, char* infos2,FMOD_SYSTEM *system,FMOD_SOUND *son_saut_debut,FMOD_SOUND *son_saut_fin)
 {
 	SDL_Rect pos;
-	int i,x,y;
+	int i,x = 0 ,y = 0;
 	bool p;
 	Case_terrain_combat * une_case;
 	Unite * une_unite;
@@ -3231,13 +3229,14 @@ void nouvelle_partie(Terrain_espace ** un_terrain_espace, Jeu **un_jeu, FMOD_SYS
     TTF_Font *police;
     SDL_Color couleur= {255, 255, 255};
     SDL_Rect positionTexte, positionTexte2, positionTexte3, positionTexte4, positionTexte5;
+	SDL_Rect position_saisie_texte = {0, 0, 0, 0};
     SDL_Event evenement;
     
     int b = 255, i, continuer = 1;
 	double longueurTexte, longueurTexte2, longueurTexte3, longueurTexte4, longueurTexte5;
 
-	char nom1[50];
-    char nom2[50];
+	char nom1[30];
+    char nom2[30];
     
     
     *un_terrain_espace = creer_terrain_espace(20, 15);
@@ -3345,10 +3344,9 @@ void nouvelle_partie(Terrain_espace ** un_terrain_espace, Jeu **un_jeu, FMOD_SYS
     
     /*Chargement du texte*/
     police = TTF_OpenFont("../graphiques/fonts/space_age.ttf", 40);
-    Texte2 = TTF_RenderText_Blended(police, "Tapez les noms sur le terminal", couleur);
+    Texte2 = TTF_RenderText_Blended(police, "Noms des joueurs", couleur);
     longueurTexte2 = Texte2->w;
-    positionTexte2.x = ((TAILLE_FENETRE_X/2.0) - (longueurTexte2/2.0));
-    positionTexte2.y = 2*(TAILLE_FENETRE_Y)/10;
+	initialise_sdl_rect(&positionTexte2, (TAILLE_FENETRE_X/2.0) - (longueurTexte2/2.0), (TAILLE_FENETRE_Y)/5, 0, 0);
     TTF_CloseFont(police);
     
     /*AFFICHAGE*/
@@ -3366,10 +3364,10 @@ void nouvelle_partie(Terrain_espace ** un_terrain_espace, Jeu **un_jeu, FMOD_SYS
     }
     
     /*Scan du nom et sauvegarde*/
-    printf("Tapez ci-dessous le nom du joueur 1 :\n");
-    scanf("%s", nom1);
-    printf("Tapez ci-dessous le nom du joueur 2 :\n");
-    scanf("%s", nom2);
+	initialise_sdl_rect(&position_saisie_texte, 350, 200, 0, 0);
+	saisie_texte_sdl(nom1, ecran, position_saisie_texte);
+	initialise_sdl_rect(&position_saisie_texte, 350, 250, 0, 0);
+	saisie_texte_sdl(nom2, ecran, position_saisie_texte);
     
     /*Disparition du menu*/
     SDL_FreeSurface(ecran);
@@ -3645,6 +3643,356 @@ void ecran_titre(void)
     }
 }
 
+void saisie_texte_sdl(char nom[50], SDL_Surface* ecran, SDL_Rect position_saisie_texte)
+{
+	SDL_Surface* fond_texte = NULL;
+	SDL_Surface* surface_texte = NULL;
+	SDL_Rect position_texte = {5, 5, 0, 0};
+	TTF_Font *police = NULL;
+	SDL_Color couleur_blanche = {255, 255, 255};
+	char c[10];
+	int i = 0;
+	bool saisie_en_cours = true;
+	SDL_Event evenement;
+
+	police = TTF_OpenFont("../graphiques/fonts/space_age.ttf", 40);
+
+	fond_texte = SDL_CreateRGBSurface(SDL_HWSURFACE, 600, 50, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
+	SDL_FillRect(fond_texte, NULL, SDL_MapRGB(ecran->format, 0, 0, 0));
+	SDL_BlitSurface(fond_texte, NULL, ecran, &position_saisie_texte);
+	SDL_Flip(ecran);
+
+	while(saisie_en_cours)
+	{
+		SDL_WaitEvent(&evenement);
+		switch(evenement.type)
+		{
+		case SDL_KEYDOWN:
+			switch(evenement.key.keysym.sym)
+			{
+			case SDLK_q:
+				nom[i] = 'A';
+				sprintf(c, "A");
+				i++;
+				surface_texte = TTF_RenderText_Blended(police, c, couleur_blanche);
+				SDL_BlitSurface(surface_texte, NULL, fond_texte, &position_texte);
+				SDL_BlitSurface(fond_texte, NULL, ecran, &position_saisie_texte);
+				initialise_sdl_rect(&position_texte, position_texte.x + surface_texte->w + 2, 5, 0, 0);
+				SDL_Flip(ecran);
+				SDL_FreeSurface(surface_texte);
+				break;
+			case SDLK_b:
+				nom[i] = 'B';
+				sprintf(c, "B");
+				i++;
+				surface_texte = TTF_RenderText_Blended(police, c, couleur_blanche);
+				SDL_BlitSurface(surface_texte, NULL, fond_texte, &position_texte);
+				SDL_BlitSurface(fond_texte, NULL, ecran, &position_saisie_texte);
+				initialise_sdl_rect(&position_texte, position_texte.x + surface_texte->w + 2, 5, 0, 0);
+				SDL_Flip(ecran);
+				SDL_FreeSurface(surface_texte);
+				break;
+			case SDLK_c:
+				nom[i] = 'C';
+				sprintf(c, "C");
+				i++;
+				surface_texte = TTF_RenderText_Blended(police, c, couleur_blanche);
+				SDL_BlitSurface(surface_texte, NULL, fond_texte, &position_texte);
+				SDL_BlitSurface(fond_texte, NULL, ecran, &position_saisie_texte);
+				initialise_sdl_rect(&position_texte, position_texte.x + surface_texte->w + 2, 5, 0, 0);
+				SDL_Flip(ecran);
+				SDL_FreeSurface(surface_texte);
+				break;
+			case SDLK_d:
+				nom[i] = 'D';
+				sprintf(c, "D");
+				i++;
+				surface_texte = TTF_RenderText_Blended(police, c, couleur_blanche);
+				SDL_BlitSurface(surface_texte, NULL, fond_texte, &position_texte);
+				SDL_BlitSurface(fond_texte, NULL, ecran, &position_saisie_texte);
+				initialise_sdl_rect(&position_texte, position_texte.x + surface_texte->w + 2, 5, 0, 0);
+				SDL_Flip(ecran);
+				SDL_FreeSurface(surface_texte);
+				break;
+			case SDLK_e:
+				nom[i] = 'E';
+				sprintf(c, "E");
+				i++;
+				surface_texte = TTF_RenderText_Blended(police, c, couleur_blanche);
+				SDL_BlitSurface(surface_texte, NULL, fond_texte, &position_texte);
+				SDL_BlitSurface(fond_texte, NULL, ecran, &position_saisie_texte);
+				initialise_sdl_rect(&position_texte, position_texte.x + surface_texte->w + 2, 5, 0, 0);
+				SDL_Flip(ecran);
+				SDL_FreeSurface(surface_texte);
+				break;
+			case SDLK_f:
+				nom[i] = 'F';
+				sprintf(c, "F");
+				i++;
+				surface_texte = TTF_RenderText_Blended(police, c, couleur_blanche);
+				SDL_BlitSurface(surface_texte, NULL, fond_texte, &position_texte);
+				SDL_BlitSurface(fond_texte, NULL, ecran, &position_saisie_texte);
+				initialise_sdl_rect(&position_texte, position_texte.x + surface_texte->w + 2, 5, 0, 0);
+				SDL_Flip(ecran);
+				SDL_FreeSurface(surface_texte);
+				break;
+			case SDLK_g:
+				nom[i] = 'G';
+				sprintf(c, "G");
+				i++;
+				surface_texte = TTF_RenderText_Blended(police, c, couleur_blanche);
+				SDL_BlitSurface(surface_texte, NULL, fond_texte, &position_texte);
+				SDL_BlitSurface(fond_texte, NULL, ecran, &position_saisie_texte);
+				initialise_sdl_rect(&position_texte, position_texte.x + surface_texte->w + 2, 5, 0, 0);
+				SDL_Flip(ecran);
+				SDL_FreeSurface(surface_texte);
+				break;
+			case SDLK_h:
+				nom[i] = 'H';
+				sprintf(c, "H");
+				i++;
+				surface_texte = TTF_RenderText_Blended(police, c, couleur_blanche);
+				SDL_BlitSurface(surface_texte, NULL, fond_texte, &position_texte);
+				SDL_BlitSurface(fond_texte, NULL, ecran, &position_saisie_texte);
+				initialise_sdl_rect(&position_texte, position_texte.x + surface_texte->w + 2, 5, 0, 0);
+				SDL_Flip(ecran);
+				SDL_FreeSurface(surface_texte);
+				break;
+			case SDLK_i:
+				nom[i] = 'I';
+				sprintf(c, "I");
+				i++;
+				surface_texte = TTF_RenderText_Blended(police, c, couleur_blanche);
+				SDL_BlitSurface(surface_texte, NULL, fond_texte, &position_texte);
+				SDL_BlitSurface(fond_texte, NULL, ecran, &position_saisie_texte);
+				initialise_sdl_rect(&position_texte, position_texte.x + surface_texte->w + 2, 5, 0, 0);
+				SDL_Flip(ecran);
+				SDL_FreeSurface(surface_texte);
+				break;
+			case SDLK_j:
+				nom[i] = 'J';
+				sprintf(c, "J");
+				i++;
+				surface_texte = TTF_RenderText_Blended(police, c, couleur_blanche);
+				SDL_BlitSurface(surface_texte, NULL, fond_texte, &position_texte);
+				SDL_BlitSurface(fond_texte, NULL, ecran, &position_saisie_texte);
+				initialise_sdl_rect(&position_texte, position_texte.x + surface_texte->w + 2, 5, 0, 0);
+				SDL_Flip(ecran);
+				SDL_FreeSurface(surface_texte);
+				break;
+			case SDLK_k:
+				nom[i] = 'K';
+				sprintf(c, "K");
+				i++;
+				surface_texte = TTF_RenderText_Blended(police, c, couleur_blanche);
+				SDL_BlitSurface(surface_texte, NULL, fond_texte, &position_texte);
+				SDL_BlitSurface(fond_texte, NULL, ecran, &position_saisie_texte);
+				initialise_sdl_rect(&position_texte, position_texte.x + surface_texte->w + 2, 5, 0, 0);
+				SDL_Flip(ecran);
+				SDL_FreeSurface(surface_texte);
+				break;
+			case SDLK_l:
+				nom[i] = 'L';
+				sprintf(c, "L");
+				i++;
+				surface_texte = TTF_RenderText_Blended(police, c, couleur_blanche);
+				SDL_BlitSurface(surface_texte, NULL, fond_texte, &position_texte);
+				SDL_BlitSurface(fond_texte, NULL, ecran, &position_saisie_texte);
+				initialise_sdl_rect(&position_texte, position_texte.x + surface_texte->w + 2, 5, 0, 0);
+				SDL_Flip(ecran);
+				SDL_FreeSurface(surface_texte);
+				break;
+			case SDLK_SEMICOLON:
+				nom[i] = 'M';
+				sprintf(c, "M");
+				i++;
+				surface_texte = TTF_RenderText_Blended(police, c, couleur_blanche);
+				SDL_BlitSurface(surface_texte, NULL, fond_texte, &position_texte);
+				SDL_BlitSurface(fond_texte, NULL, ecran, &position_saisie_texte);
+				initialise_sdl_rect(&position_texte, position_texte.x + surface_texte->w + 2, 5, 0, 0);
+				SDL_Flip(ecran);
+				SDL_FreeSurface(surface_texte);
+				break;
+			case SDLK_n:
+				nom[i] = 'N';
+				sprintf(c, "N");
+				i++;
+				surface_texte = TTF_RenderText_Blended(police, c, couleur_blanche);
+				SDL_BlitSurface(surface_texte, NULL, fond_texte, &position_texte);
+				SDL_BlitSurface(fond_texte, NULL, ecran, &position_saisie_texte);
+				initialise_sdl_rect(&position_texte, position_texte.x + surface_texte->w + 2, 5, 0, 0);
+				SDL_Flip(ecran);
+				SDL_FreeSurface(surface_texte);
+				break;
+			case SDLK_o:
+				nom[i] = 'O';
+				sprintf(c, "O");
+				i++;
+				surface_texte = TTF_RenderText_Blended(police, c, couleur_blanche);
+				SDL_BlitSurface(surface_texte, NULL, fond_texte, &position_texte);
+				SDL_BlitSurface(fond_texte, NULL, ecran, &position_saisie_texte);
+				initialise_sdl_rect(&position_texte, position_texte.x + surface_texte->w + 2, 5, 0, 0);
+				SDL_Flip(ecran);
+				SDL_FreeSurface(surface_texte);
+				break;
+			case SDLK_p:
+				nom[i] = 'P';
+				sprintf(c, "P");
+				i++;
+				surface_texte = TTF_RenderText_Blended(police, c, couleur_blanche);
+				SDL_BlitSurface(surface_texte, NULL, fond_texte, &position_texte);
+				SDL_BlitSurface(fond_texte, NULL, ecran, &position_saisie_texte);
+				initialise_sdl_rect(&position_texte, position_texte.x + surface_texte->w + 2, 5, 0, 0);
+				SDL_Flip(ecran);
+				SDL_FreeSurface(surface_texte);
+				break;
+			case SDLK_a:
+				nom[i] = 'Q';
+				sprintf(c, "Q");
+				i++;
+				surface_texte = TTF_RenderText_Blended(police, c, couleur_blanche);
+				SDL_BlitSurface(surface_texte, NULL, fond_texte, &position_texte);
+				SDL_BlitSurface(fond_texte, NULL, ecran, &position_saisie_texte);
+				initialise_sdl_rect(&position_texte, position_texte.x + surface_texte->w + 2, 5, 0, 0);
+				SDL_Flip(ecran);
+				SDL_FreeSurface(surface_texte);
+				break;
+			case SDLK_r:
+				nom[i] = 'R';
+				sprintf(c, "R");
+				i++;
+				surface_texte = TTF_RenderText_Blended(police, c, couleur_blanche);
+				SDL_BlitSurface(surface_texte, NULL, fond_texte, &position_texte);
+				SDL_BlitSurface(fond_texte, NULL, ecran, &position_saisie_texte);
+				initialise_sdl_rect(&position_texte, position_texte.x + surface_texte->w + 2, 5, 0, 0);
+				SDL_Flip(ecran);
+				SDL_FreeSurface(surface_texte);
+				break;
+			case SDLK_s:
+				nom[i] = 'S';
+				sprintf(c, "S");
+				i++;
+				surface_texte = TTF_RenderText_Blended(police, c, couleur_blanche);
+				SDL_BlitSurface(surface_texte, NULL, fond_texte, &position_texte);
+				SDL_BlitSurface(fond_texte, NULL, ecran, &position_saisie_texte);
+				initialise_sdl_rect(&position_texte, position_texte.x + surface_texte->w + 2, 5, 0, 0);
+				SDL_Flip(ecran);
+				SDL_FreeSurface(surface_texte);
+				break;
+			case SDLK_t:
+				nom[i] = 'T';
+				sprintf(c, "T");
+				i++;
+				surface_texte = TTF_RenderText_Blended(police, c, couleur_blanche);
+				SDL_BlitSurface(surface_texte, NULL, fond_texte, &position_texte);
+				SDL_BlitSurface(fond_texte, NULL, ecran, &position_saisie_texte);
+				initialise_sdl_rect(&position_texte, position_texte.x + surface_texte->w + 2, 5, 0, 0);
+				SDL_Flip(ecran);
+				SDL_FreeSurface(surface_texte);
+				break;
+			case SDLK_u:
+				nom[i] = 'U';
+				sprintf(c, "U");
+				i++;
+				surface_texte = TTF_RenderText_Blended(police, c, couleur_blanche);
+				SDL_BlitSurface(surface_texte, NULL, fond_texte, &position_texte);
+				SDL_BlitSurface(fond_texte, NULL, ecran, &position_saisie_texte);
+				initialise_sdl_rect(&position_texte, position_texte.x + surface_texte->w + 2, 5, 0, 0);
+				SDL_Flip(ecran);
+				SDL_FreeSurface(surface_texte);
+				break;
+			case SDLK_v:
+				nom[i] = 'V';
+				sprintf(c, "V");
+				i++;
+				surface_texte = TTF_RenderText_Blended(police, c, couleur_blanche);
+				SDL_BlitSurface(surface_texte, NULL, fond_texte, &position_texte);
+				SDL_BlitSurface(fond_texte, NULL, ecran, &position_saisie_texte);
+				initialise_sdl_rect(&position_texte, position_texte.x + surface_texte->w + 2, 5, 0, 0);
+				SDL_Flip(ecran);
+				SDL_FreeSurface(surface_texte);
+				break;
+			case SDLK_z:
+				nom[i] = 'W';
+				sprintf(c, "W");
+				i++;
+				surface_texte = TTF_RenderText_Blended(police, c, couleur_blanche);
+				SDL_BlitSurface(surface_texte, NULL, fond_texte, &position_texte);
+				SDL_BlitSurface(fond_texte, NULL, ecran, &position_saisie_texte);
+				initialise_sdl_rect(&position_texte, position_texte.x + surface_texte->w + 2, 5, 0, 0);
+				SDL_FreeSurface(surface_texte);
+				break;
+			case SDLK_x:
+				nom[i] = 'X';
+				sprintf(c, "X");
+				i++;
+				surface_texte = TTF_RenderText_Blended(police, c, couleur_blanche);
+				SDL_BlitSurface(surface_texte, NULL, fond_texte, &position_texte);
+				SDL_BlitSurface(fond_texte, NULL, ecran, &position_saisie_texte);
+				initialise_sdl_rect(&position_texte, position_texte.x + surface_texte->w + 2, 5, 0, 0);
+				SDL_Flip(ecran);
+				SDL_FreeSurface(surface_texte);
+				break;
+			case SDLK_y:
+				nom[i] = 'Y';
+				sprintf(c, "Y");
+				i++;
+				surface_texte = TTF_RenderText_Blended(police, c, couleur_blanche);
+				SDL_BlitSurface(surface_texte, NULL, fond_texte, &position_texte);
+				SDL_BlitSurface(fond_texte, NULL, ecran, &position_saisie_texte);
+				initialise_sdl_rect(&position_texte, position_texte.x + surface_texte->w + 2, 5, 0, 0);
+				SDL_Flip(ecran);
+				SDL_FreeSurface(surface_texte);
+				break;
+			case SDLK_w:
+				nom[i] = 'Z';
+				sprintf(c, "Z");
+				i++;
+				surface_texte = TTF_RenderText_Blended(police, c, couleur_blanche);
+				SDL_BlitSurface(surface_texte, NULL, fond_texte, &position_texte);
+				SDL_BlitSurface(fond_texte, NULL, ecran, &position_saisie_texte);
+				initialise_sdl_rect(&position_texte, position_texte.x + surface_texte->w + 2, 5, 0, 0);
+				SDL_Flip(ecran);
+				SDL_FreeSurface(surface_texte);
+				break;
+			case SDLK_SPACE:
+				nom[i] = ' ';
+				sprintf(c, " ");
+				i++;
+				surface_texte = TTF_RenderText_Blended(police, c, couleur_blanche);
+				SDL_BlitSurface(surface_texte, NULL, fond_texte, &position_texte);
+				SDL_BlitSurface(fond_texte, NULL, ecran, &position_saisie_texte);
+				initialise_sdl_rect(&position_texte, position_texte.x + surface_texte->w + 2, 5, 0, 0);
+				SDL_Flip(ecran);
+				SDL_FreeSurface(surface_texte);
+				break;
+			case SDLK_BACKSPACE:
+				if(i>1)
+				{
+					i--;
+					surface_texte = SDL_CreateRGBSurface(SDL_HWSURFACE, 50, position_texte.x - 12, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
+					SDL_FillRect(surface_texte, NULL, SDL_MapRGB(ecran->format, 0, 0, 0));
+					initialise_sdl_rect(&position_texte, position_texte.x - surface_texte->w, 5, 0, 0);
+					SDL_BlitSurface(surface_texte, NULL, fond_texte, &position_texte);
+					SDL_BlitSurface(fond_texte, NULL, ecran, &position_saisie_texte);
+					//initialise_sdl_rect(&position_texte, position_texte.x + surface_texte->w + 2, 5, 0, 0);
+					SDL_Flip(ecran);
+					SDL_FreeSurface(surface_texte);
+				}
+				break;
+			case SDLK_RETURN:
+				nom[i] = '\0';
+				saisie_en_cours = false;
+				break;
+			default:
+				break;
+			}
+		default:
+			break;
+		}
+	}
+}
+
 /**
  * \brief      affiche l'attaque 
  * \details    
@@ -3867,7 +4215,7 @@ void clic_sur_bouton_attaque(SDL_Event evenement,SDL_Rect pos_clic,SDL_Rect pos_
  * \param      flotte2        Pointeur sur Flotte  
  * \param      infos2        Pointeur sur char  
  */
-void verifie_etat_combat(Jeu *jeu,Terrain_combat *un_terrain_combat,Flotte *flotte1,Flotte *flotte2,char * infos2,int gagnant,bool continuer){
+void verifie_etat_combat(Jeu *jeu,Terrain_combat *un_terrain_combat,Flotte *flotte1,Flotte *flotte2,char * infos2,int gagnant,bool* continuer){
 /*vérifie si le combat est fini et quel joueur l'a remporté*/
 	int taille_flotte1,taille_flotte2,i;
 	Joueur * joueur;
@@ -3879,7 +4227,7 @@ void verifie_etat_combat(Jeu *jeu,Terrain_combat *un_terrain_combat,Flotte *flot
 		joueur = get_ieme_joueur_jeu(jeu,i);
 		sprintf(infos2,"Gagné %s!",joueur->nom_joueur);
 		gagnant = 1;
-		continuer = 0;
+		*continuer = 0;
 	}
 	else if(taille_flotte2 == 0)
 	{
@@ -3887,7 +4235,7 @@ void verifie_etat_combat(Jeu *jeu,Terrain_combat *un_terrain_combat,Flotte *flot
 		joueur = get_ieme_joueur_jeu(jeu,i);
 		sprintf(infos2,"Gagné %s !",joueur->nom_joueur);
 		gagnant = 2;
-		continuer = 0;
+		*continuer = 0;
 	}
 }
 
@@ -3965,10 +4313,6 @@ int affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat,Flotte* f
 	initialise_sdl_rect(&position_passer,X_BOUTON_PASSER,Y_BOUTON_PASSER,TAILLE_X_BOUTON_ATTAQUER,TAILLE_Y_BOUTON_ATTAQUER);
 
 	
-	
-
-	SDL_WM_SetCaption("Conquest of Space", "COS");
-	
 	couleur = SDL_MapRGB(ecran->format,150,0,0);
 	SDL_FillRect(ecran, NULL, couleur);
 	SDL_Flip(ecran);
@@ -4033,7 +4377,7 @@ int affichage_ecran_combat(Jeu* jeu ,Terrain_combat *un_terrain_combat,Flotte* f
 					} /*on affiche les infos de l'unité */
 					SDL_FreeSurface(texte);
 					texte = TTF_RenderUTF8_Blended(police,infos,couleur_police);
-					verifie_etat_combat(jeu,un_terrain_combat,flotte1,flotte2,infos2,gagnant,continuer); /*on vérifie si le combat est fini*/
+					verifie_etat_combat(jeu,un_terrain_combat,flotte1,flotte2,infos2,gagnant,&continuer); /*on vérifie si le combat est fini*/
 					SDL_FreeSurface(texte2);
 					texte2 = TTF_RenderUTF8_Blended(police,infos2,couleur_police);
 					
