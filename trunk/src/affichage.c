@@ -4227,6 +4227,8 @@ bool verifie_etat_combat(Jeu *jeu,Terrain_combat *un_terrain_combat,Flotte *flot
 		i= get_indice_joueur_flotte(flotte2);
 		joueur = get_ieme_joueur_jeu(jeu,i);
 		sprintf(infos2,"Gagné %s!",joueur->nom_joueur);
+		detruire_flotte(&flotte1);
+
 		gagnant = 1;
 		return 0;
 	}
@@ -4235,6 +4237,8 @@ bool verifie_etat_combat(Jeu *jeu,Terrain_combat *un_terrain_combat,Flotte *flot
 		i= get_indice_joueur_flotte(flotte1);
 		joueur = get_ieme_joueur_jeu(jeu,i);
 		sprintf(infos2,"Gagné %s !",joueur->nom_joueur);
+		
+		detruire_flotte(&flotte2);
 		gagnant = 2;
 		return 0;
 	}
