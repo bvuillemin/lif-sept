@@ -30,7 +30,6 @@ Case_terrain_combat *creer_case_combat()
 }
 void libere_case_terrain_combat(Case_terrain_combat *une_case_terrain_combat)
 {
-    free(une_case_terrain_combat->unite);
     une_case_terrain_combat->x_combat=0;
     une_case_terrain_combat->y_combat=0;
     une_case_terrain_combat->type_case_terrain_combat='N';
