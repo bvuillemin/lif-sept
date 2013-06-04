@@ -2897,7 +2897,7 @@ void menu_aide(void)
                     SDL_FreeSurface(Conquerir);
                     SDL_FreeSurface(Construire);
                     imageDeFond_Droit = IMG_Load("../graphiques/images/Deplacer1.png");
-                    Deplacer = IMG_Load("../graphiques/images/Deplacer_pressé.png");
+                    Deplacer = IMG_Load("../graphiques/images/Deplacer_Presse.png");
                     Conquerir = IMG_Load("../graphiques/images/Conquerir.png");
                     Construire = IMG_Load("../graphiques/images/Construire.png");
 
@@ -2923,7 +2923,7 @@ void menu_aide(void)
                     SDL_FreeSurface(Construire);
                     imageDeFond_Droit = IMG_Load("../graphiques/images/Fond_titre.png");
                     Deplacer = IMG_Load("../graphiques/images/Deplacer.png");
-                    Conquerir = IMG_Load("../graphiques/images/Conquerir_pressé.png");
+                    Conquerir = IMG_Load("../graphiques/images/Conquerir_Presse.png");
                     Construire = IMG_Load("../graphiques/images/Construire.png");
 
                     SDL_BlitSurface(imageDeFond_Gauche, NULL, ecran, NULL);
@@ -2948,7 +2948,7 @@ void menu_aide(void)
                     imageDeFond_Droit = IMG_Load("../graphiques/images/Fond_titre.png");
                     Deplacer = IMG_Load("../graphiques/images/Deplacer.png");
                     Conquerir = IMG_Load("../graphiques/images/Conquerir.png");
-                    Construire = IMG_Load("../graphiques/images/Construire_pressé.png");
+                    Construire = IMG_Load("../graphiques/images/Construire_Presse.png");
 
                     SDL_BlitSurface(imageDeFond_Gauche, NULL, ecran, NULL);
                     SDL_BlitSurface(imageDeFond_Droit, NULL, ecran, &positionImage_droit);
@@ -3086,7 +3086,7 @@ void menu_pause(Terrain_espace *un_terrain_espace, Jeu *un_jeu, int * exit)
                 SDL_FreeSurface(ecran);
                 if(test_souris_rectangle(positionRetour,xm,ym))
                 {
-                    Retour = IMG_Load("../graphiques/images/Retour_Pressé.png");
+                    Retour = IMG_Load("../graphiques/images/Retour_Presse.png");
                 }
                 if(!test_souris_rectangle(positionRetour,xm,ym))
                 {
@@ -3094,7 +3094,7 @@ void menu_pause(Terrain_espace *un_terrain_espace, Jeu *un_jeu, int * exit)
                 }
                 if(test_souris_rectangle(positionAide,xm,ym))
                 {
-                    Aide = IMG_Load("../graphiques/images/Aide_Pressé.png");
+                    Aide = IMG_Load("../graphiques/images/Aide_Presse.png");
                 }
                 if(!test_souris_rectangle(positionAide,xm,ym))
                 {
@@ -3102,7 +3102,7 @@ void menu_pause(Terrain_espace *un_terrain_espace, Jeu *un_jeu, int * exit)
                 }
                 if(test_souris_rectangle(positionSauvegarder,xm,ym))
                 {
-                    Sauvegarder = IMG_Load("../graphiques/images/Sauvegarder_Pressé.png");
+                    Sauvegarder = IMG_Load("../graphiques/images/Sauvegarder_Presse.png");
                 }
                 if(!test_souris_rectangle(positionSauvegarder,xm,ym))
                 {
@@ -3110,7 +3110,7 @@ void menu_pause(Terrain_espace *un_terrain_espace, Jeu *un_jeu, int * exit)
                 }
                 if(test_souris_rectangle(positionQuitter,xm,ym))
                 {
-                    Quitter = IMG_Load("../graphiques/images/Quitter_Pressé.png");
+                    Quitter = IMG_Load("../graphiques/images/Quitter_Presse.png");
                 }
                 if(!test_souris_rectangle(positionQuitter,xm,ym))
                 {
@@ -3689,7 +3689,7 @@ void ecran_titre(void)
                 SDL_FreeSurface(Quitter);
                 if(test_souris_rectangle(positionNouvellePartie,xm,ym))
                 {
-                    NouvellePartie = IMG_Load("../graphiques/images/Nouvelle_Partie_Pressé.png");
+                    NouvellePartie = IMG_Load("../graphiques/images/Nouvelle_Partie_Presse.png");
                 }
                 if(!test_souris_rectangle(positionNouvellePartie,xm,ym))
                 {
@@ -3697,7 +3697,7 @@ void ecran_titre(void)
                 }
                 if(test_souris_rectangle(positionCharger,xm,ym))
                 {
-                    Charger = IMG_Load("../graphiques/images/Charger_Pressé.png");
+                    Charger = IMG_Load("../graphiques/images/Charger_Presse.png");
                 }
                 if(!test_souris_rectangle(positionCharger,xm,ym))
                 {
@@ -3705,7 +3705,7 @@ void ecran_titre(void)
                 }
                 if(test_souris_rectangle(positionQuitter,xm,ym))
                 {
-                    Quitter = IMG_Load("../graphiques/images/Quitter_Pressé.png");
+                    Quitter = IMG_Load("../graphiques/images/Quitter_Presse.png");
                 }
                 if(!test_souris_rectangle(positionQuitter,xm,ym))
                 {
