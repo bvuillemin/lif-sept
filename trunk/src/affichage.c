@@ -1350,7 +1350,7 @@ SDL_Surface* affichage_flotte_ennemie(Jeu *un_jeu)
 	une_unite = SDL_CreateRGBSurface(SDL_HWSURFACE, 100, 100, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
 	for(i=0; i<une_flotte->taille_flotte;i++)
 	{
-		SDL_FillRect(une_unite, NULL, SDL_MapRGB(info_flotte->format, 0, 0, 100));
+		une_unite = IMG_Load("../graphiques/images/?.png");;
 		initialise_sdl_rect(&position_une_unite, 10 + 120*i, 35, 0, 0);
 		SDL_BlitSurface(une_unite, NULL, fond_flotte, &position_une_unite);
 	}
