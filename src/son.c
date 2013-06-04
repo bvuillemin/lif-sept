@@ -20,7 +20,7 @@
 void initialiser_systeme_son(FMOD_SYSTEM *system)
 {
 	FMOD_System_Create(&system);
-	FMOD_System_Init(system, 5, FMOD_INIT_NORMAL, NULL);
+	FMOD_System_Init(system, 10, FMOD_INIT_NORMAL, NULL);
 }
 
 
@@ -37,16 +37,19 @@ void lire_musique(FMOD_SYSTEM *system, FMOD_SOUND *musique, char **tab_chanson)
 	FMOD_CHANNEL *channel;
 	int choix;
 
+	FMOD_System_GetChannel(system, 0, &channel);
+	FMOD_Channel_Stop(channel);
+	FMOD_Sound_Release(musique);
 	choix = rand()%5;
 	resultat = FMOD_System_CreateSound(system, tab_chanson[choix], FMOD_SOFTWARE | FMOD_2D | FMOD_LOOP_OFF | FMOD_CREATESTREAM, 0, &musique);
 	if (resultat != FMOD_OK)
 	{
-		fprintf(stderr, "Impossible de lire le fichier mp3\n");
+		fprintf(stderr, "Impossible de lire une chanson\n");
 	}
 
-	FMOD_System_PlaySound(system, 1, musique, 0, NULL);
-	FMOD_System_GetChannel(system, 1, &channel);
-	FMOD_Channel_SetVolume(channel, 0.5);
+	FMOD_System_PlaySound(system, 0, musique, 0, NULL);
+	FMOD_System_GetChannel(system, 0, &channel);
+	FMOD_Channel_SetVolume(channel, 0.4);
 }
 
 
@@ -61,7 +64,7 @@ void maj_musique(FMOD_SYSTEM *system, FMOD_SOUND *musique, char **tab_chanson)
 {
 	FMOD_CHANNEL *channel;
 	FMOD_BOOL fin_musique = false;
-	FMOD_System_GetChannel(system, 1, &channel);
+	FMOD_System_GetChannel(system, 0, &channel);
 	FMOD_Channel_IsPlaying(channel, &fin_musique);
 
 
@@ -80,6 +83,14 @@ void maj_musique(FMOD_SYSTEM *system, FMOD_SOUND *musique, char **tab_chanson)
  */
 void lire_son(FMOD_SYSTEM *system, FMOD_SOUND *son)
 {
+	FMOD_CHANNEL* channel;
+	int i;
+
+	for(i=1;i<10;i++)
+	{
+		FMOD_System_GetChannel(system, i, &channel);
+		FMOD_Channel_Stop(channel);
+	}
 	FMOD_System_PlaySound(system, FMOD_CHANNEL_FREE, son, 0, NULL);
 }
 
@@ -113,7 +124,6 @@ void initialiser_tableau_chanson(char **tab_chanson)
 	tab_chanson[5] = "../audio/musique/Stargate.mp3";
 }
 
-
 /**
  * \brief      Insère les chaînes de caractères qui correspondent aux musiques
  * \details    Ce tableau regroupe les musiques utilisées
@@ -122,13 +132,12 @@ void initialiser_tableau_chanson(char **tab_chanson)
 void initialiser_tableau_chanson_combat(char **tab_chanson)
 {
 	tab_chanson[0] = "../audio/musique/Combat1.mp3";
-	tab_chanson[1] = "../audio/musique/Combat1.mp3";
-	tab_chanson[2] = "../audio/musique/Combat1.mp3";
-	tab_chanson[3] = "../audio/musique/Combat1.mp3";
-	tab_chanson[4] = "../audio/musique/Combat1.mp3";
-	tab_chanson[5] = "../audio/musique/Combat1.mp3";
+	tab_chanson[1] = "../audio/musique/Combat2.mp3";
+	tab_chanson[2] = "../audio/musique/Combat3.mp3";
+	tab_chanson[3] = "../audio/musique/Combat4.mp3";
+	tab_chanson[4] = "../audio/musique/Combat5.mp3";
+	tab_chanson[5] = "../audio/musique/Combat6.mp3";
 }
-
 
 /**
  * \brief      Insère les chaînes de caractères qui correspondent aux musiques
@@ -143,4 +152,19 @@ void initialiser_tableau_chanson_menu(char **tab_chanson)
 	tab_chanson[3] = "../audio/musique/Menu.mp3";
 	tab_chanson[4] = "../audio/musique/Menu.mp3";
 	tab_chanson[5] = "../audio/musique/Menu.mp3";
+}
+
+/**
+ * \brief      Insère les chaînes de caractères qui correspondent aux musiques
+ * \details    Ce tableau regroupe les musiques utilisées
+ * \param      tab_chanson        Tableau de chaînes de caractères indiquant le nom des fichiers à lire
+ */
+void initialiser_tableau_chanson_game_over(char **tab_chanson)
+{
+	tab_chanson[0] = "../audio/musique/GameOver.mp3";
+	tab_chanson[1] = "../audio/musique/GameOver.mp3";
+	tab_chanson[2] = "../audio/musique/GameOver.mp3";
+	tab_chanson[3] = "../audio/musique/GameOver.mp3";
+	tab_chanson[4] = "../audio/musique/GameOver.mp3";
+	tab_chanson[5] = "../audio/musique/GameOver.mp3";
 }

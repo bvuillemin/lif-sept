@@ -950,11 +950,10 @@ void afficher_infobulle(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surf
 /**
  * \brief      Surface sur laquelle les ressource sont affichées
  * \param      un_jeu             Pointeur sur le jeu pour récupérer des informations
- * \param      un_jeu             Pointeur sur le jeu pour récupérer des informations
- * \return     SDL_Surface        Renvoie la surface voulue
  */
-SDL_Surface* affichage_ressource(Jeu *un_jeu, SDL_Surface *surface_ressource)
+SDL_Surface* affichage_ressource(Jeu *un_jeu)
 {
+	SDL_Surface *surface_ressource = NULL;
     SDL_Surface *nom_ressource = NULL;
     SDL_Surface *nombre_tour = NULL;
     SDL_Rect position;
@@ -1001,8 +1000,14 @@ SDL_Surface* affichage_ressource(Jeu *un_jeu, SDL_Surface *surface_ressource)
     return surface_ressource;
 }
 
-SDL_Surface* affichage_creation_unite(Planete* une_planete, SDL_Surface *panneau_unite)
+
+/**
+ * \brief      Surface sur laquelle la création des unités 
+ * \param      une_planete           Pointeur sur la planète dont on veut créer les unités
+ */
+SDL_Surface* affichage_creation_unite(Planete* une_planete)
 {
+	SDL_Surface *panneau_unite = NULL;
     SDL_Surface *unite1;
 	SDL_Surface *unite2;
 	SDL_Surface *unite3;
@@ -1065,8 +1070,13 @@ SDL_Surface* affichage_creation_unite(Planete* une_planete, SDL_Surface *panneau
     return panneau_unite;
 }
 
-SDL_Surface* affichage_planete(Planete* une_planete, SDL_Surface *info_planete)
+/**
+ * \brief      Surface sur laquelle on affiche les infos de planète
+ * \param      une_planete           Pointeur sur la planète dont on affiche les infos
+ */
+SDL_Surface* affichage_planete(Planete* une_planete)
 {
+	SDL_Surface *info_planete = NULL;
     SDL_Surface *planete = NULL;
     SDL_Surface *fond_planete = NULL;
     SDL_Surface *batiment = NULL;
@@ -1169,8 +1179,13 @@ get_metal(une_planete), get_argent(une_planete), get_carburant(une_planete), get
     return fond_planete;
 }
 
-SDL_Surface* affichage_planete_ennemie(Case_terrain_espace *une_case_terrain_espace, SDL_Surface *info_planete)
+/**
+ * \brief      Surface sur laquelle on affiche les infos de planète ennemie
+ * \param      une_planete           Pointeur sur la planète ennemie dont on affiche les infos
+ */
+SDL_Surface* affichage_planete_ennemie(Case_terrain_espace *une_case_terrain_espace)
 {
+	SDL_Surface *info_planete = NULL;
 	SDL_Surface *planete = NULL;
 	SDL_Rect position_texte;
 	TTF_Font *police = NULL;
@@ -1194,8 +1209,14 @@ SDL_Surface* affichage_planete_ennemie(Case_terrain_espace *une_case_terrain_esp
 	return info_planete;
 }
 
-SDL_Surface* affichage_flotte(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *info_flotte)
+/**
+ * \brief      Surface sur laquelle on affiche les infos de flotte
+ * \param      un_jeu                    Pointeur sur le jeu
+ * \param      un_terrain_espace         Pointeur sur le Terrain_espace pour vérifier certains boutons à afficher
+ */
+SDL_Surface* affichage_flotte(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
 {
+	SDL_Surface *info_flotte = NULL;
     SDL_Surface *flotte = NULL;
 	SDL_Surface *une_unite1 = NULL;
 	SDL_Surface *une_unite2 = NULL;
@@ -1300,8 +1321,13 @@ SDL_Surface* affichage_flotte(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SD
     return info_flotte;
 }
 
-SDL_Surface* affichage_flotte_ennemie(Jeu *un_jeu, SDL_Surface *info_flotte)
+/**
+ * \brief      Surface sur laquelle on affiche les infos de flotte ennemie
+ * \param      un_jeu                    Pointeur sur le jeu
+ */
+SDL_Surface* affichage_flotte_ennemie(Jeu *un_jeu)
 {
+	SDL_Surface *info_flotte =NULL;
 	SDL_Surface *flotte = NULL;
 	SDL_Surface *fond_flotte = NULL;
 	SDL_Surface *une_unite = NULL;
@@ -1341,6 +1367,11 @@ SDL_Surface* affichage_flotte_ennemie(Jeu *un_jeu, SDL_Surface *info_flotte)
 	return fond_flotte;
 }
 
+/**
+ * \brief      Surface où l'on crée l'affichage du terrain
+ * \details    On parcourt le terrain pour afficher les informations nécessaires puis on stocke la surface en mémoire pour éviter de la recréer
+ * \param      un_terrain_espace         Pointeur sur le Terrain_espace
+ */
 SDL_Surface* creer_affichage_terrain(Terrain_espace *un_terrain_espace)
 {
 	SDL_Surface *carte = NULL;
@@ -1404,6 +1435,11 @@ SDL_Surface* creer_affichage_terrain(Terrain_espace *un_terrain_espace)
 	return carte;
 }
 
+/**
+ * \brief      Surface où l'on crée l'affichage des flottes
+ * \details    On parcourt le terrain pour afficher les informations nécessaires puis on stocke la surface en mémoire pour éviter de la recréer
+ * \param      un_terrain_espace         Pointeur sur le Terrain_espace
+ */
 SDL_Surface* creer_affichage_flotte(Terrain_espace *un_terrain_espace)
 {
     SDL_Surface *carte = NULL;
@@ -1487,6 +1523,11 @@ SDL_Surface* creer_affichage_flotte(Terrain_espace *un_terrain_espace)
 	return carte;
 }
 
+/**
+ * \brief      Surface où l'on crée la minimap
+ * \details    On affiche la vision de la carte globale en cours en créant un rectangle à la position adéquate
+ * \param      un_terrain_espace         Pointeur sur le Terrain_espace
+ */
 SDL_Surface* affichage_minimap(Terrain_espace *un_terrain_espace)
 {
 	SDL_Surface *minimap = NULL;
@@ -1539,6 +1580,12 @@ SDL_Surface* affichage_minimap(Terrain_espace *un_terrain_espace)
 	return minimap;
 }
 
+/**
+ * \brief      Surface où l'on crée l'affichage de la vision du joueur
+ * \details    On parcourt la vision du joueur pour afficher les informations nécessaires puis on stocke la surface en mémoire pour éviter de la recréer
+ * \param      un_jeu         Pointeur sur le jeu
+ * \param      un_joueur      Pointeur sur le joueur dont on veut afficher la vision
+ */
 SDL_Surface* creer_affichage_vision(Jeu *un_jeu, Joueur* un_joueur)
 {
 	SDL_Surface *affichee = NULL;
@@ -1596,6 +1643,11 @@ SDL_Surface* creer_affichage_vision(Jeu *un_jeu, Joueur* un_joueur)
 	return fond;
 }
 
+/**
+ * \brief      Surface où l'on crée l'affichage des flottes
+ * \details    On parcourt le terrain pour afficher les informations nécessaires puis on stocke la surface en mémoire pour éviter de la recréer
+ * \param      un_terrain_espace         Pointeur sur le Terrain_espace
+ */
 void maj_affichage_vision(Jeu *un_jeu, Joueur* un_joueur, SDL_Surface *ecran, SDL_Surface **tab_surface)
 {
 	SDL_Surface *affichee = NULL;
@@ -1682,7 +1734,7 @@ void initialiser_affichage(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_S
 	SDL_BlitSurface(tab_surface[11], &affichage_carte, ecran, &position_affichage_carte);
 
 	/*affichage de la barre de ressources*/
-    tab_surface[2] = affichage_ressource(un_jeu, tab_surface[2]);
+    tab_surface[2] = affichage_ressource(un_jeu);
 	SDL_BlitSurface(tab_surface[2], NULL, ecran, &position);
 	SDL_FreeSurface(tab_surface[2]);
 
@@ -1790,10 +1842,10 @@ void maj_affichage_carte_terrain(Jeu *un_jeu, Terrain_espace *un_terrain_espace,
     }
 	if(interface_affichee == PANNEAU_UNITE)
 	{
-		tab_surface[7] = affichage_planete(get_planete_en_cours(un_jeu), tab_surface[7]);
+		tab_surface[7] = affichage_planete(get_planete_en_cours(un_jeu));
 		SDL_BlitSurface(tab_surface[7], NULL, ecran, &position_affichage_info);
         SDL_FreeSurface(tab_surface[7]);
-		tab_surface[8] = affichage_creation_unite(get_planete_en_cours(un_jeu), tab_surface[8]);
+		tab_surface[8] = affichage_creation_unite(get_planete_en_cours(un_jeu));
 		SDL_BlitSurface(tab_surface[8], NULL, ecran, &position_panneau_unite);
         SDL_FreeSurface(tab_surface[8]);
 	}
@@ -1838,7 +1890,7 @@ void maj_affichage_flotte(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Su
 
     if(interface_affichee == FLOTTE)
     {
-        tab_surface[7] = affichage_flotte(un_jeu, un_terrain_espace,tab_surface[7]);
+        tab_surface[7] = affichage_flotte(un_jeu, un_terrain_espace);
         SDL_BlitSurface(tab_surface[7], NULL, ecran, &position_affichage_info);
         SDL_FreeSurface(tab_surface[7]);
     }
@@ -1875,34 +1927,34 @@ void maj_affichage(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *
         }
         if(interface_affichee == PLANETE)
         {
-			tab_surface[7] = affichage_planete(get_planete_en_cours(un_jeu), tab_surface[7]);
+			tab_surface[7] = affichage_planete(get_planete_en_cours(un_jeu));
             SDL_BlitSurface(tab_surface[7], NULL, ecran, &position_affichage_info);
             SDL_FreeSurface(tab_surface[7]);
         }
         if(interface_affichee == PLANETE_ENNEMIE)
         {
-			tab_surface[7] = affichage_planete_ennemie(une_case_terrain_espace, tab_surface[7]);
+			tab_surface[7] = affichage_planete_ennemie(une_case_terrain_espace);
             SDL_BlitSurface(tab_surface[7], NULL, ecran, &position_affichage_info);
             SDL_FreeSurface(tab_surface[7]);
         }
         if(interface_affichee == FLOTTE)
         {
-			tab_surface[7] = affichage_flotte(un_jeu, un_terrain_espace, tab_surface[7]);
+			tab_surface[7] = affichage_flotte(un_jeu, un_terrain_espace);
             SDL_BlitSurface(tab_surface[7], NULL, ecran, &position_affichage_info);
             SDL_FreeSurface(tab_surface[7]);
         }
         if(interface_affichee == FLOTTE_ENNEMIE)
         {
-			tab_surface[7] = affichage_flotte_ennemie(un_jeu, tab_surface[7]);
+			tab_surface[7] = affichage_flotte_ennemie(un_jeu);
             SDL_BlitSurface(tab_surface[7], NULL, ecran, &position_affichage_info);
             SDL_FreeSurface(tab_surface[7]);
         }
         if(interface_affichee == PANNEAU_UNITE)
         {
-			tab_surface[7] = affichage_planete(get_planete_en_cours(un_jeu), tab_surface[7]);
+			tab_surface[7] = affichage_planete(get_planete_en_cours(un_jeu));
             SDL_BlitSurface(tab_surface[7], NULL, ecran, &position_affichage_info);
             SDL_FreeSurface(tab_surface[7]);
-            tab_surface[8] = affichage_creation_unite(get_planete_en_cours(un_jeu), tab_surface[8]);
+            tab_surface[8] = affichage_creation_unite(get_planete_en_cours(un_jeu));
             SDL_BlitSurface(tab_surface[8], NULL, ecran, &position_panneau_unite);
             SDL_FreeSurface(tab_surface[8]);
         }
