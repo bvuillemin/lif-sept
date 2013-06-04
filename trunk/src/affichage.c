@@ -1701,7 +1701,7 @@ void initialiser_affichage(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_S
     SDL_BlitSurface(tab_surface[10], NULL, ecran, &position_bouton_tour);
 
     /*affichage du cadre*/
-    tab_surface[3] = IMG_Load("../graphiques/images/bordure.png");
+    tab_surface[3] = IMG_Load("../graphiques/images/bordure_bleue.png");
     SDL_BlitSurface(tab_surface[3], NULL, ecran, &position_affichage_carte);
 
 /*
@@ -2138,7 +2138,18 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace, FMOD_SYSTEM
 
 						interface_affichee = RIEN;
 						joueur_suivant(un_jeu, un_terrain_espace);
-
+                        
+                        /* Mise à jour de la bordure */
+                        SDL_FreeSurface(tab_surface[3]);
+                        if (get_numero_joueur(get_joueur_en_cours(un_jeu)) == 0)
+                        {
+                            tab_surface[3] = IMG_Load("../graphiques/images/bordure_bleue.png");
+                        }
+                        else
+                        {
+                            tab_surface[3] = IMG_Load("../graphiques/images/bordure_rouge.png");
+                        }
+                        SDL_BlitSurface(tab_surface[3], NULL, ecran, &position_affichage_carte);
 						/*creation de l'affichage de la visibilité*/
 						SDL_FreeSurface(tab_surface[11]);
 						tab_surface[11] = creer_affichage_vision(un_jeu, get_ieme_joueur_jeu(un_jeu, get_indice_joueur_en_cours(un_jeu)));
@@ -3826,7 +3837,7 @@ void saisie_texte_sdl(char nom[50], SDL_Surface* ecran, SDL_Rect position_saisie
 		case SDL_KEYDOWN:
 			switch(evenement.key.keysym.sym)
 			{
-			case SDLK_q:
+			case SDLK_a:
 				nom[i] = 'A';
 				sprintf(c, "A");
 				i++;
@@ -3958,7 +3969,7 @@ void saisie_texte_sdl(char nom[50], SDL_Surface* ecran, SDL_Rect position_saisie
 				SDL_Flip(ecran);
 				SDL_FreeSurface(surface_texte);
 				break;
-			case SDLK_SEMICOLON:
+			case SDLK_m:
 				nom[i] = 'M';
 				sprintf(c, "M");
 				i++;
@@ -4002,7 +4013,7 @@ void saisie_texte_sdl(char nom[50], SDL_Surface* ecran, SDL_Rect position_saisie
 				SDL_Flip(ecran);
 				SDL_FreeSurface(surface_texte);
 				break;
-			case SDLK_a:
+			case SDLK_q:
 				nom[i] = 'Q';
 				sprintf(c, "Q");
 				i++;
@@ -4068,7 +4079,7 @@ void saisie_texte_sdl(char nom[50], SDL_Surface* ecran, SDL_Rect position_saisie
 				SDL_Flip(ecran);
 				SDL_FreeSurface(surface_texte);
 				break;
-			case SDLK_z:
+			case SDLK_w:
 				nom[i] = 'W';
 				sprintf(c, "W");
 				i++;
@@ -4100,7 +4111,7 @@ void saisie_texte_sdl(char nom[50], SDL_Surface* ecran, SDL_Rect position_saisie
 				SDL_Flip(ecran);
 				SDL_FreeSurface(surface_texte);
 				break;
-			case SDLK_w:
+			case SDLK_z:
 				nom[i] = 'Z';
 				sprintf(c, "Z");
 				i++;
@@ -4565,8 +4576,7 @@ int affichage_ecran_combat(Jeu* jeu, Terrain_combat *un_terrain_combat, Flotte* 
 									if((pos_clic.x+X_CARTE<=get_taille_combat_x(un_terrain_combat)*100)&&(pos_clic.x+X_CARTE>=0)&&(pos_clic.y+Y_CARTE>=0)&&(pos_clic.y+Y_CARTE <= get_taille_combat_y(un_terrain_combat)*100))
 									{
 										sprintf(infos2," ");
-										if(get_presence_unite(get_case_terrain_combat(un_terrain_combat ,
-coordonnee_case_du_clic(pos_clic).x,coordonnee_case_du_clic(pos_clic).y)))
+										if(get_presence_unite(get_case_terrain_combat(un_terrain_combat, coordonnee_case_du_clic(pos_clic).x, coordonnee_case_du_clic(pos_clic).y)))
 										{
 											affiche_info_unite(jeu,un_terrain_combat,infos,pos_clic);
 										}
