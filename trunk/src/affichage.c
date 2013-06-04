@@ -4476,7 +4476,14 @@ int affichage_ecran_combat(Jeu* jeu, Terrain_combat *un_terrain_combat, Flotte* 
 
 	interface = IMG_Load("../graphiques/images/interface_combat_bas.png");
 	interface_haut=	IMG_Load("../graphiques/images/interface_combat_haut.png");
-	bordure = IMG_Load("../graphiques/images/bordure.png");
+    if (get_joueur_en_cours_combat(jeu) == 0)
+    {
+        bordure = IMG_Load("../graphiques/images/bordure_bleue.png");
+    }
+    else
+    {
+        bordure = IMG_Load("../graphiques/images/bordure_rouge.png");
+    }
 	attaquer= IMG_Load("../graphiques/images/Attaquer.png");
 	passer= IMG_Load("../graphiques/images/Passer.png");
 
@@ -4549,6 +4556,16 @@ int affichage_ecran_combat(Jeu* jeu, Terrain_combat *un_terrain_combat, Flotte* 
 					sprintf(infos2,"Passe le tour !");
 					SDL_FreeSurface(texte2);
 					texte2 = TTF_RenderUTF8_Blended(police,infos2,couleur_police);
+                    SDL_FreeSurface(bordure);
+                    if (get_joueur_en_cours_combat(jeu) == 0)
+                    {
+                        bordure = IMG_Load("../graphiques/images/bordure_bleue.png");
+                    }
+                    else
+                    {
+                        bordure = IMG_Load("../graphiques/images/bordure_rouge.png");
+                    }
+                    SDL_BlitSurface(bordure, NULL, ecran, &position_affichage_carte);
 				}
 				else if(test_souris_rectangle(pos_attaquer,evenement.motion.x,evenement.motion.y))/*clic sur le bouton "attaquer"*/
 				{
