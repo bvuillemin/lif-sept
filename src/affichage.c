@@ -2968,7 +2968,7 @@ void menu_aide(void)
     positionSuivant.x = 1080;
     positionSuivant.y = 668;
     positionQuitter.x = 21;
-    positionQuitter.y = TAILLE_FENETRE_Y - hauteurBouton;
+    positionQuitter.y = TAILLE_FENETRE_Y - hauteurBouton - 10;
     
     /*Animation de l'apparition du menu*/
     while (b>=0) {
@@ -3028,7 +3028,7 @@ void menu_aide(void)
                     SDL_FreeSurface(Deplacer);
                     SDL_FreeSurface(Conquerir);
                     SDL_FreeSurface(Construire);
-                    imageDeFond_Droit = IMG_Load("../graphiques/images/Fond_titre.png");
+                    imageDeFond_Droit = IMG_Load("../graphiques/images/Conquerir1.png");
                     Deplacer = IMG_Load("../graphiques/images/Deplacer.png");
                     Conquerir = IMG_Load("../graphiques/images/Conquerir_Presse.png");
                     Construire = IMG_Load("../graphiques/images/Construire.png");
@@ -3052,7 +3052,7 @@ void menu_aide(void)
                     SDL_FreeSurface(Deplacer);
                     SDL_FreeSurface(Conquerir);
                     SDL_FreeSurface(Construire);
-                    imageDeFond_Droit = IMG_Load("../graphiques/images/Fond_titre.png");
+                    imageDeFond_Droit = IMG_Load("../graphiques/images/Construire1.png");
                     Deplacer = IMG_Load("../graphiques/images/Deplacer.png");
                     Conquerir = IMG_Load("../graphiques/images/Conquerir.png");
                     Construire = IMG_Load("../graphiques/images/Construire_Presse.png");
@@ -3083,7 +3083,7 @@ void menu_aide(void)
                     {
                         aide = 0;
                         SDL_FreeSurface(imageDeFond_Droit);
-                        imageDeFond_Droit = IMG_Load("../graphiques/images/Fond_titre.png");
+                        imageDeFond_Droit = IMG_Load("../graphiques/images/Conquerir2.png");
                         SDL_BlitSurface(imageDeFond_Droit, NULL, ecran, &positionImage_droit);
                         SDL_Flip(ecran);
                     }
@@ -3091,7 +3091,7 @@ void menu_aide(void)
                     {
                         aide = 0;
                         SDL_FreeSurface(imageDeFond_Droit);
-                        imageDeFond_Droit = IMG_Load("../graphiques/images/Fond_titre.png");
+                        imageDeFond_Droit = IMG_Load("../graphiques/images/Construire2.png");
                         SDL_BlitSurface(imageDeFond_Droit, NULL, ecran, &positionImage_droit);
                         SDL_Flip(ecran);
                     }
