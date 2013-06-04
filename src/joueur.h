@@ -60,6 +60,7 @@ void liberer_joueur(Joueur *un_joueur);
 void detruire_joueur(Joueur **un_joueur);
 
 void set_nom_joueur(Joueur *un_joueur, char nom[20]);
+char* get_nom_joueur(Joueur *un_joueur);
 void set_couleur(Joueur *un_joueur, Couleur_joueur couleur_joueur);
 Couleur_joueur get_couleur(const Joueur *un_joueur);
 void set_pt_action_joueur(Joueur *un_joueur, int i);

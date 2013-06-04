@@ -2227,7 +2227,14 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace, FMOD_SYSTEM
                                 if(get_planete_principale(get_planete_terrain_espace(un_terrain_espace, get_x_flotte(get_flotte_en_cours(un_jeu)), get_y_flotte(get_flotte_en_cours(un_jeu)))) == true)
                                 {
                                     continuer = 0;
-                                    game_over("Robert", "Gérard");
+                                    if (get_numero_joueur((get_joueur_en_cours(un_jeu))) == 0)
+                                    {
+                                        game_over(get_nom_joueur(get_ieme_joueur_jeu(un_jeu, 0)), get_nom_joueur(get_ieme_joueur_jeu(un_jeu, 1)));
+                                    }
+                                    else
+                                    {
+                                        game_over(get_nom_joueur(get_ieme_joueur_jeu(un_jeu, 1)), get_nom_joueur(get_ieme_joueur_jeu(un_jeu, 0)));
+                                    }
                                 }
 							}
 						}
@@ -3274,7 +3281,7 @@ void game_over(char nom1[30], char nom2[30])
     TTF_Font *police;
     SDL_Color couleur= {255, 255, 255};
     SDL_Rect positionTexte, positionTexte2;
-    int b = 255, continuer = 1;
+    int b = 255, continuer = 1, i;
 	double longueurTexte, longueurTexte2;
     char gagnant[60] = "Merci d'avoir joué ";
     char perdant[60] = "Merci d'avoir été nul ";
@@ -3324,13 +3331,47 @@ void game_over(char nom1[30], char nom2[30])
 		{
             case SDL_MOUSEBUTTONUP :
                 continuer = 0;
+                SDL_SetAlpha(Noir, SDL_SRCALPHA, 50);
+                for (i=0; i<30; i++)
+                {
+                    SDL_BlitSurface(Noir, NULL, ecran, NULL);
+                    SDL_Flip(ecran);
+                }
+        }
+    }
+    SDL_FreeSurface(Texte);
+    SDL_FreeSurface(Texte2);
+    SDL_FreeSurface(imageDeFond);
+    continuer = 1;
+    b = 255;
+    imageDeFond = IMG_Load("../graphiques/images/Credits.png");
+    while (b>=0) {
+        SDL_SetAlpha(Noir, SDL_SRCALPHA, b);
+        SDL_BlitSurface(Noir, NULL, ecran, NULL);
+        b = b-20;
+        SDL_Flip(ecran);
+        SDL_FreeSurface(ecran);
+        SDL_BlitSurface(imageDeFond, NULL, ecran, NULL);
+    }
+    while(continuer)
+	{
+		SDL_WaitEvent(&evenement);
+		switch(evenement.type)
+		{
+            case SDL_MOUSEBUTTONUP :
+                continuer = 0;
+                SDL_SetAlpha(Noir, SDL_SRCALPHA, 50);
+                for (i=0; i<30; i++)
+                {
+                    SDL_BlitSurface(Noir, NULL, ecran, NULL);
+                    SDL_Flip(ecran);
+                }
         }
     }
     /*Disparition du menu et affichage du jeu*/
-    SDL_FreeSurface(ecran);
-    SDL_FreeSurface(Texte);
     SDL_FreeSurface(imageDeFond);
     SDL_FreeSurface(Noir);
+    SDL_FreeSurface(ecran);
 }
 
 void nouvelle_partie(Terrain_espace ** un_terrain_espace, Jeu **un_jeu, FMOD_SYSTEM *system, FMOD_SOUND *musique)

@@ -87,6 +87,10 @@ void set_nom_joueur(Joueur *un_joueur, char nom[20])
 {
     strcpy(un_joueur->nom_joueur, nom);
 }
+char* get_nom_joueur(Joueur *un_joueur)
+{
+    return un_joueur->nom_joueur;
+}
 void set_couleur(Joueur *un_joueur, Couleur_joueur couleur_joueur)
 {
     un_joueur->couleur_joueur = couleur_joueur;
