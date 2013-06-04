@@ -4221,9 +4221,9 @@ void animation_explosion(Terrain_combat * un_terrain_combat,Jeu * jeu, SDL_Surfa
 	SDL_Rect pos;
 	pos.x = x;
 	pos.y = y;
-	pos = coordonnee_clic(pos);
-	pos.x = pos.x +X_CARTE;
-	pos.y = pos.y + Y_CARTE;
+	pos = coordonnee_case_du_clic(pos);
+	pos.x = pos.x *100 + X_CARTE;
+	pos.y = pos.y * 100 +Y_CARTE;
 	explosion = creer_animation(48, 100, 100,20, "../graphiques/images/explosion.png");
 	lancer_animation_bloquante_combat(jeu, un_terrain_combat, explosion, ecran, pos.x, pos.y);
     free(explosion);
@@ -4347,7 +4347,7 @@ void animation_attaque(Terrain_combat * un_terrain_combat,Jeu * jeu, SDL_Surface
 			SDL_BlitSurface(copie, NULL,  ecran,&pos_laser);SDL_Flip(ecran);
 		}
 	}
-	SDL_Delay(1000);
+	SDL_Delay(100);
 	SDL_FreeSurface(laser);
 	SDL_FreeSurface(copie);
 }
@@ -4503,7 +4503,6 @@ int affichage_ecran_combat(Jeu* jeu, Terrain_combat *un_terrain_combat, Flotte* 
 	while(continuer)
 	{
 		SDL_PollEvent(&evenement);
-		maj_musique(system, musique, tab_chanson);
 		continuer = verifie_etat_combat(jeu,un_terrain_combat,flotte1,flotte2,infos2, &gagnant); /*on vérifie si le combat est fini*/
 		switch(evenement.type)
 		{
@@ -4591,7 +4590,7 @@ int affichage_ecran_combat(Jeu* jeu, Terrain_combat *un_terrain_combat, Flotte* 
 										lire_son(system, tir_laser);
 										animation_attaque(un_terrain_combat,jeu, ecran,get_selection(un_terrain_combat),pos_clic);
 										lire_son(system, explosion);
-										animation_explosion(un_terrain_combat,jeu, ecran,(X_CARTE+ pos_clic.x), (Y_CARTE + pos_clic.y));
+										animation_explosion(un_terrain_combat,jeu, ecran,pos_clic.x,pos_clic.y);
 										enlever_pt_action_joueur(get_ieme_joueur_jeu(jeu,get_joueur_en_cours_combat(jeu)), 1);
 									}
 									else
@@ -4607,7 +4606,7 @@ int affichage_ecran_combat(Jeu* jeu, Terrain_combat *un_terrain_combat, Flotte* 
 									}
 									SDL_FreeSurface(carte);
 									carte=affiche_ecran_terrain_combat(un_terrain_combat);/*on refais le terrain*/
-									SDL_BlitSurface(carte, &position_affichage_carte,  ecran,NULL);
+									SDL_BlitSurface(carte, NULL,  ecran,&position_affichage_carte);
 									SDL_BlitSurface(bordure, NULL, ecran, &pos_bordure);
 									SDL_BlitSurface(interface_haut, NULL, ecran, &pos_interface_haut);
 									SDL_Flip(ecran);
@@ -4621,7 +4620,7 @@ int affichage_ecran_combat(Jeu* jeu, Terrain_combat *un_terrain_combat, Flotte* 
 						printf("fin du while \n");//à supprrimer
 						attend_attaque=1;
 					}
-					SDL_BlitSurface(carte, &position_affichage_carte,  ecran,NULL);
+					SDL_BlitSurface(carte,NULL,  ecran, &position_affichage_carte);
 					SDL_BlitSurface(bordure, NULL, ecran, &pos_bordure);
 					SDL_BlitSurface(interface_haut, NULL, ecran, &pos_interface_haut);SDL_Flip(ecran);
 				}
@@ -4665,21 +4664,6 @@ int affichage_ecran_combat(Jeu* jeu, Terrain_combat *un_terrain_combat, Flotte* 
             	case SDLK_ESCAPE: /* Appui sur la touche Echap, on arrête le programme */
               	    continuer = 0;
 					break;
-				case SDLK_DOWN: /*Flèche haut*/
-               		position_affichage_carte.y--;
-                	break;
-            	case SDLK_UP: /* Flèche bas*/
-            	   	position_affichage_carte.y++;
-           		    break;
-        	    case SDLK_LEFT: /* Flèche droite*/
-               		position_affichage_carte.x++;
-               		break;
-  	      	    case SDLK_RIGHT: /*Flèche gauche*/
-  	     	        position_affichage_carte.x--;
-             	    break;
-				case SDLK_p: /*Flèche gauche*/
-  	     	        passer_tour_combat(jeu,un_terrain_combat);
-             	    break;
 				default:
                     break;
             	}
