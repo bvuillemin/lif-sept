@@ -1644,9 +1644,11 @@ SDL_Surface* creer_affichage_vision(Jeu *un_jeu, Joueur* un_joueur)
 }
 
 /**
- * \brief      Surface où l'on crée l'affichage des flottes
- * \details    On parcourt le terrain pour afficher les informations nécessaires puis on stocke la surface en mémoire pour éviter de la recréer
- * \param      un_terrain_espace         Pointeur sur le Terrain_espace
+ * \brief      On reprend la surface et on la met à jour
+ * \param      un_jeu         Pointeur sur le jeu
+ * \param      un_joueur      Pointeur sur le joueur dont on veut afficher la vision
+ * \param      ecran          Pointeur sur la surface d'ecran
+ * \param      tab_surface    Pointeur sur le tableau de pointeurs sur surface
  */
 void maj_affichage_vision(Jeu *un_jeu, Joueur* un_joueur, SDL_Surface *ecran, SDL_Surface **tab_surface)
 {
@@ -1704,6 +1706,14 @@ void maj_affichage_vision(Jeu *un_jeu, Joueur* un_joueur, SDL_Surface *ecran, SD
 	SDL_FreeSurface(affichee);
 }
 
+/**
+ * \brief      On initialise l'affichage
+ * \details    L'affichage est créé, les surfaces utiles sont stockées en mémoire
+ * \param      un_jeu                Pointeur sur le jeu
+ * \param      un_terrain_espace     Pointeur sur le terrain espace
+ * \param      ecran                 Pointeur sur la surface d'ecran
+ * \param      tab_surface           Pointeur sur le tableau de pointeurs sur surface
+ */
 void initialiser_affichage(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface **tab_surface)
 {
     int i;
@@ -1774,6 +1784,14 @@ void initialiser_affichage(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_S
 	SDL_Flip(ecran);
 }
 
+/**
+ * \brief      On reprend la surface et on la met à jour
+ * \param      un_jeu                Pointeur sur le jeu
+ * \param      un_terrain_espace     Pointeur sur le terrain espace
+ * \param      ecran                 Pointeur sur la surface d'ecran
+ * \param      tab_surface           Pointeur sur le tableau de pointeurs sur surface
+ * \param      interface_affichee    Interface en cours d'affichage
+ */
 void maj_carte_terrain(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface **tab_surface, INTERFACE_AFFICHEE interface_affichee)
 {
 	SDL_Rect position_interface = {0, TAILLE_TERRAIN_ESPACE_Y + 30, 0, 0};
@@ -1813,6 +1831,14 @@ void maj_carte_terrain(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surfa
 
 }
 
+/**
+ * \brief      On reprend la surface et on la met à jour
+ * \param      un_jeu                Pointeur sur le jeu
+ * \param      un_terrain_espace     Pointeur sur le terrain espace
+ * \param      ecran                 Pointeur sur la surface d'ecran
+ * \param      tab_surface           Pointeur sur le tableau de pointeurs sur surface
+ * \param      interface_affichee    Interface en cours d'affichage
+ */
 void maj_affichage_carte_terrain(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface **tab_surface, INTERFACE_AFFICHEE interface_affichee)
 {
     SDL_Rect position_minimap = {TAILLE_FENETRE_X - TAILLE_MINIMAP_X, TAILLE_FENETRE_Y - TAILLE_MINIMAP_Y, 0, 0};
@@ -1853,6 +1879,15 @@ void maj_affichage_carte_terrain(Jeu *un_jeu, Terrain_espace *un_terrain_espace,
     SDL_Flip(ecran);
 }
 
+
+/**
+ * \brief      On reprend la surface et on la met à jour
+ * \param      un_jeu                Pointeur sur le jeu
+ * \param      un_terrain_espace     Pointeur sur le terrain espace
+ * \param      ecran                 Pointeur sur la surface d'ecran
+ * \param      tab_surface           Pointeur sur le tableau de pointeurs sur surface
+ * \param      interface_affichee    Interface en cours d'affichage
+ */
 void maj_affichage_flotte(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface **tab_surface, INTERFACE_AFFICHEE interface_affichee)
 {
     SDL_Rect position_interface = {0, TAILLE_TERRAIN_ESPACE_Y + 30, 0, 0};
@@ -1898,6 +1933,13 @@ void maj_affichage_flotte(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Su
     SDL_Flip(ecran);
 }
 
+
+/**
+ * \brief      On reprend la surface et on la met à jour
+ * \param      un_jeu                Pointeur sur le jeu
+ * \param      ecran                 Pointeur sur la surface d'ecran
+ * \param      tab_surface           Pointeur sur le tableau de pointeurs sur surface
+ */
 void maj_affichage_ressource(Jeu *un_jeu, SDL_Surface *ecran, SDL_Surface **tab_surface)
 {
 	SDL_Rect position = {0, 0, 0, 0};
@@ -1906,6 +1948,15 @@ void maj_affichage_ressource(Jeu *un_jeu, SDL_Surface *ecran, SDL_Surface **tab_
 	SDL_FreeSurface(tab_surface[2]);
 }
 
+/**
+ * \brief      On remet à jour tout l'affichage
+ * \param      un_jeu                Pointeur sur le jeu
+ * \param      un_terrain_espace     Pointeur sur le terrain espace
+ * \param      interface_affichee    Interface en cours d'affichage
+ * \param      ecran                 Pointeur sur la surface d'ecran
+ * \param      une_case_terrain_espace    Pointeur sur une case du terrain (utile pour un des appels de fonction)
+ * \param      tab_surface           Pointeur sur le tableau de pointeurs sur surface
+ */
 void maj_affichage(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *ecran, INTERFACE_AFFICHEE interface_affichee, Case_terrain_espace *une_case_terrain_espace, SDL_Surface **tab_surface)
  {
     SDL_Rect position_interface = {0, TAILLE_TERRAIN_ESPACE_Y + 30, 0, 0};
@@ -1967,6 +2018,15 @@ void maj_affichage(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *
 /* Boucle principale                                                    */
 /************************************************************************/
 
+
+/**
+ * \brief      Boucle principale de la partie gestion
+ * \details    Cette boucle va gérer l'affichage et la gestion des évènements de la partie gestion. De nombreux tests y sont faits, en fonction des actions des joueurs et de ce qu'il y faut afficher
+ * \param      un_jeu                Pointeur sur le jeu
+ * \param      un_terrain_espace     Pointeur sur le terrain espace
+ * \param      system                Pointeur sur une variable FMOD qui va gérer le son
+ * \param      musique               Pointeur sur une variable FMOD qui va gérer le son
+ */
 void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace, FMOD_SYSTEM *system, FMOD_SOUND *musique)
 {
 	/************************************************************************/
@@ -2008,17 +2068,12 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace, FMOD_SYSTEM
 
 	/*on initialise le tableau de chansons puis on utilise la fonction qui va mettre les noms dedans (pour plus de clarté dans le code)*/
 	tab_chanson = (char **)malloc(sizeof(char *) * 6);
-	/*for(j=0;j<6;j++)
-	{
-		tab_chanson[j] = (char *)malloc(sizeof(char) * 50);
-	}*/
 	initialiser_tableau_chanson(tab_chanson);
 
 	/*on lance les musiques du jeu et on initialise les sons*/
 	lire_musique(system, musique, tab_chanson);
 	FMOD_System_CreateSound(system, "../audio/son/FTL_Saut.mp3", FMOD_CREATESAMPLE, 0, &son_saut_debut);
 	FMOD_System_CreateSound(system, "../audio/son/FTL_Exit.mp3", FMOD_CREATESAMPLE, 0, &son_saut_fin);
-
 
 	/*démarrage des modules, mise en place de la fenêtre principale*/
 	SDL_Init(SDL_INIT_VIDEO);
@@ -2294,11 +2349,11 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace, FMOD_SYSTEM
                                     continuer = 0;
                                     if (get_numero_joueur((get_joueur_en_cours(un_jeu))) == 0)
                                     {
-                                        game_over(get_nom_joueur(get_ieme_joueur_jeu(un_jeu, 0)), get_nom_joueur(get_ieme_joueur_jeu(un_jeu, 1)));
+                                        game_over(get_nom_joueur(get_ieme_joueur_jeu(un_jeu, 0)), get_nom_joueur(get_ieme_joueur_jeu(un_jeu, 1)), system, musique);
                                     }
                                     else
                                     {
-                                        game_over(get_nom_joueur(get_ieme_joueur_jeu(un_jeu, 1)), get_nom_joueur(get_ieme_joueur_jeu(un_jeu, 0)));
+                                        game_over(get_nom_joueur(get_ieme_joueur_jeu(un_jeu, 1)), get_nom_joueur(get_ieme_joueur_jeu(un_jeu, 0)), system, musique);
                                     }
                                 }
 							}
@@ -2358,7 +2413,6 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace, FMOD_SYSTEM
 							lire_son(system, son_saut_debut);
 							lancer_animation_bloquante(un_jeu, un_terrain_espace, saut_ftl, ecran, x_bis, y_bis);
 							deplacement_flotte(&un_jeu->tab_joueur[un_jeu->joueur_en_cours], un_terrain_espace, un_jeu->selection_flotte, une_case_terrain_espace->x_espace, une_case_terrain_espace->y_espace);
-							//un_jeu->selection_flotte = get_flotte(get_case_terrain_espace(un_terrain_espace, x/100, y/100));
 							maj_affichage_flotte(un_jeu, un_terrain_espace, ecran, tab_surface, interface_affichee);
 							booleen_coordonnees_case(un_terrain_espace, un_jeu->selection_flotte->x_flotte, un_jeu->selection_flotte->y_flotte, &x_bis, &y_bis);
 							lire_son(system, son_saut_fin);
@@ -2369,7 +2423,6 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace, FMOD_SYSTEM
 					{
 						if((un_jeu->joueur_en_cours != get_indice_joueur_flotte(get_flotte(get_case_terrain_espace(un_terrain_espace, x/100, y/100)))) && (un_jeu->selection_flotte->pt_mouvement_espace_flotte >= 0))
 						{
-							/*mettre fonction attaque prenant en param le terrain, le jeu, les 2 flottes*/
 							//combat_automatique(un_jeu, un_terrain_espace, get_flotte_en_cours(un_jeu), get_flotte(get_case_terrain_espace(un_terrain_espace, x/100, y/100)))
                             combat = lancer_combat_ecran(un_jeu, un_terrain_espace, get_flotte_en_cours(un_jeu), get_flotte(get_case_terrain_espace(un_terrain_espace, x/100, y/100)), ecran, system, musique);
 							if(combat == 1)
@@ -2382,9 +2435,13 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace, FMOD_SYSTEM
 								lire_son(system, son_saut_fin);
 								lancer_animation_bloquante(un_jeu, un_terrain_espace, saut_ftl, ecran, x_bis, y_bis);
 							}
-							else if (combat == 2)
+							if (combat == 2)
 							{
 								maj_affichage_flotte(un_jeu, un_terrain_espace, ecran, tab_surface, interface_affichee);
+							}
+							else if(combat == 0)
+							{
+								continuer = 0;
 							}
 						}
 					}
@@ -2440,13 +2497,6 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace, FMOD_SYSTEM
 	/* Libération des variables et fermetures de SDL                        */
 	/************************************************************************/
 
-    /*for(i=0;i<13;i++)
-	{
-	    if((tab_surface[i] != NULL) && (i != 2) && (i=!7))
-	    {
-            SDL_FreeSurface(tab_surface[i]);
-	    }
-	}*/
     SDL_FreeSurface(tab_surface[0]);
     SDL_FreeSurface(tab_surface[1]);
     SDL_FreeSurface(tab_surface[3]);
@@ -3338,8 +3388,7 @@ void init_nouvelle_partie(char nom1[], char nom2[], Terrain_espace **un_terrain_
 	ajouter_flotte_jeu(*jeu, *un_terrain_espace, flotte2, 1, 3, 3);
 }
 
-
-void game_over(char nom1[30], char nom2[30])
+void game_over(char nom1[30], char nom2[30], FMOD_SYSTEM* system, FMOD_SOUND* musique)
 {
     /*Initialisation des variables*/
     SDL_Surface *ecran, *imageDeFond, *Texte, *Texte2, *Noir;
@@ -3350,6 +3399,7 @@ void game_over(char nom1[30], char nom2[30])
 	double longueurTexte, longueurTexte2;
     char gagnant[60] = "Merci d'avoir joué ";
     char perdant[60] = "Merci d'avoir été nul ";
+	char **tab_chanson = NULL;
     SDL_Event evenement;
     strcat(gagnant, nom1);
     strcat(perdant, nom2);
@@ -3361,6 +3411,9 @@ void game_over(char nom1[30], char nom2[30])
     ecran = SDL_SetVideoMode(TAILLE_FENETRE_X, TAILLE_FENETRE_Y, 32, SDL_HWSURFACE);
     imageDeFond = IMG_Load("../graphiques/images/Game_over.png");
     Noir = SDL_LoadBMP("../graphiques/images/Noir.bmp");
+	tab_chanson = (char **)malloc(sizeof(char *) * 6);
+	initialiser_tableau_chanson_game_over(tab_chanson);
+	lire_musique(system, musique, tab_chanson);
     
     /*Chargement du titre*/
     TTF_Init();
@@ -3437,6 +3490,7 @@ void game_over(char nom1[30], char nom2[30])
     SDL_FreeSurface(imageDeFond);
     SDL_FreeSurface(Noir);
     SDL_FreeSurface(ecran);
+	free(tab_chanson);
 }
 
 void nouvelle_partie(Terrain_espace ** un_terrain_espace, Jeu **un_jeu, FMOD_SYSTEM *system, FMOD_SOUND *musique)
@@ -3860,7 +3914,6 @@ void ecran_titre(void)
         }
     }
 }
-
 
 void saisie_texte_sdl(char nom[50], SDL_Surface* ecran, SDL_Rect position_saisie_texte)
 {
