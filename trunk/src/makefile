@@ -10,7 +10,7 @@ INCPATH = #-I../include
 LIBS = -lSDL -lSDL_image -lSDL_ttf -lSDL_gfx -lSDL_gfx -lfmodex -L../lib/lib
 #SRC = $(wildcard *.c)
 #OBJ_FILES = $(SRC:.c=.o)
-OBJ_FILES = planete.o case_terrain_espace.o terrain_espace.o unite.o flotte.o terrain_combat.o case_terrain_combat.o jeu.o joueur.o batiment.o main2.o affichage.o sauvegarde.o animation.o vision.o son.o ia.o TableauDynamique.o #main.o 
+OBJ_FILES = planete.o case_terrain_espace.o terrain_espace.o unite.o flotte.o terrain_combat.o case_terrain_combat.o jeu.o joueur.o batiment.o main.o affichage.o sauvegarde.o animation.o vision.o son.o ia.o TableauDynamique.o #main.o 
 
 all: $(EXEC_NAME)
 
