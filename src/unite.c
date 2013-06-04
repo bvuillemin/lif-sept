@@ -145,9 +145,13 @@ int get_pt_action_total(const Unite *unite_jeu)
 {
 	return unite_jeu->pt_action_total;
 }
+void set_pt_vie_total(Unite *unite_jeu, const int x)
+{
+    unite_jeu->pt_vie_total = x;
+}
 void set_pt_vie(Unite *unite_jeu, const int x)
 {
-    unite_jeu->pt_vie = x;
+	unite_jeu->pt_vie = x;
 }
 void set_indice_joueur_unite(Unite *unite,const int i)
 {
@@ -168,6 +172,10 @@ int get_portee(const Unite *unite_jeu)
 int get_pt_vie(const Unite *unite_jeu)
 {
     return unite_jeu->pt_vie;
+}
+int get_pt_vie_total(const Unite *unite_jeu)
+{
+	return unite_jeu->pt_vie_total;
 }
 void set_x_unite(Unite *unite_jeu, const int x)
 {

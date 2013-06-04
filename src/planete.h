@@ -105,6 +105,8 @@ int get_planete_batiment_nb_tour_restant(const Planete* une_planete);
 void set_planete_batiment_nb_tour_restant(Planete* une_planete, int nb);
 void set_planete_batiment_en_cours(Planete* une_planete, int nb);
 int get_indice_joueur_planete(Planete *une_planete);
+int get_batiment_en_cours(const Planete* une_planete);
+int get_batiment_nb_tour_restant(const Planete* une_planete);
 
 void modification_production_planete(Planete *une_planete,const int metal,const int argent,const int carburant,const int population);
 void reduire_unite_nb_tour_restant(Planete* une_planete);
