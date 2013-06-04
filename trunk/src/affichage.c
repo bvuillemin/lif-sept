@@ -1610,7 +1610,7 @@ void maj_affichage_vision(Jeu *un_jeu, Joueur* un_joueur, SDL_Surface *ecran, SD
 	une_vision = un_joueur->vision_terrain;
 	un_terrain_espace = un_joueur->vision_terrain->terrain_espace;
 	maj_vision_joueur(un_jeu, un_terrain_espace, get_indice_joueur_en_cours(un_jeu));
-
+    SDL_FreeSurface(tab_surface[11]);
 	tab_surface[11] = SDL_CreateRGBSurface(SDL_HWSURFACE,un_terrain_espace->taille_espace_x * 100, un_terrain_espace->taille_espace_y * 100, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
 	SDL_FillRect(tab_surface[11], NULL, SDL_MapRGB(tab_surface[11]->format, 0, 0, 255));
 	SDL_SetColorKey(tab_surface[11], SDL_SRCCOLORKEY, SDL_MapRGB(tab_surface[11]->format, 0, 0, 255));
@@ -1933,7 +1933,7 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace, FMOD_SYSTEM
 	/*variables diverses*/
 	int continuer = 1;
 	int x = 0, y = 0, x_bis = 0, y_bis = 0;
-	int i, j;
+	int i, j, combat;
 	int flotte_planete = 0;
 	bool infobulle = false;
 	int tps_ancien = 10,tps_nouveau = 0, timer = 0, x_info = 0, y_info = 0;
@@ -2227,6 +2227,7 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace, FMOD_SYSTEM
                                 if(get_planete_principale(get_planete_terrain_espace(un_terrain_espace, get_x_flotte(get_flotte_en_cours(un_jeu)), get_y_flotte(get_flotte_en_cours(un_jeu)))) == true)
                                 {
                                     continuer = 0;
+                                    game_over("Robert", "Gérard");
                                 }
 							}
 						}
@@ -2297,8 +2298,9 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace, FMOD_SYSTEM
 						if((un_jeu->joueur_en_cours != get_indice_joueur_flotte(get_flotte(get_case_terrain_espace(un_terrain_espace, x/100, y/100)))) && (un_jeu->selection_flotte->pt_mouvement_espace_flotte >= 0))
 						{
 							/*mettre fonction attaque prenant en param le terrain, le jeu, les 2 flottes*/
-							//combat_automatique(un_jeu, un_terrain_espace, get_flotte_en_cours(un_jeu), get_flotte(get_case_terrain_espace(un_terrain_espace, x/100, y/100))) 
-							if(lancer_combat_ecran(un_jeu, un_terrain_espace, get_flotte_en_cours(un_jeu), get_flotte(get_case_terrain_espace(un_terrain_espace, x/100, y/100)), ecran, system, musique) == 1)
+							//combat_automatique(un_jeu, un_terrain_espace, get_flotte_en_cours(un_jeu), get_flotte(get_case_terrain_espace(un_terrain_espace, x/100, y/100)))
+                            combat = lancer_combat_ecran(un_jeu, un_terrain_espace, get_flotte_en_cours(un_jeu), get_flotte(get_case_terrain_espace(un_terrain_espace, x/100, y/100)), ecran, system, musique);
+							if(combat == 1)
 							{
 								lire_musique(system, musique, tab_chanson);
 								deplacement_flotte(&un_jeu->tab_joueur[un_jeu->joueur_en_cours], un_terrain_espace, un_jeu->selection_flotte, une_case_terrain_espace->x_espace, une_case_terrain_espace->y_espace);
@@ -2308,7 +2310,7 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace, FMOD_SYSTEM
 								lire_son(system, son_saut_fin);
 								lancer_animation_bloquante(un_jeu, un_terrain_espace, saut_ftl, ecran, x_bis, y_bis);
 							}
-							else
+							else if (combat == 2)
 							{
 								maj_affichage_flotte(un_jeu, un_terrain_espace, ecran, tab_surface, interface_affichee);
 							}
@@ -3248,8 +3250,8 @@ void init_nouvelle_partie(char nom1[], char nom2[], Terrain_espace **un_terrain_
     unite2 = creer_unite(Destructeur);
     
 	flotte2 = creer_flotte();
-	unite3 = creer_unite(Destructeur);
-	unite4 = creer_unite(Destroyer);
+	unite3 = creer_unite(Chasseur);
+	unite4 = creer_unite(Chasseur);
 
 	ajouter_planete_joueur(get_ieme_joueur_jeu(*jeu, 0), Terre);
     
@@ -3266,37 +3268,38 @@ void init_nouvelle_partie(char nom1[], char nom2[], Terrain_espace **un_terrain_
 }
 
 
-void game_over(char nom[30])
+void game_over(char nom1[30], char nom2[30])
 {
     /*Initialisation des variables*/
     SDL_Surface *ecran, *imageDeFond, *Texte, *Texte2, *Noir;
     TTF_Font *police;
     SDL_Color couleur= {255, 255, 255};
-    SDL_Rect positionTexte, positionTexte2, position_saisie_texte;
-    int b = 255;
-    char chaine[50];
+    SDL_Rect positionTexte, positionTexte2;
+    int b = 255, continuer = 1;
 	double longueurTexte, longueurTexte2;
-    
-    
+    char gagnant[60] = "Merci d'avoir joué ";
+    char perdant[60] = "Merci d'avoir été nul ";
+    SDL_Event evenement;
+    strcat(gagnant, nom1);
+    strcat(perdant, nom2);
+
     /*CHARGEMENT*/
     
     /*Initialisation de l'écran et des images */
     SDL_Init(SDL_INIT_VIDEO);
     ecran = SDL_SetVideoMode(TAILLE_FENETRE_X, TAILLE_FENETRE_Y, 32, SDL_HWSURFACE);
-    imageDeFond = IMG_Load("../graphiques/images/Sauvegarde_Fond.png");
+    imageDeFond = IMG_Load("../graphiques/images/Game_over.png");
     Noir = SDL_LoadBMP("../graphiques/images/Noir.bmp");
     
     /*Chargement du titre*/
     TTF_Init();
-    police = TTF_OpenFont("../graphiques/fonts/space_age.ttf", 60);
-    Texte = TTF_RenderText_Blended(police, "Charger une partie", couleur);
-    longueurTexte = Texte->w;
-    initialise_sdl_rect(&positionTexte, ((TAILLE_FENETRE_X/2.0) - (longueurTexte/2.0)), 1*(TAILLE_FENETRE_Y)/10, 0, 0);
-    TTF_CloseFont(police);
     
     /*Chargement du texte*/
     police = TTF_OpenFont("../graphiques/fonts/space_age.ttf", 40);
-    Texte2 = TTF_RenderText_Blended(police, "Tapez le nom de la sauvegarde", couleur);
+    Texte = TTF_RenderUTF8_Blended(police, gagnant, couleur);
+    longueurTexte = Texte->w;
+    initialise_sdl_rect(&positionTexte, ((TAILLE_FENETRE_X/2.0) - (longueurTexte/2.0)), 8*(TAILLE_FENETRE_Y)/10, 0, 0);
+    Texte2 = TTF_RenderUTF8_Blended(police, perdant, couleur);
     longueurTexte2 = Texte2->w;
     initialise_sdl_rect(&positionTexte2, ((TAILLE_FENETRE_X/2.0) - (longueurTexte2/2.0)), 9*(TAILLE_FENETRE_Y)/10, 0, 0);
     TTF_CloseFont(police);
@@ -3315,12 +3318,18 @@ void game_over(char nom[30])
         SDL_BlitSurface(Texte, NULL, ecran, &positionTexte);
         SDL_BlitSurface(Texte2, NULL, ecran, &positionTexte2);
     }
-    initialise_sdl_rect(&position_saisie_texte, 350, (TAILLE_FENETRE_Y)/5, 0, 0);
-	saisie_texte_sdl(chaine, ecran, position_saisie_texte);
+    while(continuer)
+	{
+		SDL_WaitEvent(&evenement);
+		switch(evenement.type)
+		{
+            case SDL_MOUSEBUTTONUP :
+                continuer = 0;
+        }
+    }
     /*Disparition du menu et affichage du jeu*/
     SDL_FreeSurface(ecran);
     SDL_FreeSurface(Texte);
-    SDL_FreeSurface(Texte2);
     SDL_FreeSurface(imageDeFond);
     SDL_FreeSurface(Noir);
 }
@@ -3668,13 +3677,6 @@ void ecran_titre(void)
                 SDL_Flip(ecran);
                 break;
                 
-            case SDL_QUIT :
-                if (partie == 1)
-                {
-                    detruire_jeu(&un_jeu);
-                    detruire_terrain_espace(&un_terrain_espace);
-                }
-                break;
             /*Chargement des menus lors d'un clic sur un bouton */
 			case SDL_MOUSEBUTTONUP:
 
@@ -3744,7 +3746,16 @@ void ecran_titre(void)
 				}
         }
     }
+    if (continuer == 0)
+    {
+        if (partie == 1)
+        {
+            detruire_jeu(&un_jeu);
+            detruire_terrain_espace(&un_terrain_espace);
+        }
+    }
 }
+
 
 void saisie_texte_sdl(char nom[50], SDL_Surface* ecran, SDL_Rect position_saisie_texte)
 {
