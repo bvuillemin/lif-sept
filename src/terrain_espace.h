@@ -33,6 +33,11 @@ int get_taille_espace_y(const Terrain_espace *terrain_jeu_espace);
 Case_terrain_espace* get_case_terrain_espace(const Terrain_espace *terrain, const int x, const int y); /*Récupère les champs d'une case terrain*/
 Planete* get_planete_terrain_espace(const Terrain_espace *terrain_espace, int x, int y);/*récupère le pointeur d'une planète à partir du terrain*/
 void set_affichage(Terrain_espace* un_terrain, int x, int y);
+int get_affichage_x(const Terrain_espace* un_terrain);
+int get_affichage_y(const Terrain_espace* un_terrain);
+void set_affichage_x(Terrain_espace* un_terrain, int nb);
+void set_affichage_y(Terrain_espace* un_terrain, int nb);
+
 
 void modifie_type_case_terrain_espace(const Terrain_espace *terrain, int x, int y, char c);/*mmodifie le type du terrain*/
 void modification_terrain_espace(const Terrain_espace *terrain, const char c); /* met toutes les cases du terrain avec le type char c*/

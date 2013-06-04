@@ -97,6 +97,18 @@ void set_selection_flotte(Jeu * un_jeu, Flotte * une_flotte)
 {
     un_jeu->selection_flotte = une_flotte;
 }
+bool get_ieme_unite_selectionnee(const Jeu* un_jeu, int i)
+{
+	return un_jeu->tab_unite_selectionnee[i];
+}
+void set_ieme_unite_selectionne(Jeu* un_jeu, int i, bool res)
+{
+	un_jeu->tab_unite_selectionnee[i] = res;
+}
+int get_tour_en_cours(const Jeu *un_jeu)
+{
+	return un_jeu->tour_en_cours;
+}
 
 /************************************************************************/
 /* Fonctions liées au jeu                                               */
@@ -604,52 +616,6 @@ bool deplacement_flotte(Joueur *un_joueur, Terrain_espace *un_terrain_espace, Fl
 	}
 	return false;
 }
-
-/*
-bool fusion_flotte(Joueur *un_joueur, Terrain_espace *un_terrain_espace, Flotte *une_flotte, int x, int y)
-{
-	int i;
-	int nb_unite = une_flotte->taille_flotte;
-	int distance;
-	int pt_mvt_arrivee;
-	int pt_mvt_depart = get_pt_mouvement_espace_flotte(une_flotte);
-	int x_depart = get_x_flotte(une_flotte);
-	int y_depart = get_y_flotte(une_flotte);
-	Case_terrain_espace *case_depart;
-	Case_terrain_espace *case_arrivee;
-	Flotte *flotte_arrivee;
-
-	case_depart = get_case_terrain_espace(un_terrain_espace, x_depart, y_depart);
-	case_arrivee = get_case_terrain_espace(un_terrain_espace, x, y);
-	flotte_arrivee = get_flotte(case_arrivee);
-	pt_mvt_arrivee = get_pt_mouvement_espace_flotte(flotte_arrivee);
-
-	if((flotte_arrivee->taille_flotte + une_flotte->taille_flotte <= flotte_arrivee->taille_maximum_flotte) && (une_flotte->indice_joueur == flotte_arrivee->indice_joueur))
-	{
-		for(i=0;i<nb_unite;i++)
-		{
-			transferer_unite_flotte(flotte_arrivee, &une_flotte->tab_unite[i]);
-		}
-		retirer_flotte(case_depart);
-		if(une_flotte->indice_tableau_joueur < flotte_arrivee->indice_tableau_joueur)
-		{
-			case_arrivee->flotte = get_ieme_flotte_joueur(un_joueur, flotte_arrivee->indice_tableau_joueur - 1);
-		}
-		else
-		{
-			case_arrivee->flotte = get_ieme_flotte_joueur(un_joueur, flotte_arrivee->indice_tableau_joueur);
-		}
-		retirer_flotte_joueur(un_joueur, une_flotte->indice_tableau_joueur);
-		//free(une_flotte);
-		distance = calcul_distance(x_depart, y_depart, x, y);
-		if(pt_mvt_arrivee > (pt_mvt_depart - distance))
-		{
-			enlever_pt_mouvement_espace_flotte(flotte_arrivee, distance);
-		}
-		return true;
-	}
-	return false;
-}*/
 
 /**
  * \brief      Fusionne deux flottes
