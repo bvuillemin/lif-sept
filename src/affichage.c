@@ -2792,6 +2792,14 @@ void input_handle(void)
     }
 }
 
+/**
+ * \brief      menu de chargement d'une sauvegarde
+ * \details
+ * \param un_terrain_espace Double pointeur sur terrain_espace
+ * \param un_jeu Double pointeur sur jeu
+ * \param system Pointeur sur FMOD_SYSTEM (pour la musique)
+ * \param musique Pointeur sur FMOD_SOUND (pour la musique)
+ */
 void menu_chargement_sauvegarde(Terrain_espace **un_terrain_espace, Jeu **un_jeu, FMOD_SYSTEM *system, FMOD_SOUND *musique)
 {
     /*Initialisation des variables*/
@@ -2859,6 +2867,12 @@ void menu_chargement_sauvegarde(Terrain_espace **un_terrain_espace, Jeu **un_jeu
     affichage_ecran(*un_jeu, *un_terrain_espace, system, musique);
 }
 
+/**
+ * \brief      menu de création d'une sauvegarde
+ * \details
+ * \param un_terrain_espace pointeur sur terrain_espace
+ * \param un_jeu pointeur sur jeu
+ */
 void menu_creation_sauvegarde(Terrain_espace *un_terrain_espace, Jeu *un_jeu)
 {
     /*Initialisation des variables*/
@@ -2921,6 +2935,10 @@ void menu_creation_sauvegarde(Terrain_espace *un_terrain_espace, Jeu *un_jeu)
     SDL_FreeSurface(imageDeFond);
 }
 
+/**
+ * \brief      menu d'aide
+ * \details
+ */
 void menu_aide(void)
 {
     /* Initialisation des variables */
@@ -3109,6 +3127,13 @@ void menu_aide(void)
     }
 }
 
+/**
+ * \brief      menu pause
+ * \details
+ * \param un_terrain_espace pointeur sur terrain_espace
+ * \param un_jeu pointeur sur jeu
+ * \param exit entier déterminant si le jeu se termine ou non
+ */
 void menu_pause(Terrain_espace *un_terrain_espace, Jeu *un_jeu, int * exit)
 {
     /* Initialisation des variables */
@@ -3305,6 +3330,14 @@ void menu_pause(Terrain_espace *un_terrain_espace, Jeu *un_jeu, int * exit)
     }
 }
 
+/**
+ * \brief      initialisation d'une nouvelle partie
+ * \details
+ * \param nom1 Nom du joueur 1
+ * \param nom2 Nom du joueur 2
+ * \param un_terrain_espace Double pointeur sur terrain_espace
+ * \param un_jeu Double pointeur sur jeu
+ */
 void init_nouvelle_partie(char nom1[], char nom2[], Terrain_espace **un_terrain_espace, Jeu **jeu)
 {
     Flotte *flotte;
@@ -3369,6 +3402,14 @@ void init_nouvelle_partie(char nom1[], char nom2[], Terrain_espace **un_terrain_
 	ajouter_flotte_jeu(*jeu, *un_terrain_espace, flotte2, 1, 3, 3);
 }
 
+/**
+ * \brief      Ecran de Game Over
+ * \details
+ * \param nom1 Nom du joueur 1
+ * \param nom2 Nom du joueur 2
+ * \param system Pointeur sur FMOD_SYSTEM (pour la musique)
+ * \param musique Pointeur sur FMOD_SOUND (pour la musique)
+ */
 void game_over(char nom1[30], char nom2[30], FMOD_SYSTEM* system, FMOD_SOUND* musique)
 {
     /*Initialisation des variables*/
@@ -3474,6 +3515,14 @@ void game_over(char nom1[30], char nom2[30], FMOD_SYSTEM* system, FMOD_SOUND* mu
 	free(tab_chanson);
 }
 
+/**
+ * \brief      Ecran de nouvelle partie
+ * \details
+ * \param un_terrain_espace Double pointeur sur terrain_espace
+ * \param un_jeu Double pointeur sur jeu
+ * \param system Pointeur sur FMOD_SYSTEM (pour la musique)
+ * \param musique Pointeur sur FMOD_SOUND (pour la musique)
+ */
 void nouvelle_partie(Terrain_espace ** un_terrain_espace, Jeu **un_jeu, FMOD_SYSTEM *system, FMOD_SOUND *musique)
 {
     /*Initialisation des variables*/
@@ -3633,6 +3682,10 @@ void nouvelle_partie(Terrain_espace ** un_terrain_espace, Jeu **un_jeu, FMOD_SYS
     affichage_ecran(*un_jeu, *un_terrain_espace, system, musique);
 }
 
+/**
+ * \brief      Ecran titre
+ * \details
+ */
 void ecran_titre(void)
 {
     /* Initialisation des variables */
@@ -3896,6 +3949,13 @@ void ecran_titre(void)
     }
 }
 
+/**
+ * \brief      Saisie sur la fenetre sdl
+ * \details
+ * \param nom chaine de caractères
+ * \param ecran Pointeur sur SDL_Surface
+ * \param position_saisie_texte Détermine l'emplacement de la saisie sur l'écran
+ */
 void saisie_texte_sdl(char nom[50], SDL_Surface* ecran, SDL_Rect position_saisie_texte)
 {
 	SDL_Surface* fond_texte = NULL;
