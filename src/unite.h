@@ -1,3 +1,11 @@
+/**
+ * \file      unite.h
+ * \author    BODARD, REYNAUD, VUILLEMIN
+ * \version   1.0
+ * \brief     Définit les unités du jeu
+ * \details   Cette classe définit les unités du jeu et leurs caractéristiques
+ */
+
 #ifndef _UNITE_H_
 #define _UNITE_H_
 
@@ -5,15 +13,6 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <assert.h>
-/**
- * \file      Module unité
- * \author    Les queues de cheval
- * \version   0.1
- * \date      19 mars 2013
- * \brief     Unité et ses particularités
- *
- * \details
- */
 
 typedef enum
 {

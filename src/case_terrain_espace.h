@@ -1,20 +1,17 @@
+/**
+ * \file      case_terrain_espace.h
+ * \author    BODARD, REYNAUD, VUILLEMIN
+ * \version   1.0
+ * \brief     Définit les cases d'un terrain d'espace
+ * \details   Cette classe définit les cases d'un terrain d'espace et leurs caractéristiques
+ */
+
 #ifndef _CASE_TERRAIN_ESPACE_H_
 #define _CASE_TERRAIN_ESPACE_H_
 
 #include <string.h>
 #include "planete.h"
 #include "flotte.h"
-
-
-/**
- * \file      Module case_terrain_espace
- * \author    Les queues de cheval
- * \version   0.1
- * \date      13 mars 2013
- * \brief     Case du Terrain_espace et ses particularités
- *
- * \details
- */
 
 typedef struct
 {
