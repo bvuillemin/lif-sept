@@ -1901,7 +1901,7 @@ void maj_affichage_flotte(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Su
 void maj_affichage_ressource(Jeu *un_jeu, SDL_Surface *ecran, SDL_Surface **tab_surface)
 {
 	SDL_Rect position = {0, 0, 0, 0};
-	tab_surface[2] = affichage_ressource(un_jeu, ecran);
+	tab_surface[2] = affichage_ressource(un_jeu);
 	SDL_BlitSurface(tab_surface[2], NULL, ecran, &position);
 	SDL_FreeSurface(tab_surface[2]);
 }
