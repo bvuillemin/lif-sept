@@ -268,6 +268,7 @@ void afficher_infobulle_batiment(SDL_Surface* fond, int i)
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
 		SDL_FreeSurface(une_ligne);
+		TTF_CloseFont(police);
 	}
 	if(i == 2)
 	{
@@ -321,6 +322,7 @@ void afficher_infobulle_batiment(SDL_Surface* fond, int i)
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
 		SDL_FreeSurface(une_ligne);
+		TTF_CloseFont(police);
 	}
 	if(i == 3)
 	{
@@ -374,6 +376,7 @@ void afficher_infobulle_batiment(SDL_Surface* fond, int i)
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
 		SDL_FreeSurface(une_ligne);
+		TTF_CloseFont(police);
 	}
 	if(i == 4)
 	{
@@ -427,6 +430,7 @@ void afficher_infobulle_batiment(SDL_Surface* fond, int i)
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
 		SDL_FreeSurface(une_ligne);
+		TTF_CloseFont(police);
 	}
 	if(i == 5)
 	{
@@ -480,6 +484,7 @@ void afficher_infobulle_batiment(SDL_Surface* fond, int i)
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
 		SDL_FreeSurface(une_ligne);
+		TTF_CloseFont(police);
 	}
 }
 
@@ -511,7 +516,7 @@ void afficher_infobulle_unite(Jeu* un_jeu, SDL_Surface* fond, int i)
 	TTF_CloseFont(police);
 	SDL_FreeSurface(une_ligne);
 
-	police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
+	police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 15);
 	sprintf(ligne, "Point de vie: %d", get_pt_vie(une_unite));
 	une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 	initialise_sdl_rect(&position, 4, j, 0, 0);
@@ -519,7 +524,6 @@ void afficher_infobulle_unite(Jeu* un_jeu, SDL_Surface* fond, int i)
 	SDL_BlitSurface(une_ligne, NULL, fond, &position);
 	SDL_FreeSurface(une_ligne);
 
-	police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 	sprintf(ligne, "Attaque: %d", get_pt_attaque(une_unite));
 	une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 	initialise_sdl_rect(&position, 4, j, 0, 0);
@@ -527,7 +531,6 @@ void afficher_infobulle_unite(Jeu* un_jeu, SDL_Surface* fond, int i)
 	SDL_BlitSurface(une_ligne, NULL, fond, &position);
 	SDL_FreeSurface(une_ligne);
 
-	police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 	sprintf(ligne, "Action: %d", get_pt_action(une_unite));
 	une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 	initialise_sdl_rect(&position, 4, j, 0, 0);
@@ -535,13 +538,13 @@ void afficher_infobulle_unite(Jeu* un_jeu, SDL_Surface* fond, int i)
 	SDL_BlitSurface(une_ligne, NULL, fond, &position);
 	SDL_FreeSurface(une_ligne);
 
-	police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 	sprintf(ligne, "Point de mouvement: %d", get_pt_mouvement_unite(une_unite));
 	une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 	initialise_sdl_rect(&position, 4, j, 0, 0);
 	j += 13;
 	SDL_BlitSurface(une_ligne, NULL, fond, &position);
 	SDL_FreeSurface(une_ligne);
+	TTF_CloseFont(police);
 
 }
 
@@ -579,7 +582,6 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
 		SDL_FreeSurface(une_ligne);
 
-		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Attaque: %d", PT_ATTAQUE_UNITE_1);
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
@@ -587,7 +589,6 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
 		SDL_FreeSurface(une_ligne);
 
-		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Action: %d", PT_ACTION_UNITE_1);
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
@@ -595,7 +596,6 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
 		SDL_FreeSurface(une_ligne);
 
-		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Point de mouvement: %d", PT_MOUVEMENT_UNITE_1);
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
@@ -603,7 +603,6 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
 		SDL_FreeSurface(une_ligne);
 
-		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Point de mouvement-combat: %d", PT_DEPLACEMENT_UNITE_1);
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
@@ -611,7 +610,6 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
 		SDL_FreeSurface(une_ligne);
 
-		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "-----------");
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
@@ -619,7 +617,6 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
 		SDL_FreeSurface(une_ligne);
 
-		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Metal: %d", NB_METAL_UNITE_1);
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
@@ -627,7 +624,6 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
 		SDL_FreeSurface(une_ligne);
 
-		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Argent: %d", NB_ARGENT_UNITE_1);
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
@@ -635,7 +631,6 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
 		SDL_FreeSurface(une_ligne);
 
-		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Carburant: %d", NB_CARBURANT_UNITE_1);
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
@@ -643,7 +638,6 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
 		SDL_FreeSurface(une_ligne);
 
-		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Population: %d", NB_POPULATION_UNITE_1);
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
@@ -651,13 +645,13 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
 		SDL_FreeSurface(une_ligne);
 
-		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Temps de construction: %d", NB_TOUR_UNITE_1);
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 13;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
 		SDL_FreeSurface(une_ligne);
+		TTF_CloseFont(police);
 	}
 	if(i==1)
 	{
@@ -678,7 +672,6 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
 		SDL_FreeSurface(une_ligne);
 
-		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Attaque: %d", PT_ATTAQUE_UNITE_2);
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
@@ -686,7 +679,6 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
 		SDL_FreeSurface(une_ligne);
 
-		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Action: %d", PT_ACTION_UNITE_2);
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
@@ -694,7 +686,6 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
 		SDL_FreeSurface(une_ligne);
 
-		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Point de mouvement: %d", PT_MOUVEMENT_UNITE_2);
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
@@ -702,7 +693,6 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
 		SDL_FreeSurface(une_ligne);
 
-		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Point de mouvement-combat: %d", PT_DEPLACEMENT_UNITE_2);
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
@@ -710,7 +700,6 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
 		SDL_FreeSurface(une_ligne);
 
-		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "-----------");
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
@@ -718,7 +707,6 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
 		SDL_FreeSurface(une_ligne);
 
-		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Metal: %d", NB_METAL_UNITE_2);
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
@@ -726,7 +714,6 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
 		SDL_FreeSurface(une_ligne);
 
-		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Argent: %d", NB_ARGENT_UNITE_2);
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
@@ -734,7 +721,6 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
 		SDL_FreeSurface(une_ligne);
 
-		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Carburant: %d", NB_CARBURANT_UNITE_2);
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
@@ -742,7 +728,6 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
 		SDL_FreeSurface(une_ligne);
 
-		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Population: %d", NB_POPULATION_UNITE_2);
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
@@ -750,13 +735,13 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
 		SDL_FreeSurface(une_ligne);
 
-		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Temps de construction: %d", NB_TOUR_UNITE_2);
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 13;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
 		SDL_FreeSurface(une_ligne);
+		TTF_CloseFont(police);
 	}
 	if(i==2)
 	{
@@ -777,7 +762,6 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
 		SDL_FreeSurface(une_ligne);
 
-		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Attaque: %d", PT_ATTAQUE_UNITE_3);
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
@@ -785,7 +769,6 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
 		SDL_FreeSurface(une_ligne);
 
-		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Action: %d", PT_ACTION_UNITE_3);
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
@@ -793,7 +776,6 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
 		SDL_FreeSurface(une_ligne);
 
-		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Point de mouvement: %d", PT_MOUVEMENT_UNITE_3);
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
@@ -801,7 +783,6 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
 		SDL_FreeSurface(une_ligne);
 
-		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Point de mouvement-combat: %d", PT_DEPLACEMENT_UNITE_3);
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
@@ -809,7 +790,6 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
 		SDL_FreeSurface(une_ligne);
 
-		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "-----------");
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
@@ -817,7 +797,6 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
 		SDL_FreeSurface(une_ligne);
 
-		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Metal: %d", NB_METAL_UNITE_3);
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
@@ -825,7 +804,6 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
 		SDL_FreeSurface(une_ligne);
 
-		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Argent: %d", NB_ARGENT_UNITE_3);
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
@@ -833,7 +811,6 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
 		SDL_FreeSurface(une_ligne);
 
-		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Carburant: %d", NB_CARBURANT_UNITE_3);
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
@@ -841,7 +818,6 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
 		SDL_FreeSurface(une_ligne);
 
-		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Population: %d", NB_POPULATION_UNITE_3);
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
@@ -849,13 +825,13 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
 		SDL_FreeSurface(une_ligne);
 
-		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Temps de construction: %d", NB_TOUR_UNITE_3);
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
 		j += 13;
 		SDL_BlitSurface(une_ligne, NULL, fond, &position);
 		SDL_FreeSurface(une_ligne);
+		TTF_CloseFont(police);
 	}
 }
 
@@ -4118,6 +4094,7 @@ void saisie_texte_sdl(char nom[50], SDL_Surface* ecran, SDL_Rect position_saisie
 			break;
 		}
 	}
+	SDL_FreeSurface(fond_texte);
 }
 
 /**
