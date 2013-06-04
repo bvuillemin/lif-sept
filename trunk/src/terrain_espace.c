@@ -102,6 +102,26 @@ void set_affichage(Terrain_espace* un_terrain, int x, int y)
 	un_terrain->affichage_y = y;
 }
 
+int get_affichage_x(const Terrain_espace* un_terrain)
+{
+	return un_terrain->affichage_x;
+}
+
+int get_affichage_y(const Terrain_espace* un_terrain)
+{
+	return un_terrain->affichage_y;
+}
+
+void set_affichage_x(Terrain_espace* un_terrain, int nb)
+{
+	un_terrain->affichage_x = nb;
+}
+
+void set_affichage_y(Terrain_espace* un_terrain, int nb)
+{
+	un_terrain->affichage_y = nb;
+}
+
 
 /************************************************************************/
 /* Fonctions diverses                                                   */

@@ -32,11 +32,6 @@ Case_terrain_espace *creer_case_espace()
 
 void liberer_case_terrain_espace(Case_terrain_espace *une_case_terrain_espace)
 {
-    /*if(une_case_terrain_espace->presence_flotte == true)
-    {
-        detruire_flotte(&(une_case_terrain_espace->flotte));
-        une_case_terrain_espace->presence_flotte = false;
-    }*/
     if(une_case_terrain_espace->type_case_terrain_espace == 'P')
     {
         detruire_planete(&(une_case_terrain_espace->planete));
@@ -44,8 +39,7 @@ void liberer_case_terrain_espace(Case_terrain_espace *une_case_terrain_espace)
     une_case_terrain_espace->x_espace=0;
     une_case_terrain_espace->y_espace=0;
 	une_case_terrain_espace->presence_flotte= false;
-	/*une_case_terrain_espace->est_visible = false;*/
-    une_case_terrain_espace->type_case_terrain_espace='N';
+	une_case_terrain_espace->type_case_terrain_espace='N';
 }
 
 void detruire_case_terrain_espace(Case_terrain_espace *une_case_terrain_espace)

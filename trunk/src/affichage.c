@@ -73,7 +73,7 @@ void initialise_sdl_rect(SDL_Rect *un_rectangle, int x, int y, int w, int h) /*V
  */
 bool booleen_coordonnees_case(Terrain_espace *un_terrain_espace, int x_case, int y_case, int *x, int *y)
 {
-	SDL_Rect affichage_map = {un_terrain_espace->affichage_x - 1, un_terrain_espace->affichage_y - 1, un_terrain_espace->affichage_x + TAILLE_TERRAIN_ESPACE_X, un_terrain_espace->affichage_y + TAILLE_TERRAIN_ESPACE_Y};
+	SDL_Rect affichage_map = {get_affichage_x(un_terrain_espace) - 1, get_affichage_y(un_terrain_espace) - 1, get_affichage_x(un_terrain_espace) + TAILLE_TERRAIN_ESPACE_X, get_affichage_y(un_terrain_espace) + TAILLE_TERRAIN_ESPACE_Y};
 	if(test_souris_rectangle(affichage_map, x_case * 100, y_case *100))
 	{
 		*x = (x_case * 100) - affichage_map.x;
@@ -106,8 +106,7 @@ bool booleen_minimap_pointeur_souris(int x, int y)
  */
 void test_minimap_souris(Terrain_espace *un_terrain_espace, int x, int y)
 {
-	//a modifier 
-    SDL_Rect position_minimap = {TAILLE_FENETRE_X - TAILLE_MINIMAP_X, TAILLE_FENETRE_Y - TAILLE_MINIMAP_Y, 0, 0};
+	SDL_Rect position_minimap = {TAILLE_FENETRE_X - TAILLE_MINIMAP_X, TAILLE_FENETRE_Y - TAILLE_MINIMAP_Y, 0, 0};
     int x_calcule, y_calcule;
 
     x = x - position_minimap.x;
@@ -116,10 +115,10 @@ void test_minimap_souris(Terrain_espace *un_terrain_espace, int x, int y)
     x_calcule = x * ((float)TAILLE_FENETRE_X/TAILLE_MINIMAP_X);
     y_calcule = y * ((float)TAILLE_FENETRE_Y/TAILLE_MINIMAP_Y);
 
-    if((x_calcule > 0) && (x_calcule <= (un_terrain_espace->taille_espace_x *100) - TAILLE_TERRAIN_ESPACE_X) && (y_calcule > 0) && (y_calcule < (un_terrain_espace->taille_espace_y * 100)- TAILLE_TERRAIN_ESPACE_Y))
+    if((x_calcule > 0) && (x_calcule <= (get_taille_espace_x(un_terrain_espace) *100) - TAILLE_TERRAIN_ESPACE_X) && (y_calcule > 0) && (y_calcule < (get_taille_espace_y(un_terrain_espace) * 100)- TAILLE_TERRAIN_ESPACE_Y))
     {
-        un_terrain_espace->affichage_x = x_calcule;
-        un_terrain_espace->affichage_y = y_calcule;
+		set_affichage_x(un_terrain_espace, x_calcule);
+		set_affichage_y(un_terrain_espace, y_calcule);
     }
 }
 
@@ -134,11 +133,11 @@ void test_minimap_souris(Terrain_espace *un_terrain_espace, int x, int y)
  */
 Case_terrain_espace* case_pointeur_souris(Terrain_espace *un_terrain_espace, int x, int y)
 {
-	x = (un_terrain_espace->affichage_x + x) / 100;
-	y = (un_terrain_espace->affichage_y + y - 33) / 100;
-	if ((x >= 0) && (x < un_terrain_espace->taille_espace_x) && (y >= 0) && (y < un_terrain_espace->taille_espace_y))
+	x = (get_taille_espace_x(un_terrain_espace) + x) / 100;
+	y = (get_taille_espace_y(un_terrain_espace) + y - 33) / 100;
+	if ((x >= 0) && (x < get_taille_espace_x(un_terrain_espace)) && (y >= 0) && (y < get_taille_espace_y(un_terrain_espace)))
 	{
-		return &(un_terrain_espace->tab_terrain_espace[y*(un_terrain_espace->taille_espace_x)+x]);
+		return get_case_terrain_espace(un_terrain_espace, x, y);
 	}
 	else return NULL;
 }
@@ -153,7 +152,7 @@ void reinitialiser_tableau_selection_unite(Jeu *un_jeu)
     int i;
     for(i=0;i<10;i++)
     {
-        un_jeu->tab_unite_selectionnee[i] = false;
+        set_ieme_unite_selectionne(un_jeu, i, false);
     }
 }
 
@@ -966,31 +965,31 @@ SDL_Surface* affichage_ressource(Jeu *un_jeu)
     surface_ressource = IMG_Load("../graphiques/images/interface_ressource.png");
 
 	/*affichage des ressources*/
-    sprintf(ressource, "%d", get_metal_joueur(&un_jeu->tab_joueur[un_jeu->joueur_en_cours]));
+    sprintf(ressource, "%d", get_metal_joueur(get_joueur_en_cours(un_jeu)));
     nom_ressource = TTF_RenderText_Blended(police, ressource, couleur_blanche);
     initialise_sdl_rect(&position, 75, 4, 0, 0);
     SDL_BlitSurface(nom_ressource, NULL, surface_ressource, &position);
     SDL_FreeSurface(nom_ressource);
 
-	sprintf(ressource, "%d", get_argent_joueur(&un_jeu->tab_joueur[un_jeu->joueur_en_cours]));
+	sprintf(ressource, "%d", get_argent_joueur(get_joueur_en_cours(un_jeu)));
 	nom_ressource = TTF_RenderText_Blended(police, ressource, couleur_blanche);
 	initialise_sdl_rect(&position, 75 + 150, 4, 0, 0);
 	SDL_BlitSurface(nom_ressource, NULL, surface_ressource, &position);
 	SDL_FreeSurface(nom_ressource);
 
-	sprintf(ressource, "%d", get_carburant_joueur(&un_jeu->tab_joueur[un_jeu->joueur_en_cours]));
+	sprintf(ressource, "%d", get_carburant_joueur(get_joueur_en_cours(un_jeu)));
 	nom_ressource = TTF_RenderText_Blended(police, ressource, couleur_blanche);
 	initialise_sdl_rect(&position, 75 + 300, 4, 0, 0);
 	SDL_BlitSurface(nom_ressource, NULL, surface_ressource, &position);
 	SDL_FreeSurface(nom_ressource);
 
-	sprintf(ressource, "%d", get_population_joueur(&un_jeu->tab_joueur[un_jeu->joueur_en_cours]));
+	sprintf(ressource, "%d", get_population_joueur(get_joueur_en_cours(un_jeu)));
 	nom_ressource = TTF_RenderText_Blended(police, ressource, couleur_blanche);
 	initialise_sdl_rect(&position, 75 + 450, 4, 0, 0);
 	SDL_BlitSurface(nom_ressource, NULL, surface_ressource, &position);
 	SDL_FreeSurface(nom_ressource);
 
-    sprintf(tour, "Tour en cours: %d   Joueur en cours: %d", un_jeu->tour_en_cours, un_jeu->joueur_en_cours);
+    sprintf(tour, "Tour en cours: %d   Joueur en cours: %d", get_tour_en_cours(un_jeu), get_indice_joueur_en_cours(un_jeu));
     nombre_tour = TTF_RenderText_Blended(police, tour, couleur_blanche);
     position.x = TAILLE_FENETRE_X - 400;
     SDL_BlitSurface(nombre_tour, NULL, surface_ressource, &position);
@@ -1055,11 +1054,6 @@ SDL_Surface* affichage_creation_unite(Planete* une_planete)
             SDL_BlitSurface(surface_texte_unite, NULL, panneau_unite, &position_texte_unite);
             SDL_FreeSurface(surface_texte_unite);
         }
-
-		/*if(((i + 1)== une_planete->unite_en_cours) && (une_planete->unite_nb_tour_restant != 0))
-		{
-			SDL_FillRect(unite, NULL, SDL_MapRGB(panneau_unite->format, 100, 0, 0));
-		}*/
     }
 
     TTF_CloseFont(police);
