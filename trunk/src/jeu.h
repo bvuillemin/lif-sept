@@ -57,6 +57,7 @@ void set_selection_flotte(Jeu * un_jeu, Flotte * une_flotte);
 bool get_ieme_unite_selectionnee(const Jeu* un_jeu, int i);
 void set_ieme_unite_selectionne(Jeu* un_jeu, int i, bool res);
 int get_tour_en_cours(const Jeu *un_jeu);
+void set_selection_planete(Jeu* un_jeu, Planete* une_planete);
 
 bool construction_unite_possible(Planete* une_planete);
 
