@@ -3247,7 +3247,7 @@ void init_nouvelle_partie(char nom1[], char nom2[], Terrain_espace **un_terrain_
     
 	joueur = creer_joueur(nom1, 0, false);
 	joueur2 = creer_joueur(nom2, 1, false);
-	*jeu = creer_jeu();
+	
     ajouter_joueur(*jeu, joueur);
 	ajouter_joueur(*jeu, joueur2);
     
