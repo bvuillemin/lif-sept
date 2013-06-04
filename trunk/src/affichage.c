@@ -7,7 +7,6 @@
  */
 
 #include <math.h>
-
 #ifdef __APPLE__
 #include "SDL_rotozoom.h"
 #include "SDL_framerate.h"
@@ -4476,6 +4475,7 @@ int affichage_ecran_combat(Jeu* jeu, Terrain_combat *un_terrain_combat, Flotte* 
 	SDL_BlitSurface(bordure, NULL, ecran, &pos_bordure);
 	SDL_BlitSurface(interface, NULL, ecran, &pos_interface);
 	SDL_BlitSurface(interface_haut, NULL, ecran, &pos_interface_haut);
+    SDL_BlitSurface(attaquer, NULL, interface, &pos_attaquer);
 	SDL_BlitSurface(passer, NULL, interface, &position_passer);
 	SDL_Flip(ecran);
 
