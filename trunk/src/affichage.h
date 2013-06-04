@@ -37,12 +37,12 @@ void test_minimap_souris(Terrain_espace *un_terrain_espace, int x, int y);
 void reinitialiser_tableau_selection_unite(Jeu *un_jeu);
 void afficher_infobulle(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface **tab_surface, INTERFACE_AFFICHEE interface_affichee, int x, int y);
 
-SDL_Surface* affichage_ressource(Jeu *un_jeu, SDL_Surface *surface_ressource);
-SDL_Surface* affichage_creation_unite(Planete* une_planete, SDL_Surface *panneau_unite);
-SDL_Surface* affichage_planete(Planete* une_planete, SDL_Surface *info_planete);
-SDL_Surface* affichage_planete_ennemie(Case_terrain_espace *une_case_terrain_espace, SDL_Surface *info_planete);
-SDL_Surface* affichage_flotte(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *info_flotte);
-SDL_Surface* affichage_flotte_ennemie(Jeu *un_jeu, SDL_Surface *info_flotte);
+SDL_Surface* affichage_ressource(Jeu *un_jeu);
+SDL_Surface* affichage_creation_unite(Planete* une_planete);
+SDL_Surface* affichage_planete(Planete* une_planete);
+SDL_Surface* affichage_planete_ennemie(Case_terrain_espace *une_case_terrain_espace);
+SDL_Surface* affichage_flotte(Jeu *un_jeu, Terrain_espace *un_terrain_espace);
+SDL_Surface* affichage_flotte_ennemie(Jeu *un_jeu);
 SDL_Surface* creer_affichage_terrain(Terrain_espace *un_terrain_espace);
 SDL_Surface* creer_affichage_flotte(Terrain_espace *un_terrain_espace);
 SDL_Surface* affichage_minimap(Terrain_espace *un_terrain_espace);
