@@ -4659,7 +4659,10 @@ int affichage_ecran_combat(Jeu* jeu, Terrain_combat *un_terrain_combat, Flotte* 
 					SDL_FreeSurface(texte2);
 					texte2 = TTF_RenderUTF8_Blended(police,infos2,couleur_police);
 					selection(jeu,un_terrain_combat,pos_clic);/*on sélectionne ou désélectionne */
-					affiche_deplacement_unite(jeu,un_terrain_combat, pos_clic,carte,bordure,ecran,position_affichage_carte,pos_bordure,infos2,system,son_saut_debut,son_saut_fin);/*on essaie de déplacer*/
+                    if(evenement.button.button == SDL_BUTTON_RIGHT)
+                    {
+                        affiche_deplacement_unite(jeu,un_terrain_combat, pos_clic,carte,bordure,ecran,position_affichage_carte,pos_bordure,infos2,system,son_saut_debut,son_saut_fin);/*on essaie de déplacer*/
+                    }
 					SDL_FreeSurface(texte2);
 					texte2 = TTF_RenderUTF8_Blended(police,infos2,couleur_police);
 					SDL_FreeSurface(carte);
