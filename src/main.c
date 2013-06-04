@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
 
 #include "planete.h"
 #include "case_terrain_espace.h"
@@ -18,6 +19,7 @@
 
 int main(int argc, char *argv[])
 {
+    srand(time(NULL));
     ecran_titre();
 	return EXIT_SUCCESS;
 }
