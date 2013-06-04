@@ -109,6 +109,10 @@ int get_tour_en_cours(const Jeu *un_jeu)
 {
 	return un_jeu->tour_en_cours;
 }
+void set_selection_planete(Jeu* un_jeu, Planete* une_planete)
+{
+	un_jeu->selection_planete = une_planete;
+}
 
 /************************************************************************/
 /* Fonctions liées au jeu                                               */
