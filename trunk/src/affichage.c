@@ -2388,7 +2388,6 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace, FMOD_SYSTEM
 	SDL_FreeSurface(ecran);
 	SDL_FreeSurface(icone);
 
-
 	FMOD_Sound_Release(son_saut_debut);
 	FMOD_Sound_Release(son_saut_fin);
 
@@ -4321,7 +4320,7 @@ void animation_attaque(Terrain_combat * un_terrain_combat,Jeu * jeu, SDL_Surface
  * \param      flotte2        Pointeur sur Flotte  
  * \param      infos2        Pointeur sur char  
  */
-bool verifie_etat_combat(Jeu *jeu,Terrain_combat *un_terrain_combat,Flotte *flotte1,Flotte *flotte2,char * infos2,int gagnant){
+bool verifie_etat_combat(Jeu *jeu,Terrain_combat *un_terrain_combat,Flotte *flotte1,Flotte *flotte2,char * infos2,int* gagnant){
 /*vérifie si le combat est fini et quel joueur l'a remporté*/
 	int taille_flotte1,taille_flotte2,i;
 	Joueur * joueur;
@@ -4332,9 +4331,8 @@ bool verifie_etat_combat(Jeu *jeu,Terrain_combat *un_terrain_combat,Flotte *flot
 		i= get_indice_joueur_flotte(flotte2);
 		joueur = get_ieme_joueur_jeu(jeu,i);
 		sprintf(infos2,"Gagné %s!",joueur->nom_joueur);
-		detruire_flotte(&flotte1);
-
-		gagnant = 1;
+		
+		*gagnant = 2;
 		return 0;
 	}
 	else if(taille_flotte2 == 0)
@@ -4343,8 +4341,7 @@ bool verifie_etat_combat(Jeu *jeu,Terrain_combat *un_terrain_combat,Flotte *flot
 		joueur = get_ieme_joueur_jeu(jeu,i);
 		sprintf(infos2,"Gagné %s !",joueur->nom_joueur);
 		
-		detruire_flotte(&flotte2);
-		gagnant = 2;
+		*gagnant = 1;
 		return 0;
 	}
 	return 1;
@@ -4372,7 +4369,7 @@ int affichage_ecran_combat(Jeu* jeu, Terrain_combat *un_terrain_combat, Flotte* 
 	SDL_Color couleur_police = {255,255,255};
 	char infos[255] = "",infos2[255]="",infos3[255]="OK";
 
-	int gagnant = 2;
+	int gagnant = 0;
 	bool continuer,attend_attaque,attaque_reussi;
 	SDL_Event evenement;
 
@@ -4466,6 +4463,7 @@ int affichage_ecran_combat(Jeu* jeu, Terrain_combat *un_terrain_combat, Flotte* 
 	{
 		SDL_PollEvent(&evenement);
 		maj_musique(system, musique, tab_chanson);
+		continuer = verifie_etat_combat(jeu,un_terrain_combat,flotte1,flotte2,infos2, &gagnant); /*on vérifie si le combat est fini*/
 		switch(evenement.type)
 		{
 			case SDL_QUIT:
@@ -4484,7 +4482,6 @@ int affichage_ecran_combat(Jeu* jeu, Terrain_combat *un_terrain_combat, Flotte* 
 					} /*on affiche les infos de l'unité */
 					SDL_FreeSurface(texte);
 					texte = TTF_RenderUTF8_Blended(police,infos,couleur_police);
-					continuer = verifie_etat_combat(jeu,un_terrain_combat,flotte1,flotte2,infos2,gagnant); /*on vérifie si le combat est fini*/
 					SDL_FreeSurface(texte2);
 					texte2 = TTF_RenderUTF8_Blended(police,infos2,couleur_police);
 				}
@@ -4698,9 +4695,19 @@ int lancer_combat_ecran(Jeu *jeu, Terrain_espace* un_terrain_espace, Flotte* flo
 	Terrain_combat * un_combat; 
 	un_combat=creer_terrain_combat(X_CASE_COMBAT, Y_CASE_COMBAT);
 	modification_terrain_combat(un_combat, 'E');
-	placer_unite_flotte_en_haut(un_combat, flotte1);
-	placer_unite_flotte_en_bas(un_combat, flotte2);
-	gagnant = affichage_ecran_combat(jeu, un_combat, flotte1, flotte2, ecran, system, musique);
+	if(get_indice_joueur_flotte(flotte1) == 0)
+	{
+		placer_unite_flotte_en_haut(un_combat, flotte1);
+		placer_unite_flotte_en_bas(un_combat, flotte2);
+		gagnant = affichage_ecran_combat(jeu, un_combat, flotte1, flotte2, ecran, system, musique);
+	}
+	else
+	{
+		placer_unite_flotte_en_haut(un_combat, flotte2);
+		placer_unite_flotte_en_bas(un_combat, flotte1);
+		gagnant = affichage_ecran_combat(jeu, un_combat, flotte2, flotte1, ecran, system, musique);
+	}
+	
 	detruit_terrain_combat(&un_combat);
 
 	if(gagnant == 1)
