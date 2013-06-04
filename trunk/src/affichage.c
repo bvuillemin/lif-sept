@@ -4094,7 +4094,8 @@ void saisie_texte_sdl(char nom[50], SDL_Surface* ecran, SDL_Rect position_saisie
 			break;
 		}
 	}
-	SDL_FreeSurface(fond_texte);
+    TTF_CloseFont(police);
+    SDL_FreeSurface(fond_texte);
 }
 
 /**
