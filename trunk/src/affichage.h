@@ -5,6 +5,7 @@
  * \brief     Définit l'affichage du jeu
  * \details   Cette classe permet l'affichage du jeu, des menus, prend en compte les actions du joueur
  */
+
 #ifndef _AFFICHAGE_H_
 #define _AFFICHAGE_H_
 
@@ -28,39 +29,45 @@ typedef enum
 	PANNEAU_UNITE
 }INTERFACE_AFFICHEE;
 
-bool test_souris_rectangle (SDL_Rect taille_surface, int x, int y);
+/*Fonctions diverses*/
+bool test_souris_rectangle (const SDL_Rect taille_surface, int x, int y);
 void initialise_sdl_rect(SDL_Rect *un_rectangle, int x, int y, int w, int h);
-Case_terrain_espace* case_pointeur_souris(Terrain_espace *un_terrain_espace, int x, int y) ;
+Case_terrain_espace* case_pointeur_souris(const Terrain_espace *un_terrain_espace, int x, int y) ;
 bool booleen_coordonnees_case(Terrain_espace *un_terrain_espace, int x_case, int y_case, int *x, int *y);
 bool booleen_minimap_pointeur_souris(int x, int y);
 void test_minimap_souris(Terrain_espace *un_terrain_espace, int x, int y);
 void reinitialiser_tableau_selection_unite(Jeu *un_jeu);
+
+/*Affiche les infobulles*/
 void afficher_infobulle(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface **tab_surface, INTERFACE_AFFICHEE interface_affichee, int x, int y);
 
-SDL_Surface* affichage_ressource(Jeu *un_jeu);
-SDL_Surface* affichage_creation_unite(Planete* une_planete);
-SDL_Surface* affichage_planete(Planete* une_planete);
-SDL_Surface* affichage_planete_ennemie(Case_terrain_espace *une_case_terrain_espace);
-SDL_Surface* affichage_flotte(Jeu *un_jeu, Terrain_espace *un_terrain_espace);
-SDL_Surface* affichage_flotte_ennemie(Jeu *un_jeu);
-SDL_Surface* creer_affichage_terrain(Terrain_espace *un_terrain_espace);
-SDL_Surface* creer_affichage_flotte(Terrain_espace *un_terrain_espace);
-SDL_Surface* affichage_minimap(Terrain_espace *un_terrain_espace);
-SDL_Surface* creer_affichage_vision(Jeu *un_jeu, Joueur* un_joueur);
-void game_over(char nom1[30], char nom2[30], FMOD_SYSTEM* system, FMOD_SOUND* musique);
+/*Affichage des informations du terrain espace*/
+SDL_Surface* affichage_ressource(const Jeu *un_jeu);
+SDL_Surface* affichage_creation_unite(const Planete* une_planete);
+SDL_Surface* affichage_planete(const Planete* une_planete);
+SDL_Surface* affichage_planete_ennemie(const Case_terrain_espace *une_case_terrain_espace);
+SDL_Surface* affichage_flotte(const Jeu *un_jeu, const Terrain_espace *un_terrain_espace);
+SDL_Surface* affichage_flotte_ennemie(const Jeu *un_jeu);
+SDL_Surface* creer_affichage_terrain(const Terrain_espace *un_terrain_espace);
+SDL_Surface* creer_affichage_flotte(const Terrain_espace *un_terrain_espace);
+SDL_Surface* affichage_minimap(const Terrain_espace *un_terrain_espace);
+SDL_Surface* creer_affichage_vision(const Jeu *un_jeu, const Joueur* un_joueur);
+SDL_Surface* creer_affichage_terrain(const Terrain_espace *un_terrain_espace);
+SDL_Surface* affichage_terrain(const Terrain_espace *un_terrain_espace, SDL_Surface *carte);
+void maj_affichage_flotte(const Jeu *un_jeu, const Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface **tab_surface, INTERFACE_AFFICHEE interface_affichee);
+void maj_affichage(const Jeu *un_jeu, const Terrain_espace *un_terrain_espace, SDL_Surface *ecran, INTERFACE_AFFICHEE interface_affichee, Case_terrain_espace *une_case_terrain_espace, SDL_Surface **tab_surface);
+void maj_affichage_carte_terrain(const Jeu *un_jeu, const Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface **tab_surface, INTERFACE_AFFICHEE interface_affichee);
+void maj_affichage_vision(const Jeu *un_jeu, const Joueur* un_joueur, SDL_Surface *ecran, SDL_Surface **tab_surface);
+void initialiser_affichage(const Jeu *un_jeu, const Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface **tab_surface);
+void maj_carte_terrain(const Jeu *un_jeu, const Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface **tab_surface, INTERFACE_AFFICHEE interface_affichee);
+void maj_affichage_ressource(const Jeu *un_jeu, SDL_Surface *ecran, SDL_Surface **tab_surface);
+
+/*Boucle principale*/
 void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace, FMOD_SYSTEM *system, FMOD_SOUND *musique);
-SDL_Surface* creer_affichage_terrain(Terrain_espace *un_terrain_espace);
-SDL_Surface* affichage_terrain(Terrain_espace *un_terrain_espace, SDL_Surface *carte);
-void maj_affichage_flotte(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface **tab_surface, INTERFACE_AFFICHEE interface_affichee);
-void maj_affichage(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *ecran, INTERFACE_AFFICHEE interface_affichee, Case_terrain_espace *une_case_terrain_espace, SDL_Surface **tab_surface);
-void maj_affichage_carte_terrain(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface **tab_surface, INTERFACE_AFFICHEE interface_affichee);
-void maj_affichage_vision(Jeu *un_jeu, Joueur* un_joueur, SDL_Surface *ecran, SDL_Surface **tab_surface);
-void initialiser_affichage(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface **tab_surface);
-void maj_carte_terrain(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface **tab_surface, INTERFACE_AFFICHEE interface_affichee);
-void maj_affichage_ressource(Jeu *un_jeu, SDL_Surface *ecran, SDL_Surface **tab_surface);
 
+/*Pour le menu*/
+void game_over(char nom1[30], char nom2[30], FMOD_SYSTEM* system, FMOD_SOUND* musique);
 void saisie_texte_sdl(char* nom, SDL_Surface* ecran, SDL_Rect position_saisie_texte);
-
 void pause();
 void input_handle(void);
 void menu_pause(Terrain_espace *un_terrain_espace, Jeu *un_jeu, int * exit);

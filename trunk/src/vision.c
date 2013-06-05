@@ -9,7 +9,7 @@
 #include "vision.h"
 
 /************************************************************************/
-/* Initialisation, crÈation et destruction                              */
+/* Initialisation, création et destruction                              */
 /************************************************************************/
 
 void initialiser_vision_terrain(Vision_terrain *une_vision_terrain, Terrain_espace *un_terrain, int indice_joueur)
