@@ -200,9 +200,9 @@ void ajouter_planete_joueur(Joueur *un_joueur, Planete *une_planete)
         une_planete->planete_colonisee = true;
         if(i==0)
         {
-            une_planete->planete_principale = true;
+            set_planete_principale(une_planete, true);
         }
-		une_planete->indice_joueur = un_joueur->numero_joueur;
+		set_indice_joueur_planete(une_planete, un_joueur->numero_joueur);
     }
 }
 
@@ -219,12 +219,12 @@ void ajouter_planete_avec_indice_joueur(Joueur* un_joueur, Planete* une_planete,
 		un_joueur->nb_planete ++;
 	}
 	un_joueur->tab_planete[indice] = une_planete;
-	une_planete->planete_colonisee = true;
+	set_planete_colonisee(une_planete, true);
 	if(indice==0)
 	{
-		une_planete->planete_principale = true;
+		set_planete_principale(une_planete, true);
 	}
-	une_planete->indice_joueur = un_joueur->numero_joueur;
+	set_indice_joueur_planete(une_planete, un_joueur->numero_joueur);
 }
 
 
@@ -308,10 +308,10 @@ void recuperer_ressource_planete(Joueur *un_joueur, int *metal, int *argent, int
 	int i;
 	for(i = 0; i < un_joueur->nb_planete;i++)
 	{
-		*metal = *metal + un_joueur->tab_planete[i]->metal;
-		*argent = *argent + un_joueur->tab_planete[i]->argent;
-		*carburant = *carburant + un_joueur->tab_planete[i]->carburant;
-		*population = *population + un_joueur->tab_planete[i]->population;
+		*metal = *metal + get_metal(un_joueur->tab_planete[i]);
+		*argent = *argent + get_argent(un_joueur->tab_planete[i]);
+		*carburant = *carburant + get_carburant(un_joueur->tab_planete[i]);
+		*population = *population + get_population(un_joueur->tab_planete[i]);
 	}
 }
 
@@ -416,7 +416,7 @@ void colonisation_planete(Joueur *un_joueur, Planete *une_planete)
 {
     int i = un_joueur->nb_planete;
 
-    if(une_planete->planete_colonisee == true)
+    if(get_planete_colonisee(une_planete)== true)
     {
         printf("Colonisation impossible\n\n");
     }
@@ -427,11 +427,11 @@ void colonisation_planete(Joueur *un_joueur, Planete *une_planete)
         {
             (un_joueur->tab_planete)[i] = une_planete;
             un_joueur->nb_planete ++;
-            une_planete->planete_colonisee = true;
-			une_planete->indice_joueur = un_joueur->numero_joueur;
+			set_planete_colonisee(une_planete, true);
+			set_indice_joueur_planete(une_planete, un_joueur->numero_joueur);
             if(i==0)
             {
-                une_planete->planete_principale = true;
+                set_planete_principale(une_planete, true);
             }
         }
         else
@@ -449,12 +449,12 @@ void colonisation_planete(Joueur *un_joueur, Planete *une_planete)
  */
 void creation_unite_planete(Joueur *un_joueur, Planete *une_planete, int choix)
 {
-    if(une_planete->unite_nb_tour_restant <= 0)
+    if(get_planete_unite_nb_tour_restant(une_planete)<= 0)
     {
         if(choix == 1)
         {
-          une_planete->unite_nb_tour_restant = NB_TOUR_UNITE_1;
-          une_planete->unite_en_cours = 1;
+		  set_planete_unite_en_cours(une_planete, 1);
+		  set_planete_unite_nb_tour_restant(une_planete, NB_TOUR_UNITE_1);
           un_joueur->metal -= NB_METAL_UNITE_1;
 		  un_joueur->argent -= NB_ARGENT_UNITE_1;
 		  un_joueur->carburant -= NB_CARBURANT_UNITE_1;
@@ -462,8 +462,8 @@ void creation_unite_planete(Joueur *un_joueur, Planete *une_planete, int choix)
         }
 		if(choix == 2)
 		{
-			une_planete->unite_nb_tour_restant = NB_TOUR_UNITE_2;
-			une_planete->unite_en_cours = 2;
+			set_planete_unite_en_cours(une_planete, 2);
+			set_planete_unite_nb_tour_restant(une_planete, NB_TOUR_UNITE_2);
 			un_joueur->metal -= NB_METAL_UNITE_2;
 			un_joueur->argent -= NB_ARGENT_UNITE_2;
 			un_joueur->carburant -= NB_CARBURANT_UNITE_2;
@@ -471,8 +471,8 @@ void creation_unite_planete(Joueur *un_joueur, Planete *une_planete, int choix)
 		}
 		if(choix == 3)
 		{
-			une_planete->unite_nb_tour_restant = NB_TOUR_UNITE_3;
-			une_planete->unite_en_cours = 3;
+			set_planete_unite_en_cours(une_planete, 3);
+			set_planete_unite_nb_tour_restant(une_planete, NB_TOUR_UNITE_3);
 			un_joueur->metal -= NB_METAL_UNITE_3;
 			un_joueur->argent -= NB_ARGENT_UNITE_3;
 			un_joueur->carburant -= NB_CARBURANT_UNITE_3;
