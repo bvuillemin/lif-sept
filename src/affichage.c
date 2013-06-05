@@ -3974,9 +3974,10 @@ void saisie_texte_sdl(char nom[50], SDL_Surface* ecran, SDL_Rect position_saisie
 	SDL_FillRect(fond_texte, NULL, SDL_MapRGB(ecran->format, 10, 10, 10));
 	SDL_BlitSurface(fond_texte, NULL, ecran, &position_saisie_texte);
 	SDL_Flip(ecran);
-
+    SDL_EnableKeyRepeat(200, 100);
 	while(saisie_en_cours)
 	{
+        evenement.type = 0;
 		SDL_WaitEvent(&evenement);
 		switch(evenement.type)
 		{
