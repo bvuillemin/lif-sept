@@ -216,7 +216,7 @@ NIVEAU_MENACE detecter_menace_planete(Joueur* un_joueur, Terrain_espace* un_terr
 	if(nb_unite_alliee != 0) /*on vÈrifie qu'il n'y a pas de division par 0*/
 	{
 		ratio = (float)nb_unite_ennemie / nb_unite_alliee;
-		printf("le ratio est: %d\n", ratio);
+		printf("le ratio est: %f\n", ratio);
 	}
 	if((nb_unite_alliee == 0) && (nb_unite_ennemie != 0))
 	{
@@ -305,7 +305,7 @@ NIVEAU_MENACE detecter_menace_flotte(Joueur* un_joueur, Terrain_espace* un_terra
 	if(nb_unite_alliee != 0) /*on vÈrifie qu'il n'y a pas de division par 0*/
 	{
 		ratio = (float)nb_unite_ennemie / nb_unite_alliee;
-		printf("le ratio est: %d\n", ratio);
+		printf("le ratio est: %f\n", ratio);
 	}
 	if((nb_unite_alliee == 0) && (nb_unite_ennemie != 0))
 	{
@@ -361,7 +361,7 @@ COMPORTEMENT_IA calcul_niveau_menace_globale(Joueur* un_joueur, Terrain_espace* 
 			res += 9;
 	}
 	ratio = (double)res/((get_nb_planete(un_joueur) * 3)+ get_nb_flotte_joueur(un_joueur));
-	printf("Ratio niveau global %d", ratio);
+	printf("Ratio niveau global %f", ratio);
 	return EXPLORATION;
 }
 

@@ -1068,7 +1068,7 @@ SDL_Surface* affichage_creation_unite(const Planete* une_planete)
  * \brief      Surface sur laquelle on affiche les infos de planète
  * \param      une_planete           Pointeur sur la planète dont on affiche les infos
  */
-SDL_Surface* affichage_planete(const Planete* une_planete)
+SDL_Surface* affichage_planete(Planete* une_planete)
 {
 	SDL_Surface *info_planete = NULL;
     SDL_Surface *planete = NULL;
@@ -1644,7 +1644,7 @@ SDL_Surface* creer_affichage_vision(const Jeu *un_jeu, const Joueur* un_joueur)
  * \param      ecran          Pointeur sur la surface d'ecran
  * \param      tab_surface    Pointeur sur le tableau de pointeurs sur surface
  */
-void maj_affichage_vision(const Jeu *un_jeu, const Joueur* un_joueur, SDL_Surface *ecran, SDL_Surface **tab_surface)
+void maj_affichage_vision(Jeu *un_jeu, const Joueur* un_joueur, SDL_Surface *ecran, SDL_Surface **tab_surface)
 {
 	SDL_Surface *affichee = NULL;
 	SDL_Surface *jamais_visitee = NULL;
@@ -1773,7 +1773,7 @@ void initialiser_affichage(const Jeu *un_jeu, const Terrain_espace *un_terrain_e
  * \param      tab_surface           Pointeur sur le tableau de pointeurs sur surface
  * \param      interface_affichee    Interface en cours d'affichage
  */
-void maj_carte_terrain(const Jeu *un_jeu, const Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface **tab_surface, INTERFACE_AFFICHEE interface_affichee)
+void maj_carte_terrain(Jeu *un_jeu, const Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface **tab_surface, INTERFACE_AFFICHEE interface_affichee)
 {
 	SDL_Rect position_interface = {0, TAILLE_TERRAIN_ESPACE_Y + 30, 0, 0};
 	SDL_Rect position_mini_carte = {TAILLE_FENETRE_X - 240, TAILLE_FENETRE_Y - 158};
@@ -1869,7 +1869,7 @@ void maj_affichage_carte_terrain(const Jeu *un_jeu, const Terrain_espace *un_ter
  * \param      tab_surface           Pointeur sur le tableau de pointeurs sur surface
  * \param      interface_affichee    Interface en cours d'affichage
  */
-void maj_affichage_flotte(const Jeu *un_jeu, const Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface **tab_surface, INTERFACE_AFFICHEE interface_affichee)
+void maj_affichage_flotte(Jeu *un_jeu, const Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface **tab_surface, INTERFACE_AFFICHEE interface_affichee)
 {
     SDL_Rect position_interface = {0, TAILLE_TERRAIN_ESPACE_Y + 30, 0, 0};
     SDL_Rect position_mini_carte = {TAILLE_FENETRE_X - 240, TAILLE_FENETRE_Y - 158};
@@ -2154,18 +2154,21 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace, FMOD_SYSTEM
 						reinitialiser_tableau_selection_unite(un_jeu);
 					}
 
-					/*si les deux sont vrais, qu'il y a une planète et une flotte sur la même case, on va passer de l'un à l'autre à chaque fois qu'in clique*/
+					/*si les deux sont vrais, qu'il y a une planète et une flotte sur la même case, on va passer de l'un à l'autre à chaque fois qu'on clique*/
 					if((get_type_case_terrain_espace(une_case_terrain_espace) == 'P') && (get_presence_flotte(une_case_terrain_espace) == true) && (flotte_planete%2 == 0))
 					{
 						set_selection_planete(un_jeu, get_planete(une_case_terrain_espace));
-						if(get_indice_joueur_flotte(get_flotte_en_cours(un_jeu)) == get_indice_joueur_en_cours(un_jeu))
-						{
-							interface_affichee = PLANETE;
-						}
-						else
-						{
-							interface_affichee = PLANETE_ENNEMIE;
-						}
+                        if(get_flotte_en_cours(un_jeu) != NULL)
+                        {
+                            if(get_indice_joueur_flotte(get_flotte_en_cours(un_jeu)) == get_indice_joueur_en_cours(un_jeu))
+                            {
+                                interface_affichee = PLANETE;
+                            }
+                            else
+                            {
+                                interface_affichee = PLANETE_ENNEMIE;
+                            }
+                        }
 						maj_affichage(un_jeu, un_terrain_espace, ecran, interface_affichee, une_case_terrain_espace, tab_surface);
 						reinitialiser_tableau_selection_unite(un_jeu);
 					}
