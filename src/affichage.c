@@ -3377,7 +3377,7 @@ void init_nouvelle_partie(char nom1[], char nom2[], Terrain_espace **un_terrain_
 	ajouter_planete_terrain_espace(*un_terrain_espace, 10, 13, "Tauron", 20, 30, 200, 50);
     
     Terre = get_planete_terrain_espace(*un_terrain_espace, 1, 1);
-    Caprica = get_planete_terrain_espace(*un_terrain_espace, 4, 4);
+    Caprica = get_planete_terrain_espace(*un_terrain_espace, 18, 13);
     
 	joueur = creer_joueur(nom1, 0, false);
 	joueur2 = creer_joueur(nom2, 1, false);
@@ -3386,8 +3386,8 @@ void init_nouvelle_partie(char nom1[], char nom2[], Terrain_espace **un_terrain_
 	ajouter_joueur(*jeu, joueur2);
     
     flotte = creer_flotte();
-    unite1 = creer_unite(Destroyer);
-    unite2 = creer_unite(Destructeur);
+    unite1 = creer_unite(Chasseur);
+    unite2 = creer_unite(Chasseur);
     
 	flotte2 = creer_flotte();
 	unite3 = creer_unite(Chasseur);
@@ -3403,8 +3403,8 @@ void init_nouvelle_partie(char nom1[], char nom2[], Terrain_espace **un_terrain_
 	ajouter_unite_flotte(flotte2, unite3);
     ajouter_unite_flotte(flotte2, unite4);
 	
-	ajouter_flotte_jeu(*jeu, *un_terrain_espace, flotte, 0, 2, 2);
-	ajouter_flotte_jeu(*jeu, *un_terrain_espace, flotte2, 1, 3, 3);
+	ajouter_flotte_jeu(*jeu, *un_terrain_espace, flotte, 0, 1, 2);
+	ajouter_flotte_jeu(*jeu, *un_terrain_espace, flotte2, 1, 18, 13);
 }
 
 /**
