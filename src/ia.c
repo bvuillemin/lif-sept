@@ -1,7 +1,7 @@
 /**
  * \file      ia.c
  * \author    BODARD, REYNAUD, VUILLEMIN
- * \version   1.0
+ * \version   0.1
  * \brief     Définit l'ia du jeu
  * \details   Cette classe définit l'intelligence artificielle du jeu et ses caractéristiques
  */

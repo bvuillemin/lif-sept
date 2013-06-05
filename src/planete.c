@@ -244,19 +244,19 @@ void set_planete_batiment_en_cours(Planete* une_planete, int nb)
 	une_planete->batiment_en_cours = nb;
 }
 
+int get_planete_batiment_en_cours(const Planete* une_planete)
+{
+	return une_planete->batiment_en_cours;
+}
+
 int get_indice_joueur_planete(Planete *une_planete)
 {
 	return une_planete->indice_joueur;
 }
 
-int get_batiment_en_cours(const Planete* une_planete)
+void set_indice_joueur_planete(Planete* une_planete, int nb)
 {
-	return une_planete->batiment_en_cours;
-}
-
-int get_batiment_nb_tour_restant(const Planete* une_planete)
-{
-	return une_planete->batiment_nb_tour_restant;
+	une_planete->indice_joueur = nb;
 }
 
 /************************************************************************/

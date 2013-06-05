@@ -1140,18 +1140,18 @@ get_metal(une_planete), get_argent(une_planete), get_carburant(une_planete), get
         initialise_sdl_rect(&position_batiment, 10 + 120*i, 35, 0, 0);
         SDL_BlitSurface(batiment, NULL, fond_planete, &position_batiment);
 
-		if((i == get_batiment_en_cours(une_planete)) && (get_batiment_nb_tour_restant(une_planete) != 0))
+		if((i == get_planete_batiment_en_cours(une_planete)) && (get_planete_batiment_nb_tour_restant(une_planete) != 0))
 		{
 			SDL_BlitSurface(construction, NULL, fond_planete, &position_batiment);
 		}
-		if((i != get_batiment_en_cours(une_planete)) && (get_batiment_nb_tour_restant(une_planete) > 0))
+		if((i != get_planete_batiment_en_cours(une_planete)) && (get_planete_batiment_nb_tour_restant(une_planete) > 0))
 		{
 			SDL_BlitSurface(interdiction, NULL, fond_planete, &position_batiment);
 		}
         SDL_BlitSurface(planete, NULL, fond_planete, &position_texte);
         SDL_FreeSurface(planete);
 
-        if((i == get_batiment_en_cours(une_planete)) && (get_batiment_nb_tour_restant(une_planete) != 0))
+        if((i == get_planete_batiment_en_cours(une_planete)) && (get_planete_batiment_nb_tour_restant(une_planete) != 0))
         {
             sprintf(texte_batiment, "Tours: %d", une_planete->batiment_nb_tour_restant);
             initialise_sdl_rect(&position_texte, 15 + 120 * i, 60, 0, 0);
