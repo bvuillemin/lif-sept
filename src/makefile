@@ -5,17 +5,22 @@
 CC = gcc
 CFLAGS = -Wall -pedantic -ggdb 
 EXEC_NAME = ../bin/cos
-LIBPATH = #-L../lib
-INCPATH = #-I../include
+TEST_NAME = ../bin/test
+LIBPATH = 
+INCPATH = 
 LIBS = -lSDL -lSDL_image -lSDL_ttf -lSDL_gfx -lSDL_gfx -lfmodex -L../lib/lib
-#SRC = $(wildcard *.c)
-#OBJ_FILES = $(SRC:.c=.o)
-OBJ_FILES = planete.o case_terrain_espace.o terrain_espace.o unite.o flotte.o terrain_combat.o case_terrain_combat.o jeu.o joueur.o batiment.o main.o affichage.o sauvegarde.o animation.o vision.o son.o ia.o TableauDynamique.o #main.o 
 
-all: $(EXEC_NAME)
+OBJ_FILES = planete.o case_terrain_espace.o terrain_espace.o unite.o flotte.o terrain_combat.o case_terrain_combat.o jeu.o joueur.o batiment.o affichage.o sauvegarde.o animation.o vision.o son.o ia.o TableauDynamique.o 
+MAIN_FILE = main.o
+MAIN_TEST_FILE = main_test.o
 
-$(EXEC_NAME): $(OBJ_FILES)
-	$(CC) $(OBJ_FILES) -o $(LIBPATH) $(INCPATH) $(EXEC_NAME) $(LIBS)
+all: $(EXEC_NAME) $(TEST_NAME)
+
+$(EXEC_NAME):  $(MAIN_FILE) $(OBJ_FILES)
+	$(CC)  $(MAIN_FILE) $(OBJ_FILES) -o $(LIBPATH) $(INCPATH) $(EXEC_NAME) $(LIBS)
+
+$(TEST_NAME): $(MAIN_TEST_FILE) $(OBJ_FILES)
+	$(CC) $(MAIN_TEST_FILE) $(OBJ_FILES) -o $(LIBPATH) $(INCPATH) $(TEST_NAME) $(LIBS)
 
 %.o: %.c
 	$(CC) $(INCPATH) $(CFLAGS) -o $@ -c $<
