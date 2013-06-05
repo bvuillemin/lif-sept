@@ -2727,7 +2727,6 @@ void selection(Jeu * jeu,Terrain_combat *un_terrain_combat,SDL_Rect position)
 	pos=position;
 	pos=coordonnee_case_du_clic(pos);
   	selectionner_case_combat(jeu,un_terrain_combat, pos.x, pos.y);
-	printf("joueur en cours : %d \n",  get_joueur_en_cours_combat(jeu));
 }
 void affiche_info_unite(Jeu * jeu,Terrain_combat *un_terrain_combat,char * infos,SDL_Rect position)
 {
@@ -2739,17 +2738,13 @@ void affiche_info_unite(Jeu * jeu,Terrain_combat *un_terrain_combat,char * infos
 
 	if(get_presence_unite(une_case))
 	{
-		n=get_joueur_en_cours_combat(jeu);
 		unite = get_unite(une_case);
 		a = get_pt_vie(unite);
-		b = get_pt_action(unite);
 		d = get_pt_deplacement(unite);
 		c = get_portee(unite);
 		e = get_pt_attaque(unite);
-		f = get_x_unite(unite);
-		g = get_y_unite(unite);
 		h = get_pt_action_joueur(get_ieme_joueur_jeu(jeu,get_joueur_en_cours_combat(jeu)));
-		sprintf(infos,"Joueur en cours : no: %d pa: %d || Unite : (%d,%d) pv = %d pa=%d po=%d pd=%d pw=%d",n,h,f,g,a,b,c,d,e);
+		sprintf(infos,"Pt de vie = %d   Portée=%d   Pt déplacement=%d   Puissance d'attaque=%d",a,c,d,e);
 	}
 	else
 	{
@@ -4853,7 +4848,8 @@ int affichage_ecran_combat(Jeu* jeu, Terrain_combat *un_terrain_combat, Flotte* 
 		}
 		
 		evenement.type=0;
-		sprintf(infos3," %s",get_ieme_joueur_jeu(jeu,get_joueur_en_cours_combat(jeu))->nom_joueur);
+		
+		sprintf(infos3," %s  points d'action restant : %d",get_ieme_joueur_jeu(jeu,get_joueur_en_cours_combat(jeu))->nom_joueur,get_pt_action_joueur(get_ieme_joueur_jeu(jeu,get_joueur_en_cours_combat(jeu))));
 		texte3 = TTF_RenderUTF8_Blended(police,infos3,couleur_police);
 		SDL_FillRect(ecran, NULL, couleur);
 		SDL_BlitSurface(carte, NULL,  ecran,&position_affichage_carte);
