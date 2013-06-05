@@ -2405,12 +2405,12 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace, FMOD_SYSTEM
 							lancer_animation_bloquante(un_jeu, un_terrain_espace, saut_ftl, ecran, x_bis, y_bis);
                         }
                     }
-					if(get_flotte(get_case_terrain_espace(un_terrain_espace, x/100, y/100)) != NULL)
+					if(get_flotte(case_pointeur_souris(un_terrain_espace, x, y)) != NULL)
 					{
-						if((un_jeu->joueur_en_cours != get_indice_joueur_flotte(get_flotte(get_case_terrain_espace(un_terrain_espace, x/100, y/100)))) && (un_jeu->selection_flotte->pt_mouvement_espace_flotte >= 0))
+						if((un_jeu->joueur_en_cours != get_indice_joueur_flotte(get_flotte(case_pointeur_souris(un_terrain_espace, x, y)))) && (un_jeu->selection_flotte->pt_mouvement_espace_flotte >= 0))
 						{
 							//combat_automatique(un_jeu, un_terrain_espace, get_flotte_en_cours(un_jeu), get_flotte(get_case_terrain_espace(un_terrain_espace, x/100, y/100)))
-                            combat = lancer_combat_ecran(un_jeu, un_terrain_espace, get_flotte_en_cours(un_jeu), get_flotte(get_case_terrain_espace(un_terrain_espace, x/100, y/100)), ecran, system, musique);
+                            combat = lancer_combat_ecran(un_jeu, un_terrain_espace, get_flotte_en_cours(un_jeu), get_flotte(case_pointeur_souris(un_terrain_espace, x, y)), ecran, system, musique);
 							if(combat == 1)
 							{
 								lire_musique(system, musique, tab_chanson);
