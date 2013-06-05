@@ -53,7 +53,9 @@ void detruire_sauvegarde(Sauvegarde **une_sauvegarde)
 void creer_fichier_sauvegarde(const char nom[30], Terrain_espace *un_terrain_espace, Jeu *un_jeu)
 {
     FILE *f;
-    f = fopen(nom, "w");
+    char fichier[50] = "../data/sauvegardes/";
+    strcat(fichier, nom);
+    f = fopen(fichier, "w");
     if (f==NULL)
     {
         printf("Erreur lors de l'ouverture de %s\n", nom);
@@ -74,8 +76,10 @@ Sauvegarde* selection_ouverture(const char nom[30])
 	char chaine[50];
     Sauvegarde* une_sauvegarde;
     int i;
+    char fichier[50] = "../data/sauvegardes/";
+    strcat(fichier, nom);
     une_sauvegarde = creer_sauvegarde();
-    f = fopen(nom, "r");
+    f = fopen(fichier, "r");
     if (f==NULL)
     {
         printf("Erreur lors de l'ouverture de %s\n", nom);
