@@ -133,8 +133,8 @@ void test_minimap_souris(Terrain_espace *un_terrain_espace, int x, int y)
  */
 Case_terrain_espace* case_pointeur_souris(const Terrain_espace *un_terrain_espace, int x, int y)
 {
-	x = (get_taille_espace_x(un_terrain_espace) + x) / 100;
-	y = (get_taille_espace_y(un_terrain_espace) + y - 33) / 100;
+	x = (get_affichage_x(un_terrain_espace) + x) / 100;
+	y = (get_affichage_y(un_terrain_espace) + y - 33) / 100;
 	if ((x >= 0) && (x < get_taille_espace_x(un_terrain_espace)) && (y >= 0) && (y < get_taille_espace_y(un_terrain_espace)))
 	{
 		return get_case_terrain_espace(un_terrain_espace, x, y);
