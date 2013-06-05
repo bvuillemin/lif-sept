@@ -67,4 +67,5 @@ void testRegression_Animation()
     assert(une_animation->y == 0);
     assert(une_animation->tps_debut_anim == 0);
     assert(strcmp(une_animation->nom, "TEST") == 0);
+	detruire_animation(&une_animation);
 }
