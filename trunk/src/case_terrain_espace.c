@@ -54,7 +54,7 @@ void detruire_case_terrain_espace(Case_terrain_espace *une_case_terrain_espace)
 /* Fonctions set et get                                                 */
 /************************************************************************/
 
-void set_x_espace(Case_terrain_espace *une_case_terrain_espace, int x)
+void set_x_espace(Case_terrain_espace *une_case_terrain_espace,const int x)
 {
     une_case_terrain_espace->x_espace = x;
 }
@@ -62,7 +62,7 @@ int get_x_espace(const Case_terrain_espace *une_case_terrain_espace)
 {
     return une_case_terrain_espace->x_espace;
 }
-void set_y_espace(Case_terrain_espace *une_case_terrain_espace, int y)
+void set_y_espace(Case_terrain_espace *une_case_terrain_espace,const int y)
 {
     une_case_terrain_espace->y_espace = y;
 }
@@ -70,7 +70,7 @@ int get_y_espace(const Case_terrain_espace *une_case_terrain_espace)
 {
     return une_case_terrain_espace->y_espace;
 }
-void set_type_case_terrain_espace(Case_terrain_espace *une_case_terrain_espace, char type)
+void set_type_case_terrain_espace(Case_terrain_espace *une_case_terrain_espace,const char type)
 {
 	une_case_terrain_espace->type_case_terrain_espace = type;
 }
@@ -78,11 +78,11 @@ char get_type_case_terrain_espace(Case_terrain_espace *une_case_terrain_espace)
 {
 	return une_case_terrain_espace->type_case_terrain_espace;
 }
-Planete * get_planete(Case_terrain_espace *une_case_terrain_espace)
+Planete * get_planete(const Case_terrain_espace *une_case_terrain_espace)
 {
 	return une_case_terrain_espace->planete;
 }
-Flotte * get_flotte(Case_terrain_espace *une_case_terrain_espace)
+Flotte * get_flotte(const Case_terrain_espace *une_case_terrain_espace)
 {
 	return une_case_terrain_espace->flotte;
 }
@@ -96,7 +96,7 @@ bool get_presence_flotte(Case_terrain_espace* une_case)
 /* Fonctions                                                            */
 /************************************************************************/
 
-void definir_case_terrain_espace(Case_terrain_espace *une_case_terrain_espace, char c)
+void definir_case_terrain_espace(Case_terrain_espace *une_case_terrain_espace,const char c)
 {
     une_case_terrain_espace->type_case_terrain_espace = c;
 }
