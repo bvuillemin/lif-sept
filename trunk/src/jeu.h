@@ -47,12 +47,12 @@ Jeu *creer_jeu();
 void liberer_jeu(Jeu *un_jeu);
 void detruire_jeu(Jeu **un_jeu);
 
-Joueur* get_joueur_en_cours(Jeu *un_jeu);
-Flotte* get_flotte_en_cours(Jeu *un_jeu);
-int get_indice_joueur_en_cours(Jeu *un_jeu);
-Planete *get_planete_en_cours(Jeu *un_jeu);
-int get_joueur_en_cours_combat(Jeu * jeu);
-Joueur * get_ieme_joueur_jeu(Jeu * un_jeu,int i);
+Joueur* get_joueur_en_cours(const Jeu *un_jeu);
+Flotte* get_flotte_en_cours(const Jeu *un_jeu);
+int get_indice_joueur_en_cours(const Jeu *un_jeu);
+Planete *get_planete_en_cours(const Jeu *un_jeu);
+int get_joueur_en_cours_combat(const Jeu * jeu);
+Joueur * get_ieme_joueur_jeu(const Jeu * un_jeu,const int i);
 void set_selection_flotte(Jeu * un_jeu, Flotte * une_flotte);
 bool get_ieme_unite_selectionnee(const Jeu* un_jeu, int i);
 void set_ieme_unite_selectionne(Jeu* un_jeu, int i, bool res);
