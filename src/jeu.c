@@ -69,27 +69,27 @@ void detruire_jeu(Jeu **un_jeu)
 /* Fonctions set et get                                                 */
 /************************************************************************/
 
-int get_joueur_en_cours_combat(Jeu * jeu)
+int get_joueur_en_cours_combat(const Jeu * jeu)
 {
 	return jeu->joueur_en_cours_combat;
 }
-Joueur* get_joueur_en_cours(Jeu *un_jeu)
+Joueur* get_joueur_en_cours(const Jeu *un_jeu)
 {
 	return get_ieme_joueur_jeu(un_jeu, un_jeu->joueur_en_cours);
 }
-Flotte *get_flotte_en_cours(Jeu *un_jeu)
+Flotte *get_flotte_en_cours(const Jeu *un_jeu)
 {
 	return un_jeu->selection_flotte;
 }
-int get_indice_joueur_en_cours(Jeu *un_jeu)
+int get_indice_joueur_en_cours(const Jeu *un_jeu)
 {
 	return un_jeu->joueur_en_cours;
 }
-Planete *get_planete_en_cours(Jeu *un_jeu)
+Planete *get_planete_en_cours(const Jeu *un_jeu)
 {
 	return un_jeu->selection_planete;
 }
-Joueur * get_ieme_joueur_jeu(Jeu * un_jeu,int i)
+Joueur * get_ieme_joueur_jeu(const Jeu * un_jeu, const int i)
 {
 	return un_jeu->tab_joueur + i;
 }
