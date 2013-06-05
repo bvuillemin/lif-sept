@@ -2035,7 +2035,7 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace, FMOD_SYSTEM
 	INTERFACE_AFFICHEE interface_affichee = RIEN; /*1 pour une planete, 2 pour une planete ennemie, 3 pour une flotte, 4 pour une flotte ennemie, 5 pour la création d'unités sur une planète*/
 	Case_terrain_espace *une_case_terrain_espace;
 	Animation *saut_ftl = NULL;
-	char nom_fichier_saut_ftl[] = "../graphiques/images/effet téléportation.png";
+	char nom_fichier_saut_ftl[] = "../graphiques/images/effet_teleportation.png";
 
 	/*variables pour le son*/
 	FMOD_SOUND *son_saut_debut = NULL;
