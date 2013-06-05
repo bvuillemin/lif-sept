@@ -64,6 +64,7 @@ int retirer_unite_flotte(Flotte *flotte,const int indice_unite);
 void enlever_pt_mouvement_espace_flotte(Flotte *une_flotte,const int distance);
 void afficher_flotte(const Flotte *flotte);
 void reinitialiser_mouvement_flotte(Flotte *une_flotte);
+void changer_indice_joueur_unite_flotte(Flotte *une_flotte);
 void reinitialiser_deplacement_unite_flotte(Flotte *une_flotte);
 void reinitialiser_pt_action_unite_flotte(Flotte *une_flotte);
 
