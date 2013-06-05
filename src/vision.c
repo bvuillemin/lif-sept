@@ -177,6 +177,7 @@ void testRegression_Vision_terrain()
     assert(une_vision_terrain->indice_joueur == 0);
     assert(une_vision_terrain->terrain_espace == un_terrain_espace);
     detruire_vision_terrain(&une_vision_terrain);
+	detruire_terrain_espace(&un_terrain_espace);
 }
 void testRegression_Vision_case()
 {
