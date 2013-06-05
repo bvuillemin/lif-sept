@@ -116,12 +116,12 @@ void fermer_systeme_son(FMOD_SYSTEM *system, FMOD_SOUND *musique)
  */
 void initialiser_tableau_chanson(char **tab_chanson)
 {
-	tab_chanson[0] = "../audio/musique/Battlestar.mp3";
-	tab_chanson[1] = "../audio/musique/Halo.mp3";
-	tab_chanson[2] = "../audio/musique/Mass effect 3.mp3";
-	tab_chanson[3] = "../audio/musique/Prometheus.mp3";
-	tab_chanson[4] = "../audio/musique/Star wars.mp3";
-	tab_chanson[5] = "../audio/musique/Stargate.mp3";
+	tab_chanson[0] = "../data/audio/musique/Battlestar.mp3";
+	tab_chanson[1] = "../data/audio/musique/Halo.mp3";
+	tab_chanson[2] = "../data/audio/musique/Mass effect 3.mp3";
+	tab_chanson[3] = "../data/audio/musique/Prometheus.mp3";
+	tab_chanson[4] = "../data/audio/musique/Star wars.mp3";
+	tab_chanson[5] = "../data/audio/musique/Stargate.mp3";
 }
 
 /**
@@ -131,12 +131,12 @@ void initialiser_tableau_chanson(char **tab_chanson)
  */
 void initialiser_tableau_chanson_combat(char **tab_chanson)
 {
-	tab_chanson[0] = "../audio/musique/Combat1.mp3";
-	tab_chanson[1] = "../audio/musique/Combat2.mp3";
-	tab_chanson[2] = "../audio/musique/Combat3.mp3";
-	tab_chanson[3] = "../audio/musique/Combat4.mp3";
-	tab_chanson[4] = "../audio/musique/Combat5.mp3";
-	tab_chanson[5] = "../audio/musique/Combat6.mp3";
+	tab_chanson[0] = "../data/audio/musique/Combat1.mp3";
+	tab_chanson[1] = "../data/audio/musique/Combat2.mp3";
+	tab_chanson[2] = "../data/audio/musique/Combat3.mp3";
+	tab_chanson[3] = "../data/audio/musique/Combat4.mp3";
+	tab_chanson[4] = "../data/audio/musique/Combat5.mp3";
+	tab_chanson[5] = "../data/audio/musique/Combat6.mp3";
 }
 
 /**
@@ -146,12 +146,12 @@ void initialiser_tableau_chanson_combat(char **tab_chanson)
  */
 void initialiser_tableau_chanson_menu(char **tab_chanson)
 {
-	tab_chanson[0] = "../audio/musique/Menu.mp3";
-	tab_chanson[1] = "../audio/musique/Menu.mp3";
-	tab_chanson[2] = "../audio/musique/Menu.mp3";
-	tab_chanson[3] = "../audio/musique/Menu.mp3";
-	tab_chanson[4] = "../audio/musique/Menu.mp3";
-	tab_chanson[5] = "../audio/musique/Menu.mp3";
+	tab_chanson[0] = "../data/audio/musique/Menu.mp3";
+	tab_chanson[1] = "../data/audio/musique/Menu.mp3";
+	tab_chanson[2] = "../data/audio/musique/Menu.mp3";
+	tab_chanson[3] = "../data/audio/musique/Menu.mp3";
+	tab_chanson[4] = "../data/audio/musique/Menu.mp3";
+	tab_chanson[5] = "../data/audio/musique/Menu.mp3";
 }
 
 /**
@@ -161,10 +161,10 @@ void initialiser_tableau_chanson_menu(char **tab_chanson)
  */
 void initialiser_tableau_chanson_game_over(char **tab_chanson)
 {
-	tab_chanson[0] = "../audio/musique/GameOver.mp3";
-	tab_chanson[1] = "../audio/musique/GameOver.mp3";
-	tab_chanson[2] = "../audio/musique/GameOver.mp3";
-	tab_chanson[3] = "../audio/musique/GameOver.mp3";
-	tab_chanson[4] = "../audio/musique/GameOver.mp3";
-	tab_chanson[5] = "../audio/musique/GameOver.mp3";
+	tab_chanson[0] = "../data/audio/musique/GameOver.mp3";
+	tab_chanson[1] = "../data/audio/musique/GameOver.mp3";
+	tab_chanson[2] = "../data/audio/musique/GameOver.mp3";
+	tab_chanson[3] = "../data/audio/musique/GameOver.mp3";
+	tab_chanson[4] = "../data/audio/musique/GameOver.mp3";
+	tab_chanson[5] = "../data/audio/musique/GameOver.mp3";
 }

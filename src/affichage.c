@@ -177,7 +177,7 @@ void afficher_infobulle_batiment(SDL_Surface* fond, int i)
 
 	if(i == 0)
 	{
-		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 15);
+		police = TTF_OpenFont("../data/graphiques/fonts/charcoalcy.ttf", 15);
 		sprintf(ligne, "Quartier general");
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
@@ -186,7 +186,7 @@ void afficher_infobulle_batiment(SDL_Surface* fond, int i)
 		SDL_FreeSurface(une_ligne);
 		TTF_CloseFont(police);
 
-		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
+		police = TTF_OpenFont("../data/graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Indispensable a la mise en place");
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
@@ -224,7 +224,7 @@ void afficher_infobulle_batiment(SDL_Surface* fond, int i)
 	}
 	if(i == 1)
 	{
-		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 15);
+		police = TTF_OpenFont("../data/graphiques/fonts/charcoalcy.ttf", 15);
 		sprintf(ligne, "Mine de metal");
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
@@ -233,7 +233,7 @@ void afficher_infobulle_batiment(SDL_Surface* fond, int i)
 		TTF_CloseFont(police);
 		SDL_FreeSurface(une_ligne);
 
-		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
+		police = TTF_OpenFont("../data/graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Le  metal  est  devenu,  avec ");
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
@@ -271,7 +271,7 @@ void afficher_infobulle_batiment(SDL_Surface* fond, int i)
 	}
 	if(i == 2)
 	{
-		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 15);
+		police = TTF_OpenFont("../data/graphiques/fonts/charcoalcy.ttf", 15);
 		sprintf(ligne, "Mine d'or");
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
@@ -280,7 +280,7 @@ void afficher_infobulle_batiment(SDL_Surface* fond, int i)
 		TTF_CloseFont(police);
 		SDL_FreeSurface(une_ligne);
 
-		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
+		police = TTF_OpenFont("../data/graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "L'or   est   la   ressource  la  plus ");
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
@@ -325,7 +325,7 @@ void afficher_infobulle_batiment(SDL_Surface* fond, int i)
 	}
 	if(i == 3)
 	{
-		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 15);
+		police = TTF_OpenFont("../data/graphiques/fonts/charcoalcy.ttf", 15);
 		sprintf(ligne, "Raffinerie");
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
@@ -334,7 +334,7 @@ void afficher_infobulle_batiment(SDL_Surface* fond, int i)
 		TTF_CloseFont(police);
 		SDL_FreeSurface(une_ligne);
 
-		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
+		police = TTF_OpenFont("../data/graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Le carburant est extrait du sous");
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
@@ -379,7 +379,7 @@ void afficher_infobulle_batiment(SDL_Surface* fond, int i)
 	}
 	if(i == 4)
 	{
-		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 15);
+		police = TTF_OpenFont("../data/graphiques/fonts/charcoalcy.ttf", 15);
 		sprintf(ligne, "Habitations");
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
@@ -388,7 +388,7 @@ void afficher_infobulle_batiment(SDL_Surface* fond, int i)
 		TTF_CloseFont(police);
 		SDL_FreeSurface(une_ligne);
 
-		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
+		police = TTF_OpenFont("../data/graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "La construction sur nos colonies");
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
@@ -433,7 +433,7 @@ void afficher_infobulle_batiment(SDL_Surface* fond, int i)
 	}
 	if(i == 5)
 	{
-		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 15);
+		police = TTF_OpenFont("../data/graphiques/fonts/charcoalcy.ttf", 15);
 		sprintf(ligne, "Spatioport");
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
@@ -442,7 +442,7 @@ void afficher_infobulle_batiment(SDL_Surface* fond, int i)
 		TTF_CloseFont(police);
 		SDL_FreeSurface(une_ligne);
 
-		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
+		police = TTF_OpenFont("../data/graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Le  spatioport  nous  autorisera");
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
@@ -506,7 +506,7 @@ void afficher_infobulle_unite(const Jeu* un_jeu, SDL_Surface* fond, int i)
 
 	une_unite = get_unite_i_flotte(get_flotte_en_cours(un_jeu), i);
 
-	police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 15);
+	police = TTF_OpenFont("../data/graphiques/fonts/charcoalcy.ttf", 15);
 	sprintf(ligne, "Type unite");
 	une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 	initialise_sdl_rect(&position, 4, j, 0, 0);
@@ -515,7 +515,7 @@ void afficher_infobulle_unite(const Jeu* un_jeu, SDL_Surface* fond, int i)
 	TTF_CloseFont(police);
 	SDL_FreeSurface(une_ligne);
 
-	police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 15);
+	police = TTF_OpenFont("../data/graphiques/fonts/charcoalcy.ttf", 15);
 	sprintf(ligne, "Point de vie: %d", get_pt_vie(une_unite));
 	une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 	initialise_sdl_rect(&position, 4, j, 0, 0);
@@ -564,7 +564,7 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 
 	if(i==0)
 	{
-		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 15);
+		police = TTF_OpenFont("../data/graphiques/fonts/charcoalcy.ttf", 15);
 		sprintf(ligne, "Type unite");
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
@@ -573,7 +573,7 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		TTF_CloseFont(police);
 		SDL_FreeSurface(une_ligne);
 
-		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
+		police = TTF_OpenFont("../data/graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Point de vie: %d", PT_VIE_UNITE_1);
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
@@ -654,7 +654,7 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 	}
 	if(i==1)
 	{
-		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 15);
+		police = TTF_OpenFont("../data/graphiques/fonts/charcoalcy.ttf", 15);
 		sprintf(ligne, "Type unite");
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
@@ -663,7 +663,7 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		TTF_CloseFont(police);
 		SDL_FreeSurface(une_ligne);
 
-		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
+		police = TTF_OpenFont("../data/graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Point de vie: %d", PT_VIE_UNITE_2);
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
@@ -744,7 +744,7 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 	}
 	if(i==2)
 	{
-		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 15);
+		police = TTF_OpenFont("../data/graphiques/fonts/charcoalcy.ttf", 15);
 		sprintf(ligne, "Type unite");
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
@@ -753,7 +753,7 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
 		TTF_CloseFont(police);
 		SDL_FreeSurface(une_ligne);
 
-		police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 12);
+		police = TTF_OpenFont("../data/graphiques/fonts/charcoalcy.ttf", 12);
 		sprintf(ligne, "Point de vie: %d", PT_VIE_UNITE_3);
 		une_ligne = TTF_RenderText_Blended(police, ligne, couleur_blanche);
 		initialise_sdl_rect(&position, 4, j, 0, 0);
@@ -961,8 +961,8 @@ SDL_Surface* affichage_ressource(const Jeu *un_jeu)
     char ressource[200] = "";
     char tour[50] = "";
 
-    police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 18);
-    surface_ressource = IMG_Load("../graphiques/images/interface_ressource.png");
+    police = TTF_OpenFont("../data/graphiques/fonts/charcoalcy.ttf", 18);
+    surface_ressource = IMG_Load("../data/graphiques/images/interface_ressource.png");
 
 	/*affichage des ressources*/
     sprintf(ressource, "%d", get_metal_joueur(get_joueur_en_cours(un_jeu)));
@@ -1017,11 +1017,11 @@ SDL_Surface* affichage_creation_unite(const Planete* une_planete)
     TTF_Font *police = NULL;
     SDL_Color couleur_blanche = {255, 255, 255};
     int i;
-    panneau_unite = IMG_Load("../graphiques/images/interface_barrelaterale.png");
-	unite1 = IMG_Load("../graphiques/images/unite1.png");
-	unite2 = IMG_Load("../graphiques/images/unite2.png");
-	unite3 = IMG_Load("../graphiques/images/unite3.png");
-    police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 14);
+    panneau_unite = IMG_Load("../data/graphiques/images/interface_barrelaterale.png");
+	unite1 = IMG_Load("../data/graphiques/images/unite1.png");
+	unite2 = IMG_Load("../data/graphiques/images/unite2.png");
+	unite3 = IMG_Load("../data/graphiques/images/unite3.png");
+    police = TTF_OpenFont("../data/graphiques/fonts/charcoalcy.ttf", 14);
 
     for(i=0;i<3;i++)
     {
@@ -1087,12 +1087,12 @@ SDL_Surface* affichage_planete(Planete* une_planete)
     int i;
 
     /*affichage de l'interface*/
-	info_planete = IMG_Load("../graphiques/images/interface_bas.png");
-    construction = IMG_Load("../graphiques/images/construction.png");
-    interdiction = IMG_Load("../graphiques/images/interdit.png");
+	info_planete = IMG_Load("../data/graphiques/images/interface_bas.png");
+    construction = IMG_Load("../data/graphiques/images/construction.png");
+    interdiction = IMG_Load("../data/graphiques/images/interdit.png");
 
-    police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 14);
-    fond_planete = IMG_Load("../graphiques/images/interface_bas.png");
+    police = TTF_OpenFont("../data/graphiques/fonts/charcoalcy.ttf", 14);
+    fond_planete = IMG_Load("../data/graphiques/images/interface_bas.png");
 
     sprintf(texte_planete, "Nom de la planete: %s Occupation de la planete: %d/%d Production: Metal:%d Argent:%d Carburant:%d Population:%d",
 get_nom_planete(une_planete), get_taille_utilisee(une_planete), get_taille_planete(une_planete),
@@ -1103,7 +1103,7 @@ get_metal(une_planete), get_argent(une_planete), get_carburant(une_planete), get
     SDL_BlitSurface(planete, NULL, fond_planete, &position_texte);
     SDL_FreeSurface(planete);
 
-    bouton_unite = IMG_Load("../graphiques/images/Creer_unite.png");
+    bouton_unite = IMG_Load("../data/graphiques/images/Creer_unite.png");
     initialise_sdl_rect(&position_bouton_unite, TAILLE_FENETRE_X -150, 35, 100, 100);
     SDL_BlitSurface(bouton_unite, NULL, fond_planete, &position_bouton_unite);
     SDL_FreeSurface(bouton_unite);
@@ -1113,22 +1113,22 @@ get_metal(une_planete), get_argent(une_planete), get_carburant(une_planete), get
         switch(i)
 		{
 		case 0:
-			batiment = IMG_Load("../graphiques/images/batiment_mairie.png");
+			batiment = IMG_Load("../data/graphiques/images/batiment_mairie.png");
 			break;
 		case 1:
-			batiment = IMG_Load("../graphiques/images/batiment_mine.png");
+			batiment = IMG_Load("../data/graphiques/images/batiment_mine.png");
 			break;
 		case 2:
-			batiment = IMG_Load("../graphiques/images/batiment_mine_or.png");
+			batiment = IMG_Load("../data/graphiques/images/batiment_mine_or.png");
 			break;
 		case 3:
-			batiment = IMG_Load("../graphiques/images/batiment_raffinerie.png");
+			batiment = IMG_Load("../data/graphiques/images/batiment_raffinerie.png");
 			break;
 		case 4:
-			batiment = IMG_Load("../graphiques/images/batiment_population.png");
+			batiment = IMG_Load("../data/graphiques/images/batiment_population.png");
 			break;
 		case 5:
-			batiment = IMG_Load("../graphiques/images/batiment_port.png");
+			batiment = IMG_Load("../data/graphiques/images/batiment_port.png");
 			break;
 		default :
 			break;
@@ -1188,9 +1188,9 @@ SDL_Surface* affichage_planete_ennemie(const Case_terrain_espace *une_case_terra
 	Planete *une_planete = get_planete(une_case_terrain_espace);
 
 	/*affichage de l'interface*/
-	info_planete = IMG_Load("../graphiques/images/interface_bas.png");
+	info_planete = IMG_Load("../data/graphiques/images/interface_bas.png");
 
-	police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 14);
+	police = TTF_OpenFont("../data/graphiques/fonts/charcoalcy.ttf", 14);
 
 	sprintf(texte_planete, "Nom de la planete: %s", get_nom_planete(une_planete));
 	planete = TTF_RenderText_Blended(police, texte_planete, couleur_blanche);
@@ -1229,10 +1229,10 @@ SDL_Surface* affichage_flotte(const Jeu *un_jeu, const Terrain_espace *un_terrai
 	TYPE_VAISSEAU type;
 
 	/*affichage de l'interface*/
-	info_flotte = IMG_Load("../graphiques/images/interface_bas.png");
+	info_flotte = IMG_Load("../data/graphiques/images/interface_bas.png");
 
 	/*affichage des informations d'une flotte*/
-    police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 14);
+    police = TTF_OpenFont("../data/graphiques/fonts/charcoalcy.ttf", 14);
 
     sprintf(texte_flotte, "Coordonnes de la flotte: %d %d, pt mouvement %d, taille : %d", get_x_flotte(une_flotte), get_y_flotte(une_flotte), get_pt_mouvement_espace_flotte(une_flotte), get_taille_flotte(une_flotte));
     flotte = TTF_RenderText_Blended(police, texte_flotte, couleur_blanche);
@@ -1240,10 +1240,10 @@ SDL_Surface* affichage_flotte(const Jeu *un_jeu, const Terrain_espace *un_terrai
     SDL_FreeSurface(flotte);
 
 	/*affichage des unités*/
-    une_unite1 = IMG_Load("../graphiques/images/unite1.png");
-	une_unite2 = IMG_Load("../graphiques/images/unite2.png");
-	une_unite3 = IMG_Load("../graphiques/images/unite3.png");
-	selection = IMG_Load("../graphiques/images/selection.png");
+    une_unite1 = IMG_Load("../data/graphiques/images/unite1.png");
+	une_unite2 = IMG_Load("../data/graphiques/images/unite2.png");
+	une_unite3 = IMG_Load("../data/graphiques/images/unite3.png");
+	selection = IMG_Load("../data/graphiques/images/selection.png");
 
     for(i=0; i<get_taille_flotte(une_flotte);i++)
     {
@@ -1293,14 +1293,14 @@ SDL_Surface* affichage_flotte(const Jeu *un_jeu, const Terrain_espace *un_terrai
 	/*affichage du bouton pour coloniser une planète*/
 	if((get_type_case_terrain_espace(get_case_terrain_espace(un_terrain_espace, get_x_flotte(une_flotte), get_y_flotte(une_flotte))) == 'P') && (!get_planete_colonisee(get_planete_terrain_espace(un_terrain_espace, get_x_flotte(une_flotte), get_y_flotte(une_flotte)))))
 	{
-		bouton_coloniser = IMG_Load("../graphiques/images/Attaquer.png");
+		bouton_coloniser = IMG_Load("../data/graphiques/images/Attaquer.png");
 		SDL_BlitSurface(bouton_coloniser, NULL, info_flotte, &position_bouton_coloniser);
 	}
 
 	/*affichage du bouton pour apturer une planète ennemie*/
 	if((get_type_case_terrain_espace(get_case_terrain_espace(un_terrain_espace, get_x_flotte(une_flotte), get_y_flotte(une_flotte))) == 'P') && (get_indice_joueur_planete(get_planete_terrain_espace(un_terrain_espace, get_x_flotte(une_flotte), get_y_flotte(une_flotte))) != get_indice_joueur_flotte(une_flotte)))
 	{
-		bouton_attaquer = IMG_Load("../graphiques/images/Attaquer.png");
+		bouton_attaquer = IMG_Load("../data/graphiques/images/Attaquer.png");
 		SDL_BlitSurface(bouton_attaquer, NULL, info_flotte, &position_bouton_coloniser);
 	}
 
@@ -1334,9 +1334,9 @@ SDL_Surface* affichage_flotte_ennemie(const Jeu *un_jeu)
 	Flotte *une_flotte = get_flotte_en_cours(un_jeu);
 
     /*affichage de l'interface*/
-	info_flotte = IMG_Load("../graphiques/images/interface_bas.png");
+	info_flotte = IMG_Load("../data/graphiques/images/interface_bas.png");
 
-	police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 14);
+	police = TTF_OpenFont("../data/graphiques/fonts/charcoalcy.ttf", 14);
 	fond_flotte = SDL_CreateRGBSurface(SDL_HWSURFACE, TAILLE_FENETRE_X, TAILLE_FENETRE_Y - TAILLE_TERRAIN_ESPACE_Y, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
 	SDL_FillRect(fond_flotte, NULL, SDL_MapRGB(fond_flotte->format, 60, 60, 60));
 	SDL_SetColorKey(fond_flotte, SDL_SRCCOLORKEY, SDL_MapRGB(fond_flotte->format, 60, 60, 60));
@@ -1350,7 +1350,7 @@ SDL_Surface* affichage_flotte_ennemie(const Jeu *un_jeu)
 	une_unite = SDL_CreateRGBSurface(SDL_HWSURFACE, 100, 100, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
 	for(i=0; i<une_flotte->taille_flotte;i++)
 	{
-		une_unite = IMG_Load("../graphiques/images/?.png");;
+		une_unite = IMG_Load("../data/graphiques/images/?.png");;
 		initialise_sdl_rect(&position_une_unite, 10 + 120*i, 35, 0, 0);
 		SDL_BlitSurface(une_unite, NULL, fond_flotte, &position_une_unite);
 	}
@@ -1386,11 +1386,11 @@ SDL_Surface* creer_affichage_terrain(const Terrain_espace *un_terrain_espace)
 	position.y = 0;
 
 	carte = SDL_CreateRGBSurface(SDL_HWSURFACE, get_taille_espace_x(un_terrain_espace) * 100, get_taille_espace_y(un_terrain_espace) * 100, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
-	planete1 = IMG_Load("../graphiques/images/1.png");
-	planete2 = IMG_Load("../graphiques/images/2.png");
-	planete3 = IMG_Load("../graphiques/images/3.png");
-	image_une_case = IMG_Load("../graphiques/images/quadrillage.png");
-    fond = IMG_Load("../graphiques/images/fond.png");
+	planete1 = IMG_Load("../data/graphiques/images/1.png");
+	planete2 = IMG_Load("../data/graphiques/images/2.png");
+	planete3 = IMG_Load("../data/graphiques/images/3.png");
+	image_une_case = IMG_Load("../data/graphiques/images/quadrillage.png");
+    fond = IMG_Load("../data/graphiques/images/fond.png");
     SDL_BlitSurface(fond, NULL, carte, &position);
 	for(i=0;i< get_taille_espace_x(un_terrain_espace);i++)
 	{
@@ -1458,15 +1458,15 @@ SDL_Surface* creer_affichage_flotte(const Terrain_espace *un_terrain_espace)
 	position.y = 0;
 
 	carte = SDL_CreateRGBSurface(SDL_HWSURFACE, get_taille_espace_x(un_terrain_espace)* 100, get_taille_espace_y(un_terrain_espace) * 100, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
-	flotte1_bleu = IMG_Load("../graphiques/images/unite1_bleu.png");
-	flotte2_bleu = IMG_Load("../graphiques/images/unite2_bleu.png");
-	flotte3_bleu = IMG_Load("../graphiques/images/unite3_bleu.png");
+	flotte1_bleu = IMG_Load("../data/graphiques/images/unite1_bleu.png");
+	flotte2_bleu = IMG_Load("../data/graphiques/images/unite2_bleu.png");
+	flotte3_bleu = IMG_Load("../data/graphiques/images/unite3_bleu.png");
 
-	flotte1_rouge = IMG_Load("../graphiques/images/unite1_rouge.png");
-	flotte2_rouge = IMG_Load("../graphiques/images/unite2_rouge.png");
-	flotte3_rouge = IMG_Load("../graphiques/images/unite3_rouge.png");
+	flotte1_rouge = IMG_Load("../data/graphiques/images/unite1_rouge.png");
+	flotte2_rouge = IMG_Load("../data/graphiques/images/unite2_rouge.png");
+	flotte3_rouge = IMG_Load("../data/graphiques/images/unite3_rouge.png");
 
-	image_une_case = IMG_Load("../graphiques/images/quadrillage.png");
+	image_une_case = IMG_Load("../data/graphiques/images/quadrillage.png");
 	for(i=0;i< get_taille_espace_x(un_terrain_espace);i++)
 	{
 		for(j=0;j< get_taille_espace_y(un_terrain_espace);j++)
@@ -1534,7 +1534,7 @@ SDL_Surface* affichage_minimap(const Terrain_espace *un_terrain_espace)
 	float x, y, x_affichage, y_affichage;
 
 	minimap = SDL_CreateRGBSurface(SDL_HWSURFACE, TAILLE_MINIMAP_X, TAILLE_MINIMAP_Y, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
-	fond_minimap = IMG_Load("../graphiques/images/fond_minimap.png");
+	fond_minimap = IMG_Load("../data/graphiques/images/fond_minimap.png");
 	SDL_BlitSurface(fond_minimap, NULL, minimap, NULL);
 
 	x = TAILLE_MINIMAP_X * ((float)((float)TAILLE_TERRAIN_ESPACE_X/100)/ un_terrain_espace->taille_espace_x);
@@ -1598,7 +1598,7 @@ SDL_Surface* creer_affichage_vision(const Jeu *un_jeu, const Joueur* un_joueur)
 	fond = SDL_CreateRGBSurface(SDL_HWSURFACE, get_taille_espace_x(un_terrain_espace) * 100, get_taille_espace_y(un_terrain_espace) * 100, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
 	SDL_FillRect(fond, NULL, SDL_MapRGB(fond->format, 0, 0, 255));
 
-	jamais_visitee = IMG_Load("../graphiques/images/brouillard.png");
+	jamais_visitee = IMG_Load("../data/graphiques/images/brouillard.png");
 
 	affichee = SDL_CreateRGBSurface(SDL_HWSURFACE, 100, 100, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
 	SDL_FillRect(affichee, NULL, SDL_MapRGB(fond->format, 255, 255, 255));
@@ -1663,7 +1663,7 @@ void maj_affichage_vision(Jeu *un_jeu, const Joueur* un_joueur, SDL_Surface *ecr
 	SDL_FillRect(tab_surface[11], NULL, SDL_MapRGB(tab_surface[11]->format, 0, 0, 255));
 	SDL_SetColorKey(tab_surface[11], SDL_SRCCOLORKEY, SDL_MapRGB(tab_surface[11]->format, 0, 0, 255));
 
-	jamais_visitee = IMG_Load("../graphiques/images/brouillard.png");
+	jamais_visitee = IMG_Load("../data/graphiques/images/brouillard.png");
 
 	affichee = SDL_CreateRGBSurface(SDL_HWSURFACE, 100, 100, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
 	SDL_FillRect(affichee, NULL, SDL_MapRGB(tab_surface[11]->format, 255, 255, 255));
@@ -1746,7 +1746,7 @@ void initialiser_affichage(const Jeu *un_jeu, const Terrain_espace *un_terrain_e
 	SDL_FreeSurface(tab_surface[2]);
 
 	/*affichage de l'interface*/
-	tab_surface[5] = IMG_Load("../graphiques/images/interface_bas.png");
+	tab_surface[5] = IMG_Load("../data/graphiques/images/interface_bas.png");
 	SDL_BlitSurface(tab_surface[5], NULL, ecran, &position_interface);
 
 	initialise_sdl_rect(&position_panneau_unite, TAILLE_FENETRE_X - 214, 35, 200, TAILLE_TERRAIN_ESPACE_Y-300);
@@ -1756,11 +1756,11 @@ void initialiser_affichage(const Jeu *un_jeu, const Terrain_espace *un_terrain_e
 	SDL_BlitSurface(tab_surface[9], NULL, ecran, &position_minimap);
 
 	/*affichage du bouton de tour suivant*/
-	tab_surface[10] = IMG_Load("../graphiques/images/passer_tour.png");
+	tab_surface[10] = IMG_Load("../data/graphiques/images/passer_tour.png");
     SDL_BlitSurface(tab_surface[10], NULL, ecran, &position_bouton_tour);
 
     /*affichage du cadre*/
-    tab_surface[3] = IMG_Load("../graphiques/images/bordure_bleue.png");
+    tab_surface[3] = IMG_Load("../data/graphiques/images/bordure_bleue.png");
     SDL_BlitSurface(tab_surface[3], NULL, ecran, &position_affichage_carte);
 	SDL_Flip(ecran);
 }
@@ -2018,7 +2018,7 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace, FMOD_SYSTEM
 	SDL_Surface *ecran = NULL;
 	SDL_Surface *icone = NULL;
 	SDL_Surface **tab_surface;
-    SDL_Surface *Noir = SDL_LoadBMP("../graphiques/images/Noir.bmp");
+    SDL_Surface *Noir = SDL_LoadBMP("../data/graphiques/images/Noir.bmp");
 	SDL_Rect bouton_tour = {TAILLE_FENETRE_X -207, TAILLE_TERRAIN_ESPACE_Y - 8, 200, 33};
 	SDL_Rect position_affichage_carte = {0, TAILLE_BARRE_RESSOURCE, TAILLE_TERRAIN_ESPACE_X, TAILLE_TERRAIN_ESPACE_Y};
 	SDL_Rect position_panneau_unite = {TAILLE_FENETRE_X - 300, 20, 300, TAILLE_TERRAIN_ESPACE_Y};
@@ -2035,7 +2035,7 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace, FMOD_SYSTEM
 	INTERFACE_AFFICHEE interface_affichee = RIEN; /*1 pour une planete, 2 pour une planete ennemie, 3 pour une flotte, 4 pour une flotte ennemie, 5 pour la création d'unités sur une planète*/
 	Case_terrain_espace *une_case_terrain_espace;
 	Animation *saut_ftl = NULL;
-	char nom_fichier_saut_ftl[] = "../graphiques/images/effet_teleportation.png";
+	char nom_fichier_saut_ftl[] = "../data/graphiques/images/effet_teleportation.png";
 
 	/*variables pour le son*/
 	FMOD_SOUND *son_saut_debut = NULL;
@@ -2053,14 +2053,14 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace, FMOD_SYSTEM
 
 	/*on lance les musiques du jeu et on initialise les sons*/
 	lire_musique(system, musique, tab_chanson);
-	FMOD_System_CreateSound(system, "../audio/son/FTL_Saut.mp3", FMOD_CREATESAMPLE, 0, &son_saut_debut);
-	FMOD_System_CreateSound(system, "../audio/son/FTL_Exit.mp3", FMOD_CREATESAMPLE, 0, &son_saut_fin);
+	FMOD_System_CreateSound(system, "../data/audio/son/FTL_Saut.mp3", FMOD_CREATESAMPLE, 0, &son_saut_debut);
+	FMOD_System_CreateSound(system, "../data/audio/son/FTL_Exit.mp3", FMOD_CREATESAMPLE, 0, &son_saut_fin);
 
 	/*démarrage des modules, mise en place de la fenêtre principale*/
 	SDL_Init(SDL_INIT_VIDEO);
 	TTF_Init();
 	SDL_EnableKeyRepeat(10, 10); /*active la répétition des touches, principalement pour un déplacement de la map plus fluide*/
-	icone = IMG_Load("../graphiques/images/icone.png");
+	icone = IMG_Load("../data/graphiques/images/icone.png");
 	SDL_WM_SetIcon(icone, NULL);
 	ecran = SDL_SetVideoMode(TAILLE_FENETRE_X, TAILLE_FENETRE_Y, NOMBRE_BITS_COULEUR, SDL_HWSURFACE | SDL_DOUBLEBUF);
 	SDL_WM_SetCaption("Conquest of Space", NULL);
@@ -2234,11 +2234,11 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace, FMOD_SYSTEM
                         SDL_FreeSurface(tab_surface[3]);
                         if (get_numero_joueur(get_joueur_en_cours(un_jeu)) == 0)
                         {
-                            tab_surface[3] = IMG_Load("../graphiques/images/bordure_bleue.png");
+                            tab_surface[3] = IMG_Load("../data/graphiques/images/bordure_bleue.png");
                         }
                         else
                         {
-                            tab_surface[3] = IMG_Load("../graphiques/images/bordure_rouge.png");
+                            tab_surface[3] = IMG_Load("../data/graphiques/images/bordure_rouge.png");
                         }
                         SDL_BlitSurface(tab_surface[3], NULL, ecran, &position_affichage_carte);
 						/*creation de l'affichage de la visibilité*/
@@ -2534,10 +2534,10 @@ SDL_Surface * affiche_ecran_terrain_combat(const Terrain_combat *terrain_combat)
 	pos.x = 0 ;pos_plan.x=0;
 	pos.y = 0;pos_plan.y=0;
 	
-	fond = IMG_Load("../graphiques/images/Fond_terraincombat.png");
+	fond = IMG_Load("../data/graphiques/images/Fond_terraincombat.png");
     SDL_BlitSurface(fond, NULL, carte, &pos);
-	quadrillage = IMG_Load("../graphiques/images/quadrillage.png");
-	selection = IMG_Load("../graphiques/images/selection.png");
+	quadrillage = IMG_Load("../data/graphiques/images/quadrillage.png");
+	selection = IMG_Load("../data/graphiques/images/selection.png");
 
     for(j=0;j<terrain_combat->taille_combat_y;j++)
     {
@@ -2549,21 +2549,21 @@ SDL_Surface * affiche_ecran_terrain_combat(const Terrain_combat *terrain_combat)
             {
                 if(get_type_vaisseau(get_unite(une_case))==Chasseur)
                 {
-                    vaisseau = IMG_Load("../graphiques/images/unite1_bleu.png");
+                    vaisseau = IMG_Load("../data/graphiques/images/unite1_bleu.png");
                     pos_plan.x=i*100;pos_plan.y=j*100;
                     SDL_BlitSurface(vaisseau,NULL,carte,&pos_plan);
                     SDL_FreeSurface(vaisseau);
                 }
                 else if(get_type_vaisseau(get_unite(une_case))==Destroyer)
                 {
-                    vaisseau = IMG_Load("../graphiques/images/unite2_bleu.png");
+                    vaisseau = IMG_Load("../data/graphiques/images/unite2_bleu.png");
                     pos_plan.x=i*100;pos_plan.y=j*100;
                     SDL_BlitSurface(vaisseau,NULL,carte,&pos_plan);
                     SDL_FreeSurface(vaisseau);
                 }
                 else if(get_type_vaisseau(get_unite(une_case))==Destructeur)
                 {
-                    vaisseau = IMG_Load("../graphiques/images/unite3_bleu.png");
+                    vaisseau = IMG_Load("../data/graphiques/images/unite3_bleu.png");
                     pos_plan.x=i*100;pos_plan.y=j*100;
                     SDL_BlitSurface(vaisseau,NULL,carte,&pos_plan);
                     SDL_FreeSurface(vaisseau);
@@ -2573,7 +2573,7 @@ SDL_Surface * affiche_ecran_terrain_combat(const Terrain_combat *terrain_combat)
             {
                 if(get_type_vaisseau(get_unite(une_case))==Chasseur)
                 {
-                    vaisseau = IMG_Load("../graphiques/images/unite1_rouge.png");
+                    vaisseau = IMG_Load("../data/graphiques/images/unite1_rouge.png");
                     pos_plan.x=i*100;pos_plan.y=j*100;
                     vaisseau2 = rotozoomSurface (vaisseau, 180, 1.0, 1);
                     SDL_BlitSurface(vaisseau2,NULL,carte,&pos_plan);
@@ -2582,7 +2582,7 @@ SDL_Surface * affiche_ecran_terrain_combat(const Terrain_combat *terrain_combat)
                 }
                 else if(get_type_vaisseau(get_unite(une_case))==Destroyer)
                 {
-                    vaisseau = IMG_Load("../graphiques/images/unite2_rouge.png");
+                    vaisseau = IMG_Load("../data/graphiques/images/unite2_rouge.png");
                     pos_plan.x=i*100;pos_plan.y=j*100;
                     vaisseau2 = rotozoomSurface (vaisseau, 180, 1.0, 1);
                     SDL_BlitSurface(vaisseau2,NULL,carte,&pos_plan);
@@ -2591,7 +2591,7 @@ SDL_Surface * affiche_ecran_terrain_combat(const Terrain_combat *terrain_combat)
                 }
                 else if(get_type_vaisseau(get_unite(une_case))==Destructeur)
                 {
-                    vaisseau = IMG_Load("../graphiques/images/unite3_rouge.png");
+                    vaisseau = IMG_Load("../data/graphiques/images/unite3_rouge.png");
                     pos_plan.x=i*100;pos_plan.y=j*100;
                     vaisseau2 = rotozoomSurface (vaisseau, 180, 1.0, 1);
                     SDL_BlitSurface(vaisseau2,NULL,carte,&pos_plan);
@@ -2601,7 +2601,7 @@ SDL_Surface * affiche_ecran_terrain_combat(const Terrain_combat *terrain_combat)
             }
             else if(get_presence_unite(une_case))
             {
-                vaisseau = IMG_Load("../graphiques/images/vaisseau_3.png");
+                vaisseau = IMG_Load("../data/graphiques/images/vaisseau_3.png");
                 pos_plan.x=i*100;pos_plan.y=j*100;
                 SDL_BlitSurface(vaisseau,NULL,carte,&pos_plan);
                 SDL_FreeSurface(vaisseau);
@@ -2732,7 +2732,7 @@ void affiche_info_unite(Jeu * jeu,Terrain_combat *un_terrain_combat,char * infos
 {
 	Unite * unite;
 	Case_terrain_combat * une_case;
-	int a,b,c,d,e,f,g,h,n;
+	int a,c,d,e,h;
 	position = coordonnee_case_du_clic(position);
 	une_case = get_case_terrain_combat(un_terrain_combat , position.x,position.y);
 
@@ -2740,8 +2740,8 @@ void affiche_info_unite(Jeu * jeu,Terrain_combat *un_terrain_combat,char * infos
 	{
 		unite = get_unite(une_case);
 		a = get_pt_vie(unite);
+        c = get_portee(unite);
 		d = get_pt_deplacement(unite);
-		c = get_portee(unite);
 		e = get_pt_attaque(unite);
 		h = get_pt_action_joueur(get_ieme_joueur_jeu(jeu,get_joueur_en_cours_combat(jeu)));
 		sprintf(infos,"Pt de vie = %d   Portée=%d   Pt déplacement=%d   Puissance d'attaque=%d",a,c,d,e);
@@ -2818,19 +2818,19 @@ void menu_chargement_sauvegarde(Terrain_espace **un_terrain_espace, Jeu **un_jeu
     /*Initialisation de l'écran et des images */
     SDL_Init(SDL_INIT_VIDEO);
     ecran = SDL_SetVideoMode(TAILLE_FENETRE_X, TAILLE_FENETRE_Y, 32, SDL_HWSURFACE);
-    imageDeFond = IMG_Load("../graphiques/images/Sauvegarde_Fond.png");
-    Noir = SDL_LoadBMP("../graphiques/images/Noir.bmp");
+    imageDeFond = IMG_Load("../data/graphiques/images/Sauvegarde_Fond.png");
+    Noir = SDL_LoadBMP("../data/graphiques/images/Noir.bmp");
 
     /*Chargement du titre*/
     TTF_Init();
-    police = TTF_OpenFont("../graphiques/fonts/space_age.ttf", 60);
+    police = TTF_OpenFont("../data/graphiques/fonts/space_age.ttf", 60);
     Texte = TTF_RenderText_Blended(police, "Charger une partie", couleur);
     longueurTexte = Texte->w;
     initialise_sdl_rect(&positionTexte, ((TAILLE_FENETRE_X/2.0) - (longueurTexte/2.0)), 1*(TAILLE_FENETRE_Y)/10, 0, 0);
     TTF_CloseFont(police);
     
     /*Chargement du texte*/
-    police = TTF_OpenFont("../graphiques/fonts/space_age.ttf", 40);
+    police = TTF_OpenFont("../data/graphiques/fonts/space_age.ttf", 40);
     Texte2 = TTF_RenderText_Blended(police, "Tapez le nom de la sauvegarde", couleur);
     longueurTexte2 = Texte2->w;
     initialise_sdl_rect(&positionTexte2, ((TAILLE_FENETRE_X/2.0) - (longueurTexte2/2.0)), 9*(TAILLE_FENETRE_Y)/10, 0, 0);
@@ -2890,19 +2890,19 @@ void menu_creation_sauvegarde(Terrain_espace *un_terrain_espace, Jeu *un_jeu)
     /*Initialisation de l'écran et des images */
     SDL_Init(SDL_INIT_VIDEO);
     ecran = SDL_SetVideoMode(TAILLE_FENETRE_X, TAILLE_FENETRE_Y, 32, SDL_HWSURFACE);
-    imageDeFond = IMG_Load("../graphiques/images/Sauvegarde_Fond.png");
-    Noir = SDL_LoadBMP("../graphiques/images/Noir.bmp");
+    imageDeFond = IMG_Load("../data/graphiques/images/Sauvegarde_Fond.png");
+    Noir = SDL_LoadBMP("../data/graphiques/images/Noir.bmp");
 
     /*Chargement du titre*/
     TTF_Init();
-    police = TTF_OpenFont("../graphiques/fonts/space_age.ttf", 60);
+    police = TTF_OpenFont("../data/graphiques/fonts/space_age.ttf", 60);
     Texte = TTF_RenderText_Blended(police, "Sauvegarder une partie", couleur);
     longueurTexte = Texte->w;
     initialise_sdl_rect(&positionTexte, ((TAILLE_FENETRE_X/2.0) - (longueurTexte/2.0)), 1*(TAILLE_FENETRE_Y)/10, 0, 0);
     TTF_CloseFont(police);
     
     /*Chargement du texte*/
-    police = TTF_OpenFont("../graphiques/fonts/space_age.ttf", 40);
+    police = TTF_OpenFont("../data/graphiques/fonts/space_age.ttf", 40);
     Texte2 = TTF_RenderText_Blended(police, "Tapez le nom de la sauvegarde", couleur);
     longueurTexte2 = Texte2->w;
     initialise_sdl_rect(&positionTexte2, ((TAILLE_FENETRE_X/2.0) - (longueurTexte2/2.0)), 9*(TAILLE_FENETRE_Y)/10, 0, 0);
@@ -2950,15 +2950,15 @@ void menu_aide(void)
 
     /* Chargement des images */
     ecran = SDL_SetVideoMode(TAILLE_FENETRE_X, TAILLE_FENETRE_Y, 32, SDL_HWSURFACE);
-    imageDeFond_Gauche = IMG_Load("../graphiques/images/Fond_Aide_Gauche.png");
-    imageDeFond_Droit = IMG_Load("../graphiques/images/Fond_Aide_Droit.png");
-    Noir = SDL_LoadBMP("../graphiques/images/Noir.bmp");
-    Titre = IMG_Load("../graphiques/images/Titre_Aide.png");
-    Deplacer = IMG_Load("../graphiques/images/Deplacer.png");
-    Conquerir = IMG_Load("../graphiques/images/Conquerir.png");
-    Construire = IMG_Load("../graphiques/images/Construire.png");
-    Suivant = IMG_Load("../graphiques/images/Suivant.png");
-    Quitter = IMG_Load("../graphiques/images/Quitter_menu.png");
+    imageDeFond_Gauche = IMG_Load("../data/graphiques/images/Fond_Aide_Gauche.png");
+    imageDeFond_Droit = IMG_Load("../data/graphiques/images/Fond_Aide_Droit.png");
+    Noir = SDL_LoadBMP("../data/graphiques/images/Noir.bmp");
+    Titre = IMG_Load("../data/graphiques/images/Titre_Aide.png");
+    Deplacer = IMG_Load("../data/graphiques/images/Deplacer.png");
+    Conquerir = IMG_Load("../data/graphiques/images/Conquerir.png");
+    Construire = IMG_Load("../data/graphiques/images/Construire.png");
+    Suivant = IMG_Load("../data/graphiques/images/Suivant.png");
+    Quitter = IMG_Load("../data/graphiques/images/Quitter_menu.png");
 
     /* Affichage des images */
     positionImage_droit.x = 300;
@@ -3008,10 +3008,10 @@ void menu_aide(void)
                     SDL_FreeSurface(Deplacer);
                     SDL_FreeSurface(Conquerir);
                     SDL_FreeSurface(Construire);
-                    imageDeFond_Droit = IMG_Load("../graphiques/images/Deplacer1.png");
-                    Deplacer = IMG_Load("../graphiques/images/Deplacer_Presse.png");
-                    Conquerir = IMG_Load("../graphiques/images/Conquerir.png");
-                    Construire = IMG_Load("../graphiques/images/Construire.png");
+                    imageDeFond_Droit = IMG_Load("../data/graphiques/images/Deplacer1.png");
+                    Deplacer = IMG_Load("../data/graphiques/images/Deplacer_Presse.png");
+                    Conquerir = IMG_Load("../data/graphiques/images/Conquerir.png");
+                    Construire = IMG_Load("../data/graphiques/images/Construire.png");
 
 
                     SDL_BlitSurface(imageDeFond_Gauche, NULL, ecran, NULL);
@@ -3033,10 +3033,10 @@ void menu_aide(void)
                     SDL_FreeSurface(Deplacer);
                     SDL_FreeSurface(Conquerir);
                     SDL_FreeSurface(Construire);
-                    imageDeFond_Droit = IMG_Load("../graphiques/images/Conquerir1.png");
-                    Deplacer = IMG_Load("../graphiques/images/Deplacer.png");
-                    Conquerir = IMG_Load("../graphiques/images/Conquerir_Presse.png");
-                    Construire = IMG_Load("../graphiques/images/Construire.png");
+                    imageDeFond_Droit = IMG_Load("../data/graphiques/images/Conquerir1.png");
+                    Deplacer = IMG_Load("../data/graphiques/images/Deplacer.png");
+                    Conquerir = IMG_Load("../data/graphiques/images/Conquerir_Presse.png");
+                    Construire = IMG_Load("../data/graphiques/images/Construire.png");
 
                     SDL_BlitSurface(imageDeFond_Gauche, NULL, ecran, NULL);
                     SDL_BlitSurface(imageDeFond_Droit, NULL, ecran, &positionImage_droit);
@@ -3057,10 +3057,10 @@ void menu_aide(void)
                     SDL_FreeSurface(Deplacer);
                     SDL_FreeSurface(Conquerir);
                     SDL_FreeSurface(Construire);
-                    imageDeFond_Droit = IMG_Load("../graphiques/images/Construire1.png");
-                    Deplacer = IMG_Load("../graphiques/images/Deplacer.png");
-                    Conquerir = IMG_Load("../graphiques/images/Conquerir.png");
-                    Construire = IMG_Load("../graphiques/images/Construire_Presse.png");
+                    imageDeFond_Droit = IMG_Load("../data/graphiques/images/Construire1.png");
+                    Deplacer = IMG_Load("../data/graphiques/images/Deplacer.png");
+                    Conquerir = IMG_Load("../data/graphiques/images/Conquerir.png");
+                    Construire = IMG_Load("../data/graphiques/images/Construire_Presse.png");
 
                     SDL_BlitSurface(imageDeFond_Gauche, NULL, ecran, NULL);
                     SDL_BlitSurface(imageDeFond_Droit, NULL, ecran, &positionImage_droit);
@@ -3080,7 +3080,7 @@ void menu_aide(void)
                     {
                         aide = 0;
                         SDL_FreeSurface(imageDeFond_Droit);
-                        imageDeFond_Droit = IMG_Load("../graphiques/images/Deplacer2.png");
+                        imageDeFond_Droit = IMG_Load("../data/graphiques/images/Deplacer2.png");
                         SDL_BlitSurface(imageDeFond_Droit, NULL, ecran, &positionImage_droit);
                         SDL_Flip(ecran);
                     }
@@ -3088,7 +3088,7 @@ void menu_aide(void)
                     {
                         aide = 0;
                         SDL_FreeSurface(imageDeFond_Droit);
-                        imageDeFond_Droit = IMG_Load("../graphiques/images/Conquerir2.png");
+                        imageDeFond_Droit = IMG_Load("../data/graphiques/images/Conquerir2.png");
                         SDL_BlitSurface(imageDeFond_Droit, NULL, ecran, &positionImage_droit);
                         SDL_Flip(ecran);
                     }
@@ -3096,7 +3096,7 @@ void menu_aide(void)
                     {
                         aide = 0;
                         SDL_FreeSurface(imageDeFond_Droit);
-                        imageDeFond_Droit = IMG_Load("../graphiques/images/Construire2.png");
+                        imageDeFond_Droit = IMG_Load("../data/graphiques/images/Construire2.png");
                         SDL_BlitSurface(imageDeFond_Droit, NULL, ecran, &positionImage_droit);
                         SDL_Flip(ecran);
                     }
@@ -3147,16 +3147,16 @@ void menu_pause(Terrain_espace *un_terrain_espace, Jeu *un_jeu, int * exit)
 
     /* Chargement des images */
     ecran = SDL_SetVideoMode(TAILLE_FENETRE_X, TAILLE_FENETRE_Y, 32, SDL_HWSURFACE);
-    imageDeFond = IMG_Load("../graphiques/images/Fond_titre.png");
-    Noir = SDL_LoadBMP("../graphiques/images/Noir.bmp");
-    Retour = IMG_Load("../graphiques/images/Retour.png");
-    Aide = IMG_Load("../graphiques/images/Aide.png");
-    Sauvegarder = IMG_Load("../graphiques/images/Sauvegarder.png");
-    Quitter = IMG_Load("../graphiques/images/Quitter.png");
+    imageDeFond = IMG_Load("../data/graphiques/images/Fond_titre.png");
+    Noir = SDL_LoadBMP("../data/graphiques/images/Noir.bmp");
+    Retour = IMG_Load("../data/graphiques/images/Retour.png");
+    Aide = IMG_Load("../data/graphiques/images/Aide.png");
+    Sauvegarder = IMG_Load("../data/graphiques/images/Sauvegarder.png");
+    Quitter = IMG_Load("../data/graphiques/images/Quitter.png");
 
     /* Chargement de la police */
     TTF_Init();
-    police = TTF_OpenFont("../graphiques/fonts/space_age.ttf", 60);
+    police = TTF_OpenFont("../data/graphiques/fonts/space_age.ttf", 60);
     Texte = TTF_RenderText_Blended(police, "Pause", couleur);
     longueurTexte = Texte->w;
     positionTexte.x = ((TAILLE_FENETRE_X/2.0) - (longueurTexte/2.0));
@@ -3205,35 +3205,35 @@ void menu_pause(Terrain_espace *un_terrain_espace, Jeu *un_jeu, int * exit)
                 SDL_FreeSurface(ecran);
                 if(test_souris_rectangle(positionRetour,xm,ym))
                 {
-                    Retour = IMG_Load("../graphiques/images/Retour_Presse.png");
+                    Retour = IMG_Load("../data/graphiques/images/Retour_Presse.png");
                 }
                 if(!test_souris_rectangle(positionRetour,xm,ym))
                 {
-                    Retour = IMG_Load("../graphiques/images/Retour.png");
+                    Retour = IMG_Load("../data/graphiques/images/Retour.png");
                 }
                 if(test_souris_rectangle(positionAide,xm,ym))
                 {
-                    Aide = IMG_Load("../graphiques/images/Aide_Presse.png");
+                    Aide = IMG_Load("../data/graphiques/images/Aide_Presse.png");
                 }
                 if(!test_souris_rectangle(positionAide,xm,ym))
                 {
-                    Aide = IMG_Load("../graphiques/images/Aide.png");
+                    Aide = IMG_Load("../data/graphiques/images/Aide.png");
                 }
                 if(test_souris_rectangle(positionSauvegarder,xm,ym))
                 {
-                    Sauvegarder = IMG_Load("../graphiques/images/Sauvegarder_Presse.png");
+                    Sauvegarder = IMG_Load("../data/graphiques/images/Sauvegarder_Presse.png");
                 }
                 if(!test_souris_rectangle(positionSauvegarder,xm,ym))
                 {
-                    Sauvegarder = IMG_Load("../graphiques/images/Sauvegarder.png");
+                    Sauvegarder = IMG_Load("../data/graphiques/images/Sauvegarder.png");
                 }
                 if(test_souris_rectangle(positionQuitter,xm,ym))
                 {
-                    Quitter = IMG_Load("../graphiques/images/Quitter_Presse.png");
+                    Quitter = IMG_Load("../data/graphiques/images/Quitter_Presse.png");
                 }
                 if(!test_souris_rectangle(positionQuitter,xm,ym))
                 {
-                    Quitter = IMG_Load("../graphiques/images/Quitter.png");
+                    Quitter = IMG_Load("../data/graphiques/images/Quitter.png");
                 }
                 SDL_BlitSurface(imageDeFond, NULL, ecran, NULL);
                 SDL_BlitSurface(Texte, NULL, ecran, &positionTexte);
@@ -3431,8 +3431,8 @@ void game_over(char nom1[30], char nom2[30], FMOD_SYSTEM* system, FMOD_SOUND* mu
     /*Initialisation de l'écran et des images */
     SDL_Init(SDL_INIT_VIDEO);
     ecran = SDL_SetVideoMode(TAILLE_FENETRE_X, TAILLE_FENETRE_Y, 32, SDL_HWSURFACE);
-    imageDeFond = IMG_Load("../graphiques/images/Game_over.png");
-    Noir = SDL_LoadBMP("../graphiques/images/Noir.bmp");
+    imageDeFond = IMG_Load("../data/graphiques/images/Game_over.png");
+    Noir = SDL_LoadBMP("../data/graphiques/images/Noir.bmp");
 	tab_chanson = (char **)malloc(sizeof(char *) * 6);
 	initialiser_tableau_chanson_game_over(tab_chanson);
 	lire_musique(system, musique, tab_chanson);
@@ -3441,7 +3441,7 @@ void game_over(char nom1[30], char nom2[30], FMOD_SYSTEM* system, FMOD_SOUND* mu
     TTF_Init();
     
     /*Chargement du texte*/
-    police = TTF_OpenFont("../graphiques/fonts/space_age.ttf", 40);
+    police = TTF_OpenFont("../data/graphiques/fonts/space_age.ttf", 40);
     Texte = TTF_RenderUTF8_Blended(police, gagnant, couleur);
     longueurTexte = Texte->w;
     initialise_sdl_rect(&positionTexte, ((TAILLE_FENETRE_X/2.0) - (longueurTexte/2.0)), 8*(TAILLE_FENETRE_Y)/10, 0, 0);
@@ -3484,7 +3484,7 @@ void game_over(char nom1[30], char nom2[30], FMOD_SYSTEM* system, FMOD_SOUND* mu
     SDL_FreeSurface(imageDeFond);
     continuer = 1;
     b = 255;
-    imageDeFond = IMG_Load("../graphiques/images/Credits.png");
+    imageDeFond = IMG_Load("../data/graphiques/images/Credits.png");
     while (b>=0) {
         SDL_SetAlpha(Noir, SDL_SRCALPHA, b);
         SDL_BlitSurface(Noir, NULL, ecran, NULL);
@@ -3548,12 +3548,12 @@ void nouvelle_partie(Terrain_espace ** un_terrain_espace, Jeu **un_jeu, FMOD_SYS
     /* Initialisation de l'écran et des images */
     SDL_Init(SDL_INIT_VIDEO);
     ecran = SDL_SetVideoMode(TAILLE_FENETRE_X, TAILLE_FENETRE_Y, 32, SDL_HWSURFACE);
-    imageDeFond = IMG_Load("../graphiques/images/Fond_Nouvelle_Partie.png");
-    Noir = SDL_LoadBMP("../graphiques/images/Noir.bmp");
+    imageDeFond = IMG_Load("../data/graphiques/images/Fond_Nouvelle_Partie.png");
+    Noir = SDL_LoadBMP("../data/graphiques/images/Noir.bmp");
 
     /* Chargement du titre */
     TTF_Init();
-    police = TTF_OpenFont("../graphiques/fonts/space_age.ttf", 60);
+    police = TTF_OpenFont("../data/graphiques/fonts/space_age.ttf", 60);
     Texte = TTF_RenderUTF8_Blended(police, "Conquest Of Space", couleur);
     longueurTexte = Texte->w;
     positionTexte.x = ((TAILLE_FENETRE_X/2.0) - (longueurTexte/2.0));
@@ -3561,7 +3561,7 @@ void nouvelle_partie(Terrain_espace ** un_terrain_espace, Jeu **un_jeu, FMOD_SYS
     TTF_CloseFont(police);
 
     /* Chargement du texte */
-    police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf", 30);
+    police = TTF_OpenFont("../data/graphiques/fonts/charcoalcy.ttf", 30);
     Texte2 = TTF_RenderUTF8_Blended(police, "En l'an 2157, les chercheurs découvrent, aux frontières du", couleur);
     longueurTexte2 = Texte2->w;
     positionTexte2.x = ((TAILLE_FENETRE_X/2.0) - (longueurTexte2/2.0));
@@ -3579,7 +3579,7 @@ void nouvelle_partie(Terrain_espace ** un_terrain_espace, Jeu **un_jeu, FMOD_SYS
     TTF_CloseFont(police);
 
     /* Chargement du "Cliquez pour continuer" */
-    police = TTF_OpenFont("../graphiques/fonts/space_age.ttf", 40);
+    police = TTF_OpenFont("../data/graphiques/fonts/space_age.ttf", 40);
     Texte5 = TTF_RenderText_Blended(police, "Cliquez pour continuer", couleur);
     longueurTexte5 = Texte5->w;
     positionTexte5.x = ((TAILLE_FENETRE_X/2.0) - (longueurTexte5/2.0));
@@ -3633,10 +3633,10 @@ void nouvelle_partie(Terrain_espace ** un_terrain_espace, Jeu **un_jeu, FMOD_SYS
     /*CHARGEMENT*/
     
     /*Initialisation de l'écran et des images */
-    imageDeFond = IMG_Load("../graphiques/images/Fond_Nouvelle_Partie.png");
+    imageDeFond = IMG_Load("../data/graphiques/images/Fond_Nouvelle_Partie.png");
     
     /*Chargement du titre*/
-    police = TTF_OpenFont("../graphiques/fonts/space_age.ttf", 60);
+    police = TTF_OpenFont("../data/graphiques/fonts/space_age.ttf", 60);
     Texte = TTF_RenderText_Blended(police, "Noms des joueurs", couleur);
     longueurTexte = Texte->w;
     positionTexte.x = ((TAILLE_FENETRE_X/2.0) - (longueurTexte/2.0));
@@ -3644,7 +3644,7 @@ void nouvelle_partie(Terrain_espace ** un_terrain_espace, Jeu **un_jeu, FMOD_SYS
     TTF_CloseFont(police);
     
     /*Chargement du texte*/
-    police = TTF_OpenFont("../graphiques/fonts/space_age.ttf", 40);
+    police = TTF_OpenFont("../data/graphiques/fonts/space_age.ttf", 40);
     Texte2 = TTF_RenderText_Blended(police, "Noms des joueurs", couleur);
     longueurTexte2 = Texte2->w;
 	initialise_sdl_rect(&positionTexte2, (TAILLE_FENETRE_X/2.0) - (longueurTexte2/2.0), (TAILLE_FENETRE_Y)/5, 0, 0);
@@ -3714,14 +3714,14 @@ void ecran_titre(void)
     /* Chargement des images */
     SDL_Init(SDL_INIT_VIDEO);
     ecran = SDL_SetVideoMode(X, Y, 32, SDL_HWSURFACE);
-    imageDeFond = IMG_Load("../graphiques/images/Fond_titre.png");
-    Titre = IMG_Load("../graphiques/images/Titre.png");
-    Noir = SDL_LoadBMP("../graphiques/images/Noir.bmp");
-    FondMenu = IMG_Load("../graphiques/images/FondMenu.png");
-    Petit_Titre = IMG_Load("../graphiques/images/Petit_Titre.png");
-    NouvellePartie = IMG_Load("../graphiques/images/Nouvelle_Partie.png");
-    Charger = IMG_Load("../graphiques/images/Charger.png");
-    Quitter = IMG_Load("../graphiques/images/Quitter.png");
+    imageDeFond = IMG_Load("../data/graphiques/images/Fond_titre.png");
+    Titre = IMG_Load("../data/graphiques/images/Titre.png");
+    Noir = SDL_LoadBMP("../data/graphiques/images/Noir.bmp");
+    FondMenu = IMG_Load("../data/graphiques/images/FondMenu.png");
+    Petit_Titre = IMG_Load("../data/graphiques/images/Petit_Titre.png");
+    NouvellePartie = IMG_Load("../data/graphiques/images/Nouvelle_Partie.png");
+    Charger = IMG_Load("../data/graphiques/images/Charger.png");
+    Quitter = IMG_Load("../data/graphiques/images/Quitter.png");
 
 
     /*AFFICHAGE*/
@@ -3753,7 +3753,7 @@ void ecran_titre(void)
     SDL_BlitSurface(imageDeFond, NULL, ecran, NULL);
     SDL_BlitSurface(Titre_Anime, NULL, ecran, &positionTitre);
     TTF_Init();
-    police = TTF_OpenFont("../graphiques/fonts/space_age.ttf", 40);
+    police = TTF_OpenFont("../data/graphiques/fonts/space_age.ttf", 40);
     Texte = TTF_RenderText_Blended(police, "Cliquez pour continuer", couleur);
     longueurTexte = Texte->w;
     positionTexte.x = ((X/2.0) - (longueurTexte/2.0));
@@ -3840,27 +3840,27 @@ void ecran_titre(void)
                 SDL_FreeSurface(Quitter);
                 if(test_souris_rectangle(positionNouvellePartie,xm,ym))
                 {
-                    NouvellePartie = IMG_Load("../graphiques/images/Nouvelle_Partie_Presse.png");
+                    NouvellePartie = IMG_Load("../data/graphiques/images/Nouvelle_Partie_Presse.png");
                 }
                 if(!test_souris_rectangle(positionNouvellePartie,xm,ym))
                 {
-                    NouvellePartie = IMG_Load("../graphiques/images/Nouvelle_Partie.png");
+                    NouvellePartie = IMG_Load("../data/graphiques/images/Nouvelle_Partie.png");
                 }
                 if(test_souris_rectangle(positionCharger,xm,ym))
                 {
-                    Charger = IMG_Load("../graphiques/images/Charger_Presse.png");
+                    Charger = IMG_Load("../data/graphiques/images/Charger_Presse.png");
                 }
                 if(!test_souris_rectangle(positionCharger,xm,ym))
                 {
-                    Charger = IMG_Load("../graphiques/images/Charger.png");
+                    Charger = IMG_Load("../data/graphiques/images/Charger.png");
                 }
                 if(test_souris_rectangle(positionQuitter,xm,ym))
                 {
-                    Quitter = IMG_Load("../graphiques/images/Quitter_Presse.png");
+                    Quitter = IMG_Load("../data/graphiques/images/Quitter_Presse.png");
                 }
                 if(!test_souris_rectangle(positionQuitter,xm,ym))
                 {
-                    Quitter = IMG_Load("../graphiques/images/Quitter.png");
+                    Quitter = IMG_Load("../data/graphiques/images/Quitter.png");
                 }
                 SDL_BlitSurface(FondMenu, NULL, ecran, NULL);
                 SDL_BlitSurface(Petit_Titre, NULL, ecran, &positionPetit_Titre);
@@ -3968,7 +3968,7 @@ void saisie_texte_sdl(char nom[50], SDL_Surface* ecran, SDL_Rect position_saisie
 	bool saisie_en_cours = true;
 	SDL_Event evenement;
 
-	police = TTF_OpenFont("../graphiques/fonts/space_age.ttf", 40);
+	police = TTF_OpenFont("../data/graphiques/fonts/space_age.ttf", 40);
 
 	fond_texte = SDL_CreateRGBSurface(SDL_HWSURFACE, 600, 50, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
 	SDL_FillRect(fond_texte, NULL, SDL_MapRGB(ecran->format, 10, 10, 10));
@@ -4360,7 +4360,7 @@ bool attaque_ecran(Jeu * jeu,Terrain_combat * un_terrain_combat, SDL_Rect pos,Fl
  */
 void animation_avant_deplacement_unite(Terrain_combat * un_terrain_combat,Jeu * jeu, SDL_Surface * ecran,SDL_Surface * ecran2,SDL_Rect pos,int x, int y)
 {
-	Animation * deplacement = creer_animation(5, 100, 100,100, "../graphiques/images/effet_teleportation.png");
+	Animation * deplacement = creer_animation(5, 100, 100,100, "../data/graphiques/images/effet_teleportation.png");
 	lancer_animation_bloquante_combat(jeu, un_terrain_combat, deplacement, ecran2, x, y);
     free(deplacement);
 }
@@ -4383,7 +4383,7 @@ void animation_explosion(Terrain_combat * un_terrain_combat,Jeu * jeu, SDL_Surfa
 	pos = coordonnee_case_du_clic(pos);
 	pos.x = pos.x *100 + X_CARTE;
 	pos.y = pos.y * 100 +Y_CARTE;
-	explosion = creer_animation(48, 100, 100,20, "../graphiques/images/explosion.png");
+	explosion = creer_animation(48, 100, 100,20, "../data/graphiques/images/explosion.png");
 	lancer_animation_bloquante_combat(jeu, un_terrain_combat, explosion, ecran, pos.x, pos.y);
     free(explosion);
 }
@@ -4408,7 +4408,7 @@ void animation_attaque(Terrain_combat * un_terrain_combat,Jeu * jeu, SDL_Surface
 	y_arrivee = pos.y *100 + Y_CARTE;
 	x_depart = get_x_combat(une_case) *100 + X_CARTE;
 	y_depart = get_y_combat(une_case) *100 + Y_CARTE;
-	laser = IMG_Load("../graphiques/images/Laser.png");
+	laser = IMG_Load("../data/graphiques/images/Laser.png");
 	copie = SDL_CreateRGBSurface(SDL_HWSURFACE, TAILLE_ECRAN_COMBAT_X , TAILLE_ECRAN_COMBAT_Y, NOMBRE_BITS_COULEUR, 0, 0, 0, 0);
 	initialise_sdl_rect(&pos_laser,0,0,TAILLE_ECRAN_COMBAT_X,TAILLE_ECRAN_COMBAT_Y);
 	SDL_BlitSurface(ecran, &pos_laser,  copie,NULL);
@@ -4593,10 +4593,10 @@ int affichage_ecran_combat(Jeu* jeu, Terrain_combat *un_terrain_combat, Flotte* 
 
 	/*on lance les musiques du jeu et on initialise les sons*/
 
-	FMOD_System_CreateSound(system, "../audio/son/FTL_Saut.mp3", FMOD_CREATESAMPLE, 0, &son_saut_debut);
-	FMOD_System_CreateSound(system, "../audio/son/FTL_Exit.mp3", FMOD_CREATESAMPLE, 0, &son_saut_fin);
-	FMOD_System_CreateSound(system, "../audio/son/laser.mp3", FMOD_CREATESAMPLE, 0, &tir_laser);
-	FMOD_System_CreateSound(system, "../audio/son/Explosion.mp3", FMOD_CREATESAMPLE, 0, &explosion);
+	FMOD_System_CreateSound(system, "../data/audio/son/FTL_Saut.mp3", FMOD_CREATESAMPLE, 0, &son_saut_debut);
+	FMOD_System_CreateSound(system, "../data/audio/son/FTL_Exit.mp3", FMOD_CREATESAMPLE, 0, &son_saut_fin);
+	FMOD_System_CreateSound(system, "../data/audio/son/laser.mp3", FMOD_CREATESAMPLE, 0, &tir_laser);
+	FMOD_System_CreateSound(system, "../data/audio/son/Explosion.mp3", FMOD_CREATESAMPLE, 0, &explosion);
 	
 	lire_musique(system, musique, tab_chanson);
 
@@ -4620,18 +4620,18 @@ int affichage_ecran_combat(Jeu* jeu, Terrain_combat *un_terrain_combat, Flotte* 
 
 	couleur = NOIR;
 
-	interface = IMG_Load("../graphiques/images/interface_combat_bas.png");
-	interface_haut=	IMG_Load("../graphiques/images/interface_combat_haut.png");
+	interface = IMG_Load("../data/graphiques/images/interface_combat_bas.png");
+	interface_haut=	IMG_Load("../data/graphiques/images/interface_combat_haut.png");
     if (get_joueur_en_cours_combat(jeu) == 0)
     {
-        bordure = IMG_Load("../graphiques/images/bordure_bleue.png");
+        bordure = IMG_Load("../data/graphiques/images/bordure_bleue.png");
     }
     else
     {
-        bordure = IMG_Load("../graphiques/images/bordure_rouge.png");
+        bordure = IMG_Load("../data/graphiques/images/bordure_rouge.png");
     }
-	attaquer= IMG_Load("../graphiques/images/Attaquer.png");
-	passer= IMG_Load("../graphiques/images/Passer.png");
+	attaquer= IMG_Load("../data/graphiques/images/Attaquer.png");
+	passer= IMG_Load("../data/graphiques/images/Passer.png");
 
 	carte =affiche_ecran_terrain_combat(un_terrain_combat);
 
@@ -4646,7 +4646,7 @@ int affichage_ecran_combat(Jeu* jeu, Terrain_combat *un_terrain_combat, Flotte* 
 	position_passer.y =Y_BOUTON_PASSER+Y_INTERFACE;
 	pos_attaquer.y =Y_BOUTON_ATTAQUER+Y_INTERFACE;/*Position des boutons sur l'écran (et non pas leur position sur l'interface)*/
 
-	police = TTF_OpenFont("../graphiques/fonts/charcoalcy.ttf",16);
+	police = TTF_OpenFont("../data/graphiques/fonts/charcoalcy.ttf",16);
 
 	pos_texte.x=X_TEXTE;pos_texte.y=Y_TEXTE;
 	pos_texte2.x=X_TEXTE;pos_texte2.y=Y_TEXTE - 20;
@@ -4705,11 +4705,11 @@ int affichage_ecran_combat(Jeu* jeu, Terrain_combat *un_terrain_combat, Flotte* 
                     SDL_FreeSurface(bordure);
                     if (get_joueur_en_cours_combat(jeu) == 0)
                     {
-                        bordure = IMG_Load("../graphiques/images/bordure_bleue.png");
+                        bordure = IMG_Load("../data/graphiques/images/bordure_bleue.png");
                     }
                     else
                     {
-                        bordure = IMG_Load("../graphiques/images/bordure_rouge.png");
+                        bordure = IMG_Load("../data/graphiques/images/bordure_rouge.png");
                     }
                     SDL_BlitSurface(bordure, NULL, ecran, &position_affichage_carte);
 				}
