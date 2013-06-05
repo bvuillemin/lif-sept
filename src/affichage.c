@@ -34,7 +34,7 @@
  * \param      y	           Position en pixels du clic souris
  * \return     Booléen	       Renvoie vrai si le clic souris a lieu dans le rectangle
  */
-bool test_souris_rectangle (SDL_Rect taille_surface, int x, int y) /*Va tester si x et y sont dans le rectangle, utile pour les menus*/
+bool test_souris_rectangle (const SDL_Rect taille_surface, int x, int y) /*Va tester si x et y sont dans le rectangle, utile pour les menus*/
 {
 	if((x >= taille_surface.x) && (x<= taille_surface.x + taille_surface.w) && (y >= taille_surface.y) && (y<= taille_surface.y + taille_surface.h))
 	{
@@ -71,7 +71,7 @@ void initialise_sdl_rect(SDL_Rect *un_rectangle, int x, int y, int w, int h) /*V
  * \param      y	              Pointeur sur entier
  * \return     Booléen	          Renvoie vrai si le clic souris a lieu sur une case
  */
-bool booleen_coordonnees_case(Terrain_espace *un_terrain_espace, int x_case, int y_case, int *x, int *y)
+bool booleen_coordonnees_case(const Terrain_espace *un_terrain_espace, int x_case, int y_case, int *x, int *y)
 {
 	SDL_Rect affichage_map = {get_affichage_x(un_terrain_espace) - 1, get_affichage_y(un_terrain_espace) - 1, get_affichage_x(un_terrain_espace) + TAILLE_TERRAIN_ESPACE_X, get_affichage_y(un_terrain_espace) + TAILLE_TERRAIN_ESPACE_Y};
 	if(test_souris_rectangle(affichage_map, x_case * 100, y_case *100))
@@ -131,7 +131,7 @@ void test_minimap_souris(Terrain_espace *un_terrain_espace, int x, int y)
  * \param      y	                       Position en pixels du clic souris
  * \return     Case_terrain_espace	       Renvoie la case pointée par les coordonnées 
  */
-Case_terrain_espace* case_pointeur_souris(Terrain_espace *un_terrain_espace, int x, int y)
+Case_terrain_espace* case_pointeur_souris(const Terrain_espace *un_terrain_espace, int x, int y)
 {
 	x = (get_taille_espace_x(un_terrain_espace) + x) / 100;
 	y = (get_taille_espace_y(un_terrain_espace) + y - 33) / 100;
@@ -494,7 +494,7 @@ void afficher_infobulle_batiment(SDL_Surface* fond, int i)
  * \param      un_jeu      Pointeur sur jeu pour récupérer des informations
  * \param      i	       Indice de l'unité dont on veut récupérer les informations
  */
-void afficher_infobulle_unite(Jeu* un_jeu, SDL_Surface* fond, int i)
+void afficher_infobulle_unite(const Jeu* un_jeu, SDL_Surface* fond, int i)
 {
 	SDL_Surface* une_ligne;
 	Unite *une_unite;
@@ -845,7 +845,7 @@ void afficher_infobulle_creation_unite(SDL_Surface* fond,int i)
  * \param      x			      Coordonnées en pixel de l'endroit où afficher l'infobulle
  * \param      y			      Coordonnées en pixel de l'endroit où afficher l'infobulle
  */
-void afficher_infobulle(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface **tab_surface, INTERFACE_AFFICHEE interface_affichee, int x, int y)
+void afficher_infobulle(const Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface **tab_surface, INTERFACE_AFFICHEE interface_affichee, int x, int y)
 {
 	SDL_Surface* fond = NULL;
 	SDL_Rect position_fond = {2, 2, 0, 0};
@@ -950,7 +950,7 @@ void afficher_infobulle(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surf
  * \brief      Surface sur laquelle les ressource sont affichées
  * \param      un_jeu             Pointeur sur le jeu pour récupérer des informations
  */
-SDL_Surface* affichage_ressource(Jeu *un_jeu)
+SDL_Surface* affichage_ressource(const Jeu *un_jeu)
 {
 	SDL_Surface *surface_ressource = NULL;
     SDL_Surface *nom_ressource = NULL;
@@ -1004,7 +1004,7 @@ SDL_Surface* affichage_ressource(Jeu *un_jeu)
  * \brief      Surface sur laquelle la création des unités 
  * \param      une_planete           Pointeur sur la planète dont on veut créer les unités
  */
-SDL_Surface* affichage_creation_unite(Planete* une_planete)
+SDL_Surface* affichage_creation_unite(const Planete* une_planete)
 {
 	SDL_Surface *panneau_unite = NULL;
     SDL_Surface *unite1;
@@ -1068,7 +1068,7 @@ SDL_Surface* affichage_creation_unite(Planete* une_planete)
  * \brief      Surface sur laquelle on affiche les infos de planète
  * \param      une_planete           Pointeur sur la planète dont on affiche les infos
  */
-SDL_Surface* affichage_planete(Planete* une_planete)
+SDL_Surface* affichage_planete(const Planete* une_planete)
 {
 	SDL_Surface *info_planete = NULL;
     SDL_Surface *planete = NULL;
@@ -1177,7 +1177,7 @@ get_metal(une_planete), get_argent(une_planete), get_carburant(une_planete), get
  * \brief      Surface sur laquelle on affiche les infos de planète ennemie
  * \param      une_planete           Pointeur sur la planète ennemie dont on affiche les infos
  */
-SDL_Surface* affichage_planete_ennemie(Case_terrain_espace *une_case_terrain_espace)
+SDL_Surface* affichage_planete_ennemie(const Case_terrain_espace *une_case_terrain_espace)
 {
 	SDL_Surface *info_planete = NULL;
 	SDL_Surface *planete = NULL;
@@ -1208,7 +1208,7 @@ SDL_Surface* affichage_planete_ennemie(Case_terrain_espace *une_case_terrain_esp
  * \param      un_jeu                    Pointeur sur le jeu
  * \param      un_terrain_espace         Pointeur sur le Terrain_espace pour vérifier certains boutons à afficher
  */
-SDL_Surface* affichage_flotte(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
+SDL_Surface* affichage_flotte(const Jeu *un_jeu, const Terrain_espace *un_terrain_espace)
 {
 	SDL_Surface *info_flotte = NULL;
     SDL_Surface *flotte = NULL;
@@ -1319,7 +1319,7 @@ SDL_Surface* affichage_flotte(Jeu *un_jeu, Terrain_espace *un_terrain_espace)
  * \brief      Surface sur laquelle on affiche les infos de flotte ennemie
  * \param      un_jeu                    Pointeur sur le jeu
  */
-SDL_Surface* affichage_flotte_ennemie(Jeu *un_jeu)
+SDL_Surface* affichage_flotte_ennemie(const Jeu *un_jeu)
 {
 	SDL_Surface *info_flotte =NULL;
 	SDL_Surface *flotte = NULL;
@@ -1366,7 +1366,7 @@ SDL_Surface* affichage_flotte_ennemie(Jeu *un_jeu)
  * \details    On parcourt le terrain pour afficher les informations nécessaires puis on stocke la surface en mémoire pour éviter de la recréer
  * \param      un_terrain_espace         Pointeur sur le Terrain_espace
  */
-SDL_Surface* creer_affichage_terrain(Terrain_espace *un_terrain_espace)
+SDL_Surface* creer_affichage_terrain(const Terrain_espace *un_terrain_espace)
 {
 	SDL_Surface *carte = NULL;
 	SDL_Surface *planete1 = NULL;
@@ -1434,7 +1434,7 @@ SDL_Surface* creer_affichage_terrain(Terrain_espace *un_terrain_espace)
  * \details    On parcourt le terrain pour afficher les informations nécessaires puis on stocke la surface en mémoire pour éviter de la recréer
  * \param      un_terrain_espace         Pointeur sur le Terrain_espace
  */
-SDL_Surface* creer_affichage_flotte(Terrain_espace *un_terrain_espace)
+SDL_Surface* creer_affichage_flotte(const Terrain_espace *un_terrain_espace)
 {
     SDL_Surface *carte = NULL;
 
@@ -1522,7 +1522,7 @@ SDL_Surface* creer_affichage_flotte(Terrain_espace *un_terrain_espace)
  * \details    On affiche la vision de la carte globale en cours en créant un rectangle à la position adéquate
  * \param      un_terrain_espace         Pointeur sur le Terrain_espace
  */
-SDL_Surface* affichage_minimap(Terrain_espace *un_terrain_espace)
+SDL_Surface* affichage_minimap(const Terrain_espace *un_terrain_espace)
 {
 	SDL_Surface *minimap = NULL;
 	SDL_Surface *fond_minimap = NULL;
@@ -1580,7 +1580,7 @@ SDL_Surface* affichage_minimap(Terrain_espace *un_terrain_espace)
  * \param      un_jeu         Pointeur sur le jeu
  * \param      un_joueur      Pointeur sur le joueur dont on veut afficher la vision
  */
-SDL_Surface* creer_affichage_vision(Jeu *un_jeu, Joueur* un_joueur)
+SDL_Surface* creer_affichage_vision(const Jeu *un_jeu, const Joueur* un_joueur)
 {
 	SDL_Surface *affichee = NULL;
 	SDL_Surface *jamais_visitee = NULL;
@@ -1644,7 +1644,7 @@ SDL_Surface* creer_affichage_vision(Jeu *un_jeu, Joueur* un_joueur)
  * \param      ecran          Pointeur sur la surface d'ecran
  * \param      tab_surface    Pointeur sur le tableau de pointeurs sur surface
  */
-void maj_affichage_vision(Jeu *un_jeu, Joueur* un_joueur, SDL_Surface *ecran, SDL_Surface **tab_surface)
+void maj_affichage_vision(const Jeu *un_jeu, const Joueur* un_joueur, SDL_Surface *ecran, SDL_Surface **tab_surface)
 {
 	SDL_Surface *affichee = NULL;
 	SDL_Surface *jamais_visitee = NULL;
@@ -1711,7 +1711,7 @@ void maj_affichage_vision(Jeu *un_jeu, Joueur* un_joueur, SDL_Surface *ecran, SD
  * \param      ecran                 Pointeur sur la surface d'ecran
  * \param      tab_surface           Pointeur sur le tableau de pointeurs sur surface
  */
-void initialiser_affichage(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface **tab_surface)
+void initialiser_affichage(const Jeu *un_jeu, const Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface **tab_surface)
 {
     int i;
 	SDL_Rect position = {0, 0, 0, 0};
@@ -1773,7 +1773,7 @@ void initialiser_affichage(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_S
  * \param      tab_surface           Pointeur sur le tableau de pointeurs sur surface
  * \param      interface_affichee    Interface en cours d'affichage
  */
-void maj_carte_terrain(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface **tab_surface, INTERFACE_AFFICHEE interface_affichee)
+void maj_carte_terrain(const Jeu *un_jeu, const Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface **tab_surface, INTERFACE_AFFICHEE interface_affichee)
 {
 	SDL_Rect position_interface = {0, TAILLE_TERRAIN_ESPACE_Y + 30, 0, 0};
 	SDL_Rect position_mini_carte = {TAILLE_FENETRE_X - 240, TAILLE_FENETRE_Y - 158};
@@ -1820,7 +1820,7 @@ void maj_carte_terrain(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surfa
  * \param      tab_surface           Pointeur sur le tableau de pointeurs sur surface
  * \param      interface_affichee    Interface en cours d'affichage
  */
-void maj_affichage_carte_terrain(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface **tab_surface, INTERFACE_AFFICHEE interface_affichee)
+void maj_affichage_carte_terrain(const Jeu *un_jeu, const Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface **tab_surface, INTERFACE_AFFICHEE interface_affichee)
 {
     SDL_Rect position_minimap = {TAILLE_FENETRE_X - TAILLE_MINIMAP_X, TAILLE_FENETRE_Y - TAILLE_MINIMAP_Y, 0, 0};
     SDL_Rect position_affichage_carte = {0, 30, TAILLE_TERRAIN_ESPACE_X, TAILLE_TERRAIN_ESPACE_Y};
@@ -1869,7 +1869,7 @@ void maj_affichage_carte_terrain(Jeu *un_jeu, Terrain_espace *un_terrain_espace,
  * \param      tab_surface           Pointeur sur le tableau de pointeurs sur surface
  * \param      interface_affichee    Interface en cours d'affichage
  */
-void maj_affichage_flotte(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface **tab_surface, INTERFACE_AFFICHEE interface_affichee)
+void maj_affichage_flotte(const Jeu *un_jeu, const Terrain_espace *un_terrain_espace, SDL_Surface *ecran, SDL_Surface **tab_surface, INTERFACE_AFFICHEE interface_affichee)
 {
     SDL_Rect position_interface = {0, TAILLE_TERRAIN_ESPACE_Y + 30, 0, 0};
     SDL_Rect position_mini_carte = {TAILLE_FENETRE_X - 240, TAILLE_FENETRE_Y - 158};
@@ -1921,7 +1921,7 @@ void maj_affichage_flotte(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Su
  * \param      ecran                 Pointeur sur la surface d'ecran
  * \param      tab_surface           Pointeur sur le tableau de pointeurs sur surface
  */
-void maj_affichage_ressource(Jeu *un_jeu, SDL_Surface *ecran, SDL_Surface **tab_surface)
+void maj_affichage_ressource(const Jeu *un_jeu, SDL_Surface *ecran, SDL_Surface **tab_surface)
 {
 	SDL_Rect position = {0, 0, 0, 0};
 	tab_surface[2] = affichage_ressource(un_jeu);
@@ -1938,7 +1938,7 @@ void maj_affichage_ressource(Jeu *un_jeu, SDL_Surface *ecran, SDL_Surface **tab_
  * \param      une_case_terrain_espace    Pointeur sur une case du terrain (utile pour un des appels de fonction)
  * \param      tab_surface           Pointeur sur le tableau de pointeurs sur surface
  */
-void maj_affichage(Jeu *un_jeu, Terrain_espace *un_terrain_espace, SDL_Surface *ecran, INTERFACE_AFFICHEE interface_affichee, Case_terrain_espace *une_case_terrain_espace, SDL_Surface **tab_surface)
+void maj_affichage(const Jeu *un_jeu, const Terrain_espace *un_terrain_espace, SDL_Surface *ecran, INTERFACE_AFFICHEE interface_affichee, Case_terrain_espace *une_case_terrain_espace, SDL_Surface **tab_surface)
  {
     SDL_Rect position_interface = {0, TAILLE_TERRAIN_ESPACE_Y + 30, 0, 0};
     SDL_Rect position_mini_carte = {TAILLE_FENETRE_X - 240, TAILLE_FENETRE_Y - 158};
@@ -2395,7 +2395,7 @@ void affichage_ecran(Jeu *un_jeu, Terrain_espace *un_terrain_espace, FMOD_SYSTEM
 							booleen_coordonnees_case(un_terrain_espace, get_x_flotte(get_flotte_en_cours(un_jeu)), get_y_flotte(get_flotte_en_cours(un_jeu)), &x_bis, &y_bis);
 							lire_son(system, son_saut_debut);
 							lancer_animation_bloquante(un_jeu, un_terrain_espace, saut_ftl, ecran, x_bis, y_bis);
-							deplacement_flotte(get_flotte_en_cours(un_jeu), un_terrain_espace, get_flotte_en_cours(un_jeu), get_x_espace(une_case_terrain_espace), get_y_espace(une_case_terrain_espace));
+							deplacement_flotte(get_joueur_en_cours(un_jeu), un_terrain_espace, get_flotte_en_cours(un_jeu), get_x_espace(une_case_terrain_espace), get_y_espace(une_case_terrain_espace));
 							maj_affichage_flotte(un_jeu, un_terrain_espace, ecran, tab_surface, interface_affichee);
 							booleen_coordonnees_case(un_terrain_espace, get_x_flotte(get_flotte_en_cours(un_jeu)), get_y_flotte(get_flotte_en_cours(un_jeu)), &x_bis, &y_bis);
 							lire_son(system, son_saut_fin);
